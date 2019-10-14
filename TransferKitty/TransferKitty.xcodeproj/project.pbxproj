@@ -1,0 +1,660 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 50;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		CACC748C2354F93800FE3672 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = CACC748B2354F93800FE3672 /* AppDelegate.m */; };
+		CACC748F2354F93800FE3672 /* GameViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CACC748E2354F93800FE3672 /* GameViewController.m */; };
+		CACC74922354F93800FE3672 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CACC74902354F93800FE3672 /* Main.storyboard */; };
+		CACC74952354F93800FE3672 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CACC74932354F93800FE3672 /* LaunchScreen.storyboard */; };
+		CACC74982354F93800FE3672 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = CACC74972354F93800FE3672 /* main.m */; };
+		CACC74A12354F93800FE3672 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = CACC74A02354F93800FE3672 /* AppDelegate.m */; };
+		CACC74A42354F93800FE3672 /* GameViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CACC74A32354F93800FE3672 /* GameViewController.m */; };
+		CACC74A72354F93800FE3672 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CACC74A52354F93800FE3672 /* Main.storyboard */; };
+		CACC74AA2354F93800FE3672 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = CACC74A92354F93800FE3672 /* main.m */; };
+		CACC74AB2354F93800FE3672 /* Renderer.m in Sources */ = {isa = PBXBuildFile; fileRef = CACC747F2354F93500FE3672 /* Renderer.m */; };
+		CACC74AC2354F93800FE3672 /* Renderer.m in Sources */ = {isa = PBXBuildFile; fileRef = CACC747F2354F93500FE3672 /* Renderer.m */; };
+		CACC74AD2354F93800FE3672 /* Shaders.metal in Sources */ = {isa = PBXBuildFile; fileRef = CACC74812354F93500FE3672 /* Shaders.metal */; };
+		CACC74AE2354F93800FE3672 /* Shaders.metal in Sources */ = {isa = PBXBuildFile; fileRef = CACC74812354F93500FE3672 /* Shaders.metal */; };
+		CACC74AF2354F93800FE3672 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CACC74822354F93800FE3672 /* Assets.xcassets */; };
+		CACC74B02354F93800FE3672 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CACC74822354F93800FE3672 /* Assets.xcassets */; };
+		CACC74C12354F9AB00FE3672 /* ShareViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CACC74C02354F9AB00FE3672 /* ShareViewController.m */; };
+		CACC74C42354F9AB00FE3672 /* MainInterface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CACC74C22354F9AB00FE3672 /* MainInterface.storyboard */; };
+		CACC74C82354F9AB00FE3672 /* TransferKittyShareExtension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = CACC74BD2354F9AB00FE3672 /* TransferKittyShareExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		CACC74CD2354FC5400FE3672 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CACC74822354F93800FE3672 /* Assets.xcassets */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		CACC74C62354F9AB00FE3672 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = CACC74792354F93500FE3672 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = CACC74BC2354F9AB00FE3672;
+			remoteInfo = TransferKittyShareExtension;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		CACC74CC2354F9AB00FE3672 /* Embed App Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				CACC74C82354F9AB00FE3672 /* TransferKittyShareExtension.appex in Embed App Extensions */,
+			);
+			name = "Embed App Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		CACC747E2354F93500FE3672 /* Renderer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Renderer.h; sourceTree = "<group>"; };
+		CACC747F2354F93500FE3672 /* Renderer.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Renderer.m; sourceTree = "<group>"; };
+		CACC74802354F93500FE3672 /* ShaderTypes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ShaderTypes.h; sourceTree = "<group>"; };
+		CACC74812354F93500FE3672 /* Shaders.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = Shaders.metal; sourceTree = "<group>"; };
+		CACC74822354F93800FE3672 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		CACC74872354F93800FE3672 /* TransferKitty.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TransferKitty.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		CACC748A2354F93800FE3672 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		CACC748B2354F93800FE3672 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		CACC748D2354F93800FE3672 /* GameViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GameViewController.h; sourceTree = "<group>"; };
+		CACC748E2354F93800FE3672 /* GameViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GameViewController.m; sourceTree = "<group>"; };
+		CACC74912354F93800FE3672 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		CACC74942354F93800FE3672 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		CACC74962354F93800FE3672 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		CACC74972354F93800FE3672 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		CACC749D2354F93800FE3672 /* TransferKitty.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TransferKitty.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		CACC749F2354F93800FE3672 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		CACC74A02354F93800FE3672 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		CACC74A22354F93800FE3672 /* GameViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GameViewController.h; sourceTree = "<group>"; };
+		CACC74A32354F93800FE3672 /* GameViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GameViewController.m; sourceTree = "<group>"; };
+		CACC74A62354F93800FE3672 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		CACC74A82354F93800FE3672 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		CACC74A92354F93800FE3672 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		CACC74BD2354F9AB00FE3672 /* TransferKittyShareExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = TransferKittyShareExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		CACC74BF2354F9AB00FE3672 /* ShareViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ShareViewController.h; sourceTree = "<group>"; };
+		CACC74C02354F9AB00FE3672 /* ShareViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ShareViewController.m; sourceTree = "<group>"; };
+		CACC74C32354F9AB00FE3672 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/MainInterface.storyboard; sourceTree = "<group>"; };
+		CACC74C52354F9AB00FE3672 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		CACC74842354F93800FE3672 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		CACC749A2354F93800FE3672 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		CACC74BA2354F9AB00FE3672 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		CACC74782354F93500FE3672 = {
+			isa = PBXGroup;
+			children = (
+				CACC747D2354F93500FE3672 /* TransferKitty Shared */,
+				CACC74892354F93800FE3672 /* TransferKitty iOS */,
+				CACC749E2354F93800FE3672 /* TransferKitty macOS */,
+				CACC74BE2354F9AB00FE3672 /* TransferKitty iOS ShareExtension */,
+				CACC74882354F93800FE3672 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		CACC747D2354F93500FE3672 /* TransferKitty Shared */ = {
+			isa = PBXGroup;
+			children = (
+				CACC747E2354F93500FE3672 /* Renderer.h */,
+				CACC747F2354F93500FE3672 /* Renderer.m */,
+				CACC74802354F93500FE3672 /* ShaderTypes.h */,
+				CACC74812354F93500FE3672 /* Shaders.metal */,
+				CACC74822354F93800FE3672 /* Assets.xcassets */,
+			);
+			path = "TransferKitty Shared";
+			sourceTree = "<group>";
+		};
+		CACC74882354F93800FE3672 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				CACC74872354F93800FE3672 /* TransferKitty.app */,
+				CACC749D2354F93800FE3672 /* TransferKitty.app */,
+				CACC74BD2354F9AB00FE3672 /* TransferKittyShareExtension.appex */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		CACC74892354F93800FE3672 /* TransferKitty iOS */ = {
+			isa = PBXGroup;
+			children = (
+				CACC748A2354F93800FE3672 /* AppDelegate.h */,
+				CACC748B2354F93800FE3672 /* AppDelegate.m */,
+				CACC748D2354F93800FE3672 /* GameViewController.h */,
+				CACC748E2354F93800FE3672 /* GameViewController.m */,
+				CACC74902354F93800FE3672 /* Main.storyboard */,
+				CACC74932354F93800FE3672 /* LaunchScreen.storyboard */,
+				CACC74962354F93800FE3672 /* Info.plist */,
+				CACC74972354F93800FE3672 /* main.m */,
+			);
+			path = "TransferKitty iOS";
+			sourceTree = "<group>";
+		};
+		CACC749E2354F93800FE3672 /* TransferKitty macOS */ = {
+			isa = PBXGroup;
+			children = (
+				CACC749F2354F93800FE3672 /* AppDelegate.h */,
+				CACC74A02354F93800FE3672 /* AppDelegate.m */,
+				CACC74A22354F93800FE3672 /* GameViewController.h */,
+				CACC74A32354F93800FE3672 /* GameViewController.m */,
+				CACC74A52354F93800FE3672 /* Main.storyboard */,
+				CACC74A82354F93800FE3672 /* Info.plist */,
+				CACC74A92354F93800FE3672 /* main.m */,
+			);
+			path = "TransferKitty macOS";
+			sourceTree = "<group>";
+		};
+		CACC74BE2354F9AB00FE3672 /* TransferKitty iOS ShareExtension */ = {
+			isa = PBXGroup;
+			children = (
+				CACC74BF2354F9AB00FE3672 /* ShareViewController.h */,
+				CACC74C02354F9AB00FE3672 /* ShareViewController.m */,
+				CACC74C22354F9AB00FE3672 /* MainInterface.storyboard */,
+				CACC74C52354F9AB00FE3672 /* Info.plist */,
+			);
+			path = "TransferKitty iOS ShareExtension";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		CACC74862354F93800FE3672 /* TransferKitty iOS */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = CACC74B32354F93800FE3672 /* Build configuration list for PBXNativeTarget "TransferKitty iOS" */;
+			buildPhases = (
+				CACC74832354F93800FE3672 /* Sources */,
+				CACC74842354F93800FE3672 /* Frameworks */,
+				CACC74852354F93800FE3672 /* Resources */,
+				CACC74CC2354F9AB00FE3672 /* Embed App Extensions */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				CACC74C72354F9AB00FE3672 /* PBXTargetDependency */,
+			);
+			name = "TransferKitty iOS";
+			productName = "TransferKitty iOS";
+			productReference = CACC74872354F93800FE3672 /* TransferKitty.app */;
+			productType = "com.apple.product-type.application";
+		};
+		CACC749C2354F93800FE3672 /* TransferKitty macOS */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = CACC74B62354F93800FE3672 /* Build configuration list for PBXNativeTarget "TransferKitty macOS" */;
+			buildPhases = (
+				CACC74992354F93800FE3672 /* Sources */,
+				CACC749A2354F93800FE3672 /* Frameworks */,
+				CACC749B2354F93800FE3672 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "TransferKitty macOS";
+			productName = "TransferKitty macOS";
+			productReference = CACC749D2354F93800FE3672 /* TransferKitty.app */;
+			productType = "com.apple.product-type.application";
+		};
+		CACC74BC2354F9AB00FE3672 /* TransferKittyShareExtension */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = CACC74C92354F9AB00FE3672 /* Build configuration list for PBXNativeTarget "TransferKittyShareExtension" */;
+			buildPhases = (
+				CACC74B92354F9AB00FE3672 /* Sources */,
+				CACC74BA2354F9AB00FE3672 /* Frameworks */,
+				CACC74BB2354F9AB00FE3672 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = TransferKittyShareExtension;
+			productName = TransferKittyShareExtension;
+			productReference = CACC74BD2354F9AB00FE3672 /* TransferKittyShareExtension.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		CACC74792354F93500FE3672 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 1020;
+				ORGANIZATIONNAME = vserhiienko;
+				TargetAttributes = {
+					CACC74862354F93800FE3672 = {
+						CreatedOnToolsVersion = 10.2;
+					};
+					CACC749C2354F93800FE3672 = {
+						CreatedOnToolsVersion = 10.2;
+					};
+					CACC74BC2354F9AB00FE3672 = {
+						CreatedOnToolsVersion = 10.2;
+					};
+				};
+			};
+			buildConfigurationList = CACC747C2354F93500FE3672 /* Build configuration list for PBXProject "TransferKitty" */;
+			compatibilityVersion = "Xcode 9.3";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = CACC74782354F93500FE3672;
+			productRefGroup = CACC74882354F93800FE3672 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				CACC74862354F93800FE3672 /* TransferKitty iOS */,
+				CACC749C2354F93800FE3672 /* TransferKitty macOS */,
+				CACC74BC2354F9AB00FE3672 /* TransferKittyShareExtension */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		CACC74852354F93800FE3672 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CACC74922354F93800FE3672 /* Main.storyboard in Resources */,
+				CACC74AF2354F93800FE3672 /* Assets.xcassets in Resources */,
+				CACC74952354F93800FE3672 /* LaunchScreen.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		CACC749B2354F93800FE3672 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CACC74B02354F93800FE3672 /* Assets.xcassets in Resources */,
+				CACC74A72354F93800FE3672 /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		CACC74BB2354F9AB00FE3672 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CACC74CD2354FC5400FE3672 /* Assets.xcassets in Resources */,
+				CACC74C42354F9AB00FE3672 /* MainInterface.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		CACC74832354F93800FE3672 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CACC74AB2354F93800FE3672 /* Renderer.m in Sources */,
+				CACC748F2354F93800FE3672 /* GameViewController.m in Sources */,
+				CACC74982354F93800FE3672 /* main.m in Sources */,
+				CACC748C2354F93800FE3672 /* AppDelegate.m in Sources */,
+				CACC74AD2354F93800FE3672 /* Shaders.metal in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		CACC74992354F93800FE3672 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CACC74AC2354F93800FE3672 /* Renderer.m in Sources */,
+				CACC74A42354F93800FE3672 /* GameViewController.m in Sources */,
+				CACC74AA2354F93800FE3672 /* main.m in Sources */,
+				CACC74A12354F93800FE3672 /* AppDelegate.m in Sources */,
+				CACC74AE2354F93800FE3672 /* Shaders.metal in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		CACC74B92354F9AB00FE3672 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CACC74C12354F9AB00FE3672 /* ShareViewController.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		CACC74C72354F9AB00FE3672 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = CACC74BC2354F9AB00FE3672 /* TransferKittyShareExtension */;
+			targetProxy = CACC74C62354F9AB00FE3672 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		CACC74902354F93800FE3672 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				CACC74912354F93800FE3672 /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		CACC74932354F93800FE3672 /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				CACC74942354F93800FE3672 /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+		CACC74A52354F93800FE3672 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				CACC74A62354F93800FE3672 /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		CACC74C22354F9AB00FE3672 /* MainInterface.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				CACC74C32354F9AB00FE3672 /* Base */,
+			);
+			name = MainInterface.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		CACC74B12354F93800FE3672 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+			};
+			name = Debug;
+		};
+		CACC74B22354F93800FE3672 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+			};
+			name = Release;
+		};
+		CACC74B42354F93800FE3672 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = CP4Y4M4WP5;
+				INFOPLIST_FILE = "TransferKitty iOS/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 12.2;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = vserhiienko.TransferKitty;
+				PRODUCT_NAME = TransferKitty;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		CACC74B52354F93800FE3672 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = CP4Y4M4WP5;
+				INFOPLIST_FILE = "TransferKitty iOS/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 12.2;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = vserhiienko.TransferKitty;
+				PRODUCT_NAME = TransferKitty;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		CACC74B72354F93800FE3672 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "-";
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				DEVELOPMENT_TEAM = CP4Y4M4WP5;
+				INFOPLIST_FILE = "TransferKitty macOS/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 10.14;
+				PRODUCT_BUNDLE_IDENTIFIER = vserhiienko.TransferKitty;
+				PRODUCT_NAME = TransferKitty;
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		CACC74B82354F93800FE3672 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "-";
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				DEVELOPMENT_TEAM = CP4Y4M4WP5;
+				INFOPLIST_FILE = "TransferKitty macOS/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 10.14;
+				PRODUCT_BUNDLE_IDENTIFIER = vserhiienko.TransferKitty;
+				PRODUCT_NAME = TransferKitty;
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		CACC74CA2354F9AB00FE3672 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = CP4Y4M4WP5;
+				INFOPLIST_FILE = "$(SRCROOT)/TransferKitty iOS ShareExtension/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 12.2;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = vserhiienko.TransferKitty.TransferKittyShareExtension;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		CACC74CB2354F9AB00FE3672 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = CP4Y4M4WP5;
+				INFOPLIST_FILE = "$(SRCROOT)/TransferKitty iOS ShareExtension/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 12.2;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = vserhiienko.TransferKitty.TransferKittyShareExtension;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		CACC747C2354F93500FE3672 /* Build configuration list for PBXProject "TransferKitty" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				CACC74B12354F93800FE3672 /* Debug */,
+				CACC74B22354F93800FE3672 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		CACC74B32354F93800FE3672 /* Build configuration list for PBXNativeTarget "TransferKitty iOS" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				CACC74B42354F93800FE3672 /* Debug */,
+				CACC74B52354F93800FE3672 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		CACC74B62354F93800FE3672 /* Build configuration list for PBXNativeTarget "TransferKitty macOS" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				CACC74B72354F93800FE3672 /* Debug */,
+				CACC74B82354F93800FE3672 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		CACC74C92354F9AB00FE3672 /* Build configuration list for PBXNativeTarget "TransferKittyShareExtension" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				CACC74CA2354F9AB00FE3672 /* Debug */,
+				CACC74CB2354F9AB00FE3672 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = CACC74792354F93500FE3672 /* Project object */;
+}
