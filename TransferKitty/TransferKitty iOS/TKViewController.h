@@ -1,17 +1,17 @@
 //
 //  GameViewController.h
-//  TransferKitty macOS
+//  TransferKitty iOS
 //
 //  Created by Vlad Serhiienko on 10/14/19.
 //  Copyright © 2019 vserhiienko. All rights reserved.
 //
 
-#import <Cocoa/Cocoa.h>
+#import <UIKit/UIKit.h>
 #import <Metal/Metal.h>
 #import <MetalKit/MetalKit.h>
 #import "Renderer.h"
 
-// Our macOS view controller.
-@interface GameViewController : NSViewController
+// Our iOS view controller
+@interface TKViewController : UIViewController
 
 @end

@@ -6,10 +6,10 @@
 //  Copyright © 2019 vserhiienko. All rights reserved.
 //
 
-#import "GameViewController.h"
+#import "TKViewController.h"
 #import "Renderer.h"
 
-@implementation GameViewController
+@implementation TKViewController
 {
     MTKView *_view;
 

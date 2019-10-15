@@ -6,13 +6,13 @@
 //  Copyright © 2019 vserhiienko. All rights reserved.
 //
 
-#import "ShareViewController.h"
+#import "TKShareViewController.h"
 
-@interface ShareViewController ()
+@interface TKShareViewController ()
 
 @end
 
-@implementation ShareViewController
+@implementation TKShareViewController
 
 - (BOOL)isContentValid {
     // Do validation of contentText and/or NSExtensionContext attachments here

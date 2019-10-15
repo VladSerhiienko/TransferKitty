@@ -8,12 +8,12 @@
 
 /* Begin PBXBuildFile section */
 		CACC748C2354F93800FE3672 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = CACC748B2354F93800FE3672 /* AppDelegate.m */; };
-		CACC748F2354F93800FE3672 /* GameViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CACC748E2354F93800FE3672 /* GameViewController.m */; };
+		CACC748F2354F93800FE3672 /* TKViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CACC748E2354F93800FE3672 /* TKViewController.m */; };
 		CACC74922354F93800FE3672 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CACC74902354F93800FE3672 /* Main.storyboard */; };
 		CACC74952354F93800FE3672 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CACC74932354F93800FE3672 /* LaunchScreen.storyboard */; };
 		CACC74982354F93800FE3672 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = CACC74972354F93800FE3672 /* main.m */; };
 		CACC74A12354F93800FE3672 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = CACC74A02354F93800FE3672 /* AppDelegate.m */; };
-		CACC74A42354F93800FE3672 /* GameViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CACC74A32354F93800FE3672 /* GameViewController.m */; };
+		CACC74A42354F93800FE3672 /* TKViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CACC74A32354F93800FE3672 /* TKViewController.m */; };
 		CACC74A72354F93800FE3672 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CACC74A52354F93800FE3672 /* Main.storyboard */; };
 		CACC74AA2354F93800FE3672 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = CACC74A92354F93800FE3672 /* main.m */; };
 		CACC74AB2354F93800FE3672 /* Renderer.m in Sources */ = {isa = PBXBuildFile; fileRef = CACC747F2354F93500FE3672 /* Renderer.m */; };
@@ -22,7 +22,7 @@
 		CACC74AE2354F93800FE3672 /* Shaders.metal in Sources */ = {isa = PBXBuildFile; fileRef = CACC74812354F93500FE3672 /* Shaders.metal */; };
 		CACC74AF2354F93800FE3672 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CACC74822354F93800FE3672 /* Assets.xcassets */; };
 		CACC74B02354F93800FE3672 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CACC74822354F93800FE3672 /* Assets.xcassets */; };
-		CACC74C12354F9AB00FE3672 /* ShareViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CACC74C02354F9AB00FE3672 /* ShareViewController.m */; };
+		CACC74C12354F9AB00FE3672 /* TKShareViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CACC74C02354F9AB00FE3672 /* TKShareViewController.m */; };
 		CACC74C42354F9AB00FE3672 /* MainInterface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CACC74C22354F9AB00FE3672 /* MainInterface.storyboard */; };
 		CACC74C82354F9AB00FE3672 /* TransferKittyShareExtension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = CACC74BD2354F9AB00FE3672 /* TransferKittyShareExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		CACC74CD2354FC5400FE3672 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CACC74822354F93800FE3672 /* Assets.xcassets */; };
@@ -61,8 +61,8 @@
 		CACC74872354F93800FE3672 /* TransferKitty.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TransferKitty.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CACC748A2354F93800FE3672 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		CACC748B2354F93800FE3672 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
-		CACC748D2354F93800FE3672 /* GameViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GameViewController.h; sourceTree = "<group>"; };
-		CACC748E2354F93800FE3672 /* GameViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GameViewController.m; sourceTree = "<group>"; };
+		CACC748D2354F93800FE3672 /* TKViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TKViewController.h; sourceTree = "<group>"; };
+		CACC748E2354F93800FE3672 /* TKViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TKViewController.m; sourceTree = "<group>"; };
 		CACC74912354F93800FE3672 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		CACC74942354F93800FE3672 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		CACC74962354F93800FE3672 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -70,14 +70,14 @@
 		CACC749D2354F93800FE3672 /* TransferKitty.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TransferKitty.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CACC749F2354F93800FE3672 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		CACC74A02354F93800FE3672 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
-		CACC74A22354F93800FE3672 /* GameViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GameViewController.h; sourceTree = "<group>"; };
-		CACC74A32354F93800FE3672 /* GameViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GameViewController.m; sourceTree = "<group>"; };
+		CACC74A22354F93800FE3672 /* TKViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TKViewController.h; sourceTree = "<group>"; };
+		CACC74A32354F93800FE3672 /* TKViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TKViewController.m; sourceTree = "<group>"; };
 		CACC74A62354F93800FE3672 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		CACC74A82354F93800FE3672 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		CACC74A92354F93800FE3672 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		CACC74BD2354F9AB00FE3672 /* TransferKittyShareExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = TransferKittyShareExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
-		CACC74BF2354F9AB00FE3672 /* ShareViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ShareViewController.h; sourceTree = "<group>"; };
-		CACC74C02354F9AB00FE3672 /* ShareViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ShareViewController.m; sourceTree = "<group>"; };
+		CACC74BF2354F9AB00FE3672 /* TKShareViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TKShareViewController.h; sourceTree = "<group>"; };
+		CACC74C02354F9AB00FE3672 /* TKShareViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TKShareViewController.m; sourceTree = "<group>"; };
 		CACC74C32354F9AB00FE3672 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/MainInterface.storyboard; sourceTree = "<group>"; };
 		CACC74C52354F9AB00FE3672 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -145,8 +145,8 @@
 			children = (
 				CACC748A2354F93800FE3672 /* AppDelegate.h */,
 				CACC748B2354F93800FE3672 /* AppDelegate.m */,
-				CACC748D2354F93800FE3672 /* GameViewController.h */,
-				CACC748E2354F93800FE3672 /* GameViewController.m */,
+				CACC748D2354F93800FE3672 /* TKViewController.h */,
+				CACC748E2354F93800FE3672 /* TKViewController.m */,
 				CACC74902354F93800FE3672 /* Main.storyboard */,
 				CACC74932354F93800FE3672 /* LaunchScreen.storyboard */,
 				CACC74962354F93800FE3672 /* Info.plist */,
@@ -160,8 +160,8 @@
 			children = (
 				CACC749F2354F93800FE3672 /* AppDelegate.h */,
 				CACC74A02354F93800FE3672 /* AppDelegate.m */,
-				CACC74A22354F93800FE3672 /* GameViewController.h */,
-				CACC74A32354F93800FE3672 /* GameViewController.m */,
+				CACC74A22354F93800FE3672 /* TKViewController.h */,
+				CACC74A32354F93800FE3672 /* TKViewController.m */,
 				CACC74A52354F93800FE3672 /* Main.storyboard */,
 				CACC74A82354F93800FE3672 /* Info.plist */,
 				CACC74A92354F93800FE3672 /* main.m */,
@@ -172,8 +172,8 @@
 		CACC74BE2354F9AB00FE3672 /* TransferKitty iOS ShareExtension */ = {
 			isa = PBXGroup;
 			children = (
-				CACC74BF2354F9AB00FE3672 /* ShareViewController.h */,
-				CACC74C02354F9AB00FE3672 /* ShareViewController.m */,
+				CACC74BF2354F9AB00FE3672 /* TKShareViewController.h */,
+				CACC74C02354F9AB00FE3672 /* TKShareViewController.m */,
 				CACC74C22354F9AB00FE3672 /* MainInterface.storyboard */,
 				CACC74C52354F9AB00FE3672 /* Info.plist */,
 			);
@@ -313,7 +313,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				CACC74AB2354F93800FE3672 /* Renderer.m in Sources */,
-				CACC748F2354F93800FE3672 /* GameViewController.m in Sources */,
+				CACC748F2354F93800FE3672 /* TKViewController.m in Sources */,
 				CACC74982354F93800FE3672 /* main.m in Sources */,
 				CACC748C2354F93800FE3672 /* AppDelegate.m in Sources */,
 				CACC74AD2354F93800FE3672 /* Shaders.metal in Sources */,
@@ -325,7 +325,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				CACC74AC2354F93800FE3672 /* Renderer.m in Sources */,
-				CACC74A42354F93800FE3672 /* GameViewController.m in Sources */,
+				CACC74A42354F93800FE3672 /* TKViewController.m in Sources */,
 				CACC74AA2354F93800FE3672 /* main.m in Sources */,
 				CACC74A12354F93800FE3672 /* AppDelegate.m in Sources */,
 				CACC74AE2354F93800FE3672 /* Shaders.metal in Sources */,
@@ -336,7 +336,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				CACC74C12354F9AB00FE3672 /* ShareViewController.m in Sources */,
+				CACC74C12354F9AB00FE3672 /* TKShareViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
