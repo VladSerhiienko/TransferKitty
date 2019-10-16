@@ -169,6 +169,8 @@ bool EzriAppGL::handlePointerInput( NvInputDeviceType::Enum   device,
                                     int32_t                   count,
                                     NvPointerEvent*           points,
                                     int64_t                   timestamp ) {
+    LOGI("EzriAppGL::handlePointerInput: count: %i", count);
+
     if ( count > 0 && points ) {
         if ( auto pNkCtx = static_cast< nk_context* >( mNk ) ) {
             float position[ 2 ] = {points[ 0 ].m_x, points[ 0 ].m_y};

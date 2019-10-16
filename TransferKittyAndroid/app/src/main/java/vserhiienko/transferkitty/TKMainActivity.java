@@ -16,6 +16,7 @@ import android.util.Log;
 import android.view.Choreographer;
 import android.view.Choreographer.FrameCallback;
 import android.view.KeyEvent;
+import android.view.MotionEvent;
 import android.view.View;
 
 //import com.android.volley.Request;
@@ -30,10 +31,13 @@ import android.view.inputmethod.InputMethodManager;
 import android.content.Context;
 
 
+import androidx.core.view.MotionEventCompat;
+
 import java.lang.reflect.Field;
 import java.lang.Runnable;
 
 public class TKMainActivity extends NativeActivity implements FrameCallback {
+    private static final String TAG = TKMainActivity.class.getSimpleName();
 
     public String mCommandLine = "";
     public String mLibName = null;
@@ -118,6 +122,32 @@ public class TKMainActivity extends NativeActivity implements FrameCallback {
                     // mFirebaseAnalytics.logEvent(e.getClass().getName(), errorBundle);
                 }
             }
+        }
+    }
+
+    @Override
+    public boolean onTouchEvent(MotionEvent event){
+        int action = event.getAction(); //MotionEventCompat.getActionMasked(event);
+
+        switch(action) {
+            case (MotionEvent.ACTION_DOWN) :
+                Log.d(TAG,"Action was DOWN");
+                return true;
+            case (MotionEvent.ACTION_MOVE) :
+                Log.d(TAG,"Action was MOVE");
+                return true;
+            case (MotionEvent.ACTION_UP) :
+                Log.d(TAG,"Action was UP");
+                return true;
+            case (MotionEvent.ACTION_CANCEL) :
+                Log.d(TAG,"Action was CANCEL");
+                return true;
+            case (MotionEvent.ACTION_OUTSIDE) :
+                Log.d(TAG,"Movement occurred outside bounds " +
+                        "of current screen element");
+                return true;
+            default :
+                return super.onTouchEvent(event);
         }
     }
 
