@@ -1,8 +1,8 @@
 package vserhiienko.transferkitty;
 
 import android.app.AlertDialog;
-
 import android.app.NativeActivity;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -10,7 +10,6 @@ import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
-
 import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.Choreographer;
@@ -18,25 +17,18 @@ import android.view.Choreographer.FrameCallback;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
-
-//import com.android.volley.Request;
-//import com.android.volley.RequestQueue;
-//import com.android.volley.Response;
-//import com.android.volley.VolleyError;
-//import com.android.volley.toolbox.StringRequest;
-//import com.android.volley.toolbox.Volley;
-//import com.google.firebase.analytics.FirebaseAnalytics;
-
+// import com.android.volley.Request;
+// import com.android.volley.RequestQueue;
+// import com.android.volley.Response;
+// import com.android.volley.VolleyError;
+// import com.android.volley.toolbox.StringRequest;
+// import com.android.volley.toolbox.Volley;
+// import com.google.firebase.analytics.FirebaseAnalytics;
 import android.view.inputmethod.InputMethodManager;
-import android.content.Context;
-
-
 import androidx.core.view.MotionEventCompat;
-
 import com.google.firebase.analytics.FirebaseAnalytics;
-
-import java.lang.reflect.Field;
 import java.lang.Runnable;
+import java.lang.reflect.Field;
 import java.util.Date;
 
 public class TKMainActivity extends NativeActivity implements FrameCallback {
@@ -46,14 +38,12 @@ public class TKMainActivity extends NativeActivity implements FrameCallback {
     public String mLibName = null;
     public boolean mUseChoreographer = false;
     public boolean mChoreographerSupported = false;
-
-     private FirebaseAnalytics mFirebaseAnalytics;
+    private FirebaseAnalytics mFirebaseAnalytics = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        
-        Log.v("EzriNativeActivity", "Calling EzriNativeActivity onCreate");
+        Log.v(TAG, "onCreate");
 
         mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
         Bundle params = new Bundle();
@@ -65,10 +55,8 @@ public class TKMainActivity extends NativeActivity implements FrameCallback {
         String extra = launchIntent.getStringExtra("arguments");
         if (extra != null) {
             mCommandLine = extra;
-            Log.v("EzriNativeActivity", "command line = " + mCommandLine);
+            Log.v(TAG, "command line = " + mCommandLine);
         }
-
-        // mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
 
         // Allow the subclass to manually set the library name
         // For the samples it should be the class name, so we
@@ -77,21 +65,25 @@ public class TKMainActivity extends NativeActivity implements FrameCallback {
             // First, use the NativeActivity method
             try {
                 ActivityInfo ai = getPackageManager().getActivityInfo(
-                        getIntent().getComponent(), PackageManager.GET_META_DATA);
+                    getIntent().getComponent(), PackageManager.GET_META_DATA);
                 if (ai.metaData != null) {
                     String ln = ai.metaData.getString(META_DATA_LIB_NAME);
-                    if (ln != null) mLibName = ln;
+                    if (ln != null)
+                        mLibName = ln;
                     ln = ai.metaData.getString(META_DATA_FUNC_NAME);
-                    if (ln != null) mLibName = ln;
+                    if (ln != null)
+                        mLibName = ln;
                 }
-            } catch (PackageManager.NameNotFoundException e) {
-                // Bundle errorBundle = new Bundle();
-                // errorBundle.putString(FirebaseAnalytics.Param.VALUE, e.toString());
-                // mFirebaseAnalytics.logEvent(e.getClass().getName(), errorBundle);
+            } catch (Exception e) {
+                Bundle errorBundle = new Bundle();
+                errorBundle.putString("exception_message", e.toString());
+                mFirebaseAnalytics.logEvent("app_package_manager", errorBundle);
             }
+
             // Failing that, grab the class name
-            if (mLibName == null)
+            if (mLibName == null) {
                 mLibName = this.getClass().getSimpleName();
+            }
         }
 
         try {
@@ -99,15 +91,13 @@ public class TKMainActivity extends NativeActivity implements FrameCallback {
             // or if Choreographer is not available
             System.loadLibrary(mLibName);
             Choreographer.getInstance().postFrameCallback(this);
-            Log.v("EzriNativeActivity", "Installing Choreo calback");
+            Log.v(TAG, "Installing Choreo calback");
             mChoreographerSupported = true;
         } catch (Exception e) {
-            // Bundle errorBundle = new Bundle();
-            // errorBundle.putString(FirebaseAnalytics.Param.VALUE, e.toString());
-            // mFirebaseAnalytics.logEvent(e.getClass().getName(), errorBundle);
+            Bundle errorBundle = new Bundle();
+            errorBundle.putString("exception_message", e.toString());
+            mFirebaseAnalytics.logEvent("app_load_library", errorBundle);
         }
-
-        Log.v("EzriNativeActivity", "Exiting EzriNativeActivity onCreate");
     }
 
     /**
@@ -115,7 +105,8 @@ public class TKMainActivity extends NativeActivity implements FrameCallback {
      **/
     @SuppressWarnings("unused")
     public void setTrueFullscreen() {
-        View windowView = (getWindow() != null) ? getWindow().getDecorView() : null;
+        View windowView =
+            (getWindow() != null) ? getWindow().getDecorView() : null;
         if (windowView != null) {
             View root = windowView.getRootView();
             if (root != null) {
@@ -123,53 +114,16 @@ public class TKMainActivity extends NativeActivity implements FrameCallback {
                 try {
                     Field field = aClass.getField("SYSTEM_UI_FLAG_IMMERSIVE");
                     root.setSystemUiVisibility(
-                            View.SYSTEM_UI_FLAG_HIDE_NAVIGATION |
-                                    (Integer) field.get(null));
+                        View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+                        | (Integer)field.get(null));
                 } catch (Exception e) {
-                    // Bundle errorBundle = new Bundle();
-                    // errorBundle.putString(FirebaseAnalytics.Param.VALUE, e.toString());
-                    // mFirebaseAnalytics.logEvent(e.getClass().getName(), errorBundle);
+                    Bundle errorBundle = new Bundle();
+                    errorBundle.putString("exception_message", e.toString());
+                    mFirebaseAnalytics.logEvent("app_set_true_fullscreen",
+                                                errorBundle);
                 }
             }
         }
-    }
-
-    @Override
-    public boolean onTouchEvent(MotionEvent event){
-        int action = event.getAction(); //MotionEventCompat.getActionMasked(event);
-
-        switch(action) {
-            case (MotionEvent.ACTION_DOWN) :
-                Log.d(TAG,"Action was DOWN");
-                return true;
-            case (MotionEvent.ACTION_MOVE) :
-                Log.d(TAG,"Action was MOVE");
-                return true;
-            case (MotionEvent.ACTION_UP) :
-                Log.d(TAG,"Action was UP");
-                return true;
-            case (MotionEvent.ACTION_CANCEL) :
-                Log.d(TAG,"Action was CANCEL");
-                return true;
-            case (MotionEvent.ACTION_OUTSIDE) :
-                Log.d(TAG,"Movement occurred outside bounds " +
-                        "of current screen element");
-                return true;
-            default :
-                return super.onTouchEvent(event);
-        }
-    }
-
-    @Override
-    public boolean onKeyDown(int keyCode, KeyEvent event) {
-
-        switch (keyCode) {
-            case KeyEvent.KEYCODE_A: {
-                //your Action code
-                return true;
-            }
-        }
-        return super.onKeyDown(keyCode, event);
     }
 
     /**
@@ -186,17 +140,20 @@ public class TKMainActivity extends NativeActivity implements FrameCallback {
         final boolean finalExit = exitApp;
         runOnUiThread(new Runnable() {
             public void run() {
-                AlertDialog.Builder builder = new AlertDialog.Builder(TKMainActivity.this);
+                AlertDialog.Builder builder =
+                    new AlertDialog.Builder(TKMainActivity.this);
                 builder.setMessage(finalContents)
-                        .setTitle(finalTitle)
-                        .setCancelable(true)
-                        .setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int id) {
-                                dialog.cancel();
-                                if (finalExit)
-                                    TKMainActivity.this.finish();
-                            }
-                        });
+                    .setTitle(finalTitle)
+                    .setCancelable(true)
+                    .setPositiveButton("OK",
+                                       new DialogInterface.OnClickListener() {
+                                           public void onClick(
+                                               DialogInterface dialog, int id) {
+                                               dialog.cancel();
+                                               if (finalExit)
+                                                   TKMainActivity.this.finish();
+                                           }
+                                       });
 
                 builder.create().show();
             }
@@ -222,7 +179,7 @@ public class TKMainActivity extends NativeActivity implements FrameCallback {
                 runOnUiThread(new Runnable() {
                     public void run() {
                         Choreographer.getInstance().postFrameCallback(
-                                TKMainActivity.this);
+                            TKMainActivity.this);
                     }
                 });
             }
@@ -237,9 +194,13 @@ public class TKMainActivity extends NativeActivity implements FrameCallback {
      **/
     @SuppressWarnings("unused")
     public boolean showKeyboard(boolean show) {
-        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-        return imm != null && (show ? imm.showSoftInput(this.getWindow().getDecorView(), InputMethodManager.SHOW_FORCED)
-                : imm.hideSoftInputFromWindow(this.getWindow().getDecorView().getWindowToken(), 0));
+        InputMethodManager imm =
+            (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+        return imm != null
+            && (show ? imm.showSoftInput(this.getWindow().getDecorView(),
+                                         InputMethodManager.SHOW_FORCED)
+                     : imm.hideSoftInputFromWindow(
+                         this.getWindow().getDecorView().getWindowToken(), 0));
     }
 
     native void postRedraw(long time);
