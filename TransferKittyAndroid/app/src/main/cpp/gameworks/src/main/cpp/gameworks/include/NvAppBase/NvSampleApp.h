@@ -92,7 +92,7 @@ public:
 
     /// Get UI window.
     /// \return a pointer to the UI window
-    NvUIWindow *getUIWindow() { return mUIWindow; }
+    // NvUIWindow *getUIWindow() { return mUIWindow; }
 
     /// Get the framerate counter.
     /// The NvSampleApp initializes and updates an NvFramerateCounter in its
@@ -185,7 +185,7 @@ protected:
     bool gamepadChanged(uint32_t changedPadFlags);
     bool gamepadButtonChanged(uint32_t button, bool down);
 
-    void setFPSVisibility(bool vis) { if (mFPSText) mFPSText->SetVisibility(vis); }
+    // void setFPSVisibility(bool vis) { if (mFPSText) mFPSText->SetVisibility(vis); }
 
     NvFramerateCounter *mFramerate;
     float mFrameDelta;
@@ -197,19 +197,19 @@ protected:
     uint32_t     mAutoRepeatButton;
     bool         mAutoRepeatTriggered;
 
-    NvUIWindow *mUIWindow;
-    NvUIValueText *mFPSText;
+    // NvUIWindow *mUIWindow;
+    // NvUIValueText *mFPSText;
 	bool mEnableFPS;
-    NvTweakBar *mTweakBar;
-    NvUIButton *mTweakTab;
+    // NvTweakBar *mTweakBar;
+    // NvUIButton *mTweakTab;
 
     NvInputTransformer* m_transformer;
 	NvInputHandler* m_inputHandler;
 
-    typedef std::map<uint32_t, NvTweakBind> NvAppKeyBind;
-    NvAppKeyBind mKeyBinds;
-    typedef std::map<uint32_t, NvTweakBind> NvAppButtonBind;
-    NvAppButtonBind mButtonBinds;
+    // typedef std::map<uint32_t, NvTweakBind> NvAppKeyBind;
+    // NvAppKeyBind mKeyBinds;
+    // typedef std::map<uint32_t, NvTweakBind> NvAppButtonBind;
+    // NvAppButtonBind mButtonBinds;
 
     NvGamepad::State mLastPadState[NvGamepad::MAX_GAMEPADS];
 

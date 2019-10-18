@@ -413,7 +413,7 @@ void Engine::handleCommand(int32_t cmd) {
 
         case APP_CMD_TERM_WINDOW:
             // The window is being hidden or closed, clean it up.
-            mWin->setWindow(NULL);
+            mWin->setWindow(nullptr);
             break;
 
         case APP_CMD_GAINED_FOCUS:

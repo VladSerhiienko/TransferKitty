@@ -75,12 +75,11 @@ include_directories( #
 add_library(
         native-lib
         SHARED
-        apemode/JNIUtil.cpp
-        apemode/JNIUtil.h
-        apemode/EzriAppGL.cpp
-        apemode/EzriAppGL.h
-        apemode/NuklearGL.cpp
-        apemode/NuklearGL.h
+        apemode/TKGL.h
+        apemode/TKAppGL.cpp
+        apemode/TKAppGL.h
+        apemode/TKNuklearRendererGL.cpp
+        apemode/TKNuklearRendererGL.h
         native-lib.cpp )
 
 add_library(
