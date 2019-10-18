@@ -1,5 +1,5 @@
 //----------------------------------------------------------------------------------
-// File:        NvAppBase/NvThread.h
+// File:        TKAppBase/NvThread.h
 // SDK Version: v3.00 
 // Email:       gameworks@nvidia.com
 // Site:        http://developer.nvidia.com/

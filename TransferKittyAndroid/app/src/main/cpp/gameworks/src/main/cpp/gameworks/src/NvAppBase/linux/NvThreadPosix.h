@@ -1,5 +1,5 @@
 //----------------------------------------------------------------------------------
-// File:        NvAppBase\linux/NvThreadPosix.h
+// File:        TKAppBase\linux/NvThreadPosix.h
 // SDK Version: v3.00 
 // Email:       gameworks@nvidia.com
 // Site:        http://developer.nvidia.com/

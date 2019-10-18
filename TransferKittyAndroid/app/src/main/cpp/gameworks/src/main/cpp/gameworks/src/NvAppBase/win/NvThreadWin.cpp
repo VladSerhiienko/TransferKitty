@@ -1,5 +1,5 @@
 //----------------------------------------------------------------------------------
-// File:        NvAppBase\win/NvThreadWin.cpp
+// File:        TKAppBase\win/NvThreadWin.cpp
 // SDK Version: v3.00 
 // Email:       gameworks@nvidia.com
 // Site:        http://developer.nvidia.com/

@@ -1,5 +1,5 @@
 //----------------------------------------------------------------------------------
-// File:        NvAppBase\gl/NvAppContextGL.h
+// File:        TKAppBase\gl/NvAppContextGL.h
 // SDK Version: v3.00 
 // Email:       gameworks@nvidia.com
 // Site:        http://developer.nvidia.com/

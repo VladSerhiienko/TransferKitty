@@ -1,5 +1,5 @@
 //----------------------------------------------------------------------------------
-// File:        NvAppBase\linux/MainLinux.cpp
+// File:        TKAppBase\linux/MainLinux.cpp
 // SDK Version: v3.00 
 // Email:       gameworks@nvidia.com
 // Site:        http://developer.nvidia.com/

@@ -1,5 +1,5 @@
 //----------------------------------------------------------------------------------
-// File:        NvAppBase\glfw/NvGLFWContext.h
+// File:        TKAppBase\glfw/NvGLFWContext.h
 // SDK Version: v3.00 
 // Email:       gameworks@nvidia.com
 // Site:        http://developer.nvidia.com/

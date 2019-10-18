@@ -1,5 +1,5 @@
 //----------------------------------------------------------------------------------
-// File:        NvAppBase/NvAppBase.h
+// File:        TKAppBase/TKAppBase.h
 // SDK Version: v3.00
 // Email:       gameworks@nvidia.com
 // Site:        http://developer.nvidia.com/
@@ -49,7 +49,7 @@
 /// Application framework base class
 
 /// A basic app framework, including mainloop, setup and input processing.
-class NvAppBase : public NvInputCallbacks, public NvStopWatchFactory
+class TKAppBase : public NvInputCallbacks, public NvStopWatchFactory
 {
 public:
     /// Constructor
@@ -58,10 +58,10 @@ public:
     /// \param[in] platform the platform context representing the system, normally
     /// passed in from the #NvAppFactory
     /// \param[in] appTitle the null-terminated string title of the application
-    NvAppBase();
+    TKAppBase();
 
     /// Destructor
-    virtual ~NvAppBase();
+    virtual ~TKAppBase();
 
     /// \name Mainloop Application Callbacks
     /// To be overridden in concrete application subclasses.
@@ -295,6 +295,6 @@ protected:
 /// App must define this and have it return an instance of their class
 /// \param[in] platform the platform context to be used in the NvAppBase constructor call
 /// \return an instance of the application's own subclass.
-extern NvAppBase* NvAppFactory();
+extern TKAppBase* NvAppFactory();
 
 #endif

@@ -1,5 +1,5 @@
 //----------------------------------------------------------------------------------
-// File:        NvAppBase/NvFramerateCounter.cpp
+// File:        TKAppBase/NvFramerateCounter.cpp
 // SDK Version: v3.00 
 // Email:       gameworks@nvidia.com
 // Site:        http://developer.nvidia.com/
@@ -34,7 +34,7 @@
  
 /* Framerate stats */
 #include <NvAppBase/NvFramerateCounter.h>
-#include <NvAppBase/NvAppBase.h>
+#include <NvAppBase/TKAppBase.h>
 #include <NV/NvStopWatch.h>
 
 NvFramerateCounter::NvFramerateCounter(NvStopWatchFactory* factory) {

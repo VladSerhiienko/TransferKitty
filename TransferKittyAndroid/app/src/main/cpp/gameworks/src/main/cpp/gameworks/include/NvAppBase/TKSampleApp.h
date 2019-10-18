@@ -1,5 +1,5 @@
 //----------------------------------------------------------------------------------
-// File:        NvAppBase/NvSampleApp.h
+// File:        TKAppBase/TKSampleApp.h
 // SDK Version: v3.00 
 // Email:       gameworks@nvidia.com
 // Site:        http://developer.nvidia.com/
@@ -41,7 +41,7 @@
 #include <NsThread.h>
 #include <NsSync.h>
 
-#include "NvAppBase.h"
+#include "TKAppBase.h"
 #include "NV/NvStopWatch.h"
 #include "NvPlatformContext.h"
 #include "NvGamepad/NvGamepad.h"
@@ -59,7 +59,7 @@ class NvTweakBar;
 
 /// Base class for sample apps.
 /// Adds numerous features to NvAppBase that are of use to most or all sample apps
-class NvSampleApp : public NvAppBase 
+class TKSampleApp : public TKAppBase
 {
 public:
     /// Constructor
@@ -67,10 +67,10 @@ public:
     /// The rendering context is not bound until the entry into initRendering
     /// \param[in] platform the platform context representing the system, normally
     /// passed in from the #NvAppFactory
-    NvSampleApp();
+    TKSampleApp();
 
     /// Destructor
-    virtual ~NvSampleApp();
+    virtual ~TKSampleApp();
 
     /// UI init callback.
     /// Called after rendering is initialized, to allow preparation of overlaid
@@ -150,7 +150,7 @@ public:
     /// call HandleReaction to notify all the UI elements that a
     /// particular variable being tracked has had some kind of update.
     /// \param[in] var the variable that changed
-    void syncValue(NvTweakVarBase *var);
+    // void syncValue(NvTweakVarBase *var);
 
     /// Allows the app to enable/disable all app-level input handling.
     /// This is important in some platform-specific cases, but extremely few apps
@@ -159,8 +159,8 @@ public:
     void enableAppInputHandling(bool enable) { mEnableInputCallbacks = enable; }
     virtual bool isAppInputHandlingEnabled() const { return mEnableInputCallbacks; }
 
-	void SetInputHandler(NvInputHandler* inputHandler) { m_inputHandler = inputHandler; }
-	NvInputHandler* GetInputHandler() { return m_inputHandler; }
+	// void SetInputHandler(NvInputHandler* inputHandler) { m_inputHandler = inputHandler; }
+	// NvInputHandler* GetInputHandler() { return m_inputHandler; }
 
 #ifdef _WIN32
 	void* operator new(size_t size) {
@@ -175,7 +175,7 @@ public:
 protected:
     /// Test mode query.
     /// \return true if the app is running in a timed test harness
-    virtual bool isTestMode() { return mTestMode; }
+    // virtual bool isTestMode() { return mTestMode; }
 
     // Do not override these virtuals - overide the "handle" ones above
     bool pointerInput(NvInputDeviceType::Enum device, NvPointerActionType::Enum action, 
@@ -197,20 +197,17 @@ protected:
     uint32_t     mAutoRepeatButton;
     bool         mAutoRepeatTriggered;
 
+    bool mEnableFPS;
     // NvUIWindow *mUIWindow;
     // NvUIValueText *mFPSText;
-	bool mEnableFPS;
     // NvTweakBar *mTweakBar;
     // NvUIButton *mTweakTab;
-
-    NvInputTransformer* m_transformer;
-	NvInputHandler* m_inputHandler;
-
+    // NvInputTransformer* m_transformer;
+	// NvInputHandler* m_inputHandler;
     // typedef std::map<uint32_t, NvTweakBind> NvAppKeyBind;
     // NvAppKeyBind mKeyBinds;
     // typedef std::map<uint32_t, NvTweakBind> NvAppButtonBind;
     // NvAppButtonBind mButtonBinds;
-
     NvGamepad::State mLastPadState[NvGamepad::MAX_GAMEPADS];
 
     /// \privatesection
@@ -248,10 +245,10 @@ protected:
 
     int32_t m_desiredWidth;
     int32_t m_desiredHeight;
-    bool mTestMode;
-    float mTestDuration;
-    int32_t mTestRepeatFrames;
-    std::string mTestName;
+    // bool mTestMode;
+    // float mTestDuration;
+    // int32_t mTestRepeatFrames;
+    // std::string mTestName;
     float mSumDrawTime;
     int32_t mDrawTimeFrames;
     float mDrawRate;

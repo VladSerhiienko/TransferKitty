@@ -1,5 +1,5 @@
 //----------------------------------------------------------------------------------
-// File:        NvAppBase\java\com\nvidia\NvAppBase/NvAppBase.java
+// File:        TKAppBase\java\com\nvidia\TKAppBase/TKAppBase.java
 // SDK Version: v3.00 
 // Email:       gameworks@nvidia.com
 // Site:        http://developer.nvidia.com/
@@ -63,13 +63,13 @@ public class NvAppBase extends NativeActivity implements FrameCallback
     @Override
     protected void onCreate (Bundle savedInstanceState)
     {
-        Log.v("NvAppBase", "Calling NvAppBase onCreate");
+        Log.v("TKAppBase", "Calling TKAppBase onCreate");
 
         Intent launchIntent = getIntent();
         String extra = launchIntent.getStringExtra("arguments");
         if (extra != null) {
             mCommandLine = extra;
-            Log.v("NvAppBase", "command line = " + mCommandLine);
+            Log.v("TKAppBase", "command line = " + mCommandLine);
         }
 
         super.onCreate(savedInstanceState);
@@ -101,12 +101,12 @@ public class NvAppBase extends NativeActivity implements FrameCallback
 			// or if Choreographer is not available
 			System.loadLibrary(mLibName);
 			Choreographer.getInstance().postFrameCallback(this);
-	        Log.v("NvAppBase", "Installing Choreo calback");
+	        Log.v("TKAppBase", "Installing Choreo calback");
 			mChoreographerSupported = true;
 		} catch (Exception e) {
 		}
 
-        Log.v("NvAppBase", "Exiting NvAppBase onCreate");
+        Log.v("TKAppBase", "Exiting TKAppBase onCreate");
     }
 
 	public void setTrueFullscreen()

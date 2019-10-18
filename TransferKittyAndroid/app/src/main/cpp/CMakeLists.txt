@@ -102,56 +102,56 @@ add_library(
         gameworks/src/main/cpp/gameworks/src/NsFoundation/unix/NsUnixFPU.cpp
         gameworks/src/main/cpp/gameworks/src/NsFoundation/unix/NsUnixSList.cpp
         gameworks/src/main/cpp/gameworks/src/NsFoundation/unix/NsUnixThread.cpp
+        gameworks/src/main/cpp/gameworks/src/NvGamepad/android/NvGamepadAndroid.cpp
+        gameworks/src/main/cpp/gameworks/src/NvAssetLoader/android/NvAssetLoaderAndroid.cpp
         gameworks/src/main/cpp/gameworks/src/NvAppBase/android/EngineAndroid.cpp
         gameworks/src/main/cpp/gameworks/src/NvAppBase/android/NvFBOPool.cpp
         gameworks/src/main/cpp/gameworks/src/NvAppBase/android/MainAndroid.cpp
         gameworks/src/main/cpp/gameworks/src/NvAppBase/android/NvAndroidNativeAppGlue.c
         gameworks/src/main/cpp/gameworks/src/NvAppBase/android/NvAndroidWinUtil.cpp
         gameworks/src/main/cpp/gameworks/src/NvAppBase/android/NvThreadAnd.cpp
-        gameworks/src/main/cpp/gameworks/src/NvAppBase/gl/NvAppContextGL.cpp
-        gameworks/src/main/cpp/gameworks/src/NvAppBase/gl/NvSampleAppGL.cpp
-        gameworks/src/main/cpp/gameworks/src/NvAppBase/NvAppBase.cpp
+        gameworks/src/main/cpp/gameworks/src/NvAppBase/TKAppBase.cpp
+        gameworks/src/main/cpp/gameworks/src/NvAppBase/TKSampleApp.cpp
         gameworks/src/main/cpp/gameworks/src/NvAppBase/NvFoundationInit.cpp
         gameworks/src/main/cpp/gameworks/src/NvAppBase/NvFramerateCounter.cpp
-        gameworks/src/main/cpp/gameworks/src/NvAppBase/NvInputHandler_CameraFly.cpp
-        gameworks/src/main/cpp/gameworks/src/NvAppBase/NvInputTransformer.cpp
-        gameworks/src/main/cpp/gameworks/src/NvAppBase/NvSampleApp.cpp
-        gameworks/src/main/cpp/gameworks/src/NvAssetLoader/android/NvAssetLoaderAndroid.cpp
+        gameworks/src/main/cpp/gameworks/src/NvAppBase/gl/NvAppContextGL.cpp
+        gameworks/src/main/cpp/gameworks/src/NvAppBase/gl/NvSampleAppGL.cpp
         gameworks/src/main/cpp/gameworks/src/NvEGLUtil/NvEGLUtil.cpp
-        gameworks/src/main/cpp/gameworks/src/NvGamepad/android/NvGamepadAndroid.cpp
-        gameworks/src/main/cpp/gameworks/src/NvGLUtils/NvBitFontGL.cpp
-        gameworks/src/main/cpp/gameworks/src/NvGLUtils/NvGLSLProgram.cpp
-        gameworks/src/main/cpp/gameworks/src/NvGLUtils/NvImageGL.cpp
-        gameworks/src/main/cpp/gameworks/src/NvGLUtils/NvLogsGL.cpp
-        gameworks/src/main/cpp/gameworks/src/NvGLUtils/NvShapesGL.cpp
         gameworks/src/main/cpp/gameworks/src/NvGLUtils/NvTimers.cpp
-        gameworks/src/main/cpp/gameworks/src/NvGLUtils/NvUIGL.cpp
-        gameworks/src/main/cpp/gameworks/src/NvGLUtils/NvUIGraphicGL.cpp
-        gameworks/src/main/cpp/gameworks/src/NvGLUtils/NvUIGraphicFrameGL.cpp
-        gameworks/src/main/cpp/gameworks/src/NvGLUtils/NvUIShadersGL.cpp
-        gameworks/src/main/cpp/gameworks/src/NvGLUtils/NvUITextureRenderGL.cpp
-        gameworks/src/main/cpp/gameworks/src/NvImage/BlockDXT.cpp
-        gameworks/src/main/cpp/gameworks/src/NvImage/ColorBlock.cpp
-        gameworks/src/main/cpp/gameworks/src/NvImage/NvFilePtr.cpp
-        gameworks/src/main/cpp/gameworks/src/NvImage/NvImage.cpp
-        gameworks/src/main/cpp/gameworks/src/NvImage/NvImageDDS.cpp
-        gameworks/src/main/cpp/gameworks/src/NvUI/NvBitFont.cpp
-        gameworks/src/main/cpp/gameworks/src/NvUI/NvEmbeddedAsset.cpp
-        gameworks/src/main/cpp/gameworks/src/NvUI/NvGestureDetector.cpp
-        gameworks/src/main/cpp/gameworks/src/NvUI/NvUI.cpp
-        gameworks/src/main/cpp/gameworks/src/NvUI/NvUIContainer.cpp
-        gameworks/src/main/cpp/gameworks/src/NvUI/NvUIButton.cpp
-        gameworks/src/main/cpp/gameworks/src/NvUI/NvUISlider.cpp
-        gameworks/src/main/cpp/gameworks/src/NvUI/NvUIText.cpp
-        gameworks/src/main/cpp/gameworks/src/NvUI/NvUIPopup.cpp
-        gameworks/src/main/cpp/gameworks/src/NvUI/NvUIGraphic.cpp
-        gameworks/src/main/cpp/gameworks/src/NvUI/NvUIGraphicFrame.cpp
-        gameworks/src/main/cpp/gameworks/src/NvUI/NvTweakBar.cpp
-        gameworks/src/main/cpp/gameworks/src/NvUI/NvTweakVar.cpp
-        gameworks/src/main/cpp/gameworks/src/NvUI/NvUIValueText.cpp
-        gameworks/src/main/cpp/gameworks/src/NvUI/NvUIValueBar.cpp
-        gameworks/src/main/cpp/gameworks/src/NvUI/NvUIWindow.cpp
-        gameworks/src/main/cpp/gameworks/src/NvUI/NvUITexture.cpp)
+        gameworks/src/main/cpp/gameworks/src/NvGLUtils/NvLogsGL.cpp
+        gameworks/src/main/cpp/gameworks/src/NvGLUtils/NvGLSLProgram.cpp)
+        # gameworks/src/main/cpp/gameworks/src/NvAppBase/NvInputHandler_CameraFly.cpp
+        # gameworks/src/main/cpp/gameworks/src/NvAppBase/NvInputTransformer.cpp
+        # gameworks/src/main/cpp/gameworks/src/NvGLUtils/NvBitFontGL.cpp
+        # gameworks/src/main/cpp/gameworks/src/NvGLUtils/NvImageGL.cpp
+        # gameworks/src/main/cpp/gameworks/src/NvGLUtils/NvShapesGL.cpp
+        # gameworks/src/main/cpp/gameworks/src/NvGLUtils/NvUIGL.cpp
+        # gameworks/src/main/cpp/gameworks/src/NvGLUtils/NvUIGraphicGL.cpp
+        # gameworks/src/main/cpp/gameworks/src/NvGLUtils/NvUIGraphicFrameGL.cpp
+        # gameworks/src/main/cpp/gameworks/src/NvGLUtils/NvUIShadersGL.cpp
+        # gameworks/src/main/cpp/gameworks/src/NvGLUtils/NvUITextureRenderGL.cpp
+        # gameworks/src/main/cpp/gameworks/src/NvImage/BlockDXT.cpp
+        # gameworks/src/main/cpp/gameworks/src/NvImage/ColorBlock.cpp
+        # gameworks/src/main/cpp/gameworks/src/NvImage/NvFilePtr.cpp
+        # gameworks/src/main/cpp/gameworks/src/NvImage/NvImage.cpp
+        # gameworks/src/main/cpp/gameworks/src/NvImage/NvImageDDS.cpp
+        # gameworks/src/main/cpp/gameworks/src/NvUI/NvBitFont.cpp
+        # gameworks/src/main/cpp/gameworks/src/NvUI/NvEmbeddedAsset.cpp
+        # gameworks/src/main/cpp/gameworks/src/NvUI/NvGestureDetector.cpp
+        # gameworks/src/main/cpp/gameworks/src/NvUI/NvUI.cpp
+        # gameworks/src/main/cpp/gameworks/src/NvUI/NvUIContainer.cpp
+        # gameworks/src/main/cpp/gameworks/src/NvUI/NvUIButton.cpp
+        # gameworks/src/main/cpp/gameworks/src/NvUI/NvUISlider.cpp
+        # gameworks/src/main/cpp/gameworks/src/NvUI/NvUIText.cpp
+        # gameworks/src/main/cpp/gameworks/src/NvUI/NvUIPopup.cpp
+        # gameworks/src/main/cpp/gameworks/src/NvUI/NvUIGraphic.cpp
+        # gameworks/src/main/cpp/gameworks/src/NvUI/NvUIGraphicFrame.cpp
+        # gameworks/src/main/cpp/gameworks/src/NvUI/NvTweakBar.cpp
+        # gameworks/src/main/cpp/gameworks/src/NvUI/NvTweakVar.cpp
+        # gameworks/src/main/cpp/gameworks/src/NvUI/NvUIValueText.cpp
+        # gameworks/src/main/cpp/gameworks/src/NvUI/NvUIValueBar.cpp
+        # gameworks/src/main/cpp/gameworks/src/NvUI/NvUIWindow.cpp
+        # gameworks/src/main/cpp/gameworks/src/NvUI/NvUITexture.cpp)
 
 
 find_library( log-lib log )

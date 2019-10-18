@@ -1,5 +1,5 @@
 //----------------------------------------------------------------------------------
-// File:        NvAppBase\gl/NvSampleAppGL.cpp
+// File:        TKAppBase\gl/NvSampleAppGL.cpp
 // SDK Version: v3.00 
 // Email:       gameworks@nvidia.com
 // Site:        http://developer.nvidia.com/
@@ -59,7 +59,7 @@
 #include <sstream>
 
 NvSampleAppGL::NvSampleAppGL() :
-    NvSampleApp()
+    TKSampleApp()
 {
 }
 
@@ -108,8 +108,7 @@ bool NvSampleAppGL::platformInitRendering(void) {
         getGLContext()->isExtensionSupported("GL_EXT_texture_compression_dxt1");
     if (!hasDXT) {
         LOGI("Device has no DXT texture support - enabling DXT expansion");
-        NvImage::setDXTExpansion(true);
-
+        // NvImage::setDXTExpansion(true);
     }
 
 	return true;
@@ -163,19 +162,17 @@ bool NvSampleAppGL::requireMinAPIVersion(const NvGLAPIVersion& minApi, bool exit
 }
 
 void NvSampleAppGL::platformLogTestResults(float frameRate, int32_t frames) {
-    writeLogFile(mTestName, true, "GL_VENDOR %s\n", glGetString(GL_VENDOR));
-    writeLogFile(mTestName, true, "GL_RENDERER %s\n", glGetString(GL_RENDERER));
-    writeLogFile(mTestName, true, "GL_EXTENSIONS %s\n", glGetString(GL_EXTENSIONS));
-
-    if (m_testModeIssues != TEST_MODE_ISSUE_NONE) {
-        writeLogFile(mTestName, true, "\nWARNING - there were potential test mode anomalies\n");
-
-        if (m_testModeIssues & TEST_MODE_FBO_ISSUE) {
-            writeLogFile(mTestName, true, "\tThe application appears to have explicitly bound the onscreen framebuffer\n"
-                "\tSince the test was being run in offscreen rendering mode, this could invalidate results\n"
-                "\tThe application should be checked for glBindFramebuffer of 0\n\n");
-        }
-    }
+    // writeLogFile(mTestName, true, "GL_VENDOR %s\n", glGetString(GL_VENDOR));
+    // writeLogFile(mTestName, true, "GL_RENDERER %s\n", glGetString(GL_RENDERER));
+    // writeLogFile(mTestName, true, "GL_EXTENSIONS %s\n", glGetString(GL_EXTENSIONS));
+    // if (m_testModeIssues != TEST_MODE_ISSUE_NONE) {
+    //     writeLogFile(mTestName, true, "\nWARNING - there were potential test mode anomalies\n");
+    //     if (m_testModeIssues & TEST_MODE_FBO_ISSUE) {
+    //         writeLogFile(mTestName, true, "\tThe application appears to have explicitly bound the onscreen framebuffer\n"
+    //             "\tSince the test was being run in offscreen rendering mode, this could invalidate results\n"
+    //             "\tThe application should be checked for glBindFramebuffer of 0\n\n");
+    //     }
+    // }
 }
 
 static const int32_t uniqueTypeID = 0x20000001;
@@ -184,7 +181,7 @@ int32_t NvSampleAppGL::getUniqueTypeID() {
 	return uniqueTypeID;
 }
 
-bool NvSampleAppGL::isType(NvAppBase* app) {
+bool NvSampleAppGL::isType(TKAppBase* app) {
 	return app->getUniqueTypeID() == uniqueTypeID;
 }
 

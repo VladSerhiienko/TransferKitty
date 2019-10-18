@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "958687783477",
+    "firebase_url": "https://apemode-transferkitty.firebaseio.com",
+    "project_id": "apemode-transferkitty",
+    "storage_bucket": "apemode-transferkitty.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:958687783477:android:97e6227b0206d74f53df7c",
+        "android_client_info": {
+          "package_name": "vserhiienko.transferkitty"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "958687783477-nb7t7kqes5uhv4nasmn6u0l7f109maa1.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBMk-AnFGs1wHjqwr7d9ONvZRCc2NEcPCA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "958687783477-nb7t7kqes5uhv4nasmn6u0l7f109maa1.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

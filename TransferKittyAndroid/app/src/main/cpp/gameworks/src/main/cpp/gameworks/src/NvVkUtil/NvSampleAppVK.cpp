@@ -50,7 +50,7 @@
 
 #if defined(ANDROID)
 #include "../NvEGLUtil/NvEGLUtil.h"
-#include "../NvAppBase/android/NvEGLAppContext.h"
+#include "../TKAppBase/android/NvEGLAppContext.h"
 #include "NvAndVkWinUtil.h"
 #include "NvAppContextAndVK.h"
 #else

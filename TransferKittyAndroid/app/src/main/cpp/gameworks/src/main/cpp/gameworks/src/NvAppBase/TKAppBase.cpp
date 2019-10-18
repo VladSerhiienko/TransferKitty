@@ -1,5 +1,5 @@
 //----------------------------------------------------------------------------------
-// File:        NvAppBase/NvAppBase.cpp
+// File:        TKAppBase/TKAppBase.cpp
 // SDK Version: v3.00 
 // Email:       gameworks@nvidia.com
 // Site:        http://developer.nvidia.com/
@@ -31,7 +31,7 @@
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 //
 //----------------------------------------------------------------------------------
-#include "NvAppBase/NvAppBase.h"
+#include "NvAppBase/TKAppBase.h"
 
 #include "NV/NvLogs.h"
 #include "NV/NvStopWatch.h"
@@ -40,11 +40,11 @@
 
 #include <stdio.h>
 
-std::vector<std::string> NvAppBase::ms_commandLine;
+std::vector<std::string> TKAppBase::ms_commandLine;
 
 NvStopWatchFactory* NvCPUTimer::ms_factory = NULL;
 
-NvAppBase::NvAppBase()
+TKAppBase::TKAppBase()
     : mPlatform(NULL)
     , m_width(0)
     , m_height(0)
@@ -54,11 +54,11 @@ NvAppBase::NvAppBase()
 	NvCPUTimer::globalInit(this);
 }
 
-NvAppBase::~NvAppBase() {
+TKAppBase::~TKAppBase() {
 	delete mPlatform;
 }
 
-void NvAppBase::appRequestExit() {
+void TKAppBase::appRequestExit() {
     getPlatformContext()->requestExit();
     m_requestedExit = true; 
 }

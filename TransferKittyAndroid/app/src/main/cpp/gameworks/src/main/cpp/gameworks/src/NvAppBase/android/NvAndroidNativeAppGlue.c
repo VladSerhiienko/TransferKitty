@@ -1,5 +1,5 @@
 //----------------------------------------------------------------------------------
-// File:        NvAppBase\android/NvAndroidNativeAppGlue.c
+// File:        TKAppBase\android/NvAndroidNativeAppGlue.c
 // SDK Version: v3.00 
 // Email:       gameworks@nvidia.com
 // Site:        http://developer.nvidia.com/

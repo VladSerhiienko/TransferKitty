@@ -1,5 +1,5 @@
 //----------------------------------------------------------------------------------
-// File:        NvAppBase\gl/NvSampleAppGL.h
+// File:        TKAppBase\gl/NvSampleAppGL.h
 // SDK Version: v3.00 
 // Email:       gameworks@nvidia.com
 // Site:        http://developer.nvidia.com/
@@ -38,14 +38,14 @@
 
 #include <NvSimpleTypes.h>
 
-#include "NvAppBase/NvSampleApp.h"
+#include "NvAppBase/TKSampleApp.h"
 #include "NvAppBase/gl/NvAppContextGL.h"
 
 /// \file
 /// GL-based Sample app base class.
 
 /// Base class for GL sample apps.
-class NvSampleAppGL : public NvSampleApp
+class NvSampleAppGL : public TKSampleApp
 {
 public:
     /// Constructor
@@ -99,7 +99,7 @@ public:
 
 	/// \privatesection
 	virtual int32_t getUniqueTypeID();
-	static bool isType(NvAppBase* app);
+	static bool isType(TKAppBase* app);
 
 	virtual bool initialize(const NvPlatformInfo& platform, int32_t width, int32_t height);
 

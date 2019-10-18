@@ -187,7 +187,7 @@ bool TKAppGL::handleGamepadButtonChanged(uint32_t button, bool down) {
 }
 
 void TKAppGL::setPlatformContext(NvPlatformContext *platform) {
-    NvAppBase::setPlatformContext(platform);
+    TKAppBase::setPlatformContext(platform);
 
 #if defined(ANDROID) && false
     Engine *engine = static_cast<Engine *>(getPlatformContext());
@@ -198,6 +198,6 @@ void TKAppGL::setPlatformContext(NvPlatformContext *platform) {
     // JNIEnv* env    = engine->mApp->appThreadEnv;
 }
 
-NvAppBase *NvAppFactory() {
+TKAppBase *NvAppFactory() {
     return new TKAppGL();
 }

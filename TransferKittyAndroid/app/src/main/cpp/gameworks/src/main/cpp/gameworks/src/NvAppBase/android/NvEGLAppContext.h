@@ -1,5 +1,5 @@
 //----------------------------------------------------------------------------------
-// File:        NvAppBase\android/NvEGLAppContext.h
+// File:        TKAppBase\android/NvEGLAppContext.h
 // SDK Version: v3.00 
 // Email:       gameworks@nvidia.com
 // Site:        http://developer.nvidia.com/
@@ -40,7 +40,7 @@
 
 #include <jni.h>
 #include <errno.h>
-#include "NvAppBase/NvAppBase.h"
+#include "NvAppBase/TKAppBase.h"
 #include "NvAppBase/gl/NvAppContextGL.h"
 #include "NvFBOPool.h"
 #include "../../NvEGLUtil/NvEGLUtil.h"

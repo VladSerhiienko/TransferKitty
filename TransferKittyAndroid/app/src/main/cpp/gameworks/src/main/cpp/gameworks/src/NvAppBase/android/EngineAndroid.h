@@ -1,5 +1,5 @@
 //----------------------------------------------------------------------------------
-// File:        NvAppBase\android/EngineAndroid.h
+// File:        TKAppBase\android/EngineAndroid.h
 // SDK Version: v3.00 
 // Email:       gameworks@nvidia.com
 // Site:        http://developer.nvidia.com/
@@ -38,7 +38,7 @@
 #include <NvSimpleTypes.h>
 #include <jni.h>
 #include <errno.h>
-#include "NvAppBase/NvAppBase.h"
+#include "NvAppBase/TKAppBase.h"
 
 /**
  * Our saved state data.
@@ -87,7 +87,7 @@ public:
     virtual void* getPlatformApp() { return (void*)mApp; }
 
     struct android_app* mApp;
-    NvAppBase* mAppBase;
+    TKAppBase* mAppBase;
 
     int32_t mForceRender;
     bool mRedraw;

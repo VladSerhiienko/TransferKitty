@@ -1,5 +1,5 @@
 //----------------------------------------------------------------------------------
-// File:        NvAppBase\android/MainAndroid.cpp
+// File:        TKAppBase\android/MainAndroid.cpp
 // SDK Version: v3.00 
 // Email:       gameworks@nvidia.com
 // Site:        http://developer.nvidia.com/
@@ -52,7 +52,7 @@
 #include <android/asset_manager.h>
 #include <android/asset_manager_jni.h>
 
-#include "NvAppBase/NvAppBase.h"
+#include "NvAppBase/TKAppBase.h"
 #include "NvAssetLoader/NvAssetLoader.h"
 #include "NV/NvStopWatch.h"
 #include "EngineAndroid.h"
@@ -158,12 +158,12 @@ void android_main(struct android_app* app) {
 		std::string sarg;
 		while (cmdtok.getTokenString(sarg)) {
 			LOGI("Argument %s", sarg.c_str());
-			NvAppBase::commandLineAppend(sarg);
+			TKAppBase::commandLineAppend(sarg);
 		}
 	}
 
 
-    NvAppBase* sdkapp = NvAppFactory();
+    TKAppBase* sdkapp = NvAppFactory();
 	sdkapp->setPlatformContext(engine);
     engine->mAppBase = sdkapp;
 	sdkapp->setThreadManager(new NvThreadManagerAnd);
@@ -211,17 +211,17 @@ void android_main(struct android_app* app) {
 }
 
 // Timer and timing functions
-NvStopWatch* NvAppBase::createStopWatch() {
+NvStopWatch* TKAppBase::createStopWatch() {
     return new NvAndroidStopWatch;
 }
 
-uint64_t NvAppBase::queryPerformanceCounter() {
+uint64_t TKAppBase::queryPerformanceCounter() {
     struct timeval t_time;
     gettimeofday( &t_time, 0);
     return t_time.tv_sec * 1000000 + t_time.tv_usec;
 }
 
-uint64_t NvAppBase::queryPerformanceCounterFrequency() {
+uint64_t TKAppBase::queryPerformanceCounterFrequency() {
     return 1000000; // 1MHz
 }
 
@@ -235,7 +235,7 @@ uint64_t NvAppBase::queryPerformanceCounterFrequency() {
         return false; \
     }
 
-bool NvAppBase::showDialog(const char* title, const char *contents, bool exitApp) {
+bool TKAppBase::showDialog(const char* title, const char *contents, bool exitApp) {
     Engine* engine = (Engine*)getPlatformContext();
     struct android_app* app = engine->mApp;
 
@@ -293,7 +293,7 @@ bool getCommandLine(Engine* engine, char*& commandLine) {
     return true;
 }
 
-bool NvAppBase::writeScreenShot(int32_t width, int32_t height, const uint8_t* data, const std::string& path) {
+bool TKAppBase::writeScreenShot(int32_t width, int32_t height, const uint8_t* data, const std::string& path) {
 
     std::string filename = "/sdcard/" + path + ".bmp";
     FILE* fp = fopen(filename.c_str(), "wb");
@@ -373,7 +373,7 @@ bool NvAppBase::writeScreenShot(int32_t width, int32_t height, const uint8_t* da
     return true;
 }
 
-bool NvAppBase::writeLogFile(const std::string& path, bool append, const char* fmt, ...) {
+bool TKAppBase::writeLogFile(const std::string& path, bool append, const char* fmt, ...) {
     va_list ap;
   
     std::string filename = "/sdcard/" + path + ".txt";
@@ -389,7 +389,7 @@ bool NvAppBase::writeLogFile(const std::string& path, bool append, const char* f
     return true;
 }
 
-void NvAppBase::forceLinkHack() {
+void TKAppBase::forceLinkHack() {
 }
 
 void NVPlatformLog(const char* fmt, ...) {

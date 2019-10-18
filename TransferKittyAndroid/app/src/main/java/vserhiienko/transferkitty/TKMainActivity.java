@@ -33,8 +33,11 @@ import android.content.Context;
 
 import androidx.core.view.MotionEventCompat;
 
+import com.google.firebase.analytics.FirebaseAnalytics;
+
 import java.lang.reflect.Field;
 import java.lang.Runnable;
+import java.util.Date;
 
 public class TKMainActivity extends NativeActivity implements FrameCallback {
     private static final String TAG = TKMainActivity.class.getSimpleName();
@@ -44,11 +47,17 @@ public class TKMainActivity extends NativeActivity implements FrameCallback {
     public boolean mUseChoreographer = false;
     public boolean mChoreographerSupported = false;
 
-    // private FirebaseAnalytics mFirebaseAnalytics;
+     private FirebaseAnalytics mFirebaseAnalytics;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         Log.v("EzriNativeActivity", "Calling EzriNativeActivity onCreate");
+
+        mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
+        Bundle params = new Bundle();
+        params.putString("app_tag", TAG);
+        params.putString("app_timestamp", new Date().toString());
+        mFirebaseAnalytics.logEvent("app_start", params);
 
         Intent launchIntent = getIntent();
         String extra = launchIntent.getStringExtra("arguments");

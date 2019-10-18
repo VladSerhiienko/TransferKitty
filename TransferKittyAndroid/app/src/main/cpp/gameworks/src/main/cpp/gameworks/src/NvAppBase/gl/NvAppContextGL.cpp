@@ -1,5 +1,5 @@
 //----------------------------------------------------------------------------------
-// File:        NvAppBase\gl/NvAppContextGL.cpp
+// File:        TKAppBase\gl/NvAppContextGL.cpp
 // SDK Version: v3.00
 // Email:       gameworks@nvidia.com
 // Site:        http://developer.nvidia.com/
@@ -150,13 +150,13 @@ void NvAppContextGL::endFrame() {
 }
 
 void NvAppContextGL::contextInitRendering() {
-    NvImageGL::SupportsFormatConversion(getConfiguration().apiVer.api != NvGLAPI::GLES);
-    NvImage::setSupportsBGR(getConfiguration().apiVer.api != NvGLAPI::GLES);
+    // NvImageGL::SupportsFormatConversion(getConfiguration().apiVer.api != NvGLAPI::GLES);
+    // NvImage::setSupportsBGR(getConfiguration().apiVer.api != NvGLAPI::GLES);
 }
 
 void NvAppContextGL::initUI() {
-    extern void NvUIUseGL();
-    NvUIUseGL();
+    // extern void NvUIUseGL();
+    // NvUIUseGL();
 }
 
 bool NvAppContextGL::readFramebufferRGBX32(uint8_t *dest, int32_t& w, int32_t& h) {
