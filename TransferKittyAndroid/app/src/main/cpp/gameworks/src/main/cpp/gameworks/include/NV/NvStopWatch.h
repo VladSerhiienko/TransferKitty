@@ -50,7 +50,7 @@ class NvStopWatch
 {
 public:
     /// Constructor, default
-    NvStopWatch() { m_running = false; } 
+    NvStopWatch() { mIsRunning = false; }
     /// Destructor
     virtual ~NvStopWatch() { }
 
@@ -65,7 +65,7 @@ public:
 
     /// Test whether the timer is running
     /// \return true if the timer is running (between #start() and #stop() calls) and false if not
-    bool isRunning() { return m_running; }
+    bool isRunning() { return mIsRunning; }
 
     /// Get elapsed time
     /// Time in seconds after start. If the stop watch is still running (i.e. there
@@ -75,7 +75,7 @@ public:
     virtual const float getTime() const = 0;
 
 protected:
-    bool m_running;
+    bool mIsRunning;
 };
 
 class NvStopWatchFactory {

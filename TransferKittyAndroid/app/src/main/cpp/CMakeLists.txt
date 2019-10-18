@@ -114,8 +114,8 @@ add_library(
         gameworks/src/main/cpp/gameworks/src/NvAppBase/TKSampleApp.cpp
         gameworks/src/main/cpp/gameworks/src/NvAppBase/NvFoundationInit.cpp
         gameworks/src/main/cpp/gameworks/src/NvAppBase/NvFramerateCounter.cpp
-        gameworks/src/main/cpp/gameworks/src/NvAppBase/gl/NvAppContextGL.cpp
-        gameworks/src/main/cpp/gameworks/src/NvAppBase/gl/NvSampleAppGL.cpp
+        gameworks/src/main/cpp/gameworks/src/NvAppBase/gl/TKAppContextGL.cpp
+        gameworks/src/main/cpp/gameworks/src/NvAppBase/gl/TKSampleAppGL.cpp
         gameworks/src/main/cpp/gameworks/src/NvEGLUtil/NvEGLUtil.cpp
         gameworks/src/main/cpp/gameworks/src/NvGLUtils/NvTimers.cpp
         gameworks/src/main/cpp/gameworks/src/NvGLUtils/NvLogsGL.cpp

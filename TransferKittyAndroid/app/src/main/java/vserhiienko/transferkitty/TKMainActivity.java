@@ -51,6 +51,8 @@ public class TKMainActivity extends NativeActivity implements FrameCallback {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        
         Log.v("EzriNativeActivity", "Calling EzriNativeActivity onCreate");
 
         mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
@@ -65,8 +67,6 @@ public class TKMainActivity extends NativeActivity implements FrameCallback {
             mCommandLine = extra;
             Log.v("EzriNativeActivity", "command line = " + mCommandLine);
         }
-
-        super.onCreate(savedInstanceState);
 
         // mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
 

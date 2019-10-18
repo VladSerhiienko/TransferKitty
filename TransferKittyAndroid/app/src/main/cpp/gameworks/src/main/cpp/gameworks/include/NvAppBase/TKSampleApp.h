@@ -243,12 +243,8 @@ protected:
     void renderThreadFunc();
     static void* renderThreadThunk(void* thiz);
 
-    int32_t m_desiredWidth;
-    int32_t m_desiredHeight;
-    // bool mTestMode;
-    // float mTestDuration;
-    // int32_t mTestRepeatFrames;
-    // std::string mTestName;
+    int32_t mDesiredWidth;
+    int32_t mDesiredHeight;
     float mSumDrawTime;
     int32_t mDrawTimeFrames;
     float mDrawRate;
@@ -256,8 +252,6 @@ protected:
     bool mHasInitializedRendering;
     NvStopWatch* mDrawTime;
 
-    NvStopWatch* mTestModeTimer;
-    int32_t mTestModeFrames;
     float mTotalTime;
 
     bool mUseRenderThread;
@@ -266,20 +260,11 @@ protected:
     nvidia::shdfnd::Sync* mRenderSync;
     nvidia::shdfnd::Sync* mMainSync;
 
-    enum {
-        TEST_MODE_ISSUE_NONE = 0x00000000,
-        TEST_MODE_FBO_ISSUE = 0x00000001,
-    };
-
-    uint32_t m_testModeIssues;
-
-    const static int32_t TESTMODE_WARMUP_FRAMES = 10;
-
     bool mEnableInputCallbacks;
-
     bool mUseFBOPair;
-    int32_t m_fboWidth;
-    int32_t m_fboHeight;
+    int32_t mFBOWidth;
+    int32_t mFBOHeight;
+
 	bool mLogFPS;
 	float mTimeSinceFPSLog;
 };

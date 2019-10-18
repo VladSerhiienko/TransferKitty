@@ -36,7 +36,7 @@
 #define _NV_EGL_UTIL_H
 
 #include <NvSimpleTypes.h>
-#include <NvAppBase/gl/NvAppContextGL.h>
+#include <NvAppBase/gl/TKAppContextGL.h>
 #include <../../src/NvAppBase/android/NvAndroidWinUtil.h>
 #include <NV/NvPlatformGL.h>
 

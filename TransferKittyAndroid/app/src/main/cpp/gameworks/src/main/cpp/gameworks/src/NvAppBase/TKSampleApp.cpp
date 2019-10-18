@@ -52,34 +52,22 @@ TKSampleApp::TKSampleApp()
     : TKAppBase()
     , mFramerate(0L)
     , mFrameDelta(0.0f)
-    // , mUIWindow(0L)
-    // , mFPSText(0L)
     , mEnableFPS(true)
-    // , mTweakBar(0L)
-    // , mTweakTab(0L)
-    , m_desiredWidth(0)
-    , m_desiredHeight(0)
-    // , mTestMode(false)
-    // , mTestDuration(0.0f)
-    // , mTestRepeatFrames(1)
-    , m_testModeIssues(TEST_MODE_ISSUE_NONE)
+    , mDesiredWidth(0)
+    , mDesiredHeight(0)
     , mEnableInputCallbacks(true)
     , mUseRenderThread(false)
     , mThread(nullptr)
     , mRenderThreadRunning(false)
     , mUseFBOPair(false)
-    , m_fboWidth(0)
-    , m_fboHeight(0)
-    // , m_inputHandler(NULL)
+    , mFBOWidth(0)
+    , mFBOHeight(0)
     , mLogFPS(false)
     , mTimeSinceFPSLog(0.0f) {
-    // m_transformer = new NvInputTransformer;
     memset(mLastPadState, 0, sizeof(mLastPadState));
 
     mFrameTimer = createStopWatch();
-
     mEventTickTimer = createStopWatch();
-
     mAutoRepeatTimer = createStopWatch();
     mAutoRepeatButton = 0; // none yet! :)
     mAutoRepeatTriggered = false;
@@ -90,10 +78,10 @@ TKSampleApp::TKSampleApp()
     while (iter != cmd.end()) {
         if (0 == (*iter).compare("-w")) {
             iter++;
-            std::stringstream(*iter) >> m_desiredWidth;
+            std::stringstream(*iter) >> mDesiredWidth;
         } else if (0 == (*iter).compare("-h")) {
             iter++;
-            std::stringstream(*iter) >> m_desiredHeight;
+            std::stringstream(*iter) >> mDesiredHeight;
         // } else if (0 == (*iter).compare("-testmode")) {
         //     mTestMode = true;
         //     iter++;
@@ -106,9 +94,9 @@ TKSampleApp::TKSampleApp()
         } else if (0 == (*iter).compare("-fbo")) {
             mUseFBOPair = true;
             iter++;
-            std::stringstream(*iter) >> m_fboWidth;
+            std::stringstream(*iter) >> mFBOWidth;
             iter++;
-            std::stringstream(*iter) >> m_fboHeight;
+            std::stringstream(*iter) >> mFBOHeight;
         } else if (0 == (*iter).compare("-logfps")) {
             mLogFPS = true;
         }
@@ -134,7 +122,7 @@ TKSampleApp::~TKSampleApp() {
 bool TKSampleApp::baseInitRendering() {
     if (mUseFBOPair)
         mUseFBOPair =
-            getAppContext()->useOffscreenRendering(m_fboWidth, m_fboHeight);
+            getAppContext()->useOffscreenRendering(mFBOWidth, mFBOHeight);
 
     getAppContext()->contextInitRendering();
 
@@ -156,11 +144,11 @@ void TKSampleApp::baseInitUI() {
 void TKSampleApp::baseReshape(int32_t w, int32_t h) {
     getAppContext()->platformReshape(w, h);
 
-    if ((w == m_width) && (h == m_height))
+    if ((w == mWidth) && (h == mHeight))
         return;
 
-    m_width = w;
-    m_height = h;
+    mWidth = w;
+    mHeight = h;
     reshape(w, h);
 }
 
@@ -304,8 +292,6 @@ bool TKSampleApp::gamepadChanged(uint32_t changedPadFlags) {
 }
 
 void TKSampleApp::initRenderLoopObjects() {
-    mTestModeTimer = createStopWatch();
-    mTestModeFrames = -TESTMODE_WARMUP_FRAMES;
     mTotalTime = -1e6f; // don't exit during startup
 
     mFramerate = new NvFramerateCounter(this);
@@ -351,7 +337,7 @@ void TKSampleApp::renderLoopRenderFrame() {
 
     mFrameTimer->reset();
 
-    if (m_width == 0 || m_height == 0) {
+    if (mWidth == 0 || mHeight == 0) {
         NvThreadManager *thread = getThreadManagerInstance();
 
         if (thread) {
@@ -567,19 +553,19 @@ void TKSampleApp::errorExit(const char* errorString) {
     // we set the flag here manually.  The exit will not happen until
     // the user closes the dialog.  But we want to act as if we are
     // already exiting (which we are), so we do not render
-    m_requestedExit = true;
+    mRequestedExit = true;
     showDialog("Fatal Error", errorString, true);
 }
 
 bool TKSampleApp::getRequestedWindowSize(int32_t& width, int32_t& height) {
     bool changed = false;
-    if (m_desiredWidth != 0) {
-        width = m_desiredWidth;
+    if (mDesiredWidth != 0) {
+        width = mDesiredWidth;
         changed = true;
     }
 
-    if (m_desiredHeight != 0) {
-        height = m_desiredHeight;
+    if (mDesiredHeight != 0) {
+        height = mDesiredHeight;
         changed = true;
     }
 

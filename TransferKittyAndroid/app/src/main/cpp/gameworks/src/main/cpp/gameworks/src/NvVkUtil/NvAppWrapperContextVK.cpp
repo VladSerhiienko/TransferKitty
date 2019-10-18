@@ -113,7 +113,7 @@ void NvVkContext::shutdown()
 }
 */
 
-NvAppWrapperContextVK::NvAppWrapperContextVK(NvAppContextGL* glContext, NvVKConfiguration config, const std::string& appTitle, NvPlatformInfo info, bool useGLUI) :
+NvAppWrapperContextVK::NvAppWrapperContextVK(TKAppContextGL* glContext, NvVKConfiguration config, const std::string& appTitle, NvPlatformInfo info, bool useGLUI) :
 NvAppContextVK(config, info)
 , mGLContext(glContext)
 , mCurrentWidth(0)

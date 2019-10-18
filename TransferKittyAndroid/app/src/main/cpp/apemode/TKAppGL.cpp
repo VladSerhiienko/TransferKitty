@@ -59,8 +59,8 @@ void TKAppGL::configurationCallback(NvGLConfiguration &config) {
     config.stencilBits = 8;
 
     // TODO: ES2 should be enough.
-    config.apiVer = NvGLAPIVersionES3_1();
     // config.apiVer = NvGLAPIVersionES2();
+    config.apiVer = NvGLAPIVersionES3_1();
 }
 
 void TKAppGL::initRendering() {
@@ -80,7 +80,7 @@ void TKAppGL::shutdownRendering() {
 }
 
 void TKAppGL::reshape(int32_t width, int32_t height) {
-    NvSampleAppGL::reshape(width, height);
+    TKSampleAppGL::reshape(width, height);
     glViewport(0, 0, (GLint)width, (GLint)height);
 }
 

@@ -50,7 +50,7 @@
 
 #if defined(ANDROID)
 #include "../NvEGLUtil/NvEGLUtil.h"
-#include "../TKAppBase/android/NvEGLAppContext.h"
+#include "../TKAppBase/android/TKAppContextEGL.h"
 #include "NvAndVkWinUtil.h"
 #include "NvAppContextAndVK.h"
 #else
@@ -192,7 +192,7 @@ bool NvSampleAppVK::initialize(const NvPlatformInfo& platform, int32_t width, in
 				"with the command-line argument -wsi to force the app to use\n"
 				"the native VK windowing system and disable the app's GL features.\n"
 				"The app will now exit", true);
-			m_requestedExit = true;
+			mRequestedExit = true;
 		}
 	}
 
@@ -235,7 +235,7 @@ bool NvSampleAppVK::initialize(const NvPlatformInfo& platform, int32_t width, in
 			success = false;
 		}
 		else {
-			NvEGLAppContext* context = new NvEGLAppContext(eglWin);
+			TKAppContextEGL* context = new TKAppContextEGL(eglWin);
 			mContext = context;
 
 			// Hack - we should use a factory so we can switch to WSI
@@ -254,7 +254,7 @@ bool NvSampleAppVK::initialize(const NvPlatformInfo& platform, int32_t width, in
 			"Cannot find required Vulkan components.\nPlease visit http://developer.nvidia.com\n"
 			" to locate Vulkan-compatible drivers and OS images\n"
 			"The app will now exit", true);
-		m_requestedExit = true;
+		mRequestedExit = true;
 		return false;
 	}
 #endif

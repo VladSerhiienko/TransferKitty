@@ -1,39 +1,4 @@
-//----------------------------------------------------------------------------------
-// File:        TKAppBase/TKAppBase.h
-// SDK Version: v3.00
-// Email:       gameworks@nvidia.com
-// Site:        http://developer.nvidia.com/
-//
-// Copyright (c) 2014-2015, NVIDIA CORPORATION. All rights reserved.
-//
-// Redistribution and use in source and binary forms, with or without
-// modification, are permitted provided that the following conditions
-// are met:
-//  * Redistributions of source code must retain the above copyright
-//    notice, this list of conditions and the following disclaimer.
-//  * Redistributions in binary form must reproduce the above copyright
-//    notice, this list of conditions and the following disclaimer in the
-//    documentation and/or other materials provided with the distribution.
-//  * Neither the name of NVIDIA CORPORATION nor the names of its
-//    contributors may be used to endorse or promote products derived
-//    from this software without specific prior written permission.
-//
-// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS ``AS IS'' AND ANY
-// EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
-// IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
-// PURPOSE ARE DISCLAIMED.  IN NO EVENT SHALL THE COPYRIGHT OWNER OR
-// CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
-// EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
-// PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
-// PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY
-// OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-// (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-// OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-//
-//----------------------------------------------------------------------------------
 
-// simple SDK app interface
-// abstract base class
 #ifndef NV_APP_BASE_H
 #define NV_APP_BASE_H
 
@@ -240,25 +205,25 @@ public:
 	/// command line that was seperated by whitespace.  The elements are provided in
 	/// the order they appeared in the command line.  The application executable name
 	/// is NOT the first element.  Only the options are included.
-	static const std::vector<std::string>& getCommandLine() { return ms_commandLine; }
+	static const std::vector<std::string>& getCommandLine() { return sCmdLine; }
 
-	static void commandLineAppend(std::string arg) { ms_commandLine.push_back(arg);  }
+	static void commandLineAppend(std::string arg) { sCmdLine.push_back(arg);  }
 
 	virtual void setPlatformContext(NvPlatformContext* platform) { mPlatform = platform; }
 
 	// Returns true if the final output will be in HDR format. Useful for making decisions
 	// within the app based on if the output will be in HDR/SDR mode.
-	bool getHDREnable() const { return m_hdrEnable; }
+	bool getHDREnable() const { return mEnableHDR; }
 
 	// Set if the final output should be in HDR based on sink's capabilities and app's readiness
-	void setHDREnable(bool flag) { m_hdrEnable = flag; }
+	void setHDREnable(bool flag) { mEnableHDR = flag; }
 
 	// Gets application's readiness for HDR. This should be set by the application upon creation.
-	bool getHDRReady() const { return m_hdrReady; }
+	bool getHDRReady() const { return mIsHDRReady; }
 
 	// Set HDR readiness of the application. This should be called as soon at the sample's instance has
 	// been created.
-	void setHDRReady(bool flag) { m_hdrReady = flag; }
+	void setHDRReady(bool flag) { mIsHDRReady = flag; }
 
 protected:
 	virtual bool isTestMode() { return false; }
@@ -269,16 +234,16 @@ protected:
 
     /// Exit query.
     /// \return true if the application is in the process of exiting, false if not.
-    bool isExiting() { return m_requestedExit; }
+    bool isExiting() { return mRequestedExit; }
 
-    int32_t m_width; ///< the current window width
-    int32_t m_height; ///< the current window height
+    int32_t mWidth; ///< the current window width
+    int32_t mHeight; ///< the current window height
 
 	// This flag determines if the output should be in HDR mode or not.
-	bool m_hdrEnable = false;
+	bool mEnableHDR = false;
 
 	// Is the app built with HDR support
-	bool m_hdrReady = false;
+	bool mIsHDRReady = false;
 
     /// \privatesection
     NvPlatformContext* mPlatform;
@@ -286,9 +251,9 @@ protected:
 	NvThreadManager* mThreadManager;
 	std::string mAppTitle;
 
-	static std::vector<std::string> ms_commandLine;
+	static std::vector<std::string> sCmdLine;
 
-	bool m_requestedExit;
+	bool mRequestedExit;
 };
 
 /// App creation entrypoint.

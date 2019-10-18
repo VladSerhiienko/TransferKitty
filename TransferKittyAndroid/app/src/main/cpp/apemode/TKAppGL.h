@@ -1,8 +1,8 @@
 #pragma once
-#include "NvAppBase/gl/NvSampleAppGL.h"
+#include "NvAppBase/gl/TKSampleAppGL.h"
 
 namespace apemode {
-class TKAppGL : public NvSampleAppGL {
+class TKAppGL : public TKSampleAppGL {
 public:
     TKAppGL();
     virtual ~TKAppGL();

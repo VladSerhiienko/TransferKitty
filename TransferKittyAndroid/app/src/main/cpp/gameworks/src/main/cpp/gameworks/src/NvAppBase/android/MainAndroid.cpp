@@ -75,25 +75,25 @@ public:
     //! Start time measurement
     void start() {
         gettimeofday( &start_time, 0);
-        m_running = true;
+        mIsRunning = true;
     }
 
     //! Stop time measurement
     void stop() {
         diff_time = getDiffTime();
-        m_running = false;
+        mIsRunning = false;
     }
 
     //! Reset time counters to zero
     void reset()
     {
         diff_time = 0;
-        if( m_running )
+        if( mIsRunning )
             gettimeofday( &start_time, 0);
     }
 
     const float getTime() const {
-        if(m_running) {
+        if(mIsRunning) {
             return getDiffTime();
         } else {
             // time difference in seconds

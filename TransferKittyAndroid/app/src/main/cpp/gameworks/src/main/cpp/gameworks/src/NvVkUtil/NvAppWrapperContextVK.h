@@ -38,14 +38,14 @@
 #include <NvVkUtil/NvAppContextVK.h>
 #include <NvSimpleTypes.h>
 
-class NvAppContextGL;
+class TKAppContextGL;
 class NvVkMultibufferedRenderTarget;
 class NvGLDrawCallbacks;
 
 ///  Context wrapper (VK on top of OpenGL).
 class NvAppWrapperContextVK : public NvAppContextVK {
 public:
-	NvAppWrapperContextVK(NvAppContextGL* glContext, NvVKConfiguration config, const std::string& appTitle, NvPlatformInfo info, bool useGLUI = false);
+	NvAppWrapperContextVK(TKAppContextGL* glContext, NvVKConfiguration config, const std::string& appTitle, NvPlatformInfo info, bool useGLUI = false);
 
 	virtual void contextInitRendering();
 
@@ -111,7 +111,7 @@ protected:
 
 	NvVkMultibufferedRenderTarget* mOffscreenRenderTarget;
 
-	NvAppContextGL* mGLContext;
+	TKAppContextGL* mGLContext;
 
 	VkSemaphore m_semImageRead;
 

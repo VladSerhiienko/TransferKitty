@@ -46,7 +46,7 @@
 
 class NvGLDrawCallbacks;
 class NvAppWrapperContextVK;
-class NvAppContextGL;
+class TKAppContextGL;
 
 /// Callbacks for rendering GL in a VK app (only supported on NV HW)
 class NvGLDrawCallbacks {
@@ -57,10 +57,10 @@ public:
 	virtual bool skipVKDraw() { return false; }
 	/// Called for the app to initialize its GL resources
 	/// \param[in] gl the GL app context to use for loading rendering data
-	virtual void initGLResources(NvAppContextGL* gl) = 0;
+	virtual void initGLResources(TKAppContextGL* gl) = 0;
 	/// Callback to draw the GL rendering
 	/// \param[in] gl the GL app context to use to render
-	virtual void drawGL(NvAppContextGL* gl) = 0;
+	virtual void drawGL(TKAppContextGL* gl) = 0;
 };
 
 
