@@ -30,6 +30,10 @@ android {
             version "3.10.2"
         }
     }
+    compileOptions {
+        sourceCompatibility = 1.8
+        targetCompatibility = 1.8
+    }
 }
 
 dependencies {
@@ -43,6 +47,7 @@ dependencies {
     implementation 'com.google.firebase:firebase-database:19.2.0'
     implementation 'com.google.firebase:firebase-auth:19.1.0'
     implementation 'com.google.firebase:firebase-core:17.2.0'
+    implementation 'org.jetbrains:annotations:15.0'
 }
 
 // Add to the bottom of the file
