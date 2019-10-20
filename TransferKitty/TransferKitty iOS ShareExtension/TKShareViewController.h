@@ -9,6 +9,5 @@
 #import <UIKit/UIKit.h>
 #import <Social/Social.h>
 
-@interface TKShareViewController : SLComposeServiceViewController
-
+@interface TKShareViewController : UIViewController
 @end

@@ -639,7 +639,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = vserhiienko.TransferKitty.TransferKittyShareExtension;
+				PRODUCT_BUNDLE_IDENTIFIER = vserhiienko.TransferKitty.ShareExtension;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
@@ -660,7 +660,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = vserhiienko.TransferKitty.TransferKittyShareExtension;
+				PRODUCT_BUNDLE_IDENTIFIER = vserhiienko.TransferKitty.ShareExtension;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;

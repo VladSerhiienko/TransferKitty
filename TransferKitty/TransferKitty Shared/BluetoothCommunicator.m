@@ -1,5 +1,8 @@
 #import "BluetoothCommunicator.h"
+
+#if TARGET_OS_IOS
 #import <UIKit/UIKit.h>
+#endif
 
 #import <sys/utsname.h>
 #include <stdatomic.h>
@@ -182,6 +185,14 @@ static BluetoothCommunicator *_instance = nil;
     return _instance;
 }
 
++ (NSString *)createName {
+#if TARGET_OS_IOS
+    return [[UIDevice currentDevice] name];
+#else
+    return NSUserName();
+#endif
+}
+
 + (NSString *)createModelName {
     struct utsname systemInfo;
     uname(&systemInfo);
@@ -221,7 +232,7 @@ static BluetoothCommunicator *_instance = nil;
 
 - (void)prepareName {
     DLOGF( @"%s", FUNC_NAME );
-    _name = [[UIDevice currentDevice] name];
+    _name = [BluetoothCommunicator createName];
     _model = [BluetoothCommunicator createModelName];
     _friendlyModel = [BluetoothCommunicator createModelFriendlyName];
 }
