@@ -260,6 +260,6 @@ protected:
 /// App must define this and have it return an instance of their class
 /// \param[in] platform the platform context to be used in the NvAppBase constructor call
 /// \return an instance of the application's own subclass.
-extern TKAppBase* NvAppFactory();
+extern TKAppBase* TKAppFactory();
 
 #endif

@@ -198,6 +198,6 @@ void TKAppGL::setPlatformContext(NvPlatformContext *platform) {
     // JNIEnv* env    = engine->mApp->appThreadEnv;
 }
 
-TKAppBase *NvAppFactory() {
+TKAppBase *TKAppFactory() {
     return new TKAppGL();
 }

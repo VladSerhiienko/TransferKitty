@@ -34,55 +34,68 @@ public class TKBluetoothCommunicatorDecodedMessageHandler {
             } break;
 
             case BTCM_MESSAGE_TYPE_NAME: {
-                if (device.getDeviceName().isEmpty()) {
-                    //noinspection DuplicateExpressions
-                    final String string = new String(messageContents.bytes, messageContents.offset, messageContents.length);
-                    device.setDeviceName(string);
-
-                    TKDebug.dlog(Log.INFO, TAG, "Assigning a device name: \"" + string + "\"");
-                } else {
-                    TKDebug.dlog(Log.ERROR, TAG, "A device already has an assigned name, the message is skipped.");
-                }
+                processNameMessage(device, messageContents);
             } break;
 
             case BTCM_MESSAGE_TYPE_DEVICE_MODEL: {
-                if (device.getDeviceModel().isEmpty()) {
-                    //noinspection DuplicateExpressions
-                    final String string = new String(messageContents.bytes, messageContents.offset, messageContents.length);
-                    device.setDeviceModel(string);
-
-                    TKDebug.dlog(Log.INFO, TAG, "Assigning a device model: \"" + string + "\"");
-                } else {
-                    TKDebug.dlog(Log.ERROR, TAG, "A device already has an assigned model, the message is skipped.");
-                }
+                processModelMessage(device, messageContents);
             } break;
 
             case BTCM_MESSAGE_TYPE_DEVICE_FRIENDLY_MODEL: {
-                if (device.getDeviceFriendlyModel().isEmpty()) {
-                    //noinspection DuplicateExpressions
-                    final String string = new String(messageContents.bytes, messageContents.offset, messageContents.length);
-                    device.setDeviceFriendlyModel(string);
-
-                    TKDebug.dlog(Log.INFO, TAG, "Assigning a device friendly model: \"" + string + "\"");
-                } else {
-                    TKDebug.dlog(Log.ERROR, TAG, "A device already has an assigned friendly model, the message is skipped.");
-                }
+                processFriendlyModelMessage(device, messageContents);
             } break;
 
             case BTCM_MESSAGE_TYPE_UUID: {
-                if (device.getDeviceUuid() == null) {
-                    final UUID uuid = bytesToUuid(messageContents.bytes, messageContents.offset, messageContents.length);
-                    device.setDeviceUuid(uuid);
-
-                    TKDebug.dlog(Log.INFO, TAG, "Assigning a device UUID: \"" + uuid + "\"");
-                } else {
-                    TKDebug.dlog(Log.ERROR, TAG, "A device already has an assigned UUID, the message is skipped.");
-                }
+                processUuidMessage(device, messageContents);
             } break;
 
             case BTCM_MESSAGE_TYPE_FILE: {
                 processFileMessage(messageContents, _bluetoothCommunicator);
             } break;
+        }
+    }
+
+    private void processNameMessage(@NotNull TKBluetoothCommunicatorDevice device, TKByteArraySpan messageContents) {
+        if (device.getDeviceName().isEmpty()) {
+            final String string = new String(messageContents.bytes, messageContents.offset, messageContents.length);
+            device.setDeviceName(string);
+
+            TKDebug.dlog(Log.INFO, TAG, "Assigning a device name: \"" + string + "\"");
+        } else {
+            TKDebug.dlog(Log.ERROR, TAG, "A device already has an assigned name, the message is skipped.");
+        }
+    }
+
+    private void processModelMessage(@NotNull TKBluetoothCommunicatorDevice device, TKByteArraySpan messageContents) {
+        if (device.getDeviceModel().isEmpty()) {
+            final String string = new String(messageContents.bytes, messageContents.offset, messageContents.length);
+            device.setDeviceModel(string);
+
+            TKDebug.dlog(Log.INFO, TAG, "Assigning a device model: \"" + string + "\"");
+        } else {
+            TKDebug.dlog(Log.ERROR, TAG, "A device already has an assigned model, the message is skipped.");
+        }
+    }
+
+    private void processFriendlyModelMessage(@NotNull TKBluetoothCommunicatorDevice device, TKByteArraySpan messageContents) {
+        if (device.getDeviceFriendlyModel().isEmpty()) {
+            final String string = new String(messageContents.bytes, messageContents.offset, messageContents.length);
+            device.setDeviceFriendlyModel(string);
+
+            TKDebug.dlog(Log.INFO, TAG, "Assigning a device friendly model: \"" + string + "\"");
+        } else {
+            TKDebug.dlog(Log.ERROR, TAG, "A device already has an assigned friendly model, the message is skipped.");
+        }
+    }
+
+    private void processUuidMessage(@NotNull TKBluetoothCommunicatorDevice device, TKByteArraySpan messageContents) {
+        if (device.getDeviceUuid() == null) {
+            final UUID uuid = bytesToUuid(messageContents.bytes, messageContents.offset, messageContents.length);
+            device.setDeviceUuid(uuid);
+
+            TKDebug.dlog(Log.INFO, TAG, "Assigning a device UUID: \"" + uuid + "\"");
+        } else {
+            TKDebug.dlog(Log.ERROR, TAG, "A device already has an assigned UUID, the message is skipped.");
         }
     }
 

@@ -163,7 +163,7 @@ void android_main(struct android_app* app) {
 	}
 
 
-    TKAppBase* sdkapp = NvAppFactory();
+    TKAppBase* sdkapp = TKAppFactory();
 	sdkapp->setPlatformContext(engine);
     engine->mAppBase = sdkapp;
 	sdkapp->setThreadManager(new NvThreadManagerAnd);

@@ -21,48 +21,48 @@ include_directories( #
         # nvidia gameworks
         #
 
-        gameworks/src/main/cpp/gameworks/externals/include
-        gameworks/src/main/cpp/gameworks/externals/include/GL
-        gameworks/src/main/cpp/gameworks/externals/include/GLFW
-        gameworks/src/main/cpp/gameworks/externals/include/GLFW/GL
-        gameworks/src/main/cpp/gameworks/externals/include/GLFW/GLES2
-        gameworks/src/main/cpp/gameworks/externals/include/GLFW/KHR
-        gameworks/src/main/cpp/gameworks/include
-        gameworks/src/main/cpp/gameworks/include/NV
-        gameworks/src/main/cpp/gameworks/include/NvFoundation
-        gameworks/src/main/cpp/gameworks/include/NsFoundation/unix
-        gameworks/src/main/cpp/gameworks/include/NvGamepad
-        gameworks/src/main/cpp/gameworks/include/NvGamepad/android
-        gameworks/src/main/cpp/gameworks/include/NvGLESWrapper
-        gameworks/src/main/cpp/gameworks/include/NvGLUtils
-        gameworks/src/main/cpp/gameworks/include/NvImage
-        gameworks/src/main/cpp/gameworks/include/NvModel
-        gameworks/src/main/cpp/gameworks/include/NsFoundation
-        gameworks/src/main/cpp/gameworks/src/NsFoundation/android
-        gameworks/src/main/cpp/gameworks/src/NsFoundation/unix
-        gameworks/src/main/cpp/gameworks/src
-        gameworks/src/main/cpp/gameworks/include
-        gameworks/src/main/cpp/gameworks/include/NsFoundation
-        gameworks/src/main/cpp/gameworks/include/NsFoundation/unix
-        gameworks/src/main/cpp/gameworks/include/NsFoundation/windows
-        gameworks/src/main/cpp/gameworks/include/NV
-        gameworks/src/main/cpp/gameworks/include/NvAppBase
-        gameworks/src/main/cpp/gameworks/include/NvAppBase/gl
-        gameworks/src/main/cpp/gameworks/src/NvAppBase/android
-        gameworks/src/main/cpp/gameworks/include/NvAssetLoader
-        gameworks/src/main/cpp/gameworks/include/NvFoundation
-        gameworks/src/main/cpp/gameworks/include/NvFoundation/unix
-        gameworks/src/main/cpp/gameworks/include/NvFoundation/windows
-        gameworks/src/main/cpp/gameworks/include/NvGamepad
-        gameworks/src/main/cpp/gameworks/include/NvGLESWrapper
-        gameworks/src/main/cpp/gameworks/include/NvGLUtils
-        gameworks/src/main/cpp/gameworks/include/NvImage
-        gameworks/src/main/cpp/gameworks/include/NvModel
-        gameworks/src/main/cpp/gameworks/include/NvUI
+        gameworks/externals/include
+        gameworks/externals/include/GL
+        gameworks/externals/include/GLFW
+        gameworks/externals/include/GLFW/GL
+        gameworks/externals/include/GLFW/GLES2
+        gameworks/externals/include/GLFW/KHR
+        gameworks/src/NsFoundation/android
+        gameworks/src/NsFoundation/unix
+        gameworks/src/NvAppBase/android
+        gameworks/src
+        gameworks/include
+        gameworks/include/NV
+        gameworks/include/NvFoundation
+        gameworks/include/NsFoundation/unix
+        gameworks/include/NvGamepad
+        gameworks/include/NvGamepad/android
+        gameworks/include/NvGLESWrapper
+        gameworks/include/NvGLUtils
+        gameworks/include/NvImage
+        gameworks/include/NvModel
+        gameworks/include/NsFoundation
+        gameworks/include
+        gameworks/include/NsFoundation
+        gameworks/include/NsFoundation/unix
+        gameworks/include/NsFoundation/windows
+        gameworks/include/NV
+        gameworks/include/NvAppBase
+        gameworks/include/NvAppBase/gl
+        gameworks/include/NvAssetLoader
+        gameworks/include/NvFoundation
+        gameworks/include/NvFoundation/unix
+        gameworks/include/NvFoundation/windows
+        gameworks/include/NvGamepad
+        gameworks/include/NvGLESWrapper
+        gameworks/include/NvGLUtils
+        gameworks/include/NvImage
+        gameworks/include/NvModel
+        gameworks/include/NvUI
 
-        gameworks/src/main/cpp/gameworks/externals/src/freetype-2.4.9/include
-        gameworks/src/main/cpp/gameworks/externals/src/freetype-2.4.9/include/freetype/config/
-        gameworks/src/main/cpp/gameworks/externals/src/freetype-2.4.9/builds/unix/
+        gameworks/externals/src/freetype-2.4.9/include
+        gameworks/externals/src/freetype-2.4.9/include/freetype/config/
+        gameworks/externals/src/freetype-2.4.9/builds/unix/
         )
 
 
@@ -85,73 +85,41 @@ add_library(
 add_library(
         gameworks
         STATIC
-        gameworks/src/main/cpp/gameworks/src/NsFoundation/NsAllocator.cpp
-        gameworks/src/main/cpp/gameworks/src/NsFoundation/NsAssert.cpp
-        gameworks/src/main/cpp/gameworks/src/NsFoundation/NsHeaderTest.cpp
-        gameworks/src/main/cpp/gameworks/src/NsFoundation/NsTempAllocator.cpp
-        gameworks/src/main/cpp/gameworks/src/NsFoundation/NsGlobals.cpp
-        gameworks/src/main/cpp/gameworks/src/NsFoundation/NsString.cpp
-        gameworks/src/main/cpp/gameworks/src/NsFoundation/android/cpu-features.c
-        gameworks/src/main/cpp/gameworks/src/NsFoundation/unix/NsUnixAtomic.cpp
-        gameworks/src/main/cpp/gameworks/src/NsFoundation/unix/NsUnixMutex.cpp
-        gameworks/src/main/cpp/gameworks/src/NsFoundation/unix/NsUnixSocket.cpp
-        gameworks/src/main/cpp/gameworks/src/NsFoundation/unix/NsUnixTime.cpp
-        gameworks/src/main/cpp/gameworks/src/NsFoundation/unix/NsUnixCpu.cpp
-        gameworks/src/main/cpp/gameworks/src/NsFoundation/unix/NsUnixPrintString.cpp
-        gameworks/src/main/cpp/gameworks/src/NsFoundation/unix/NsUnixSync.cpp
-        gameworks/src/main/cpp/gameworks/src/NsFoundation/unix/NsUnixFPU.cpp
-        gameworks/src/main/cpp/gameworks/src/NsFoundation/unix/NsUnixSList.cpp
-        gameworks/src/main/cpp/gameworks/src/NsFoundation/unix/NsUnixThread.cpp
-        gameworks/src/main/cpp/gameworks/src/NvGamepad/android/NvGamepadAndroid.cpp
-        gameworks/src/main/cpp/gameworks/src/NvAssetLoader/android/NvAssetLoaderAndroid.cpp
-        gameworks/src/main/cpp/gameworks/src/NvAppBase/android/EngineAndroid.cpp
-        gameworks/src/main/cpp/gameworks/src/NvAppBase/android/NvFBOPool.cpp
-        gameworks/src/main/cpp/gameworks/src/NvAppBase/android/MainAndroid.cpp
-        gameworks/src/main/cpp/gameworks/src/NvAppBase/android/NvAndroidNativeAppGlue.c
-        gameworks/src/main/cpp/gameworks/src/NvAppBase/android/NvAndroidWinUtil.cpp
-        gameworks/src/main/cpp/gameworks/src/NvAppBase/android/NvThreadAnd.cpp
-        gameworks/src/main/cpp/gameworks/src/NvAppBase/TKAppBase.cpp
-        gameworks/src/main/cpp/gameworks/src/NvAppBase/TKSampleApp.cpp
-        gameworks/src/main/cpp/gameworks/src/NvAppBase/NvFoundationInit.cpp
-        gameworks/src/main/cpp/gameworks/src/NvAppBase/NvFramerateCounter.cpp
-        gameworks/src/main/cpp/gameworks/src/NvAppBase/gl/TKAppContextGL.cpp
-        gameworks/src/main/cpp/gameworks/src/NvAppBase/gl/TKSampleAppGL.cpp
-        gameworks/src/main/cpp/gameworks/src/NvEGLUtil/NvEGLUtil.cpp
-        gameworks/src/main/cpp/gameworks/src/NvGLUtils/NvTimers.cpp
-        gameworks/src/main/cpp/gameworks/src/NvGLUtils/NvLogsGL.cpp
-        gameworks/src/main/cpp/gameworks/src/NvGLUtils/NvGLSLProgram.cpp)
-        # gameworks/src/main/cpp/gameworks/src/NvAppBase/NvInputHandler_CameraFly.cpp
-        # gameworks/src/main/cpp/gameworks/src/NvAppBase/NvInputTransformer.cpp
-        # gameworks/src/main/cpp/gameworks/src/NvGLUtils/NvBitFontGL.cpp
-        # gameworks/src/main/cpp/gameworks/src/NvGLUtils/NvImageGL.cpp
-        # gameworks/src/main/cpp/gameworks/src/NvGLUtils/NvShapesGL.cpp
-        # gameworks/src/main/cpp/gameworks/src/NvGLUtils/NvUIGL.cpp
-        # gameworks/src/main/cpp/gameworks/src/NvGLUtils/NvUIGraphicGL.cpp
-        # gameworks/src/main/cpp/gameworks/src/NvGLUtils/NvUIGraphicFrameGL.cpp
-        # gameworks/src/main/cpp/gameworks/src/NvGLUtils/NvUIShadersGL.cpp
-        # gameworks/src/main/cpp/gameworks/src/NvGLUtils/NvUITextureRenderGL.cpp
-        # gameworks/src/main/cpp/gameworks/src/NvImage/BlockDXT.cpp
-        # gameworks/src/main/cpp/gameworks/src/NvImage/ColorBlock.cpp
-        # gameworks/src/main/cpp/gameworks/src/NvImage/NvFilePtr.cpp
-        # gameworks/src/main/cpp/gameworks/src/NvImage/NvImage.cpp
-        # gameworks/src/main/cpp/gameworks/src/NvImage/NvImageDDS.cpp
-        # gameworks/src/main/cpp/gameworks/src/NvUI/NvBitFont.cpp
-        # gameworks/src/main/cpp/gameworks/src/NvUI/NvEmbeddedAsset.cpp
-        # gameworks/src/main/cpp/gameworks/src/NvUI/NvGestureDetector.cpp
-        # gameworks/src/main/cpp/gameworks/src/NvUI/NvUI.cpp
-        # gameworks/src/main/cpp/gameworks/src/NvUI/NvUIContainer.cpp
-        # gameworks/src/main/cpp/gameworks/src/NvUI/NvUIButton.cpp
-        # gameworks/src/main/cpp/gameworks/src/NvUI/NvUISlider.cpp
-        # gameworks/src/main/cpp/gameworks/src/NvUI/NvUIText.cpp
-        # gameworks/src/main/cpp/gameworks/src/NvUI/NvUIPopup.cpp
-        # gameworks/src/main/cpp/gameworks/src/NvUI/NvUIGraphic.cpp
-        # gameworks/src/main/cpp/gameworks/src/NvUI/NvUIGraphicFrame.cpp
-        # gameworks/src/main/cpp/gameworks/src/NvUI/NvTweakBar.cpp
-        # gameworks/src/main/cpp/gameworks/src/NvUI/NvTweakVar.cpp
-        # gameworks/src/main/cpp/gameworks/src/NvUI/NvUIValueText.cpp
-        # gameworks/src/main/cpp/gameworks/src/NvUI/NvUIValueBar.cpp
-        # gameworks/src/main/cpp/gameworks/src/NvUI/NvUIWindow.cpp
-        # gameworks/src/main/cpp/gameworks/src/NvUI/NvUITexture.cpp)
+        gameworks/src/NsFoundation/NsAllocator.cpp
+        gameworks/src/NsFoundation/NsAssert.cpp
+        gameworks/src/NsFoundation/NsHeaderTest.cpp
+        gameworks/src/NsFoundation/NsTempAllocator.cpp
+        gameworks/src/NsFoundation/NsGlobals.cpp
+        gameworks/src/NsFoundation/NsString.cpp
+        gameworks/src/NsFoundation/android/cpu-features.c
+        gameworks/src/NsFoundation/unix/NsUnixAtomic.cpp
+        gameworks/src/NsFoundation/unix/NsUnixMutex.cpp
+        gameworks/src/NsFoundation/unix/NsUnixSocket.cpp
+        gameworks/src/NsFoundation/unix/NsUnixTime.cpp
+        gameworks/src/NsFoundation/unix/NsUnixCpu.cpp
+        gameworks/src/NsFoundation/unix/NsUnixPrintString.cpp
+        gameworks/src/NsFoundation/unix/NsUnixSync.cpp
+        gameworks/src/NsFoundation/unix/NsUnixFPU.cpp
+        gameworks/src/NsFoundation/unix/NsUnixSList.cpp
+        gameworks/src/NsFoundation/unix/NsUnixThread.cpp
+        gameworks/src/NvGamepad/android/NvGamepadAndroid.cpp
+        gameworks/src/NvAssetLoader/android/NvAssetLoaderAndroid.cpp
+        gameworks/src/NvAppBase/android/EngineAndroid.cpp
+        gameworks/src/NvAppBase/android/NvFBOPool.cpp
+        gameworks/src/NvAppBase/android/MainAndroid.cpp
+        gameworks/src/NvAppBase/android/NvAndroidNativeAppGlue.c
+        gameworks/src/NvAppBase/android/NvAndroidWinUtil.cpp
+        gameworks/src/NvAppBase/android/NvThreadAnd.cpp
+        gameworks/src/NvAppBase/TKAppBase.cpp
+        gameworks/src/NvAppBase/TKSampleApp.cpp
+        gameworks/src/NvAppBase/NvFoundationInit.cpp
+        gameworks/src/NvAppBase/NvFramerateCounter.cpp
+        gameworks/src/NvAppBase/gl/TKAppContextGL.cpp
+        gameworks/src/NvAppBase/gl/TKSampleAppGL.cpp
+        gameworks/src/NvEGLUtil/NvEGLUtil.cpp
+        gameworks/src/NvGLUtils/NvTimers.cpp
+        gameworks/src/NvGLUtils/NvLogsGL.cpp
+        gameworks/src/NvGLUtils/NvGLSLProgram.cpp)
 
 
 find_library( log-lib log )
