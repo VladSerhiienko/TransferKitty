@@ -16,16 +16,30 @@
 		CACC74A42354F93800FE3672 /* TKViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = CACC74A32354F93800FE3672 /* TKViewController.mm */; };
 		CACC74A72354F93800FE3672 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CACC74A52354F93800FE3672 /* Main.storyboard */; };
 		CACC74AA2354F93800FE3672 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = CACC74A92354F93800FE3672 /* main.m */; };
-		CACC74AB2354F93800FE3672 /* Renderer.m in Sources */ = {isa = PBXBuildFile; fileRef = CACC747F2354F93500FE3672 /* Renderer.m */; };
-		CACC74AC2354F93800FE3672 /* Renderer.m in Sources */ = {isa = PBXBuildFile; fileRef = CACC747F2354F93500FE3672 /* Renderer.m */; };
-		CACC74AD2354F93800FE3672 /* Shaders.metal in Sources */ = {isa = PBXBuildFile; fileRef = CACC74812354F93500FE3672 /* Shaders.metal */; };
-		CACC74AE2354F93800FE3672 /* Shaders.metal in Sources */ = {isa = PBXBuildFile; fileRef = CACC74812354F93500FE3672 /* Shaders.metal */; };
 		CACC74AF2354F93800FE3672 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CACC74822354F93800FE3672 /* Assets.xcassets */; };
 		CACC74B02354F93800FE3672 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CACC74822354F93800FE3672 /* Assets.xcassets */; };
 		CACC74C12354F9AB00FE3672 /* TKShareViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = CACC74C02354F9AB00FE3672 /* TKShareViewController.mm */; };
 		CACC74C42354F9AB00FE3672 /* MainInterface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CACC74C22354F9AB00FE3672 /* MainInterface.storyboard */; };
 		CACC74C82354F9AB00FE3672 /* TransferKittyShareExtension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = CACC74BD2354F9AB00FE3672 /* TransferKittyShareExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		CACC74CD2354FC5400FE3672 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CACC74822354F93800FE3672 /* Assets.xcassets */; };
+		CAE7EC4C235C4F5A00C4D217 /* Nuklear.metal in Sources */ = {isa = PBXBuildFile; fileRef = CAE7EC44235C4F5A00C4D217 /* Nuklear.metal */; };
+		CAE7EC4D235C4F5A00C4D217 /* Nuklear.metal in Sources */ = {isa = PBXBuildFile; fileRef = CAE7EC44235C4F5A00C4D217 /* Nuklear.metal */; };
+		CAE7EC4E235C4F5A00C4D217 /* Nuklear.metal in Sources */ = {isa = PBXBuildFile; fileRef = CAE7EC44235C4F5A00C4D217 /* Nuklear.metal */; };
+		CAE7EC4F235C4F5A00C4D217 /* BluetoothCommunicator.m in Sources */ = {isa = PBXBuildFile; fileRef = CAE7EC45235C4F5A00C4D217 /* BluetoothCommunicator.m */; };
+		CAE7EC50235C4F5A00C4D217 /* BluetoothCommunicator.m in Sources */ = {isa = PBXBuildFile; fileRef = CAE7EC45235C4F5A00C4D217 /* BluetoothCommunicator.m */; };
+		CAE7EC51235C4F5A00C4D217 /* BluetoothCommunicator.m in Sources */ = {isa = PBXBuildFile; fileRef = CAE7EC45235C4F5A00C4D217 /* BluetoothCommunicator.m */; };
+		CAE7EC52235C4F5A00C4D217 /* TKNuklearMetalViewDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = CAE7EC4A235C4F5A00C4D217 /* TKNuklearMetalViewDelegate.mm */; };
+		CAE7EC53235C4F5A00C4D217 /* TKNuklearMetalViewDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = CAE7EC4A235C4F5A00C4D217 /* TKNuklearMetalViewDelegate.mm */; };
+		CAE7EC54235C4F5A00C4D217 /* TKNuklearMetalViewDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = CAE7EC4A235C4F5A00C4D217 /* TKNuklearMetalViewDelegate.mm */; };
+		CAE7EC57235C51D800C4D217 /* CoreBluetooth.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CAE7EC56235C51D800C4D217 /* CoreBluetooth.framework */; };
+		CAE7EC5A235C51E100C4D217 /* Metal.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CAE7EC58235C51E100C4D217 /* Metal.framework */; };
+		CAE7EC5B235C51E100C4D217 /* MetalKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CAE7EC59235C51E100C4D217 /* MetalKit.framework */; };
+		CAE7EC5D235C51EC00C4D217 /* CoreBluetooth.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CAE7EC5C235C51EC00C4D217 /* CoreBluetooth.framework */; };
+		CAE7EC60235C51F400C4D217 /* MetalKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CAE7EC5E235C51F400C4D217 /* MetalKit.framework */; };
+		CAE7EC61235C51F400C4D217 /* Metal.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CAE7EC5F235C51F400C4D217 /* Metal.framework */; };
+		CAE7EC62235C51FE00C4D217 /* CoreBluetooth.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CAE7EC56235C51D800C4D217 /* CoreBluetooth.framework */; };
+		CAE7EC63235C520400C4D217 /* Metal.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CAE7EC58235C51E100C4D217 /* Metal.framework */; };
+		CAE7EC64235C520400C4D217 /* MetalKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CAE7EC59235C51E100C4D217 /* MetalKit.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -53,10 +67,6 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		CACC747E2354F93500FE3672 /* Renderer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Renderer.h; sourceTree = "<group>"; };
-		CACC747F2354F93500FE3672 /* Renderer.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Renderer.m; sourceTree = "<group>"; };
-		CACC74802354F93500FE3672 /* ShaderTypes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ShaderTypes.h; sourceTree = "<group>"; };
-		CACC74812354F93500FE3672 /* Shaders.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = Shaders.metal; sourceTree = "<group>"; };
 		CACC74822354F93800FE3672 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		CACC74872354F93800FE3672 /* TransferKitty.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TransferKitty.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CACC748A2354F93800FE3672 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -80,6 +90,19 @@
 		CACC74C02354F9AB00FE3672 /* TKShareViewController.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = TKShareViewController.mm; sourceTree = "<group>"; };
 		CACC74C32354F9AB00FE3672 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/MainInterface.storyboard; sourceTree = "<group>"; };
 		CACC74C52354F9AB00FE3672 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		CAE7EC44235C4F5A00C4D217 /* Nuklear.metal */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.metal; path = Nuklear.metal; sourceTree = "<group>"; };
+		CAE7EC45235C4F5A00C4D217 /* BluetoothCommunicator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BluetoothCommunicator.m; sourceTree = "<group>"; };
+		CAE7EC46235C4F5A00C4D217 /* AppInput.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppInput.h; sourceTree = "<group>"; };
+		CAE7EC47235C4F5A00C4D217 /* BluetoothCommunicator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BluetoothCommunicator.h; sourceTree = "<group>"; };
+		CAE7EC49235C4F5A00C4D217 /* TKNuklearMetalViewDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TKNuklearMetalViewDelegate.h; sourceTree = "<group>"; };
+		CAE7EC4A235C4F5A00C4D217 /* TKNuklearMetalViewDelegate.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = TKNuklearMetalViewDelegate.mm; sourceTree = "<group>"; };
+		CAE7EC4B235C4F5A00C4D217 /* nuklear.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = nuklear.h; sourceTree = "<group>"; };
+		CAE7EC56235C51D800C4D217 /* CoreBluetooth.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreBluetooth.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS12.2.sdk/System/Library/Frameworks/CoreBluetooth.framework; sourceTree = DEVELOPER_DIR; };
+		CAE7EC58235C51E100C4D217 /* Metal.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Metal.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS12.2.sdk/System/Library/Frameworks/Metal.framework; sourceTree = DEVELOPER_DIR; };
+		CAE7EC59235C51E100C4D217 /* MetalKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MetalKit.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS12.2.sdk/System/Library/Frameworks/MetalKit.framework; sourceTree = DEVELOPER_DIR; };
+		CAE7EC5C235C51EC00C4D217 /* CoreBluetooth.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreBluetooth.framework; path = System/Library/Frameworks/CoreBluetooth.framework; sourceTree = SDKROOT; };
+		CAE7EC5E235C51F400C4D217 /* MetalKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MetalKit.framework; path = System/Library/Frameworks/MetalKit.framework; sourceTree = SDKROOT; };
+		CAE7EC5F235C51F400C4D217 /* Metal.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Metal.framework; path = System/Library/Frameworks/Metal.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -87,6 +110,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CAE7EC5A235C51E100C4D217 /* Metal.framework in Frameworks */,
+				CAE7EC5B235C51E100C4D217 /* MetalKit.framework in Frameworks */,
+				CAE7EC57235C51D800C4D217 /* CoreBluetooth.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -94,6 +120,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CAE7EC60235C51F400C4D217 /* MetalKit.framework in Frameworks */,
+				CAE7EC61235C51F400C4D217 /* Metal.framework in Frameworks */,
+				CAE7EC5D235C51EC00C4D217 /* CoreBluetooth.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -101,6 +130,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CAE7EC63235C520400C4D217 /* Metal.framework in Frameworks */,
+				CAE7EC64235C520400C4D217 /* MetalKit.framework in Frameworks */,
+				CAE7EC62235C51FE00C4D217 /* CoreBluetooth.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -115,17 +147,21 @@
 				CACC749E2354F93800FE3672 /* TransferKitty macOS */,
 				CACC74BE2354F9AB00FE3672 /* TransferKitty iOS ShareExtension */,
 				CACC74882354F93800FE3672 /* Products */,
+				CAE7EC55235C51D800C4D217 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
 		CACC747D2354F93500FE3672 /* TransferKitty Shared */ = {
 			isa = PBXGroup;
 			children = (
-				CACC747E2354F93500FE3672 /* Renderer.h */,
-				CACC747F2354F93500FE3672 /* Renderer.m */,
-				CACC74802354F93500FE3672 /* ShaderTypes.h */,
-				CACC74812354F93500FE3672 /* Shaders.metal */,
 				CACC74822354F93800FE3672 /* Assets.xcassets */,
+				CAE7EC46235C4F5A00C4D217 /* AppInput.h */,
+				CAE7EC47235C4F5A00C4D217 /* BluetoothCommunicator.h */,
+				CAE7EC45235C4F5A00C4D217 /* BluetoothCommunicator.m */,
+				CAE7EC49235C4F5A00C4D217 /* TKNuklearMetalViewDelegate.h */,
+				CAE7EC4A235C4F5A00C4D217 /* TKNuklearMetalViewDelegate.mm */,
+				CAE7EC4B235C4F5A00C4D217 /* nuklear.h */,
+				CAE7EC44235C4F5A00C4D217 /* Nuklear.metal */,
 			);
 			path = "TransferKitty Shared";
 			sourceTree = "<group>";
@@ -178,6 +214,19 @@
 				CACC74C52354F9AB00FE3672 /* Info.plist */,
 			);
 			path = "TransferKitty iOS ShareExtension";
+			sourceTree = "<group>";
+		};
+		CAE7EC55235C51D800C4D217 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				CAE7EC5F235C51F400C4D217 /* Metal.framework */,
+				CAE7EC5E235C51F400C4D217 /* MetalKit.framework */,
+				CAE7EC5C235C51EC00C4D217 /* CoreBluetooth.framework */,
+				CAE7EC58235C51E100C4D217 /* Metal.framework */,
+				CAE7EC59235C51E100C4D217 /* MetalKit.framework */,
+				CAE7EC56235C51D800C4D217 /* CoreBluetooth.framework */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -312,11 +361,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				CACC74AB2354F93800FE3672 /* Renderer.m in Sources */,
 				CACC748F2354F93800FE3672 /* TKViewController.mm in Sources */,
+				CAE7EC4C235C4F5A00C4D217 /* Nuklear.metal in Sources */,
 				CACC74982354F93800FE3672 /* main.m in Sources */,
+				CAE7EC52235C4F5A00C4D217 /* TKNuklearMetalViewDelegate.mm in Sources */,
 				CACC748C2354F93800FE3672 /* AppDelegate.m in Sources */,
-				CACC74AD2354F93800FE3672 /* Shaders.metal in Sources */,
+				CAE7EC4F235C4F5A00C4D217 /* BluetoothCommunicator.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -324,11 +374,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				CACC74AC2354F93800FE3672 /* Renderer.m in Sources */,
 				CACC74A42354F93800FE3672 /* TKViewController.mm in Sources */,
+				CAE7EC4D235C4F5A00C4D217 /* Nuklear.metal in Sources */,
 				CACC74AA2354F93800FE3672 /* main.m in Sources */,
+				CAE7EC53235C4F5A00C4D217 /* TKNuklearMetalViewDelegate.mm in Sources */,
 				CACC74A12354F93800FE3672 /* AppDelegate.m in Sources */,
-				CACC74AE2354F93800FE3672 /* Shaders.metal in Sources */,
+				CAE7EC50235C4F5A00C4D217 /* BluetoothCommunicator.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -336,6 +387,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CAE7EC54235C4F5A00C4D217 /* TKNuklearMetalViewDelegate.mm in Sources */,
+				CAE7EC4E235C4F5A00C4D217 /* Nuklear.metal in Sources */,
+				CAE7EC51235C4F5A00C4D217 /* BluetoothCommunicator.m in Sources */,
 				CACC74C12354F9AB00FE3672 /* TKShareViewController.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
