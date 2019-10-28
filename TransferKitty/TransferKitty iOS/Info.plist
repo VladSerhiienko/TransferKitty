@@ -27,6 +27,7 @@
 	<key>UIRequiredDeviceCapabilities</key>
 	<array>
 		<string>armv7</string>
+        <string>bluetooth-le</string>
 	</array>
 	<key>UIStatusBarHidden</key>
 	<true/>
@@ -43,5 +44,17 @@
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
+    
+    <key>UIBackgroundModes</key>
+    <array>
+        <string>fetch</string>
+        <string>remote-notification</string>
+    </array>
+    
+    <key>NSAppleMusicUsageDescription</key>
+    <string>Audio files transferring</string>
+    
+    <key>NSPhotoLibraryUsageDescription</key>
+    <string>Photo and video files transferring</string>
 </dict>
 </plist>

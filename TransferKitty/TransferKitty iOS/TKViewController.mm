@@ -95,23 +95,25 @@ struct Tap {
 
 -(void)handlePan:(id)sender {
     if (UIPanGestureRecognizer* panGestureRecognizer = sender) {
-        CGPoint transition = [panGestureRecognizer translationInView:self.view];
+        CGPoint translation = [panGestureRecognizer translationInView:self.view];
         CGPoint velocity = [panGestureRecognizer velocityInView:self.view];
+        
+        NSLog(@"handlePan: velocity [%f %f]\n", velocity.x, velocity.y);
+        NSLog(@"handlePan: translation [%f %f]\n", translation.x, translation.y);
+        NSLog(@"handlePan: state %i\n", (int32_t)panGestureRecognizer.state);
 
-        pan.location = transition;
+        pan.location = translation;
         pan.velocity = velocity;
         
         if (panGestureRecognizer.state == UIGestureRecognizerStateBegan) {
             pan.state = 1;
             NSLog(@"handlePan: UIGestureRecognizerStateBegan\n");
-            NSLog(@"handlePan: [%f %f]\n", transition.x, transition.y);
         } else if (panGestureRecognizer.state == UIGestureRecognizerStateEnded) {
             pan.state = 3;
-            NSLog(@"handlePan: [%f %f]\n", transition.x, transition.y);
             NSLog(@"handlePan: UIGestureRecognizerStateEnded\n");
         } else {
             pan.state = 2;
-            NSLog(@"handlePan: [%f %f]\n", transition.x, transition.y);
+            NSLog(@"handlePan: [%f %f]\n", translation.x, translation.y);
         }
     }
 }
@@ -171,19 +173,48 @@ struct Tap {
 //    scroll.y = inputState->GetAnalogInput(apemode::platform::kAnalogInput_MouseVertScroll);
 //    nk_input_scroll(contextPtr, scroll);
 
-    if (pan.state == 1 || pan.state == 2 || pan.state == 3) {
-        
-        // auto& mouse = contextPtr->input.mouse;
-        // mouse.scroll_delta.x = pan.location.x / 1000.0f;
-        // mouse.scroll_delta.y = pan.location.y / 1000.0f;
+    if (abs(pan.velocity.x) > 0.001 || abs(pan.velocity.y) > 0.001) {
         struct nk_vec2 scroll;
         scroll.x = pan.velocity.x / 3000.0f;
         scroll.y = pan.velocity.y / 3000.0f;
         nk_input_scroll(contextPtr, scroll);
         
-        pan.state = 4;
-        // nk_input_scroll(contextPtr, scroll);
+        pan.velocity.x /= 1.25;
+        pan.velocity.y /= 1.25;
+        
+        if (abs(pan.velocity.x) < 0.001) {
+            pan.velocity.x = 0;
+        }
+        if (abs(pan.velocity.y) < 0.001) {
+            pan.velocity.y = 0;
+        }
     }
+
+//    if (pan.state == 1 || pan.state == 2 || pan.state == 3) {
+//
+//        // auto& mouse = contextPtr->input.mouse;
+//        // mouse.scroll_delta.x = pan.location.x / 1000.0f;
+//        // mouse.scroll_delta.y = pan.location.y / 1000.0f;
+//        struct nk_vec2 scroll;
+//        scroll.x = pan.velocity.x / 3000.0f;
+//        scroll.y = pan.velocity.y / 3000.0f;
+//        nk_input_scroll(contextPtr, scroll);
+//
+//        pan.state = 4;
+//        // nk_input_scroll(contextPtr, scroll);
+//    } else {
+//        if (abs(pan.velocity.x) > 0.01 || abs(pan.velocity.y) > 0.01) {
+//            pan.velocity.x /= 2.0;
+//            pan.velocity.y /= 2.0;
+//
+//            struct nk_vec2 scroll;
+//            scroll.x = pan.velocity.x / 3000.0;
+//            scroll.y = pan.velocity.y / 3000.0;
+//            nk_input_scroll(contextPtr, scroll);
+//
+//            NSLog(@"gliding: [%f %f]\n", pan.velocity.x, pan.velocity.y);
+//        }
+//    }
 
     nk_input_end(contextPtr);
     return 1;

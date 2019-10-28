@@ -769,7 +769,7 @@ static BluetoothCommunicator *_instance = nil;
 - (void)centralManagerDidUpdateState:(nonnull CBCentralManager *)central {
     DCHECK( central );
     switch ( central.state ) {
-        case CBCentralManagerStatePoweredOn: {
+        case CBManagerStatePoweredOn: {
                 DCHECK( _centralManager == central );
                 DLOGF( @"%s: Caught CBCentralManagerStatePoweredOn.", FUNC_NAME );
                 NSUInteger statusBits = unsetBit(_statusBits, BTCStatusBitWaitingForUserInput);
@@ -779,28 +779,28 @@ static BluetoothCommunicator *_instance = nil;
                 [self setStatusBits:statusBits];
             } break;
 
-        case CBCentralManagerStateUnknown:
+        case CBManagerStateUnknown:
             DLOGF( @"%s: Caught CBCentralManagerStateUnknown. Waiting for an update.", FUNC_NAME );
             [self setStatusBits:setBit(_statusBits, BTCStatusBitWaitingForSystem)];
             break;
-        case CBCentralManagerStateResetting:
+        case CBManagerStateResetting:
             DLOGF( @"%s: Caught CBCentralManagerStateResetting. Waiting for an update.", FUNC_NAME );
             [self setStatusBits:setBit(_statusBits, BTCStatusBitWaitingForSystem)];
             break;
 
-        case CBCentralManagerStatePoweredOff: {
+        case CBManagerStatePoweredOff: {
                 DLOGF( @"%s: Caught CBCentralManagerStatePoweredOff state.", FUNC_NAME );
                 NSUInteger statusBits = unsetBit(_statusBits, BTCStatusBitStartingCentral);
                 statusBits = unsetBit(statusBits, BTCStatusBitStartingPeripheral);
                 statusBits = setBit(statusBits, BTCStatusBitWaitingForUserInput);
                 [self setStatusBits:statusBits];
             } break;
-        case CBCentralManagerStateUnauthorized:
+        case CBManagerStateUnauthorized:
             DLOGF( @"%s: Caught CBCentralManagerStateUnauthorized state.", FUNC_NAME );
             [self setStatusBits:setBit(_statusBits, BTCStatusBitWaitingForUserInput)];
             break;
 
-        case CBCentralManagerStateUnsupported:
+        case CBManagerStateUnsupported:
             DLOGF( @"%s: Caught CBCentralManagerStateUnsupported state.", FUNC_NAME );
             [self setStatusBits:BTCStatusBitUnsupported];
             break;
