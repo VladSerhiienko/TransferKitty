@@ -10,7 +10,7 @@
 #include <chrono>
 
 #define NK_POINTER_TYPE uintptr_t
-#define NK_SIZE_TYPE size_t
+//#define NK_SIZE_TYPE size_t
 #define NK_IMPLEMENTATION
 #import "TKNuklearMetalViewDelegate.h"
 

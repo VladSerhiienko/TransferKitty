@@ -25,6 +25,9 @@ typedef NS_ENUM( NSUInteger, BTCStatusBits ) {
     BTCStatusBitWaitingForUserInput = 1 << 11,
     BTCStatusBitUnsupported = 1 << 12,
     BTCStatusBitPanic = 1 << 13,
+    BTCStatusBitPublishingService = 1 << 14,
+    BTCStatusBitPublishedService = 1 << 15,
+    BTCStatusBitStartingAdvertising = 1 << 16,
 };
 
 typedef NS_ENUM( NSUInteger, BluetoothCommunicatorMessageType ) {
@@ -50,10 +53,10 @@ typedef NS_ENUM( NSUInteger, BluetoothCommunicatorMessageType ) {
     BTCMessageTypeFile = 7,
 };
 
-static_assert(BTCMessageLength1ByteIndex == (BTCMessageLength0ByteIndex + 1));
-static_assert(BTCMessageLength2ByteIndex == (BTCMessageLength1ByteIndex + 1));
-static_assert(BTCMessageLength3ByteIndex == (BTCMessageLength2ByteIndex + 1));
-static_assert(BTCMessageLengthIntegerByteLength == (BTCMessageLength3ByteIndex - BTCMessageLength0ByteIndex + 1));
+static_assert(BTCMessageLength1ByteIndex == (BTCMessageLength0ByteIndex + 1), "");
+static_assert(BTCMessageLength2ByteIndex == (BTCMessageLength1ByteIndex + 1), "");
+static_assert(BTCMessageLength3ByteIndex == (BTCMessageLength2ByteIndex + 1), "");
+static_assert(BTCMessageLengthIntegerByteLength == (BTCMessageLength3ByteIndex - BTCMessageLength0ByteIndex + 1), "");
 
 @interface NSStringUtilities : NSObject
 + (NSString*)empty;
@@ -135,6 +138,9 @@ static_assert(BTCMessageLengthIntegerByteLength == (BTCMessageLength3ByteIndex -
 @interface BluetoothCommunicator : NSObject
 + (id)instance;
 - (void)initCentralWithDelegate:(id< BluetoothCommunicatorDelegate >)delegate;
+- (void)initPeripheralWithDelegate:(id< BluetoothCommunicatorDelegate >)delegate;
+- (void)startAdvertising;
+- (void)stopAdvertising;
 - (void)startDiscoveringDevices;
 - (void)stopDiscoveringDevices;
 - (void)bluetoothCommunicatorDeviceDidUpdateProperty:(BluetoothCommunicatorDevice *)device;

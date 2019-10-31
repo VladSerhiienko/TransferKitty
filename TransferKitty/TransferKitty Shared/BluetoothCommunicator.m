@@ -47,9 +47,6 @@ bool isBitSet(const NSUInteger bits, const NSUInteger bit) {
 @property( nonatomic, strong ) NSString *              deviceFriendlyModel;
 @property( nonatomic, strong ) NSUUID *                deviceUUID;
 @property( atomic, assign ) bool                       pendingWriteValue;
-// @property( atomic, assign ) NSUInteger                 currentLongMessageType;
-// @property( atomic, assign ) NSUInteger                 currentLongMessageContentsLength;
-// @property( atomic, strong ) NSMutableData *            currentLongMessageContents;
 
 @end
 
@@ -115,48 +112,19 @@ bool isBitSet(const NSUInteger bits, const NSUInteger bit) {
     return copy;
 }
 
-//- (NSUInteger)longMessageType {
-//    return [self currentLongMessageType];
-//}
-//- (NSUInteger)longMessageContentsLength {
-//    return [self currentLongMessageContentsLength];
-//}
-//
-//- (void)startLongMessage:(NSUInteger)messageType messageContentsLength:(NSUInteger)messageContentsLength messageContents:(NSData *)messageContents {
-//    assert(![self didStartLongMessage]);
-//
-//    [self setCurrentLongMessageType:messageType];
-//    [self setCurrentLongMessageContentsLength:messageContentsLength];
-//    [self setCurrentLongMessageContents:[[NSMutableData alloc] initWithCapacity:messageContentsLength]];
-//    [[self currentLongMessageContents] appendData:messageContents];
-//}
-//
-//- (void)appendLongMessageContents:(NSData *)messageContentsRange {
-//    [[self currentLongMessageContents] appendData:messageContentsRange];
-//}
-//
-//- (NSData*)getAndForgetLongMessageContents {
-//    assert([self didFinishLongMessage]);
-//
-//    NSData* result = [self currentLongMessageContents];
-//    [self setCurrentLongMessageContents:nil];
-//    return result;
-//}
-//
-//- (bool)didStartLongMessage {
-//    return [self currentLongMessageContents] != nil;
-//}
-//
-//- (bool)didFinishLongMessage {
-//    return [self didStartLongMessage] && [[self currentLongMessageContents] length] == [self currentLongMessageContentsLength];
-//}
-
 @end
 
-@interface BluetoothCommunicator ( ) < CBCentralManagerDelegate, CBPeripheralDelegate >
+@interface BluetoothCommunicator () <CBCentralManagerDelegate, CBPeripheralDelegate>
+@end
+
+@interface BluetoothCommunicator () <CBPeripheralManagerDelegate>
 @end
 
 @implementation BluetoothCommunicator {
+    CBPeripheralManager *               _peripheralManager;
+    CBMutableService *                  _peripheralService;
+    CBMutableCharacteristic *           _peripheralCharacteristic;
+    
     CBCentralManager *                  _centralManager;
     NSUInteger                          _statusBits;
     id< BluetoothCommunicatorDelegate > _delegate;
@@ -256,7 +224,7 @@ static BluetoothCommunicator *_instance = nil;
 - (void)initCentralWithDelegate:(id< BluetoothCommunicatorDelegate >)delegate {
     DLOGF( @"%s", FUNC_NAME );
     if (isBitSet(_statusBits, BTCStatusBitStartingCentral | BTCStatusBitCentral)) {
-        [Debug check:false file:@__FILE__ line:__LINE__ tag:@"BluetoothCommunicator" msg:@"Already initialized"];
+        [Debug check:false file:@__FILE__ line:__LINE__ tag:@"BluetoothCommunicator" msg:@"Already running a central role."];
         return;
     }
 
@@ -272,17 +240,118 @@ static BluetoothCommunicator *_instance = nil;
     [self prepareName];
 }
 
+- (void)initPeripheralWithDelegate:(id< BluetoothCommunicatorDelegate >)delegate {
+    DLOGF( @"%s", FUNC_NAME );
+    if (isBitSet(_statusBits, BTCStatusBitStartingPeripheral | BTCStatusBitPeripheral)) {
+        [Debug check:false file:@__FILE__ line:__LINE__ tag:@"BluetoothCommunicator" msg:@"Already running a peripheral role."];
+        return;
+    }
+
+    atomic_store(&_scanningFlag, false);
+
+    _delegate = delegate;
+    _statusBits =BTCStatusBitStartingPeripheral;
+    _scheduler = [[BluetoothCommunicatorScheduler alloc] initWithBluetoothCommunicator:self];
+    
+    _peripheralManager = [[CBPeripheralManager alloc] initWithDelegate:self queue:nil options:nil];
+    [self publishServices];
+    
+    [self prepareUUIDs];
+    [self prepareName];
+}
+
+// https://developer.apple.com/library/archive/documentation/NetworkingInternetWeb/Conceptual/CoreBluetooth_concepts/PerformingCommonPeripheralRoleTasks/PerformingCommonPeripheralRoleTasks.html
+- (void)publishServices {
+    CBCharacteristicProperties properties = CBCharacteristicPropertyRead | CBCharacteristicPropertyWrite | CBCharacteristicPropertyNotify;
+    CBAttributePermissions permissions = CBAttributePermissionsReadable | CBAttributePermissionsWriteable;
+    
+    _peripheralCharacteristic = [[CBMutableCharacteristic alloc] initWithType:[_characteristicUUIDs objectAtIndex:0] properties:properties value:nil permissions:permissions];
+    _peripheralService = [[CBMutableService alloc] initWithType:[_serviceUUIDs objectAtIndex:0] primary:YES];
+    _peripheralService.characteristics = @[_peripheralCharacteristic];
+    
+    NSUInteger statusBits = setBit(_statusBits, BTCStatusBitPublishingService);
+    [self setStatusBits:statusBits];
+    
+    [_peripheralManager addService:_peripheralService];
+}
+
+- (void)startAdvertising {
+    
+    NSUInteger statusBits = setBit(_statusBits, BTCStatusBitStartingAdvertising);
+    [self setStatusBits:statusBits];
+    
+    [_peripheralManager startAdvertising:@{ CBAdvertisementDataServiceUUIDsKey:_serviceUUIDs }];
+    // -> peripheralManagerDidStartAdvertising
+}
+
+- (void)stopAdvertising {
+    [_peripheralManager stopAdvertising];
+}
+
+// CBPeripheralManagerDelegate
+- (void)peripheralManagerDidStartAdvertising:(CBPeripheralManager *)peripheralManager error:(NSError *)error {
+    DLOGF( @"%s", FUNC_NAME );
+    
+    if (!peripheralManager) { DLOGF( @"%s: peripheral is not available, update is skipped.", FUNC_NAME ); return; }
+    DCHECK(peripheralManager && peripheralManager == _peripheralManager);
+    DCHECK(isBitSet(_statusBits, BTCStatusBitStartingAdvertising));
+    DCHECK(!isBitSet(_statusBits, BTCStatusBitAdvertising));
+
+    NSUInteger statusBits = unsetBit(_statusBits, BTCStatusBitStartingAdvertising);
+    
+    if (error) {
+        DLOGF(@"%s: Caught error, description=%@", FUNC_NAME, [error description]);
+        DLOGF(@"%s: Caught error, debugDescription=%@", FUNC_NAME, [error debugDescription]);
+        DLOGF(@"%s: Caught error, code=%ld", FUNC_NAME, (long) [error code]);
+
+        [self setStatusBits:statusBits];
+        return;
+    }
+    
+    DLOGF(@"%s, Started advertising.", FUNC_NAME);
+    
+    statusBits = setBit(statusBits, BTCStatusBitAdvertising);
+    [self setStatusBits:statusBits];
+}
+
+// CBPeripheralManagerDelegate
+- (void)peripheralManager:(CBPeripheralManager *)peripheralManager didAddService:(CBService *)service error:(NSError *)error {
+    DLOGF( @"%s", FUNC_NAME );
+    
+    if (!peripheralManager) { DLOGF( @"%s: peripheral is not available, update is skipped.", FUNC_NAME ); return; }
+    if (!service) { DLOGF( @"%s: service is not available, update is skipped.", FUNC_NAME ); return; }
+    
+    DCHECK(peripheralManager && peripheralManager == _peripheralManager);
+    DCHECK(service && service.UUID == _peripheralService.UUID);
+    DCHECK(isBitSet(_statusBits, BTCStatusBitPublishingService));
+    DCHECK(!isBitSet(_statusBits, BTCStatusBitPublishedService));
+    
+    NSUInteger statusBits = unsetBit(_statusBits, BTCStatusBitPublishingService);
+    
+    if (error) {
+        DLOGF(@"%s: Caught error, description=%@", FUNC_NAME, [error description]);
+        DLOGF(@"%s: Caught error, debugDescription=%@", FUNC_NAME, [error debugDescription]);
+        DLOGF(@"%s: Caught error, code=%ld", FUNC_NAME, (long) [error code]);
+
+        [self setStatusBits:statusBits];
+        return;
+    }
+    
+    DLOGF(@"%s, Service %@ is published.", FUNC_NAME, service);
+    
+    statusBits = setBit(statusBits, BTCStatusBitPublishedService);
+    [self setStatusBits:statusBits];
+}
+
 - (void)cancelConnectionForDevice:(BluetoothCommunicatorDevice *)device {
     DLOGF( @"%s", FUNC_NAME );
-    // TODO: Remove and get the removed item in one call? I wish they had removeObjectForKey() function
-    //       that returns the remove instance, just to avoid multiple lookups. Maybe we should use
-    //       std containers or smth self-written.
 
     [_connectedDevices removeObjectForKey:[device peripheral]];
     [_centralManager cancelPeripheralConnection:[device peripheral]];
     [_delegate bluetoothCommunicator:self didDisconnectDevice:device];
 }
 
+// CBPeripheralDelegate
 - (void)peripheral:(CBPeripheral *)peripheral
     didUpdateValueForCharacteristic:(CBCharacteristic *)characteristic
                               error:(NSError *)error {
@@ -766,12 +835,58 @@ static BluetoothCommunicator *_instance = nil;
     [self setStatusBits:setBit(_statusBits, BTCStatusBitScanning)];
 }
 
+
+- (void)peripheralManagerDidUpdateState:(nonnull CBPeripheralManager *)peripheral {
+    DCHECK( peripheral );
+    switch ( peripheral.state ) {
+        case CBManagerStatePoweredOn: {
+                DCHECK( _peripheralManager == peripheral );
+                DLOGF( @"%s: Caught CBManagerStatePoweredOn.", FUNC_NAME );
+                NSUInteger statusBits = unsetBit(_statusBits, BTCStatusBitWaitingForUserInput);
+                statusBits = unsetBit(statusBits, BTCStatusBitWaitingForSystem);
+                statusBits = unsetBit(statusBits, BTCStatusBitStartingPeripheral);
+                statusBits = setBit(statusBits, BTCStatusBitPeripheral);
+                [self setStatusBits:statusBits];
+            } break;
+
+        case CBManagerStateUnknown:
+            DLOGF( @"%s: Caught CBManagerStateUnknown. Waiting for an update.", FUNC_NAME );
+            [self setStatusBits:setBit(_statusBits, BTCStatusBitWaitingForSystem)];
+            break;
+        case CBManagerStateResetting:
+            DLOGF( @"%s: Caught CBManagerStateResetting. Waiting for an update.", FUNC_NAME );
+            [self setStatusBits:setBit(_statusBits, BTCStatusBitWaitingForSystem)];
+            break;
+
+        case CBManagerStatePoweredOff: {
+                DLOGF( @"%s: Caught CBManagerStatePoweredOff state.", FUNC_NAME );
+                NSUInteger statusBits = unsetBit(_statusBits, BTCStatusBitStartingPeripheral);
+                statusBits = setBit(statusBits, BTCStatusBitWaitingForUserInput);
+                [self setStatusBits:statusBits];
+            } break;
+        case CBManagerStateUnauthorized:
+            DLOGF( @"%s: Caught CBManagerStateUnauthorized state.", FUNC_NAME );
+            [self setStatusBits:setBit(_statusBits, BTCStatusBitWaitingForUserInput)];
+            break;
+
+        case CBManagerStateUnsupported:
+            DLOGF( @"%s: Caught CBManagerStateUnsupported state.", FUNC_NAME );
+            [self setStatusBits:BTCStatusBitUnsupported];
+            break;
+
+        default:
+            DLOGF( @"%s: Error, unexpected state %li.", FUNC_NAME, (long) peripheral.state );
+            [self setStatusBits:BTCStatusBitPanic];
+            break;
+    }
+}
+
 - (void)centralManagerDidUpdateState:(nonnull CBCentralManager *)central {
     DCHECK( central );
     switch ( central.state ) {
         case CBManagerStatePoweredOn: {
                 DCHECK( _centralManager == central );
-                DLOGF( @"%s: Caught CBCentralManagerStatePoweredOn.", FUNC_NAME );
+                DLOGF( @"%s: Caught CBManagerStatePoweredOn.", FUNC_NAME );
                 NSUInteger statusBits = unsetBit(_statusBits, BTCStatusBitWaitingForUserInput);
                 statusBits = unsetBit(statusBits, BTCStatusBitWaitingForSystem);
                 statusBits = unsetBit(statusBits, BTCStatusBitStartingCentral);
@@ -780,28 +895,27 @@ static BluetoothCommunicator *_instance = nil;
             } break;
 
         case CBManagerStateUnknown:
-            DLOGF( @"%s: Caught CBCentralManagerStateUnknown. Waiting for an update.", FUNC_NAME );
+            DLOGF( @"%s: Caught CBManagerStateUnknown. Waiting for an update.", FUNC_NAME );
             [self setStatusBits:setBit(_statusBits, BTCStatusBitWaitingForSystem)];
             break;
         case CBManagerStateResetting:
-            DLOGF( @"%s: Caught CBCentralManagerStateResetting. Waiting for an update.", FUNC_NAME );
+            DLOGF( @"%s: Caught CBManagerStateResetting. Waiting for an update.", FUNC_NAME );
             [self setStatusBits:setBit(_statusBits, BTCStatusBitWaitingForSystem)];
             break;
 
         case CBManagerStatePoweredOff: {
-                DLOGF( @"%s: Caught CBCentralManagerStatePoweredOff state.", FUNC_NAME );
+                DLOGF( @"%s: Caught CBManagerStatePoweredOff state.", FUNC_NAME );
                 NSUInteger statusBits = unsetBit(_statusBits, BTCStatusBitStartingCentral);
-                statusBits = unsetBit(statusBits, BTCStatusBitStartingPeripheral);
                 statusBits = setBit(statusBits, BTCStatusBitWaitingForUserInput);
                 [self setStatusBits:statusBits];
             } break;
         case CBManagerStateUnauthorized:
-            DLOGF( @"%s: Caught CBCentralManagerStateUnauthorized state.", FUNC_NAME );
+            DLOGF( @"%s: Caught CBManagerStateUnauthorized state.", FUNC_NAME );
             [self setStatusBits:setBit(_statusBits, BTCStatusBitWaitingForUserInput)];
             break;
 
         case CBManagerStateUnsupported:
-            DLOGF( @"%s: Caught CBCentralManagerStateUnsupported state.", FUNC_NAME );
+            DLOGF( @"%s: Caught CBManagerStateUnsupported state.", FUNC_NAME );
             [self setStatusBits:BTCStatusBitUnsupported];
             break;
 
@@ -911,7 +1025,6 @@ static BluetoothCommunicator *_instance = nil;
 
     return model;
 }
-
 @end
 
 @implementation BluetoothCommunicatorLongMessage {
@@ -1597,7 +1710,7 @@ static NSString* emptyStringInstance = @"";
         DCHECK(device && operation);
         
         if ([operation requiresResponse]) { [device setPendingWriteValue:true]; }
-        [_bluetoothCommunicator writeValue:[operation data] toDevice:device];
+        [self->_bluetoothCommunicator writeValue:[operation data] toDevice:device];
     }];
 }
 
