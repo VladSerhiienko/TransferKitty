@@ -5,11 +5,9 @@
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
 	<key>CFBundleDisplayName</key>
-	<string>TransferKittymacOSSharedExtension</string>
+	<string>TransferKitty</string>
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
-	<key>CFBundleIconFile</key>
-	<string>icon</string>
 	<key>CFBundleIdentifier</key>
 	<string>$(PRODUCT_BUNDLE_IDENTIFIER)</string>
 	<key>CFBundleInfoDictionaryVersion</key>
@@ -28,9 +26,21 @@
 	<dict>
 		<key>NSExtensionAttributes</key>
 		<dict>
-			<key>NSExtensionActivationRule</key>
-			<string>TRUEPREDICATE</string>
-		</dict>
+            <key>NSExtensionActivationRule</key>
+            <string>TRUEPREDICATE</string>
+            <key>NSExtensionActivationSupportsFileWithMaxCount</key>
+            <integer>10</integer>
+            <key>NSExtensionActivationSupportsImageWithMaxCount</key>
+            <integer>10</integer>
+            <key>NSExtensionActivationSupportsMovieWithMaxCount</key>
+            <integer>10</integer>
+            <key>NSExtensionActivationSupportsText</key>
+            <true/>
+            <key>NSExtensionActivationSupportsWebURLWithMaxCount</key>
+            <integer>10</integer>
+        </dict>
+		<key>NSExtensionMainNibFile</key>
+		<string>TKViewController</string>
 		<key>NSExtensionPointIdentifier</key>
 		<string>com.apple.share-services</string>
 		<key>NSExtensionPrincipalClass</key>

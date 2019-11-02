@@ -39,7 +39,6 @@
 		CAE7EC62235C51FE00C4D217 /* CoreBluetooth.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CAE7EC56235C51D800C4D217 /* CoreBluetooth.framework */; };
 		CAE7EC63235C520400C4D217 /* Metal.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CAE7EC58235C51E100C4D217 /* Metal.framework */; };
 		CAE7EC64235C520400C4D217 /* MetalKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CAE7EC59235C51E100C4D217 /* MetalKit.framework */; };
-		F919AF4B236E055900E9EF75 /* icon.icns in Resources */ = {isa = PBXBuildFile; fileRef = F919AF4A236E055900E9EF75 /* icon.icns */; };
 		F919AF4E236E055900E9EF75 /* TKViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = F919AF4D236E055900E9EF75 /* TKViewController.mm */; };
 		F919AF51236E055900E9EF75 /* TKViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F919AF4F236E055900E9EF75 /* TKViewController.xib */; };
 		F919AF56236E055900E9EF75 /* TransferKitty macOS ShareExtension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = F919AF48236E055900E9EF75 /* TransferKitty macOS ShareExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
@@ -134,7 +133,6 @@
 		CAE7EC5E235C51F400C4D217 /* MetalKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MetalKit.framework; path = System/Library/Frameworks/MetalKit.framework; sourceTree = SDKROOT; };
 		CAE7EC5F235C51F400C4D217 /* Metal.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Metal.framework; path = System/Library/Frameworks/Metal.framework; sourceTree = SDKROOT; };
 		F919AF48236E055900E9EF75 /* TransferKitty macOS ShareExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "TransferKitty macOS ShareExtension.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
-		F919AF4A236E055900E9EF75 /* icon.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = icon.icns; sourceTree = "<group>"; };
 		F919AF4C236E055900E9EF75 /* TKViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TKViewController.h; sourceTree = "<group>"; };
 		F919AF4D236E055900E9EF75 /* TKViewController.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = TKViewController.mm; sourceTree = "<group>"; };
 		F919AF50236E055900E9EF75 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/TKViewController.xib; sourceTree = "<group>"; };
@@ -284,7 +282,6 @@
 		F919AF49236E055900E9EF75 /* TransferKitty macOS ShareExtension */ = {
 			isa = PBXGroup;
 			children = (
-				F919AF4A236E055900E9EF75 /* icon.icns */,
 				F919AF4C236E055900E9EF75 /* TKViewController.h */,
 				F919AF4D236E055900E9EF75 /* TKViewController.mm */,
 				F919AF4F236E055900E9EF75 /* TKViewController.xib */,
@@ -448,7 +445,6 @@
 			files = (
 				F919AF51236E055900E9EF75 /* TKViewController.xib in Resources */,
 				F919AF60236E174400E9EF75 /* Assets.xcassets in Resources */,
-				F919AF4B236E055900E9EF75 /* icon.icns in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -794,6 +790,7 @@
 		F919AF58236E055900E9EF75 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = "AppIcon-4";
 				CODE_SIGN_ENTITLEMENTS = "$(SRCROOT)/TransferKitty mac OS ShareExtension/TransferKitty.entitlements";
 				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Automatic;
@@ -816,6 +813,7 @@
 		F919AF59236E055900E9EF75 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = "AppIcon-4";
 				CODE_SIGN_ENTITLEMENTS = "$(SRCROOT)/TransferKitty mac OS ShareExtension/TransferKitty.entitlements";
 				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Automatic;
