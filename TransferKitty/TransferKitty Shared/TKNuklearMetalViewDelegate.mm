@@ -441,9 +441,9 @@ const size_t getFontByteLength(void);
         // https://developer.apple.com/documentation/metal/synchronization/synchronizing_cpu_and_gpu_work?language=objc
         _commandCompletionSemaphore = dispatch_semaphore_create(FrameCount);
         
+        view.sampleCount = 1;
         view.depthStencilPixelFormat = MTLPixelFormatDepth32Float_Stencil8;
         view.colorPixelFormat = MTLPixelFormatBGRA8Unorm_sRGB;
-        view.sampleCount = 1;
 
         _renderer = [[TKNuklearRenderer alloc] initWithMetalDevice:_device
                                                    colorPixelFormat:view.colorPixelFormat

@@ -1,6 +1,6 @@
 //
 //  ShareViewController.h
-//  TransferKitty macOS ShareExtension
+//  TransferKitty ShareExtension macOS
 //
 //  Created by Vladyslav Serhiienko on 11/2/19.
 //  Copyright © 2019 vserhiienko. All rights reserved.

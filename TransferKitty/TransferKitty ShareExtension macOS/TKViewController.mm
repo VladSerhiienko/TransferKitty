@@ -1,6 +1,6 @@
 //
 //  ShareViewController.m
-//  TransferKitty macOS ShareExtension
+//  TransferKitty ShareExtension macOS
 //
 //  Created by Vladyslav Serhiienko on 11/2/19.
 //  Copyright © 2019 vserhiienko. All rights reserved.
@@ -23,21 +23,33 @@
 }
 
 - (NSString *)nibName {
-    return @"TKViewController";
+    return @"Main";
 }
 
-- (void)loadView {
-    [super loadView];
+- (void)viewDidLoad {
+    [super viewDidLoad];
+    // TODO: Load resources without touching a view.
+}
+
+- (void)viewDidAppear {
+    [super viewDidAppear];
+    
+    // Insert code here to customize the view
+    NSExtensionItem *item = self.extensionContext.inputItems.firstObject;
+    NSLog(@"Attachments = %@", item.attachments);
 
     _view = (MTKView *)self.view;
-    _view.device = MTLCreateSystemDefaultDevice();
+    
+    if (!_view.device) {
+        _view.device = MTLCreateSystemDefaultDevice();
+    }
 
     if(!_view.device) {
         NSLog(@"Metal is not supported on this device");
         self.view = [[NSView alloc] initWithFrame:self.view.frame];
         return;
     }
-    
+
     _renderer = [[TKNuklearMetalViewDelegate alloc] initWithMetalKitView:_view];
     [_renderer mtkView:_view drawableSizeWillChange:_view.drawableSize];
 
@@ -48,13 +60,25 @@
     scrollDampingFactor = 0.1f;
     
     [[_view window] makeFirstResponder:self];
-    
-    // Insert code here to customize the view
-    NSExtensionItem *item = self.extensionContext.inputItems.firstObject;
-    NSLog(@"Attachments = %@", item.attachments);
 }
 
-- (void)renderer:(nonnull TKNuklearRenderer *)renderer currentFrame:(nonnull TKNuklearFrame *)currentFrame {
+//- (IBAction)send:(id)sender {
+//    NSExtensionItem *outputItem = [[NSExtensionItem alloc] init];
+//    // Complete implementation by setting the appropriate value on the output item
+//    
+//    NSArray *outputItems = @[outputItem];
+//    [self.extensionContext completeRequestReturningItems:outputItems completionHandler:nil];
+//}
+//
+//- (IBAction)cancel:(id)sender {
+//    NSError *cancelError = [NSError errorWithDomain:NSCocoaErrorDomain code:NSUserCancelledError userInfo:nil];
+//    [self.extensionContext cancelRequestWithError:cancelError];
+//}
+
+- (void)renderer:(nonnull TKNuklearMetalViewDelegate *)renderer currentFrame:(nonnull TKNuklearFrame *)currentFrame {
+    // [self handleInput:&appInput context:currentFrame.contextPtr];
+    // [self updateInput];
+
     struct nk_context* ctx = currentFrame.contextPtr;
     if (nk_begin(ctx, "Demo (macOS)", nk_rect(50, 100, 500, 800),
         NK_WINDOW_BORDER|NK_WINDOW_MOVABLE|NK_WINDOW_SCALABLE|

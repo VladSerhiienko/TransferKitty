@@ -19,7 +19,7 @@
 		CACC74B02354F93800FE3672 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CACC74822354F93800FE3672 /* Assets.xcassets */; };
 		CACC74C12354F9AB00FE3672 /* TKViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = CACC74C02354F9AB00FE3672 /* TKViewController.mm */; };
 		CACC74C42354F9AB00FE3672 /* MainInterface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CACC74C22354F9AB00FE3672 /* MainInterface.storyboard */; };
-		CACC74C82354F9AB00FE3672 /* TransferKitty iOS ShareExtension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = CACC74BD2354F9AB00FE3672 /* TransferKitty iOS ShareExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		CACC74C82354F9AB00FE3672 /* TransferKitty ShareExtension iOS.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = CACC74BD2354F9AB00FE3672 /* TransferKitty ShareExtension iOS.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		CACC74CD2354FC5400FE3672 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CACC74822354F93800FE3672 /* Assets.xcassets */; };
 		CAE7EC4C235C4F5A00C4D217 /* Nuklear.metal in Sources */ = {isa = PBXBuildFile; fileRef = CAE7EC44235C4F5A00C4D217 /* Nuklear.metal */; };
 		CAE7EC4D235C4F5A00C4D217 /* Nuklear.metal in Sources */ = {isa = PBXBuildFile; fileRef = CAE7EC44235C4F5A00C4D217 /* Nuklear.metal */; };
@@ -39,18 +39,20 @@
 		CAE7EC62235C51FE00C4D217 /* CoreBluetooth.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CAE7EC56235C51D800C4D217 /* CoreBluetooth.framework */; };
 		CAE7EC63235C520400C4D217 /* Metal.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CAE7EC58235C51E100C4D217 /* Metal.framework */; };
 		CAE7EC64235C520400C4D217 /* MetalKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CAE7EC59235C51E100C4D217 /* MetalKit.framework */; };
-		F919AF4E236E055900E9EF75 /* TKViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = F919AF4D236E055900E9EF75 /* TKViewController.mm */; };
-		F919AF51236E055900E9EF75 /* TKViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F919AF4F236E055900E9EF75 /* TKViewController.xib */; };
-		F919AF56236E055900E9EF75 /* TransferKitty macOS ShareExtension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = F919AF48236E055900E9EF75 /* TransferKitty macOS ShareExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
-		F919AF5B236E06F000E9EF75 /* CoreBluetooth.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CAE7EC5C235C51EC00C4D217 /* CoreBluetooth.framework */; };
-		F919AF5C236E06F800E9EF75 /* Metal.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CAE7EC5F235C51F400C4D217 /* Metal.framework */; };
-		F919AF5D236E06F800E9EF75 /* MetalKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CAE7EC5E235C51F400C4D217 /* MetalKit.framework */; };
-		F919AF5F236E16BB00E9EF75 /* AppKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F919AF5E236E16BA00E9EF75 /* AppKit.framework */; };
-		F919AF60236E174400E9EF75 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CACC74822354F93800FE3672 /* Assets.xcassets */; };
-		F919AF61236E174400E9EF75 /* TKBluetoothCommunicator.m in Sources */ = {isa = PBXBuildFile; fileRef = CAE7EC45235C4F5A00C4D217 /* TKBluetoothCommunicator.m */; };
-		F919AF62236E174400E9EF75 /* TKNuklearMetalViewDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = CAE7EC4A235C4F5A00C4D217 /* TKNuklearMetalViewDelegate.mm */; };
-		F919AF63236E174400E9EF75 /* Nuklear.metal in Sources */ = {isa = PBXBuildFile; fileRef = CAE7EC44235C4F5A00C4D217 /* Nuklear.metal */; };
 		F919AF64236E1A8E00E9EF75 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CACC74A52354F93800FE3672 /* Main.storyboard */; };
+		F998F726236E312E0025564F /* icon.icns in Resources */ = {isa = PBXBuildFile; fileRef = F998F725236E312E0025564F /* icon.icns */; };
+		F998F729236E312E0025564F /* TKViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = F998F728236E312E0025564F /* TKViewController.mm */; };
+		F998F72C236E312E0025564F /* Main.xib in Resources */ = {isa = PBXBuildFile; fileRef = F998F72A236E312E0025564F /* Main.xib */; };
+		F998F731236E312E0025564F /* TransferKitty ShareExtension macOS.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = F998F723236E312E0025564F /* TransferKitty ShareExtension macOS.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		F998F735236E348C0025564F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CACC74822354F93800FE3672 /* Assets.xcassets */; };
+		F998F736236E348C0025564F /* TKBluetoothCommunicator.m in Sources */ = {isa = PBXBuildFile; fileRef = CAE7EC45235C4F5A00C4D217 /* TKBluetoothCommunicator.m */; };
+		F998F737236E348C0025564F /* TKNuklearMetalViewDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = CAE7EC4A235C4F5A00C4D217 /* TKNuklearMetalViewDelegate.mm */; };
+		F998F738236E348C0025564F /* Nuklear.metal in Sources */ = {isa = PBXBuildFile; fileRef = CAE7EC44235C4F5A00C4D217 /* Nuklear.metal */; };
+		F998F739236E359A0025564F /* AppKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F919AF5E236E16BA00E9EF75 /* AppKit.framework */; };
+		F998F73A236E359F0025564F /* CoreBluetooth.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CAE7EC5C235C51EC00C4D217 /* CoreBluetooth.framework */; };
+		F998F73B236E35A40025564F /* Metal.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CAE7EC5F235C51F400C4D217 /* Metal.framework */; };
+		F998F73C236E35A40025564F /* MetalKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CAE7EC5E235C51F400C4D217 /* MetalKit.framework */; };
+		F998F741236E3DD60025564F /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F998F740236E3DD60025564F /* QuartzCore.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -61,12 +63,12 @@
 			remoteGlobalIDString = CACC74BC2354F9AB00FE3672;
 			remoteInfo = TransferKittyShareExtension;
 		};
-		F919AF54236E055900E9EF75 /* PBXContainerItemProxy */ = {
+		F998F72F236E312E0025564F /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = CACC74792354F93500FE3672 /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = F919AF47236E055900E9EF75;
-			remoteInfo = TransferKittymacOSSharedExtension;
+			remoteGlobalIDString = F998F722236E312E0025564F;
+			remoteInfo = "TransferKitty ShareExtension macOS";
 		};
 /* End PBXContainerItemProxy section */
 
@@ -77,7 +79,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 13;
 			files = (
-				CACC74C82354F9AB00FE3672 /* TransferKitty iOS ShareExtension.appex in Embed App Extensions */,
+				CACC74C82354F9AB00FE3672 /* TransferKitty ShareExtension iOS.appex in Embed App Extensions */,
 			);
 			name = "Embed App Extensions";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -88,7 +90,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 13;
 			files = (
-				F919AF56236E055900E9EF75 /* TransferKitty macOS ShareExtension.appex in Embed App Extensions */,
+				F998F731236E312E0025564F /* TransferKitty ShareExtension macOS.appex in Embed App Extensions */,
 			);
 			name = "Embed App Extensions";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -114,7 +116,7 @@
 		CACC74A62354F93800FE3672 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		CACC74A82354F93800FE3672 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		CACC74A92354F93800FE3672 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
-		CACC74BD2354F9AB00FE3672 /* TransferKitty iOS ShareExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "TransferKitty iOS ShareExtension.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
+		CACC74BD2354F9AB00FE3672 /* TransferKitty ShareExtension iOS.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "TransferKitty ShareExtension iOS.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
 		CACC74BF2354F9AB00FE3672 /* TKViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TKViewController.h; sourceTree = "<group>"; };
 		CACC74C02354F9AB00FE3672 /* TKViewController.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = TKViewController.mm; sourceTree = "<group>"; };
 		CACC74C32354F9AB00FE3672 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/MainInterface.storyboard; sourceTree = "<group>"; };
@@ -132,13 +134,15 @@
 		CAE7EC5C235C51EC00C4D217 /* CoreBluetooth.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreBluetooth.framework; path = System/Library/Frameworks/CoreBluetooth.framework; sourceTree = SDKROOT; };
 		CAE7EC5E235C51F400C4D217 /* MetalKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MetalKit.framework; path = System/Library/Frameworks/MetalKit.framework; sourceTree = SDKROOT; };
 		CAE7EC5F235C51F400C4D217 /* Metal.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Metal.framework; path = System/Library/Frameworks/Metal.framework; sourceTree = SDKROOT; };
-		F919AF48236E055900E9EF75 /* TransferKitty macOS ShareExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "TransferKitty macOS ShareExtension.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
-		F919AF4C236E055900E9EF75 /* TKViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TKViewController.h; sourceTree = "<group>"; };
-		F919AF4D236E055900E9EF75 /* TKViewController.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = TKViewController.mm; sourceTree = "<group>"; };
-		F919AF50236E055900E9EF75 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/TKViewController.xib; sourceTree = "<group>"; };
-		F919AF52236E055900E9EF75 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		F919AF53236E055900E9EF75 /* TransferKitty.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = TransferKitty.entitlements; sourceTree = "<group>"; };
 		F919AF5E236E16BA00E9EF75 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
+		F998F723236E312E0025564F /* TransferKitty ShareExtension macOS.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "TransferKitty ShareExtension macOS.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
+		F998F725236E312E0025564F /* icon.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = icon.icns; sourceTree = "<group>"; };
+		F998F727236E312E0025564F /* TKViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TKViewController.h; sourceTree = "<group>"; };
+		F998F728236E312E0025564F /* TKViewController.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = TKViewController.mm; sourceTree = "<group>"; };
+		F998F72B236E312E0025564F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/Main.xib; sourceTree = "<group>"; };
+		F998F72D236E312E0025564F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		F998F72E236E312E0025564F /* TransferKitty.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = TransferKitty.entitlements; sourceTree = "<group>"; };
+		F998F740236E3DD60025564F /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -172,14 +176,15 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		F919AF45236E055900E9EF75 /* Frameworks */ = {
+		F998F720236E312E0025564F /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F919AF5F236E16BB00E9EF75 /* AppKit.framework in Frameworks */,
-				F919AF5D236E06F800E9EF75 /* MetalKit.framework in Frameworks */,
-				F919AF5C236E06F800E9EF75 /* Metal.framework in Frameworks */,
-				F919AF5B236E06F000E9EF75 /* CoreBluetooth.framework in Frameworks */,
+				F998F741236E3DD60025564F /* QuartzCore.framework in Frameworks */,
+				F998F73A236E359F0025564F /* CoreBluetooth.framework in Frameworks */,
+				F998F73C236E35A40025564F /* MetalKit.framework in Frameworks */,
+				F998F73B236E35A40025564F /* Metal.framework in Frameworks */,
+				F998F739236E359A0025564F /* AppKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -192,8 +197,8 @@
 				CACC747D2354F93500FE3672 /* TransferKitty Shared */,
 				CACC74892354F93800FE3672 /* TransferKitty iOS */,
 				CACC749E2354F93800FE3672 /* TransferKitty macOS */,
-				CACC74BE2354F9AB00FE3672 /* TransferKitty iOS ShareExtension */,
-				F919AF49236E055900E9EF75 /* TransferKitty macOS ShareExtension */,
+				CACC74BE2354F9AB00FE3672 /* TransferKitty ShareExtension iOS */,
+				F998F724236E312E0025564F /* TransferKitty ShareExtension macOS */,
 				CACC74882354F93800FE3672 /* Products */,
 				CAE7EC55235C51D800C4D217 /* Frameworks */,
 			);
@@ -219,8 +224,8 @@
 			children = (
 				CACC74872354F93800FE3672 /* TransferKitty.app */,
 				CACC749D2354F93800FE3672 /* TransferKitty.app */,
-				CACC74BD2354F9AB00FE3672 /* TransferKitty iOS ShareExtension.appex */,
-				F919AF48236E055900E9EF75 /* TransferKitty macOS ShareExtension.appex */,
+				CACC74BD2354F9AB00FE3672 /* TransferKitty ShareExtension iOS.appex */,
+				F998F723236E312E0025564F /* TransferKitty ShareExtension macOS.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -254,7 +259,7 @@
 			path = "TransferKitty macOS";
 			sourceTree = "<group>";
 		};
-		CACC74BE2354F9AB00FE3672 /* TransferKitty iOS ShareExtension */ = {
+		CACC74BE2354F9AB00FE3672 /* TransferKitty ShareExtension iOS */ = {
 			isa = PBXGroup;
 			children = (
 				CACC74BF2354F9AB00FE3672 /* TKViewController.h */,
@@ -262,12 +267,13 @@
 				CACC74C22354F9AB00FE3672 /* MainInterface.storyboard */,
 				CACC74C52354F9AB00FE3672 /* Info.plist */,
 			);
-			path = "TransferKitty iOS ShareExtension";
+			path = "TransferKitty ShareExtension iOS";
 			sourceTree = "<group>";
 		};
 		CAE7EC55235C51D800C4D217 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				F998F740236E3DD60025564F /* QuartzCore.framework */,
 				F919AF5E236E16BA00E9EF75 /* AppKit.framework */,
 				CAE7EC5F235C51F400C4D217 /* Metal.framework */,
 				CAE7EC5E235C51F400C4D217 /* MetalKit.framework */,
@@ -279,16 +285,17 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		F919AF49236E055900E9EF75 /* TransferKitty macOS ShareExtension */ = {
+		F998F724236E312E0025564F /* TransferKitty ShareExtension macOS */ = {
 			isa = PBXGroup;
 			children = (
-				F919AF4C236E055900E9EF75 /* TKViewController.h */,
-				F919AF4D236E055900E9EF75 /* TKViewController.mm */,
-				F919AF4F236E055900E9EF75 /* TKViewController.xib */,
-				F919AF52236E055900E9EF75 /* Info.plist */,
-				F919AF53236E055900E9EF75 /* TransferKitty.entitlements */,
+				F998F725236E312E0025564F /* icon.icns */,
+				F998F727236E312E0025564F /* TKViewController.h */,
+				F998F728236E312E0025564F /* TKViewController.mm */,
+				F998F72A236E312E0025564F /* Main.xib */,
+				F998F72D236E312E0025564F /* Info.plist */,
+				F998F72E236E312E0025564F /* TransferKitty.entitlements */,
 			);
-			path = "TransferKitty macOS ShareExtension";
+			path = "TransferKitty ShareExtension macOS";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -325,16 +332,16 @@
 			buildRules = (
 			);
 			dependencies = (
-				F919AF55236E055900E9EF75 /* PBXTargetDependency */,
+				F998F730236E312E0025564F /* PBXTargetDependency */,
 			);
 			name = "TransferKitty macOS";
 			productName = "TransferKitty macOS";
 			productReference = CACC749D2354F93800FE3672 /* TransferKitty.app */;
 			productType = "com.apple.product-type.application";
 		};
-		CACC74BC2354F9AB00FE3672 /* TransferKitty iOS ShareExtension */ = {
+		CACC74BC2354F9AB00FE3672 /* TransferKitty ShareExtension iOS */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = CACC74C92354F9AB00FE3672 /* Build configuration list for PBXNativeTarget "TransferKitty iOS ShareExtension" */;
+			buildConfigurationList = CACC74C92354F9AB00FE3672 /* Build configuration list for PBXNativeTarget "TransferKitty ShareExtension iOS" */;
 			buildPhases = (
 				CACC74B92354F9AB00FE3672 /* Sources */,
 				CACC74BA2354F9AB00FE3672 /* Frameworks */,
@@ -344,26 +351,26 @@
 			);
 			dependencies = (
 			);
-			name = "TransferKitty iOS ShareExtension";
+			name = "TransferKitty ShareExtension iOS";
 			productName = TransferKittyShareExtension;
-			productReference = CACC74BD2354F9AB00FE3672 /* TransferKitty iOS ShareExtension.appex */;
+			productReference = CACC74BD2354F9AB00FE3672 /* TransferKitty ShareExtension iOS.appex */;
 			productType = "com.apple.product-type.app-extension";
 		};
-		F919AF47236E055900E9EF75 /* TransferKitty macOS ShareExtension */ = {
+		F998F722236E312E0025564F /* TransferKitty ShareExtension macOS */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = F919AF5A236E055900E9EF75 /* Build configuration list for PBXNativeTarget "TransferKitty macOS ShareExtension" */;
+			buildConfigurationList = F998F732236E312E0025564F /* Build configuration list for PBXNativeTarget "TransferKitty ShareExtension macOS" */;
 			buildPhases = (
-				F919AF44236E055900E9EF75 /* Sources */,
-				F919AF45236E055900E9EF75 /* Frameworks */,
-				F919AF46236E055900E9EF75 /* Resources */,
+				F998F71F236E312E0025564F /* Sources */,
+				F998F720236E312E0025564F /* Frameworks */,
+				F998F721236E312E0025564F /* Resources */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 			);
-			name = "TransferKitty macOS ShareExtension";
-			productName = TransferKittymacOSSharedExtension;
-			productReference = F919AF48236E055900E9EF75 /* TransferKitty macOS ShareExtension.appex */;
+			name = "TransferKitty ShareExtension macOS";
+			productName = "TransferKitty ShareExtension macOS";
+			productReference = F998F723236E312E0025564F /* TransferKitty ShareExtension macOS.appex */;
 			productType = "com.apple.product-type.app-extension";
 		};
 /* End PBXNativeTarget section */
@@ -384,7 +391,7 @@
 					CACC74BC2354F9AB00FE3672 = {
 						CreatedOnToolsVersion = 10.2;
 					};
-					F919AF47236E055900E9EF75 = {
+					F998F722236E312E0025564F = {
 						CreatedOnToolsVersion = 11.1;
 					};
 				};
@@ -404,8 +411,8 @@
 			targets = (
 				CACC74862354F93800FE3672 /* TransferKitty iOS */,
 				CACC749C2354F93800FE3672 /* TransferKitty macOS */,
-				CACC74BC2354F9AB00FE3672 /* TransferKitty iOS ShareExtension */,
-				F919AF47236E055900E9EF75 /* TransferKitty macOS ShareExtension */,
+				CACC74BC2354F9AB00FE3672 /* TransferKitty ShareExtension iOS */,
+				F998F722236E312E0025564F /* TransferKitty ShareExtension macOS */,
 			);
 		};
 /* End PBXProject section */
@@ -439,12 +446,13 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		F919AF46236E055900E9EF75 /* Resources */ = {
+		F998F721236E312E0025564F /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F919AF51236E055900E9EF75 /* TKViewController.xib in Resources */,
-				F919AF60236E174400E9EF75 /* Assets.xcassets in Resources */,
+				F998F72C236E312E0025564F /* Main.xib in Resources */,
+				F998F735236E348C0025564F /* Assets.xcassets in Resources */,
+				F998F726236E312E0025564F /* icon.icns in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -488,14 +496,14 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		F919AF44236E055900E9EF75 /* Sources */ = {
+		F998F71F236E312E0025564F /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F919AF63236E174400E9EF75 /* Nuklear.metal in Sources */,
-				F919AF61236E174400E9EF75 /* TKBluetoothCommunicator.m in Sources */,
-				F919AF62236E174400E9EF75 /* TKNuklearMetalViewDelegate.mm in Sources */,
-				F919AF4E236E055900E9EF75 /* TKViewController.mm in Sources */,
+				F998F738236E348C0025564F /* Nuklear.metal in Sources */,
+				F998F736236E348C0025564F /* TKBluetoothCommunicator.m in Sources */,
+				F998F737236E348C0025564F /* TKNuklearMetalViewDelegate.mm in Sources */,
+				F998F729236E312E0025564F /* TKViewController.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -504,13 +512,13 @@
 /* Begin PBXTargetDependency section */
 		CACC74C72354F9AB00FE3672 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = CACC74BC2354F9AB00FE3672 /* TransferKitty iOS ShareExtension */;
+			target = CACC74BC2354F9AB00FE3672 /* TransferKitty ShareExtension iOS */;
 			targetProxy = CACC74C62354F9AB00FE3672 /* PBXContainerItemProxy */;
 		};
-		F919AF55236E055900E9EF75 /* PBXTargetDependency */ = {
+		F998F730236E312E0025564F /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = F919AF47236E055900E9EF75 /* TransferKitty macOS ShareExtension */;
-			targetProxy = F919AF54236E055900E9EF75 /* PBXContainerItemProxy */;
+			target = F998F722236E312E0025564F /* TransferKitty ShareExtension macOS */;
+			targetProxy = F998F72F236E312E0025564F /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -547,12 +555,12 @@
 			name = MainInterface.storyboard;
 			sourceTree = "<group>";
 		};
-		F919AF4F236E055900E9EF75 /* TKViewController.xib */ = {
+		F998F72A236E312E0025564F /* Main.xib */ = {
 			isa = PBXVariantGroup;
 			children = (
-				F919AF50236E055900E9EF75 /* Base */,
+				F998F72B236E312E0025564F /* Base */,
 			);
-			name = TKViewController.xib;
+			name = Main.xib;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
@@ -750,7 +758,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = CP4Y4M4WP5;
-				INFOPLIST_FILE = "$(SRCROOT)/TransferKitty iOS ShareExtension/Info.plist";
+				INFOPLIST_FILE = "$(SRCROOT)/TransferKitty ShareExtension iOS/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 12.2;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -771,7 +779,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = CP4Y4M4WP5;
-				INFOPLIST_FILE = "$(SRCROOT)/TransferKitty iOS ShareExtension/Info.plist";
+				INFOPLIST_FILE = "$(SRCROOT)/TransferKitty ShareExtension iOS/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 12.2;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -787,16 +795,17 @@
 			};
 			name = Release;
 		};
-		F919AF58236E055900E9EF75 /* Debug */ = {
+		F998F733236E312E0025564F /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = "AppIcon-4";
-				CODE_SIGN_ENTITLEMENTS = "$(SRCROOT)/TransferKitty mac OS ShareExtension/TransferKitty.entitlements";
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = "TransferKitty ShareExtension macOS/TransferKitty.entitlements";
 				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = CP4Y4M4WP5;
-				INFOPLIST_FILE = "$(SRCROOT)/TransferKitty macOS ShareExtension/Info.plist";
+				ENABLE_HARDENED_RUNTIME = YES;
+				INFOPLIST_FILE = "$(SRCROOT)/TransferKitty ShareExtension macOS/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
@@ -810,16 +819,17 @@
 			};
 			name = Debug;
 		};
-		F919AF59236E055900E9EF75 /* Release */ = {
+		F998F734236E312E0025564F /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = "AppIcon-4";
-				CODE_SIGN_ENTITLEMENTS = "$(SRCROOT)/TransferKitty mac OS ShareExtension/TransferKitty.entitlements";
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = "TransferKitty ShareExtension macOS/TransferKitty.entitlements";
 				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = CP4Y4M4WP5;
-				INFOPLIST_FILE = "$(SRCROOT)/TransferKitty macOS ShareExtension/Info.plist";
+				ENABLE_HARDENED_RUNTIME = YES;
+				INFOPLIST_FILE = "$(SRCROOT)/TransferKitty ShareExtension macOS/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
@@ -863,7 +873,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		CACC74C92354F9AB00FE3672 /* Build configuration list for PBXNativeTarget "TransferKitty iOS ShareExtension" */ = {
+		CACC74C92354F9AB00FE3672 /* Build configuration list for PBXNativeTarget "TransferKitty ShareExtension iOS" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				CACC74CA2354F9AB00FE3672 /* Debug */,
@@ -872,11 +882,11 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		F919AF5A236E055900E9EF75 /* Build configuration list for PBXNativeTarget "TransferKitty macOS ShareExtension" */ = {
+		F998F732236E312E0025564F /* Build configuration list for PBXNativeTarget "TransferKitty ShareExtension macOS" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				F919AF58236E055900E9EF75 /* Debug */,
-				F919AF59236E055900E9EF75 /* Release */,
+				F998F733236E312E0025564F /* Debug */,
+				F998F734236E312E0025564F /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

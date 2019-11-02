@@ -15,9 +15,9 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "CACC74BC2354F9AB00FE3672"
-               BuildableName = "TransferKitty iOS ShareExtension.appex"
-               BlueprintName = "TransferKitty iOS ShareExtension"
+               BlueprintIdentifier = "F998F722236E312E0025564F"
+               BuildableName = "TransferKitty ShareExtension macOS.appex"
+               BlueprintName = "TransferKitty ShareExtension macOS"
                ReferencedContainer = "container:TransferKitty.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -29,9 +29,9 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "CACC74862354F93800FE3672"
+               BlueprintIdentifier = "CACC749C2354F93800FE3672"
                BuildableName = "TransferKitty.app"
-               BlueprintName = "TransferKitty iOS"
+               BlueprintName = "TransferKitty macOS"
                ReferencedContainer = "container:TransferKitty.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -57,16 +57,20 @@
       debugServiceExtension = "internal"
       allowLocationSimulation = "YES"
       launchAutomaticallySubstyle = "2">
-      <BuildableProductRunnable
-         runnableDebuggingMode = "0">
+      <RemoteRunnable
+         runnableDebuggingMode = "0"
+         BundleIdentifier = "com.apple.AppStore"
+         RemotePath = "/Applications/App Store.app">
+      </RemoteRunnable>
+      <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "CACC74862354F93800FE3672"
+            BlueprintIdentifier = "CACC749C2354F93800FE3672"
             BuildableName = "TransferKitty.app"
-            BlueprintName = "TransferKitty iOS"
+            BlueprintName = "TransferKitty macOS"
             ReferencedContainer = "container:TransferKitty.xcodeproj">
          </BuildableReference>
-      </BuildableProductRunnable>
+      </MacroExpansion>
    </LaunchAction>
    <ProfileAction
       buildConfiguration = "Release"
@@ -79,9 +83,9 @@
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "CACC74862354F93800FE3672"
+            BlueprintIdentifier = "CACC749C2354F93800FE3672"
             BuildableName = "TransferKitty.app"
-            BlueprintName = "TransferKitty iOS"
+            BlueprintName = "TransferKitty macOS"
             ReferencedContainer = "container:TransferKitty.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
