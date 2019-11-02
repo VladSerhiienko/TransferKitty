@@ -1,4 +1,4 @@
-#import "BluetoothCommunicator.h"
+#import "TKBluetoothCommunicator.h"
 
 #if TARGET_OS_IOS
 #import <UIKit/UIKit.h>
@@ -32,25 +32,26 @@ bool isBitSet(const NSUInteger bits, const NSUInteger bit) {
     return (bits & bit) == bit;
 }
 
-@interface BluetoothCommunicatorDevice ( )
+@interface TKBluetoothCommunicatorDevice ()
 
-@property( nonatomic, assign ) BluetoothCommunicator * bluetoothCommunicator;
-@property( nonatomic, assign ) NSInteger               localId;
-@property( nonatomic, assign ) NSInteger               mtu;
-@property( nonatomic, assign ) NSInteger               maxWriteLength;
-@property( nonatomic, assign ) NSInteger               maxWriteLengthWithResponse;
-@property( nonatomic, strong ) CBPeripheral *          peripheral;
-@property( nonatomic, strong ) CBService *             service;
-@property( nonatomic, strong ) CBCharacteristic *      characteristic;
-@property( nonatomic, strong ) NSString *              deviceName;
-@property( nonatomic, strong ) NSString *              deviceModel;
-@property( nonatomic, strong ) NSString *              deviceFriendlyModel;
-@property( nonatomic, strong ) NSUUID *                deviceUUID;
-@property( atomic, assign ) bool                       pendingWriteValue;
+@property( nonatomic, assign ) TKBluetoothCommunicator * bluetoothCommunicator;
+@property( nonatomic, assign ) NSInteger                 localId;
+@property( nonatomic, assign ) NSInteger                 mtu;
+@property( nonatomic, assign ) NSInteger                 maxWriteLength;
+@property( nonatomic, assign ) NSInteger                 maxWriteLengthWithResponse;
+@property( nonatomic, strong ) CBCentral *               central;
+@property( nonatomic, strong ) CBPeripheral *            peripheral;
+@property( nonatomic, strong ) CBService *               service;
+@property( nonatomic, strong ) CBCharacteristic *        characteristic;
+@property( nonatomic, strong ) NSString *                deviceName;
+@property( nonatomic, strong ) NSString *                deviceModel;
+@property( nonatomic, strong ) NSString *                deviceFriendlyModel;
+@property( nonatomic, strong ) NSUUID *                  deviceUUID;
+@property( atomic, assign ) bool                         pendingWriteValue;
 
 @end
 
-@implementation BluetoothCommunicatorDevice
+@implementation TKBluetoothCommunicatorDevice
 - (NSInteger)getId { return [self localId]; }
 - (NSInteger)getMTU { return [self mtu]; }
 - (NSUUID *)getUUID { return [self deviceUUID]; }
@@ -86,12 +87,15 @@ bool isBitSet(const NSUInteger bits, const NSUInteger bit) {
     if (self == object) { return true; }
     if (![object isKindOfClass:[self class]]) { return false; }
     
-    BluetoothCommunicatorDevice* other = object;
-    return [[self peripheral] isEqual:[other peripheral]];
+    TKBluetoothCommunicatorDevice* other = object;
+    DCHECK(self.peripheral || self.central);
+    return (self.peripheral && [self.peripheral isEqual:[other peripheral]])
+        || (self.central && [self.central isEqual:[other central]]);
 }
 
 - (NSUInteger)hash {
-    return [[self peripheral] hash];
+    DCHECK(self.peripheral || self.central);
+    return self.peripheral ? [self.peripheral hash] : [self.central hash];
 }
 
 - (id)copyWithZone:(NSZone *)zone {
@@ -101,6 +105,7 @@ bool isBitSet(const NSUInteger bits, const NSUInteger bit) {
     [copy setMtu:[self mtu]];
     [copy setMaxWriteLength:[self maxWriteLength]];
     [copy setMaxWriteLengthWithResponse:[self maxWriteLengthWithResponse]];
+    [copy setCentral:[self central]];
     [copy setPeripheral:[self peripheral]];
     [copy setService:[self service]];
     [copy setCharacteristic:[self characteristic]];
@@ -114,20 +119,20 @@ bool isBitSet(const NSUInteger bits, const NSUInteger bit) {
 
 @end
 
-@interface BluetoothCommunicator () <CBCentralManagerDelegate, CBPeripheralDelegate>
+@interface TKBluetoothCommunicator () <CBCentralManagerDelegate, CBPeripheralDelegate>
 @end
 
-@interface BluetoothCommunicator () <CBPeripheralManagerDelegate>
+@interface TKBluetoothCommunicator () <CBPeripheralManagerDelegate>
 @end
 
-@implementation BluetoothCommunicator {
+@implementation TKBluetoothCommunicator {
     CBPeripheralManager *               _peripheralManager;
     CBMutableService *                  _peripheralService;
     CBMutableCharacteristic *           _peripheralCharacteristic;
     
     CBCentralManager *                  _centralManager;
     NSUInteger                          _statusBits;
-    id< BluetoothCommunicatorDelegate > _delegate;
+    id< TKBluetoothCommunicatorDelegate > _delegate;
     NSArray< CBUUID * > *               _serviceUUIDs;
     NSArray< CBUUID * > *               _characteristicUUIDs;
     NSMutableSet *                      _connectingDevices;
@@ -137,16 +142,16 @@ bool isBitSet(const NSUInteger bits, const NSUInteger bit) {
     NSString *                          _model;
     NSString *                          _friendlyModel;
     atomic_bool                         _scanningFlag;
-    BluetoothCommunicatorScheduler*     _scheduler;
+    TKBluetoothCommunicatorScheduler*     _scheduler;
 }
 
-static BluetoothCommunicator *_instance = nil;
+static TKBluetoothCommunicator *_instance = nil;
 
 + (id)instance {
     @synchronized( self ) {
         if ( _instance == nil ) {
             _instance = [[self alloc] init];
-            [Debug setBluetoothCommunicator:_instance];
+            [TKDebug setBluetoothCommunicator:_instance];
         }
     }
     
@@ -200,9 +205,9 @@ static BluetoothCommunicator *_instance = nil;
 
 - (void)prepareName {
     DLOGF( @"%s", FUNC_NAME );
-    _name = [BluetoothCommunicator createName];
-    _model = [BluetoothCommunicator createModelName];
-    _friendlyModel = [BluetoothCommunicator createModelFriendlyName];
+    _name = [TKBluetoothCommunicator createName];
+    _model = [TKBluetoothCommunicator createModelName];
+    _friendlyModel = [TKBluetoothCommunicator createModelFriendlyName];
 }
 
 - (NSUUID *)getUUID {
@@ -221,18 +226,18 @@ static BluetoothCommunicator *_instance = nil;
     return _friendlyModel;
 }
 
-- (void)initCentralWithDelegate:(id< BluetoothCommunicatorDelegate >)delegate {
+- (void)initCentralWithDelegate:(id< TKBluetoothCommunicatorDelegate >)delegate {
     DLOGF( @"%s", FUNC_NAME );
-    if (isBitSet(_statusBits, BTCStatusBitStartingCentral | BTCStatusBitCentral)) {
-        [Debug check:false file:@__FILE__ line:__LINE__ tag:@"BluetoothCommunicator" msg:@"Already running a central role."];
+    if (isBitSet(_statusBits, TKBluetoothCommunicatorStatusBitStartingCentral | TKBluetoothCommunicatorStatusBitCentral)) {
+        [TKDebug check:false file:@__FILE__ line:__LINE__ tag:@"BluetoothCommunicator" msg:@"Already running a central role."];
         return;
     }
 
     atomic_store(&_scanningFlag, false);
 
     _delegate = delegate;
-    _statusBits = BTCStatusBitStartingCentral;
-    _scheduler = [[BluetoothCommunicatorScheduler alloc] initWithBluetoothCommunicator:self];
+    _statusBits = TKBluetoothCommunicatorStatusBitStartingCentral;
+    _scheduler = [[TKBluetoothCommunicatorScheduler alloc] initWithBluetoothCommunicator:self];
     
     _centralManager = [[CBCentralManager alloc] initWithDelegate:self queue:nil options:nil];
     
@@ -240,18 +245,18 @@ static BluetoothCommunicator *_instance = nil;
     [self prepareName];
 }
 
-- (void)initPeripheralWithDelegate:(id< BluetoothCommunicatorDelegate >)delegate {
+- (void)initPeripheralWithDelegate:(id< TKBluetoothCommunicatorDelegate >)delegate {
     DLOGF( @"%s", FUNC_NAME );
-    if (isBitSet(_statusBits, BTCStatusBitStartingPeripheral | BTCStatusBitPeripheral)) {
-        [Debug check:false file:@__FILE__ line:__LINE__ tag:@"BluetoothCommunicator" msg:@"Already running a peripheral role."];
+    if (isBitSet(_statusBits, TKBluetoothCommunicatorStatusBitStartingPeripheral | TKBluetoothCommunicatorStatusBitPeripheral)) {
+        [TKDebug check:false file:@__FILE__ line:__LINE__ tag:@"BluetoothCommunicator" msg:@"Already running a peripheral role."];
         return;
     }
 
     atomic_store(&_scanningFlag, false);
 
     _delegate = delegate;
-    _statusBits =BTCStatusBitStartingPeripheral;
-    _scheduler = [[BluetoothCommunicatorScheduler alloc] initWithBluetoothCommunicator:self];
+    _statusBits =TKBluetoothCommunicatorStatusBitStartingPeripheral;
+    _scheduler = [[TKBluetoothCommunicatorScheduler alloc] initWithBluetoothCommunicator:self];
     
     _peripheralManager = [[CBPeripheralManager alloc] initWithDelegate:self queue:nil options:nil];
     [self publishServices];
@@ -269,7 +274,7 @@ static BluetoothCommunicator *_instance = nil;
     _peripheralService = [[CBMutableService alloc] initWithType:[_serviceUUIDs objectAtIndex:0] primary:YES];
     _peripheralService.characteristics = @[_peripheralCharacteristic];
     
-    NSUInteger statusBits = setBit(_statusBits, BTCStatusBitPublishingService);
+    NSUInteger statusBits = setBit(_statusBits, TKBluetoothCommunicatorStatusBitPublishingService);
     [self setStatusBits:statusBits];
     
     [_peripheralManager addService:_peripheralService];
@@ -277,7 +282,7 @@ static BluetoothCommunicator *_instance = nil;
 
 - (void)startAdvertising {
     
-    NSUInteger statusBits = setBit(_statusBits, BTCStatusBitStartingAdvertising);
+    NSUInteger statusBits = setBit(_statusBits, TKBluetoothCommunicatorStatusBitStartingAdvertising);
     [self setStatusBits:statusBits];
     
     [_peripheralManager startAdvertising:@{ CBAdvertisementDataServiceUUIDsKey:_serviceUUIDs }];
@@ -294,10 +299,10 @@ static BluetoothCommunicator *_instance = nil;
     
     if (!peripheralManager) { DLOGF( @"%s: peripheral is not available, update is skipped.", FUNC_NAME ); return; }
     DCHECK(peripheralManager && peripheralManager == _peripheralManager);
-    DCHECK(isBitSet(_statusBits, BTCStatusBitStartingAdvertising));
-    DCHECK(!isBitSet(_statusBits, BTCStatusBitAdvertising));
+    DCHECK(isBitSet(_statusBits, TKBluetoothCommunicatorStatusBitStartingAdvertising));
+    DCHECK(!isBitSet(_statusBits, TKBluetoothCommunicatorStatusBitAdvertising));
 
-    NSUInteger statusBits = unsetBit(_statusBits, BTCStatusBitStartingAdvertising);
+    NSUInteger statusBits = unsetBit(_statusBits, TKBluetoothCommunicatorStatusBitStartingAdvertising);
     
     if (error) {
         DLOGF(@"%s: Caught error, description=%@", FUNC_NAME, [error description]);
@@ -310,7 +315,7 @@ static BluetoothCommunicator *_instance = nil;
     
     DLOGF(@"%s, Started advertising.", FUNC_NAME);
     
-    statusBits = setBit(statusBits, BTCStatusBitAdvertising);
+    statusBits = setBit(statusBits, TKBluetoothCommunicatorStatusBitAdvertising);
     [self setStatusBits:statusBits];
 }
 
@@ -323,10 +328,10 @@ static BluetoothCommunicator *_instance = nil;
     
     DCHECK(peripheralManager && peripheralManager == _peripheralManager);
     DCHECK(service && service.UUID == _peripheralService.UUID);
-    DCHECK(isBitSet(_statusBits, BTCStatusBitPublishingService));
-    DCHECK(!isBitSet(_statusBits, BTCStatusBitPublishedService));
+    DCHECK(isBitSet(_statusBits, TKBluetoothCommunicatorStatusBitPublishingService));
+    DCHECK(!isBitSet(_statusBits, TKBluetoothCommunicatorStatusBitPublishedService));
     
-    NSUInteger statusBits = unsetBit(_statusBits, BTCStatusBitPublishingService);
+    NSUInteger statusBits = unsetBit(_statusBits, TKBluetoothCommunicatorStatusBitPublishingService);
     
     if (error) {
         DLOGF(@"%s: Caught error, description=%@", FUNC_NAME, [error description]);
@@ -339,11 +344,64 @@ static BluetoothCommunicator *_instance = nil;
     
     DLOGF(@"%s, Service %@ is published.", FUNC_NAME, service);
     
-    statusBits = setBit(statusBits, BTCStatusBitPublishedService);
+    statusBits = setBit(statusBits, TKBluetoothCommunicatorStatusBitPublishedService);
     [self setStatusBits:statusBits];
 }
 
-- (void)cancelConnectionForDevice:(BluetoothCommunicatorDevice *)device {
+- (TKBluetoothCommunicatorDevice*)registerCentral:(CBCentral*)central {
+    return nil;
+}
+
+// CBPeripheralManagerDelegate
+// TODO https://developer.apple.com/library/archive/documentation/NetworkingInternetWeb/Conceptual/CoreBluetooth_concepts/PerformingCommonPeripheralRoleTasks/PerformingCommonPeripheralRoleTasks.html#//apple_ref/doc/uid/TP40013257-CH4-SW1
+- (void)peripheralManager:(CBPeripheralManager *)peripheralManager
+    didReceiveReadRequest:(CBATTRequest *)request {
+    DLOGF( @"%s", FUNC_NAME );
+       
+    if (!peripheralManager) { DLOGF( @"%s: peripheral is not available, update is skipped.", FUNC_NAME ); return; }
+    if (!request) { DLOGF( @"%s: request is not available, update is skipped.", FUNC_NAME ); return; }
+    
+    if (![request.characteristic.UUID isEqual:[_characteristicUUIDs objectAtIndex:0]]) {
+        DLOGF( @"%s: requested characteristic is not available, update is skipped.", FUNC_NAME );
+        return;
+    }
+    
+    // TODO:
+    DLOGF( @"%s: received a valid request: %@", FUNC_NAME, request );
+    
+    
+}
+
+// CBPeripheralManagerDelegate
+// TODO https://developer.apple.com/library/archive/documentation/NetworkingInternetWeb/Conceptual/CoreBluetooth_concepts/PerformingCommonPeripheralRoleTasks/PerformingCommonPeripheralRoleTasks.html#//apple_ref/doc/uid/TP40013257-CH4-SW1
+- (void)peripheralManager:(CBPeripheralManager *)peripheral
+  didReceiveWriteRequests:(NSArray<CBATTRequest *> *)requests {
+    DLOGF( @"%s", FUNC_NAME );
+    
+    for (NSUInteger i = 0; i < requests.count; ++i) {
+        CBATTRequest* request = [requests objectAtIndex:i];
+        if (!request) { continue; }
+
+    }
+}
+
+// CBPeripheralManagerDelegate
+// TODO https://developer.apple.com/library/archive/documentation/NetworkingInternetWeb/Conceptual/CoreBluetooth_concepts/PerformingCommonPeripheralRoleTasks/PerformingCommonPeripheralRoleTasks.html#//apple_ref/doc/uid/TP40013257-CH4-SW1
+- (void)peripheralManager:(CBPeripheralManager *)peripheralManager
+                         central:(CBCentral *)central
+    didSubscribeToCharacteristic:(CBCharacteristic *)characteristic {
+     DLOGF( @"%s", FUNC_NAME );
+}
+
+// CBPeripheralManagerDelegate
+// TODO https://developer.apple.com/library/archive/documentation/NetworkingInternetWeb/Conceptual/CoreBluetooth_concepts/PerformingCommonPeripheralRoleTasks/PerformingCommonPeripheralRoleTasks.html#//apple_ref/doc/uid/TP40013257-CH4-SW1
+- (void)peripheralManager:(CBPeripheralManager *)peripheralManager
+                             central:(CBCentral *)central
+    didUnsubscribeFromCharacteristic:(CBCharacteristic *)characteristic {
+    
+}
+
+- (void)cancelConnectionForDevice:(TKBluetoothCommunicatorDevice *)device {
     DLOGF( @"%s", FUNC_NAME );
 
     [_connectedDevices removeObjectForKey:[device peripheral]];
@@ -371,7 +429,7 @@ static BluetoothCommunicator *_instance = nil;
 
     DLOGF( @"%s: characteristic=%@, UUID=%@", FUNC_NAME, characteristic, characteristic.UUID );
 
-    BluetoothCommunicatorDevice *device = [_connectedDevices objectForKey:peripheral];
+    TKBluetoothCommunicatorDevice *device = [_connectedDevices objectForKey:peripheral];
     if ( device == nil || ( [device peripheral] != peripheral ) || ( [device characteristic] != characteristic ) ) {
         DLOGF( @"%s: Caught unexpected peripheral.", FUNC_NAME );
         return;
@@ -400,7 +458,7 @@ static BluetoothCommunicator *_instance = nil;
 
     DLOGF( @"%s: peripheral=%@, UUID=%@, name=%@", FUNC_NAME, peripheral, peripheral.identifier, peripheral.name );
 
-    BluetoothCommunicatorDevice *device = [_connectedDevices objectForKey:peripheral];
+    TKBluetoothCommunicatorDevice *device = [_connectedDevices objectForKey:peripheral];
     if ( device == nil || ( [device peripheral] != peripheral ) || ( [device service] != service ) ) {
         DLOGF( @"%s: Caught unexpected peripheral.", FUNC_NAME );
         return;
@@ -461,7 +519,7 @@ static BluetoothCommunicator *_instance = nil;
         return;
     }
 
-    BluetoothCommunicatorDevice *device = [_connectedDevices objectForKey:peripheral];
+    TKBluetoothCommunicatorDevice *device = [_connectedDevices objectForKey:peripheral];
     if ( device == nil || ( [device peripheral] != peripheral ) ) {
         DLOGF( @"%s: Caught unexpected peripheral.", FUNC_NAME );
         return;
@@ -486,7 +544,7 @@ static BluetoothCommunicator *_instance = nil;
 
     DLOGF( @"%s: peripheral=%@, UUID=%@, name=%@", FUNC_NAME, peripheral, peripheral.identifier, peripheral.name );
 
-    BluetoothCommunicatorDevice *device = [_connectedDevices objectForKey:peripheral];
+    TKBluetoothCommunicatorDevice *device = [_connectedDevices objectForKey:peripheral];
     if ( device == nil || ( [device peripheral] != peripheral ) ) {
         DLOGF( @"%s: Caught unexpected peripheral.", FUNC_NAME );
         return;
@@ -547,7 +605,7 @@ static BluetoothCommunicator *_instance = nil;
     // DLOGF( @"%s: _centralManager=%@", FUNC_NAME, _centralManager );
     DLOGF( @"%s: peripheral=%@, UUID=%@, name=%@", FUNC_NAME, peripheral, peripheral.identifier, peripheral.name );
 
-    BluetoothCommunicatorDevice* device = [_connectedDevices objectForKey:peripheral];
+    TKBluetoothCommunicatorDevice* device = [_connectedDevices objectForKey:peripheral];
     if (device == nil) {
         DLOGF( @"%s: Device was not connected, panic.", FUNC_NAME );
         return;
@@ -556,7 +614,7 @@ static BluetoothCommunicator *_instance = nil;
     [_connectedDevices removeObjectForKey:peripheral];
     [_delegate bluetoothCommunicator:self didDisconnectDevice:device];
     
-    NSUInteger statusBits = unsetBit(_statusBits, BTCStatusBitConnected);
+    NSUInteger statusBits = unsetBit(_statusBits, TKBluetoothCommunicatorStatusBitConnected);
     [self setStatusBits:statusBits];
     [self startDiscoveringDevices];
 }
@@ -585,7 +643,7 @@ static BluetoothCommunicator *_instance = nil;
     DLOGF( @"%s: maximumWriteValueLength:WithResponse    %u", FUNC_NAME, withResponse );
     DLOGF( @"%s: maximumWriteValueLength:WithoutResponse %u", FUNC_NAME, withoutResponse );
 
-    BluetoothCommunicatorDevice *device = [[BluetoothCommunicatorDevice alloc] init];
+    TKBluetoothCommunicatorDevice *device = [[TKBluetoothCommunicatorDevice alloc] init];
     [device setBluetoothCommunicator:self];
     [device setMtu:withResponse];
     [device setMaxWriteLength:withoutResponse];
@@ -598,8 +656,8 @@ static BluetoothCommunicator *_instance = nil;
     // [_connectingDevices removeObject:peripheral];
     [_delegate bluetoothCommunicator:self didConnectToDevice:device];
 
-    //_currentStatusBits = unsetBit(_currentStatusBits, BTCStatusBitConnecting);
-    //_currentStatusBits = setBit(_currentStatusBits, BTCStatusBitConnected);
+    //_currentStatusBits = unsetBit(_currentStatusBits, TKBluetoothCommunicatorStatusBitConnecting);
+    //_currentStatusBits = setBit(_currentStatusBits, TKBluetoothCommunicatorStatusBitConnected);
     // [_delegate bluetoothCommunicatorDidChangeState:self];
 
     //
@@ -619,9 +677,9 @@ static BluetoothCommunicator *_instance = nil;
     // TODO: Either user should stop scanning, or set a timeout for connection.
     // [self stopDiscoveringDevices];
     
-    NSUInteger statusBits = unsetBit(_statusBits, BTCStatusBitConnecting);
-    statusBits = unsetBit(statusBits, BTCStatusBitScanning);
-    statusBits = setBit(statusBits, BTCStatusBitConnected);
+    NSUInteger statusBits = unsetBit(_statusBits, TKBluetoothCommunicatorStatusBitConnecting);
+    statusBits = unsetBit(statusBits, TKBluetoothCommunicatorStatusBitScanning);
+    statusBits = setBit(statusBits, TKBluetoothCommunicatorStatusBitConnected);
     [self setStatusBits:statusBits];
 }
 
@@ -688,7 +746,7 @@ static BluetoothCommunicator *_instance = nil;
             [_connectingDevices addObject:peripheral];
             [_centralManager connectPeripheral:peripheral options:nil];
             
-            NSUInteger statusBits = setBit(_statusBits, BTCStatusBitConnecting);
+            NSUInteger statusBits = setBit(_statusBits, TKBluetoothCommunicatorStatusBitConnecting);
             [self setStatusBits:statusBits];
             break;
         }
@@ -700,19 +758,19 @@ static BluetoothCommunicator *_instance = nil;
     return [_connectedDevices allValues];
 }
 
-- (void)bluetoothCommunicatorDeviceDidUpdateProperty:(BluetoothCommunicatorDevice *)device {
+- (void)bluetoothCommunicatorDeviceDidUpdateProperty:(TKBluetoothCommunicatorDevice *)device {
     [_delegate bluetoothCommunicator:self didUpdateDevice:device];
 }
 
-- (bool)schedulerScheduleMessageFrom:(BluetoothCommunicatorDevice*)bluetoothCommunicatorDevice wholeMessageData:(NSData*)wholeMessageData {
+- (bool)schedulerScheduleMessageFrom:(TKBluetoothCommunicatorDevice*)bluetoothCommunicatorDevice wholeMessageData:(NSData*)wholeMessageData {
     return [_scheduler scheduleMessageFrom:bluetoothCommunicatorDevice wholeMessageData:wholeMessageData];
 }
 
-- (bool)schedulerScheduleMessageTo:(BluetoothCommunicatorDevice*)bluetoothCommunicatorDevice wholeMessageData:(NSData*)wholeMessageData {
+- (bool)schedulerScheduleMessageTo:(TKBluetoothCommunicatorDevice*)bluetoothCommunicatorDevice wholeMessageData:(NSData*)wholeMessageData {
     return [_scheduler scheduleMessageTo:bluetoothCommunicatorDevice wholeMessageData:wholeMessageData];
 }
 
-- (bool)writeValue:(NSData *)value toDevice:(BluetoothCommunicatorDevice *)device {
+- (bool)writeValue:(NSData *)value toDevice:(TKBluetoothCommunicatorDevice *)device {
     DLOGF( @"%s", FUNC_NAME );
 
     if ( !value || !device ) {
@@ -742,7 +800,7 @@ static BluetoothCommunicator *_instance = nil;
                              error:(nullable NSError *)error {
     DLOGF( @"%s", FUNC_NAME );
 
-    BluetoothCommunicatorDevice *device = [_connectedDevices objectForKey:peripheral];
+    TKBluetoothCommunicatorDevice *device = [_connectedDevices objectForKey:peripheral];
     if ( device == nil || ( [device peripheral] != peripheral ) || ( [device characteristic] != characteristic ) ) {
         DLOGF( @"%s: Caught unexpected peripheral.", FUNC_NAME );
         return;
@@ -761,7 +819,7 @@ static BluetoothCommunicator *_instance = nil;
     }
 }
 
-- (void)setStatusBits:(BTCStatusBits)statusBits {
+- (void)setStatusBits:(TKBluetoothCommunicatorStatusBits)statusBits {
     if (_statusBits != statusBits) {
         _statusBits = statusBits;
         [_delegate bluetoothCommunicator:self didChangeStatus:statusBits];
@@ -781,7 +839,7 @@ static BluetoothCommunicator *_instance = nil;
     [_connectingDevices removeAllObjects];
     [_centralManager stopScan];
     
-    [self setStatusBits:unsetBit(_statusBits, BTCStatusBitScanning)];
+    [self setStatusBits:unsetBit(_statusBits, TKBluetoothCommunicatorStatusBitScanning)];
 }
 
 - (void)startDiscoveringDevices {
@@ -832,7 +890,7 @@ static BluetoothCommunicator *_instance = nil;
     atomic_store(&_scanningFlag, true);
     [_centralManager scanForPeripheralsWithServices:serviceUUIDs options:scanningOptions];
     
-    [self setStatusBits:setBit(_statusBits, BTCStatusBitScanning)];
+    [self setStatusBits:setBit(_statusBits, TKBluetoothCommunicatorStatusBitScanning)];
 }
 
 
@@ -842,41 +900,41 @@ static BluetoothCommunicator *_instance = nil;
         case CBManagerStatePoweredOn: {
                 DCHECK( _peripheralManager == peripheral );
                 DLOGF( @"%s: Caught CBManagerStatePoweredOn.", FUNC_NAME );
-                NSUInteger statusBits = unsetBit(_statusBits, BTCStatusBitWaitingForUserInput);
-                statusBits = unsetBit(statusBits, BTCStatusBitWaitingForSystem);
-                statusBits = unsetBit(statusBits, BTCStatusBitStartingPeripheral);
-                statusBits = setBit(statusBits, BTCStatusBitPeripheral);
+                NSUInteger statusBits = unsetBit(_statusBits, TKBluetoothCommunicatorStatusBitWaitingForUserInput);
+                statusBits = unsetBit(statusBits, TKBluetoothCommunicatorStatusBitWaitingForSystem);
+                statusBits = unsetBit(statusBits, TKBluetoothCommunicatorStatusBitStartingPeripheral);
+                statusBits = setBit(statusBits, TKBluetoothCommunicatorStatusBitPeripheral);
                 [self setStatusBits:statusBits];
             } break;
 
         case CBManagerStateUnknown:
             DLOGF( @"%s: Caught CBManagerStateUnknown. Waiting for an update.", FUNC_NAME );
-            [self setStatusBits:setBit(_statusBits, BTCStatusBitWaitingForSystem)];
+            [self setStatusBits:setBit(_statusBits, TKBluetoothCommunicatorStatusBitWaitingForSystem)];
             break;
         case CBManagerStateResetting:
             DLOGF( @"%s: Caught CBManagerStateResetting. Waiting for an update.", FUNC_NAME );
-            [self setStatusBits:setBit(_statusBits, BTCStatusBitWaitingForSystem)];
+            [self setStatusBits:setBit(_statusBits, TKBluetoothCommunicatorStatusBitWaitingForSystem)];
             break;
 
         case CBManagerStatePoweredOff: {
                 DLOGF( @"%s: Caught CBManagerStatePoweredOff state.", FUNC_NAME );
-                NSUInteger statusBits = unsetBit(_statusBits, BTCStatusBitStartingPeripheral);
-                statusBits = setBit(statusBits, BTCStatusBitWaitingForUserInput);
+                NSUInteger statusBits = unsetBit(_statusBits, TKBluetoothCommunicatorStatusBitStartingPeripheral);
+                statusBits = setBit(statusBits, TKBluetoothCommunicatorStatusBitWaitingForUserInput);
                 [self setStatusBits:statusBits];
             } break;
         case CBManagerStateUnauthorized:
             DLOGF( @"%s: Caught CBManagerStateUnauthorized state.", FUNC_NAME );
-            [self setStatusBits:setBit(_statusBits, BTCStatusBitWaitingForUserInput)];
+            [self setStatusBits:setBit(_statusBits, TKBluetoothCommunicatorStatusBitWaitingForUserInput)];
             break;
 
         case CBManagerStateUnsupported:
             DLOGF( @"%s: Caught CBManagerStateUnsupported state.", FUNC_NAME );
-            [self setStatusBits:BTCStatusBitUnsupported];
+            [self setStatusBits:TKBluetoothCommunicatorStatusBitUnsupported];
             break;
 
         default:
             DLOGF( @"%s: Error, unexpected state %li.", FUNC_NAME, (long) peripheral.state );
-            [self setStatusBits:BTCStatusBitPanic];
+            [self setStatusBits:TKBluetoothCommunicatorStatusBitPanic];
             break;
     }
 }
@@ -887,47 +945,47 @@ static BluetoothCommunicator *_instance = nil;
         case CBManagerStatePoweredOn: {
                 DCHECK( _centralManager == central );
                 DLOGF( @"%s: Caught CBManagerStatePoweredOn.", FUNC_NAME );
-                NSUInteger statusBits = unsetBit(_statusBits, BTCStatusBitWaitingForUserInput);
-                statusBits = unsetBit(statusBits, BTCStatusBitWaitingForSystem);
-                statusBits = unsetBit(statusBits, BTCStatusBitStartingCentral);
-                statusBits = setBit(statusBits, BTCStatusBitCentral);
+                NSUInteger statusBits = unsetBit(_statusBits, TKBluetoothCommunicatorStatusBitWaitingForUserInput);
+                statusBits = unsetBit(statusBits, TKBluetoothCommunicatorStatusBitWaitingForSystem);
+                statusBits = unsetBit(statusBits, TKBluetoothCommunicatorStatusBitStartingCentral);
+                statusBits = setBit(statusBits, TKBluetoothCommunicatorStatusBitCentral);
                 [self setStatusBits:statusBits];
             } break;
 
         case CBManagerStateUnknown:
             DLOGF( @"%s: Caught CBManagerStateUnknown. Waiting for an update.", FUNC_NAME );
-            [self setStatusBits:setBit(_statusBits, BTCStatusBitWaitingForSystem)];
+            [self setStatusBits:setBit(_statusBits, TKBluetoothCommunicatorStatusBitWaitingForSystem)];
             break;
         case CBManagerStateResetting:
             DLOGF( @"%s: Caught CBManagerStateResetting. Waiting for an update.", FUNC_NAME );
-            [self setStatusBits:setBit(_statusBits, BTCStatusBitWaitingForSystem)];
+            [self setStatusBits:setBit(_statusBits, TKBluetoothCommunicatorStatusBitWaitingForSystem)];
             break;
 
         case CBManagerStatePoweredOff: {
                 DLOGF( @"%s: Caught CBManagerStatePoweredOff state.", FUNC_NAME );
-                NSUInteger statusBits = unsetBit(_statusBits, BTCStatusBitStartingCentral);
-                statusBits = setBit(statusBits, BTCStatusBitWaitingForUserInput);
+                NSUInteger statusBits = unsetBit(_statusBits, TKBluetoothCommunicatorStatusBitStartingCentral);
+                statusBits = setBit(statusBits, TKBluetoothCommunicatorStatusBitWaitingForUserInput);
                 [self setStatusBits:statusBits];
             } break;
         case CBManagerStateUnauthorized:
             DLOGF( @"%s: Caught CBManagerStateUnauthorized state.", FUNC_NAME );
-            [self setStatusBits:setBit(_statusBits, BTCStatusBitWaitingForUserInput)];
+            [self setStatusBits:setBit(_statusBits, TKBluetoothCommunicatorStatusBitWaitingForUserInput)];
             break;
 
         case CBManagerStateUnsupported:
             DLOGF( @"%s: Caught CBManagerStateUnsupported state.", FUNC_NAME );
-            [self setStatusBits:BTCStatusBitUnsupported];
+            [self setStatusBits:TKBluetoothCommunicatorStatusBitUnsupported];
             break;
 
         default:
             DLOGF( @"%s: Error, unexpected state %li.", FUNC_NAME, (long) central.state );
-            [self setStatusBits:BTCStatusBitPanic];
+            [self setStatusBits:TKBluetoothCommunicatorStatusBitPanic];
             break;
     }
 }
 
 + (NSString *)createModelFriendlyName {
-    NSString* model = [BluetoothCommunicator createModelName];
+    NSString* model = [TKBluetoothCommunicator createModelName];
 
     if ([model compare:@"iPhone3,1"] == kCFCompareEqualTo) return @"iPhone 4";
     if ([model compare:@"iPhone3,2"] == kCFCompareEqualTo) return @"iPhone 4";
@@ -1027,7 +1085,7 @@ static BluetoothCommunicator *_instance = nil;
 }
 @end
 
-@implementation BluetoothCommunicatorLongMessage {
+@implementation TKBluetoothCommunicatorLongMessage {
     NSUInteger _responseMessageType;
     NSUInteger _messageType;
     NSUInteger _messageContentsLength;
@@ -1050,15 +1108,15 @@ static BluetoothCommunicator *_instance = nil;
 }
 - (void)start:(NSData *)wholeMessageData {
     DCHECK([self isEmpty]);
-    _responseMessageType = [BluetoothCommunicatorMessage getResponseMessageType:wholeMessageData];
-    _messageType = [BluetoothCommunicatorMessage getMessageType:wholeMessageData];
-    _messageContentsLength = [BluetoothCommunicatorMessage getMessageContentsByteLength:wholeMessageData];
+    _responseMessageType = [TKBluetoothCommunicatorMessage getResponseMessageType:wholeMessageData];
+    _messageType = [TKBluetoothCommunicatorMessage getMessageType:wholeMessageData];
+    _messageContentsLength = [TKBluetoothCommunicatorMessage getMessageContentsByteLength:wholeMessageData];
     _messageContents = [[NSMutableData alloc] initWithCapacity:_messageContentsLength];
     _messageContentsOffset = 0;
     
-    const NSUInteger contentsLength = wholeMessageData.length - BTCLongMessageStartByteIndex;
+    const NSUInteger contentsLength = wholeMessageData.length - TKBluetoothCommunicatorLongMessageStartByteIndex;
     if (contentsLength) {
-        const uint8_t* contentsPtr = (const uint8_t*)[wholeMessageData bytes] + BTCLongMessageStartByteIndex;
+        const uint8_t* contentsPtr = (const uint8_t*)[wholeMessageData bytes] + TKBluetoothCommunicatorLongMessageStartByteIndex;
         [_messageContents appendBytes:contentsPtr length:contentsLength];
         _messageContentsOffset += contentsLength;
     }
@@ -1092,37 +1150,37 @@ static BluetoothCommunicator *_instance = nil;
 }
 @end
 
-@implementation BluetoothCommunicatorMessage
+@implementation TKBluetoothCommunicatorMessage
 + (NSUInteger)getMessageType:(NSData*)wholeMessageBytes {
-    const uint8_t decoratedMessageType = ((const uint8_t*)[wholeMessageBytes bytes])[BTCMessageTypeByteIndex];
+    const uint8_t decoratedMessageType = ((const uint8_t*)[wholeMessageBytes bytes])[TKBluetoothCommunicatorMessageTypeByteIndex];
     return (NSUInteger) decoratedMessageType;
 }
 + (NSUInteger)getResponseMessageType:(NSData*)wholeMessageBytes {
-    const uint8_t decoratedMessageType = ((const uint8_t*)[wholeMessageBytes bytes])[BTCResponseMessageTypeByteIndex];
+    const uint8_t decoratedMessageType = ((const uint8_t*)[wholeMessageBytes bytes])[TKBluetoothCommunicatorResponseMessageTypeByteIndex];
     return (NSUInteger) decoratedMessageType;
 }
 + (bool)isShortMessage:(NSUInteger)decoratedMessageType {
-    return isBitSet(decoratedMessageType, BTCMessageShortBit);
+    return isBitSet(decoratedMessageType, TKBluetoothCommunicatorMessageShortBit);
 }
 + (bool)isEncryptedMessage:(NSUInteger)decoratedMessageType {
-    return isBitSet(decoratedMessageType, BTCMessageEncryptedBit);
+    return isBitSet(decoratedMessageType, TKBluetoothCommunicatorMessageEncryptedBit);
 }
 + (NSUInteger)undecorateMessageType:(NSUInteger)decoratedMessageType {
-    decoratedMessageType = unsetBit(decoratedMessageType, BTCMessageShortBit);
-    decoratedMessageType = unsetBit(decoratedMessageType, BTCMessageEncryptedBit);
+    decoratedMessageType = unsetBit(decoratedMessageType, TKBluetoothCommunicatorMessageShortBit);
+    decoratedMessageType = unsetBit(decoratedMessageType, TKBluetoothCommunicatorMessageEncryptedBit);
     return decoratedMessageType;
 }
 + (NSUInteger)shortMessageType:(NSUInteger)decoratedMessageType {
-    decoratedMessageType = setBit(decoratedMessageType, BTCMessageShortBit);
+    decoratedMessageType = setBit(decoratedMessageType, TKBluetoothCommunicatorMessageShortBit);
     return decoratedMessageType;
 }
 + (NSUInteger)longMessageType:(NSUInteger)decoratedMessageType {
-    decoratedMessageType = unsetBit(decoratedMessageType, BTCMessageShortBit);
+    decoratedMessageType = unsetBit(decoratedMessageType, TKBluetoothCommunicatorMessageShortBit);
     return decoratedMessageType;
 }
 + (NSUInteger)getMessageContentsByteLength:(NSData*)wholeMessageData {
-    DCHECK(wholeMessageData != nil && [wholeMessageData length] > BTCMessageLength3ByteIndex);
-    NSRange lengthRange = NSMakeRange(BTCMessageLength0ByteIndex, BTCMessageLengthIntegerByteLength);
+    DCHECK(wholeMessageData != nil && [wholeMessageData length] > TKBluetoothCommunicatorMessageLength3ByteIndex);
+    NSRange lengthRange = NSMakeRange(TKBluetoothCommunicatorMessageLength0ByteIndex, TKBluetoothCommunicatorMessageLengthIntegerByteLength);
     TKSubdata* lengthSubdata = [[TKSubdata alloc] initWithData:wholeMessageData range:lengthRange];
     return [self bytesToInt:lengthSubdata];
     // return [self bytesToInt:[NSDataNoCopyUtilities subdataNoCopy:wholeMessageData range:lengthRange]];
@@ -1135,7 +1193,7 @@ static BluetoothCommunicator *_instance = nil;
 + (void)intToBytes:(NSUInteger)integer writeTo:(NSMutableData*)mutableSubdata {
     DCHECK(integer <= 4294967295);
     DCHECK(mutableSubdata != nil);
-    DCHECK([mutableSubdata length] >= BTCMessageLengthIntegerByteLength);
+    DCHECK([mutableSubdata length] >= TKBluetoothCommunicatorMessageLengthIntegerByteLength);
     
     uint8_t* ptr = (uint8_t*)[mutableSubdata bytes];
     ptr[0] = (uint8_t)(integer & 0xff);
@@ -1144,13 +1202,13 @@ static BluetoothCommunicator *_instance = nil;
     ptr[3] = (uint8_t)((integer >> 24) & 0xff);
 }
 + (NSData*)intToBytes:(NSUInteger)integer {
-    NSMutableData* intBytes = [[NSMutableData alloc] initWithLength:BTCMessageLengthIntegerByteLength];
+    NSMutableData* intBytes = [[NSMutableData alloc] initWithLength:TKBluetoothCommunicatorMessageLengthIntegerByteLength];
     TKMutableSubdata* subdata = [[TKMutableSubdata alloc] initWithMutableData:intBytes];
     [self intToBytes:integer writeTo:subdata];
     return intBytes;
 }
 + (NSUInteger)bytesToInt:(TKSubdata*)subdata {
-    DCHECK(subdata != nil && [subdata length] >= BTCMessageLengthIntegerByteLength);
+    DCHECK(subdata != nil && [subdata length] >= TKBluetoothCommunicatorMessageLengthIntegerByteLength);
     
     const uint8_t* rawPtr = [subdata bytes];
     NSUInteger integer = (NSUInteger)rawPtr[0];
@@ -1165,7 +1223,7 @@ static BluetoothCommunicator *_instance = nil;
 //
 
 + (NSData*)uuidToBytes:(NSUUID*)UUID {
-    NSMutableData* uuidBytes = [[NSMutableData alloc] initWithLength:BTCUUIDByteLength];
+    NSMutableData* uuidBytes = [[NSMutableData alloc] initWithLength:TKBluetoothCommunicatorUUIDByteLength];
     TKMutableSubdata* uuidSubdata = [[TKMutableSubdata alloc] initWithMutableData:uuidBytes];
     [self uuidToBytes:UUID writeTo:uuidSubdata];
     return uuidBytes;
@@ -1182,8 +1240,8 @@ static BluetoothCommunicator *_instance = nil;
 
 + (bool)requiresResponse:(NSData*)wholeMessageData {
     const uint8_t* rawPtr = (const uint8_t*)[wholeMessageData bytes];
-    NSUInteger responseMessageType = rawPtr[BTCResponseMessageTypeByteIndex];
-    return responseMessageType != BTCMessageTypeFinish;
+    NSUInteger responseMessageType = rawPtr[TKBluetoothCommunicatorResponseMessageTypeByteIndex];
+    return responseMessageType != TKBluetoothCommunicatorMessageTypeFinish;
 }
 @end
 
@@ -1256,11 +1314,11 @@ static NSString* emptyStringInstance = @"";
 - (NSUInteger)length { return _range.length; }
 @end
 
-@implementation BluetoothCommunicatorEncoder {
-    BluetoothCommunicator* _bluetoothCommunicator;
+@implementation TKBluetoothCommunicatorEncoder {
+    TKBluetoothCommunicator* _bluetoothCommunicator;
 }
-- (BluetoothCommunicator*)bluetoothCommunicator { return _bluetoothCommunicator; }
-- (instancetype)initWithBluetoothCommunicator:(BluetoothCommunicator*)bluetoothCommunicator {
+- (TKBluetoothCommunicator*)bluetoothCommunicator { return _bluetoothCommunicator; }
+- (instancetype)initWithBluetoothCommunicator:(TKBluetoothCommunicator*)bluetoothCommunicator {
     DCHECK(bluetoothCommunicator != nil);
     _bluetoothCommunicator = bluetoothCommunicator;
     return self;
@@ -1270,15 +1328,15 @@ static NSString* emptyStringInstance = @"";
     const NSUInteger dataLength = data != nil ? [data length] : 0;
     const uint8_t* dataBytes = data != nil ? (const uint8_t*)[data bytes] : NULL;
     
-    const NSUInteger mutableDataLength = dataLength + BTCShortMessageStartByteIndex;
+    const NSUInteger mutableDataLength = dataLength + TKBluetoothCommunicatorShortMessageStartByteIndex;
     NSMutableData* mutableData = [[NSMutableData alloc] initWithLength:mutableDataLength];
     uint8_t* messageBytes = (uint8_t*)[mutableData mutableBytes];
     
-    messageBytes[BTCResponseMessageTypeByteIndex] = responseMessageType;
-    messageBytes[BTCMessageTypeByteIndex] = [BluetoothCommunicatorMessage shortMessageType:messageType];
+    messageBytes[TKBluetoothCommunicatorResponseMessageTypeByteIndex] = responseMessageType;
+    messageBytes[TKBluetoothCommunicatorMessageTypeByteIndex] = [TKBluetoothCommunicatorMessage shortMessageType:messageType];
 
     for (NSUInteger i = 0; i < dataLength; ++i) {
-        messageBytes[BTCShortMessageStartByteIndex + i] = dataBytes[i];
+        messageBytes[TKBluetoothCommunicatorShortMessageStartByteIndex + i] = dataBytes[i];
     }
 
     return mutableData;
@@ -1287,32 +1345,32 @@ static NSString* emptyStringInstance = @"";
     const NSUInteger dataLength = [data length];
     const uint8_t* dataBytes = (const uint8_t*)[data bytes];
     
-    const NSUInteger mutableDataLength = dataLength + BTCLongMessageStartByteIndex;
+    const NSUInteger mutableDataLength = dataLength + TKBluetoothCommunicatorLongMessageStartByteIndex;
     NSMutableData* mutableData = [[NSMutableData alloc] initWithLength:mutableDataLength];
     
     uint8_t* messageBytes = (uint8_t*)[mutableData mutableBytes];
-    messageBytes[BTCResponseMessageTypeByteIndex] = responseMessageType;
-    messageBytes[BTCMessageTypeByteIndex] = [BluetoothCommunicatorMessage longMessageType:messageType];
+    messageBytes[TKBluetoothCommunicatorResponseMessageTypeByteIndex] = responseMessageType;
+    messageBytes[TKBluetoothCommunicatorMessageTypeByteIndex] = [TKBluetoothCommunicatorMessage longMessageType:messageType];
     
-    NSRange lengthRange = NSMakeRange(BTCMessageLength0ByteIndex, BTCMessageLengthIntegerByteLength);
+    NSRange lengthRange = NSMakeRange(TKBluetoothCommunicatorMessageLength0ByteIndex, TKBluetoothCommunicatorMessageLengthIntegerByteLength);
     TKMutableSubdata* lengthMutableSubdata = [[TKMutableSubdata alloc] initWithMutableData:mutableData range:lengthRange];
     // NSMutableData* lengthMutableData = [NSDataNoCopyUtilities mutableSubdataNoCopy:mutableData range:lengthRange];
-    [BluetoothCommunicatorMessage intToBytes:[data length] writeTo:lengthMutableSubdata];
+    [TKBluetoothCommunicatorMessage intToBytes:[data length] writeTo:lengthMutableSubdata];
     
     for (NSUInteger i = 0; i < dataLength; ++i) {
-        messageBytes[BTCLongMessageStartByteIndex + i] = dataBytes[i];
+        messageBytes[TKBluetoothCommunicatorLongMessageStartByteIndex + i] = dataBytes[i];
     }
 
     return mutableData;
 }
-- (NSData*)encodeMessage:(BluetoothCommunicatorDevice *)device messageContentsData:(NSData*)messageContentsData messageType:(NSUInteger)messageType responseMessageType:(NSUInteger)responseMessageType {
-    NSUInteger wholeMessageLength = [messageContentsData length] + BTCShortMessageStartByteIndex;
+- (NSData*)encodeMessage:(TKBluetoothCommunicatorDevice *)device messageContentsData:(NSData*)messageContentsData messageType:(NSUInteger)messageType responseMessageType:(NSUInteger)responseMessageType {
+    NSUInteger wholeMessageLength = [messageContentsData length] + TKBluetoothCommunicatorShortMessageStartByteIndex;
     return wholeMessageLength > [device mtu] // If it fits, it sits.
         ? [self encodeLongMessage:messageContentsData messageType:messageType responseMessageType:responseMessageType]
         : [self encodeShortMessage:messageContentsData messageType:messageType responseMessageType:responseMessageType];
 }
 
-- (NSData*)encodeFileMessage:(BluetoothCommunicatorDevice *)device fileName:(NSString*)fileName fileData:(NSData*)fileData responseMessageType:(NSUInteger)responseMessageType {
+- (NSData*)encodeFileMessage:(TKBluetoothCommunicatorDevice *)device fileName:(NSString*)fileName fileData:(NSData*)fileData responseMessageType:(NSUInteger)responseMessageType {
     NSData* fileNameData = [fileName dataUsingEncoding:NSUTF8StringEncoding];
     
     const uint8_t stringTermination[] = {0, 0};
@@ -1323,41 +1381,41 @@ static NSString* emptyStringInstance = @"";
     [messageContentsData appendBytes:stringTermination length:sizeof(stringTermination)];
     [messageContentsData appendData:fileData];
     
-    return [self encodeMessage:device messageContentsData:messageContentsData messageType:BTCMessageTypeFile responseMessageType:responseMessageType];
+    return [self encodeMessage:device messageContentsData:messageContentsData messageType:TKBluetoothCommunicatorMessageTypeFile responseMessageType:responseMessageType];
 }
-- (NSData*)encodeConfirmationMessage:(BluetoothCommunicatorDevice *)device responseMessageType:(NSUInteger)responseMessageType {
-    return [self encodeMessage:device messageContentsData:nil messageType:BTCMessageTypeConfirm responseMessageType:responseMessageType];
+- (NSData*)encodeConfirmationMessage:(TKBluetoothCommunicatorDevice *)device responseMessageType:(NSUInteger)responseMessageType {
+    return [self encodeMessage:device messageContentsData:nil messageType:TKBluetoothCommunicatorMessageTypeConfirm responseMessageType:responseMessageType];
 }
-- (NSData*)encodeUUIDMessage:(BluetoothCommunicatorDevice *)device responseMessageType:(NSUInteger)responseMessageType {
+- (NSData*)encodeUUIDMessage:(TKBluetoothCommunicatorDevice *)device responseMessageType:(NSUInteger)responseMessageType {
     NSUUID* property = [_bluetoothCommunicator getUUID];
-    return [self encodeMessage:device messageContentsData:[BluetoothCommunicatorMessage uuidToBytes:property] messageType:BTCMessageTypeUUID responseMessageType:responseMessageType];
+    return [self encodeMessage:device messageContentsData:[TKBluetoothCommunicatorMessage uuidToBytes:property] messageType:TKBluetoothCommunicatorMessageTypeUUID responseMessageType:responseMessageType];
 }
-- (NSData*)encodeNameMessage:(BluetoothCommunicatorDevice *)device responseMessageType:(NSUInteger)responseMessageType {
+- (NSData*)encodeNameMessage:(TKBluetoothCommunicatorDevice *)device responseMessageType:(NSUInteger)responseMessageType {
     NSString* property = [_bluetoothCommunicator getName];
-    return [self encodeMessage:device messageContentsData:[property dataUsingEncoding:NSUTF8StringEncoding] messageType:BTCMessageTypeName responseMessageType:responseMessageType];
+    return [self encodeMessage:device messageContentsData:[property dataUsingEncoding:NSUTF8StringEncoding] messageType:TKBluetoothCommunicatorMessageTypeName responseMessageType:responseMessageType];
 }
-- (NSData*)encodeModelMessage:(BluetoothCommunicatorDevice *)device responseMessageType:(NSUInteger)responseMessageType  {
+- (NSData*)encodeModelMessage:(TKBluetoothCommunicatorDevice *)device responseMessageType:(NSUInteger)responseMessageType  {
     NSString* property = [_bluetoothCommunicator getModel];
-    return [self encodeMessage:device messageContentsData:[property dataUsingEncoding:NSUTF8StringEncoding] messageType:BTCMessageTypeDeviceModel responseMessageType:responseMessageType];
+    return [self encodeMessage:device messageContentsData:[property dataUsingEncoding:NSUTF8StringEncoding] messageType:TKBluetoothCommunicatorMessageTypeDeviceModel responseMessageType:responseMessageType];
 }
-- (NSData*)encodeFriendlyModelMessage:(BluetoothCommunicatorDevice *)device responseMessageType:(NSUInteger)responseMessageType {
+- (NSData*)encodeFriendlyModelMessage:(TKBluetoothCommunicatorDevice *)device responseMessageType:(NSUInteger)responseMessageType {
     NSString* property = [_bluetoothCommunicator getFriendlyModel];
-    return [self encodeMessage:device messageContentsData:[property dataUsingEncoding:NSUTF8StringEncoding] messageType:BTCMessageTypeDeviceFriendlyModel responseMessageType:responseMessageType];
+    return [self encodeMessage:device messageContentsData:[property dataUsingEncoding:NSUTF8StringEncoding] messageType:TKBluetoothCommunicatorMessageTypeDeviceFriendlyModel responseMessageType:responseMessageType];
 }
 
 @end
 
-@implementation BluetoothCommunicatorDecoder {
-    BluetoothCommunicator* _bluetoothCommunicator;
+@implementation TKBluetoothCommunicatorDecoder {
+    TKBluetoothCommunicator* _bluetoothCommunicator;
 }
-- (BluetoothCommunicator*)bluetoothCommunicator { return _bluetoothCommunicator; }
-- (instancetype)initWithBluetoothCommunicator:(BluetoothCommunicator*)bluetoothCommunicator {
+- (TKBluetoothCommunicator*)bluetoothCommunicator { return _bluetoothCommunicator; }
+- (instancetype)initWithBluetoothCommunicator:(TKBluetoothCommunicator*)bluetoothCommunicator {
     DCHECK(bluetoothCommunicator != nil);
     _bluetoothCommunicator = bluetoothCommunicator;
     return self;
 }
 
-- (void)decodeWholeFileMessageFrom:(BluetoothCommunicatorDevice *)device fileMessageContents:(NSData*)data {
+- (void)decodeWholeFileMessageFrom:(TKBluetoothCommunicatorDevice *)device fileMessageContents:(NSData*)data {
     const uint8_t* rawPtr = (const uint8_t*)[data bytes];
     NSUInteger fileNameLength = 0;
     for (NSUInteger i = 1; i < [data length]; ++i) {
@@ -1389,7 +1447,7 @@ static NSString* emptyStringInstance = @"";
     NSData* fileData = [[NSData alloc] initWithBytes:(rawPtr + fileNameLength + 2) length:fileLength];
     DCHECK(fileData && [fileData length] > 0);
     
-    [FileSaver saveFile:fileName fileData:fileData];
+    [TKFileSaver saveFile:fileName fileData:fileData];
 }
 
 + (NSString*)utf8StringInitWithSubdata:(TKSubdata*)subdata {
@@ -1397,19 +1455,19 @@ static NSString* emptyStringInstance = @"";
     return stringProperty;
 }
 
-- (void)decodeWholeMessageFrom:(BluetoothCommunicatorDevice *)device undecoratedMessageType:(NSUInteger)undecoratedMessageType messageContents:(TKSubdata*)messageContents {
+- (void)decodeWholeMessageFrom:(TKBluetoothCommunicatorDevice *)device undecoratedMessageType:(NSUInteger)undecoratedMessageType messageContents:(TKSubdata*)messageContents {
     switch (undecoratedMessageType) {
-        case BTCMessageTypeFinish: {
+        case TKBluetoothCommunicatorMessageTypeFinish: {
             DLOGF(@"%s: Received EOM", __PRETTY_FUNCTION__);
         } break;
         
-        case BTCMessageTypeFile: {
+        case TKBluetoothCommunicatorMessageTypeFile: {
             [self decodeWholeFileMessageFrom:device fileMessageContents:messageContents];
         } break;
         
-        case BTCMessageTypeUUID: {
+        case TKBluetoothCommunicatorMessageTypeUUID: {
             if (nil == [device getUUID]) {
-                NSUUID* uuid = [BluetoothCommunicatorMessage bytesToUUID:messageContents];
+                NSUUID* uuid = [TKBluetoothCommunicatorMessage bytesToUUID:messageContents];
                 [device setUUID:uuid];
                 
                 DLOGF(@"%s: Assigned UUID: %@", __PRETTY_FUNCTION__, uuid);
@@ -1417,9 +1475,9 @@ static NSString* emptyStringInstance = @"";
                 DLOGF(@"%s: Skinned UUID, already assigned.", __PRETTY_FUNCTION__);
             }
         } break;
-        case BTCMessageTypeName: {
+        case TKBluetoothCommunicatorMessageTypeName: {
             if ([NSStringUtilities isNilOrEmpty:[device getName]]) {
-                NSString* stringProperty = [BluetoothCommunicatorDecoder utf8StringInitWithSubdata:messageContents];
+                NSString* stringProperty = [TKBluetoothCommunicatorDecoder utf8StringInitWithSubdata:messageContents];
                 [device setName:stringProperty];
                 
                 DLOGF(@"%s: Received name: %@", __PRETTY_FUNCTION__, stringProperty);
@@ -1427,9 +1485,9 @@ static NSString* emptyStringInstance = @"";
                 DLOGF(@"%s: Skinned name, already assigned.", __PRETTY_FUNCTION__);
             }
         } break;
-        case BTCMessageTypeDeviceModel: {
+        case TKBluetoothCommunicatorMessageTypeDeviceModel: {
             if ([NSStringUtilities isNilOrEmpty:[device getModel]]) {
-                NSString* stringProperty = [BluetoothCommunicatorDecoder utf8StringInitWithSubdata:messageContents];
+                NSString* stringProperty = [TKBluetoothCommunicatorDecoder utf8StringInitWithSubdata:messageContents];
                 [device setModel:stringProperty];
                 
                 DLOGF(@"%s: Received model: %@", __PRETTY_FUNCTION__, stringProperty);
@@ -1437,9 +1495,9 @@ static NSString* emptyStringInstance = @"";
                 DLOGF(@"%s: Skinned model name, already assigned.", __PRETTY_FUNCTION__);
             }
         } break;
-        case BTCMessageTypeDeviceFriendlyModel: {
+        case TKBluetoothCommunicatorMessageTypeDeviceFriendlyModel: {
             if ([NSStringUtilities isNilOrEmpty:[device getFriendlyModel]]) {
-                NSString* stringProperty = [BluetoothCommunicatorDecoder utf8StringInitWithSubdata:messageContents];
+                NSString* stringProperty = [TKBluetoothCommunicatorDecoder utf8StringInitWithSubdata:messageContents];
                 [device setFriendlyModel:stringProperty];
                 
                 DLOGF(@"%s: Received friendly model: %@", __PRETTY_FUNCTION__, stringProperty);
@@ -1454,8 +1512,8 @@ static NSString* emptyStringInstance = @"";
     }
 }
 
-- (void)decodeShortMessageFrom:(BluetoothCommunicatorDevice *)device undecoratedMessageType:(NSUInteger)undecoratedMessageType wholeMessageData:(NSData*)wholeMessageData {
-    const NSUInteger offset = BTCShortMessageStartByteIndex;
+- (void)decodeShortMessageFrom:(TKBluetoothCommunicatorDevice *)device undecoratedMessageType:(NSUInteger)undecoratedMessageType wholeMessageData:(NSData*)wholeMessageData {
+    const NSUInteger offset = TKBluetoothCommunicatorShortMessageStartByteIndex;
     const NSUInteger length = [wholeMessageData length] - offset;
 
     NSRange range = NSMakeRange(offset, length);
@@ -1467,7 +1525,7 @@ static NSString* emptyStringInstance = @"";
 }
 @end
 
-@implementation BluetoothCommunicatorScheduledOperation {
+@implementation TKBluetoothCommunicatorScheduledOperation {
     NSData* _data;
     bool _requiresResponse;
 }
@@ -1482,10 +1540,10 @@ static NSString* emptyStringInstance = @"";
 }
 @end
 
-@implementation BluetoothCommunicatorScheduler {
-    BluetoothCommunicator* _bluetoothCommunicator;
-    BluetoothCommunicatorEncoder* _encoder;
-    BluetoothCommunicatorDecoder* _decoder;
+@implementation TKBluetoothCommunicatorScheduler {
+    TKBluetoothCommunicator* _bluetoothCommunicator;
+    TKBluetoothCommunicatorEncoder* _encoder;
+    TKBluetoothCommunicatorDecoder* _decoder;
     dispatch_queue_t _readQueue;
     dispatch_queue_t _writeQueue;
     NSMutableDictionary* _scheduledReads;
@@ -1493,14 +1551,14 @@ static NSString* emptyStringInstance = @"";
     NSMutableDictionary* _longMessages;
 }
 
-- (BluetoothCommunicator*)bluetoothCommunicator { return _bluetoothCommunicator; }
-- (BluetoothCommunicatorEncoder*)bluetoothCommunicatorEncoder { return _encoder; }
-- (BluetoothCommunicatorDecoder*)bluetoothCommunicatorDecoder { return _decoder; }
-- (instancetype)initWithBluetoothCommunicator:(BluetoothCommunicator*)bluetoothCommunicator {
+- (TKBluetoothCommunicator*)bluetoothCommunicator { return _bluetoothCommunicator; }
+- (TKBluetoothCommunicatorEncoder*)bluetoothCommunicatorEncoder { return _encoder; }
+- (TKBluetoothCommunicatorDecoder*)bluetoothCommunicatorDecoder { return _decoder; }
+- (instancetype)initWithBluetoothCommunicator:(TKBluetoothCommunicator*)bluetoothCommunicator {
     DCHECK(bluetoothCommunicator != nil);
     _bluetoothCommunicator = bluetoothCommunicator;
-    _encoder = [[BluetoothCommunicatorEncoder alloc] initWithBluetoothCommunicator:bluetoothCommunicator];
-    _decoder = [[BluetoothCommunicatorDecoder alloc] initWithBluetoothCommunicator:bluetoothCommunicator];
+    _encoder = [[TKBluetoothCommunicatorEncoder alloc] initWithBluetoothCommunicator:bluetoothCommunicator];
+    _decoder = [[TKBluetoothCommunicatorDecoder alloc] initWithBluetoothCommunicator:bluetoothCommunicator];
     _readQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0);
     _writeQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
     
@@ -1515,7 +1573,7 @@ static NSString* emptyStringInstance = @"";
     return operations && [operations count] ? operations : nil;
 }
 
-- (NSMutableArray*)synchronizedGetOperations:(BluetoothCommunicatorDevice*)device operationDictionary:(NSMutableDictionary*)operationDictionary {
+- (NSMutableArray*)synchronizedGetOperations:(TKBluetoothCommunicatorDevice*)device operationDictionary:(NSMutableDictionary*)operationDictionary {
     if (operationDictionary == nil || device == nil) { return nil; }
     
     NSMutableArray* operations = nil;
@@ -1523,7 +1581,7 @@ static NSString* emptyStringInstance = @"";
     return operations;
 }
 
-- (NSMutableArray*)synchronizedGetOrCreateOperations:(BluetoothCommunicatorDevice*)device operationDictionary:(NSMutableDictionary*)operationDictionary {
+- (NSMutableArray*)synchronizedGetOrCreateOperations:(TKBluetoothCommunicatorDevice*)device operationDictionary:(NSMutableDictionary*)operationDictionary {
     if (operationDictionary == nil || device == nil) { return nil; }
 
     NSMutableArray* operations = [operationDictionary objectForKey:device];
@@ -1538,12 +1596,12 @@ static NSString* emptyStringInstance = @"";
     return operations;
 }
 
-- (NSMutableArray*)synchronizedGetOperationsOrNil:(BluetoothCommunicatorDevice*)device operationDictionary:(NSMutableDictionary*)operationDictionary {
+- (NSMutableArray*)synchronizedGetOperationsOrNil:(TKBluetoothCommunicatorDevice*)device operationDictionary:(NSMutableDictionary*)operationDictionary {
     return [self nilForEmptyOperations:[self synchronizedGetOperations:device operationDictionary:operationDictionary]];
 }
 
-- (BluetoothCommunicatorScheduledOperation*)synchronizedPollFirstOperation:(NSMutableArray*)operations {
-    BluetoothCommunicatorScheduledOperation* operation = nil;
+- (TKBluetoothCommunicatorScheduledOperation*)synchronizedPollFirstOperation:(NSMutableArray*)operations {
+    TKBluetoothCommunicatorScheduledOperation* operation = nil;
     @synchronized (operations) { operation = [operations firstObject]; [operations removeObjectAtIndex:0]; }
     return operation;
 }
@@ -1556,7 +1614,7 @@ static NSString* emptyStringInstance = @"";
     
     const NSUInteger keyCount = [allKeys count];
     for (NSUInteger i = 0; i < keyCount; ++i) {
-        BluetoothCommunicatorDevice* device = [allKeys objectAtIndex:i];
+        TKBluetoothCommunicatorDevice* device = [allKeys objectAtIndex:i];
         DCHECK(device != nil);
         if (!device) { continue; }
     
@@ -1575,7 +1633,7 @@ static NSString* emptyStringInstance = @"";
     
     const NSUInteger keyCount = [allKeys count];
     for (NSUInteger i = 0; i < keyCount; ++i) {
-        BluetoothCommunicatorDevice* device = [allKeys objectAtIndex:i];
+        TKBluetoothCommunicatorDevice* device = [allKeys objectAtIndex:i];
         DCHECK(device != nil);
         if (!device || [device pendingWriteValue]) { continue; }
         
@@ -1584,7 +1642,7 @@ static NSString* emptyStringInstance = @"";
         
         NSUInteger operationCount = 0;
         while ((void)(operationCount = [operations count]), operationCount) {
-            BluetoothCommunicatorScheduledOperation* operation = [self synchronizedPollFirstOperation:operations];
+            TKBluetoothCommunicatorScheduledOperation* operation = [self synchronizedPollFirstOperation:operations];
             if (!operation) { continue; }
     
             operationExecutor(device, operation);
@@ -1592,35 +1650,35 @@ static NSString* emptyStringInstance = @"";
     }
 }
 
-- (NSData*)encodeResponse:(BluetoothCommunicatorDevice*)device messageType:(NSUInteger)messageType {
+- (NSData*)encodeResponse:(TKBluetoothCommunicatorDevice*)device messageType:(NSUInteger)messageType {
     NSData* responseData = nil;
     switch (messageType) {
-        case BTCMessageTypeUUID: {
-            NSUInteger responseMessageType = [device getUUID] ? BTCMessageTypeFinish : BTCMessageTypeUUID;
+        case TKBluetoothCommunicatorMessageTypeUUID: {
+            NSUInteger responseMessageType = [device getUUID] ? TKBluetoothCommunicatorMessageTypeFinish : TKBluetoothCommunicatorMessageTypeUUID;
             responseData = [_encoder encodeUUIDMessage:device responseMessageType:responseMessageType];
         } break;
-        case BTCMessageTypeName: {
+        case TKBluetoothCommunicatorMessageTypeName: {
             bool deviceHasName = ![NSStringUtilities isNilOrEmpty:[device getName]];
-            NSUInteger responseMessageType = deviceHasName ? BTCMessageTypeFinish : BTCMessageTypeName;
+            NSUInteger responseMessageType = deviceHasName ? TKBluetoothCommunicatorMessageTypeFinish : TKBluetoothCommunicatorMessageTypeName;
             responseData = [_encoder encodeNameMessage:device responseMessageType:responseMessageType];
         } break;
-        case BTCMessageTypeDeviceModel: {
+        case TKBluetoothCommunicatorMessageTypeDeviceModel: {
             bool deviceHasProperty = ![NSStringUtilities isNilOrEmpty:[device getModel]];
-            NSUInteger responseMessageType = deviceHasProperty ? BTCMessageTypeFinish : BTCMessageTypeDeviceModel;
+            NSUInteger responseMessageType = deviceHasProperty ? TKBluetoothCommunicatorMessageTypeFinish : TKBluetoothCommunicatorMessageTypeDeviceModel;
             responseData = [_encoder encodeModelMessage:device responseMessageType:responseMessageType];
         } break;
-        case BTCMessageTypeDeviceFriendlyModel: {
+        case TKBluetoothCommunicatorMessageTypeDeviceFriendlyModel: {
             bool deviceHasProperty = ![NSStringUtilities isNilOrEmpty:[device getFriendlyModel]];
-            NSUInteger responseMessageType = deviceHasProperty ? BTCMessageTypeFinish : BTCMessageTypeDeviceFriendlyModel;
+            NSUInteger responseMessageType = deviceHasProperty ? TKBluetoothCommunicatorMessageTypeFinish : TKBluetoothCommunicatorMessageTypeDeviceFriendlyModel;
             responseData = [_encoder encodeFriendlyModelMessage:device responseMessageType:responseMessageType];
         } break;
         
-        case BTCMessageTypeConfirm:
-            responseData = [_encoder encodeConfirmationMessage:device responseMessageType:BTCMessageTypeFinish];
+        case TKBluetoothCommunicatorMessageTypeConfirm:
+            responseData = [_encoder encodeConfirmationMessage:device responseMessageType:TKBluetoothCommunicatorMessageTypeFinish];
             break;
 
-        case BTCMessageTypeFinish:
-        case BTCMessageTypeFile: {
+        case TKBluetoothCommunicatorMessageTypeFinish:
+        case TKBluetoothCommunicatorMessageTypeFile: {
             DLOGF(@"%s: Not responding.", __PRETTY_FUNCTION__);
         } break;
 
@@ -1632,10 +1690,10 @@ static NSString* emptyStringInstance = @"";
     return responseData;
 }
 
-- (void)decodeReceivedMessageAndRespond:(BluetoothCommunicatorDevice*)device receivedMessageData:(NSData*)receivedMessageData {
-    NSUInteger responseMessageType = BTCMessageTypeFinish;
+- (void)decodeReceivedMessageAndRespond:(TKBluetoothCommunicatorDevice*)device receivedMessageData:(NSData*)receivedMessageData {
+    NSUInteger responseMessageType = TKBluetoothCommunicatorMessageTypeFinish;
     
-    BluetoothCommunicatorLongMessage* longMessage = [_longMessages objectForKey:device];
+    TKBluetoothCommunicatorLongMessage* longMessage = [_longMessages objectForKey:device];
     if (longMessage != nil) {
         DLOGF(@"%s: Resuming the long message.", __PRETTY_FUNCTION__);
         
@@ -1646,7 +1704,7 @@ static NSString* emptyStringInstance = @"";
             responseMessageType = [longMessage getResponseMessageType];
         
             const NSUInteger decoratedMessageType = [longMessage getMessageType];
-            const NSUInteger undecoratedMessageType = [BluetoothCommunicatorMessage undecorateMessageType:decoratedMessageType];
+            const NSUInteger undecoratedMessageType = [TKBluetoothCommunicatorMessage undecorateMessageType:decoratedMessageType];
             NSData* messageContents = [longMessage getMessageContents];
             TKSubdata* messageContentsSubdata = [[TKSubdata alloc] initWithData:messageContents];
             
@@ -1660,12 +1718,12 @@ static NSString* emptyStringInstance = @"";
             DCHECK(![longMessage isComplete]);
             DLOGF(@"%s: Appending the long message.", __PRETTY_FUNCTION__);
             
-            responseMessageType = BTCMessageTypeConfirm;
+            responseMessageType = TKBluetoothCommunicatorMessageTypeConfirm;
         }
     } else {
-        const NSUInteger decoratedMessageType = [BluetoothCommunicatorMessage getMessageType:receivedMessageData];
-        const NSUInteger undecoratedMessageType = [BluetoothCommunicatorMessage undecorateMessageType:decoratedMessageType];
-        const bool isMessageShort = [BluetoothCommunicatorMessage isShortMessage:decoratedMessageType];
+        const NSUInteger decoratedMessageType = [TKBluetoothCommunicatorMessage getMessageType:receivedMessageData];
+        const NSUInteger undecoratedMessageType = [TKBluetoothCommunicatorMessage undecorateMessageType:decoratedMessageType];
+        const bool isMessageShort = [TKBluetoothCommunicatorMessage isShortMessage:decoratedMessageType];
 
         if (isMessageShort) {
             DLOGF(@"%s: Sending short message to parser.", __PRETTY_FUNCTION__);
@@ -1674,14 +1732,14 @@ static NSString* emptyStringInstance = @"";
                       undecoratedMessageType:undecoratedMessageType
                             wholeMessageData:receivedMessageData];
 
-            responseMessageType = [BluetoothCommunicatorMessage getResponseMessageType:receivedMessageData];
+            responseMessageType = [TKBluetoothCommunicatorMessage getResponseMessageType:receivedMessageData];
         } else {
             DLOGF(@"%s: Starting long message.", __PRETTY_FUNCTION__);
             
-            BluetoothCommunicatorLongMessage* longMessage = [[BluetoothCommunicatorLongMessage alloc] initWithMessageData:receivedMessageData];
+            TKBluetoothCommunicatorLongMessage* longMessage = [[TKBluetoothCommunicatorLongMessage alloc] initWithMessageData:receivedMessageData];
             [_longMessages setObject:longMessage forKey:device];
             
-            responseMessageType = BTCMessageTypeConfirm;
+            responseMessageType = TKBluetoothCommunicatorMessageTypeConfirm;
         }
     }
     
@@ -1694,8 +1752,8 @@ static NSString* emptyStringInstance = @"";
 
 - (void)executeReads {
     [self executeOperations:_scheduledReads operationExecutor:^(id deviceId, id operationId) {
-        BluetoothCommunicatorDevice* device = deviceId;
-        BluetoothCommunicatorScheduledOperation* operation = operationId;
+        TKBluetoothCommunicatorDevice* device = deviceId;
+        TKBluetoothCommunicatorScheduledOperation* operation = operationId;
         DCHECK(device && operation);
         
         [device setPendingWriteValue:false];
@@ -1705,8 +1763,8 @@ static NSString* emptyStringInstance = @"";
 
 - (void)executeWrites {
     [self executeOperations:_scheduledWrites operationExecutor:^(id deviceId, id operationId) {
-        BluetoothCommunicatorDevice* device = deviceId;
-        BluetoothCommunicatorScheduledOperation* operation = operationId;
+        TKBluetoothCommunicatorDevice* device = deviceId;
+        TKBluetoothCommunicatorScheduledOperation* operation = operationId;
         DCHECK(device && operation);
         
         if ([operation requiresResponse]) { [device setPendingWriteValue:true]; }
@@ -1719,20 +1777,20 @@ static NSString* emptyStringInstance = @"";
     dispatch_async(_writeQueue, ^{ [self executeWrites]; });
 }
 
-- (bool)scheduleMessageFrom:(BluetoothCommunicatorDevice*)device wholeMessageData:(NSData*)wholeMessageData {
+- (bool)scheduleMessageFrom:(TKBluetoothCommunicatorDevice*)device wholeMessageData:(NSData*)wholeMessageData {
     NSMutableArray* mutableArray = [self synchronizedGetOrCreateOperations:device operationDictionary:_scheduledReads];
     if (!mutableArray) {
         assert(false);
         return false;
     }
     
-    BluetoothCommunicatorScheduledOperation* op = [[BluetoothCommunicatorScheduledOperation alloc] initWithData:wholeMessageData requiresResponse:true];
+    TKBluetoothCommunicatorScheduledOperation* op = [[TKBluetoothCommunicatorScheduledOperation alloc] initWithData:wholeMessageData requiresResponse:true];
     @synchronized(mutableArray) { [mutableArray addObject:op]; }
     [self flush];
     return true;
 }
 
-- (bool)scheduleMessageTo:(BluetoothCommunicatorDevice*)device wholeMessageData:(NSData*)wholeMessageData {
+- (bool)scheduleMessageTo:(TKBluetoothCommunicatorDevice*)device wholeMessageData:(NSData*)wholeMessageData {
     NSMutableArray* mutableArray = [self synchronizedGetOrCreateOperations:device operationDictionary:_scheduledWrites];
     if (!mutableArray) {
         assert(false);
@@ -1740,8 +1798,8 @@ static NSString* emptyStringInstance = @"";
     }
     
     if ([device mtu] >= [wholeMessageData length]) {
-        bool requiresResponse = [BluetoothCommunicatorMessage requiresResponse:wholeMessageData];
-        BluetoothCommunicatorScheduledOperation* op = [[BluetoothCommunicatorScheduledOperation alloc] initWithData:wholeMessageData requiresResponse:requiresResponse];
+        bool requiresResponse = [TKBluetoothCommunicatorMessage requiresResponse:wholeMessageData];
+        TKBluetoothCommunicatorScheduledOperation* op = [[TKBluetoothCommunicatorScheduledOperation alloc] initWithData:wholeMessageData requiresResponse:requiresResponse];
         @synchronized(mutableArray) { [mutableArray addObject:op]; }
     } else {
         NSUInteger messageChunkFrom = 0;
@@ -1756,7 +1814,7 @@ static NSString* emptyStringInstance = @"";
             messageChunkFrom += writableLength;
 
             bool requiresResponse = true;
-            BluetoothCommunicatorScheduledOperation* op = [[BluetoothCommunicatorScheduledOperation alloc] initWithData:messageChunk requiresResponse:requiresResponse];
+            TKBluetoothCommunicatorScheduledOperation* op = [[TKBluetoothCommunicatorScheduledOperation alloc] initWithData:messageChunk requiresResponse:requiresResponse];
             @synchronized(mutableArray) { [mutableArray addObject:op]; }
         }
     }
@@ -1766,7 +1824,7 @@ static NSString* emptyStringInstance = @"";
 }
 @end
 
-@implementation FileSaver
+@implementation TKFileSaver
 + (bool)saveFile:(NSString*)fileName fileData:(NSData*)fileData {
     DCHECK(fileName && [fileName length] > 0);
     DCHECK(fileData && [fileData length] > 0);
@@ -1784,19 +1842,19 @@ static NSString* emptyStringInstance = @"";
 }
 @end
 
-@implementation Debug
+@implementation TKDebug
 
-static BluetoothCommunicator*              _bluetoothCommunicator;
-static id< BluetoothCommunicatorDelegate > _bluetoothCommunicatorDelegate;
+static TKBluetoothCommunicator*              _bluetoothCommunicator;
+static id< TKBluetoothCommunicatorDelegate > _bluetoothCommunicatorDelegate;
 
-+(void)setBluetoothCommunicator:(BluetoothCommunicator*)bluetoothCommunicator { _bluetoothCommunicator = bluetoothCommunicator; }
-+(void)setBluetoothCommunicatorDelegate:(id< BluetoothCommunicatorDelegate >)delegate { _bluetoothCommunicatorDelegate = delegate; }
++(void)setBluetoothCommunicator:(TKBluetoothCommunicator*)bluetoothCommunicator { _bluetoothCommunicator = bluetoothCommunicator; }
++(void)setBluetoothCommunicatorDelegate:(id< TKBluetoothCommunicatorDelegate >)delegate { _bluetoothCommunicatorDelegate = delegate; }
 
 +(void)logf:(NSString *)format, ... {
     va_list args;
     va_start(args, format);
     NSString *log = [[NSString alloc] initWithFormat:format arguments:args];
-    [Debug log:log];
+    [TKDebug log:log];
     va_end(args);
 }
 
@@ -1808,7 +1866,7 @@ static id< BluetoothCommunicatorDelegate > _bluetoothCommunicatorDelegate;
 }
 
 +(void)raise:(NSString *)reason {
-    [Debug log:reason];
+    [TKDebug log:reason];
     [[NSException exceptionWithName:@"RuntimeError" reason:reason userInfo:nil] raise];
 }
 
@@ -1816,13 +1874,13 @@ static id< BluetoothCommunicatorDelegate > _bluetoothCommunicatorDelegate;
     va_list args;
     va_start(args, format);
     NSString *msg = [[NSString alloc] initWithFormat:format arguments:args];
-    [Debug check:condition file:file line:line tag:tag msg:msg];
+    [TKDebug check:condition file:file line:line tag:tag msg:msg];
     va_end(args);
 }
 
 +(void)check:(bool)condition file:(NSString*)file line:(int)line tag:(NSString*)tag msg:(NSString*)msg {
     if (TK_DEBUG && !condition) {
-        [Debug raise:[NSString stringWithFormat:@"%@|'%@:%i': %@", tag, file, line, msg]];
+        [TKDebug raise:[NSString stringWithFormat:@"%@|'%@:%i': %@", tag, file, line, msg]];
     }
 }
 
@@ -1831,14 +1889,14 @@ static id< BluetoothCommunicatorDelegate > _bluetoothCommunicatorDelegate;
         va_list args;
         va_start(args, format);
         NSString *msg = [[NSString alloc] initWithFormat:[NSString stringWithUTF8String:format] arguments:args];
-        [Debug dcheck:condition file:file line:line tag:tag msg:[msg UTF8String]];
+        [TKDebug dcheck:condition file:file line:line tag:tag msg:[msg UTF8String]];
         va_end(args);
     }
 }
 
 +(void)dcheck:(bool)condition file:(const char*)file line:(int)line tag:(const char*)tag msg:(const char*)msg {
     if (TK_DEBUG && !condition) {
-        [Debug raise:[NSString stringWithFormat:@"[%s] dcheck '%s:%i': %s", tag, file, line, msg]];
+        [TKDebug raise:[NSString stringWithFormat:@"[%s] dcheck '%s:%i': %s", tag, file, line, msg]];
     }
 }
 

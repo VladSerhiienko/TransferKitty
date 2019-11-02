@@ -1,6 +1,6 @@
 //
 //  ShareViewController.m
-//  TransferKittyShareExtension
+//  TransferKitty iOS ShareExtension
 //
 //  Created by Vlad Serhiienko on 10/14/19.
 //  Copyright © 2019 vserhiienko. All rights reserved.
@@ -41,16 +41,16 @@
 //  Copyright © 2019 vserhiienko. All rights reserved.
 //
 
-#import "TKShareViewController.h"
+#import "TKViewController.h"
 #import "TKNuklearMetalViewDelegate.h"
 
 #import <Metal/Metal.h>
 #import <MetalKit/MetalKit.h>
 
-@interface TKShareViewController ()  < TKNuklearFrameDelegate >
+@interface TKViewController ()  < TKNuklearFrameDelegate >
 @end
 
-@implementation TKShareViewController
+@implementation TKViewController
 {
     MTKView *_view;
     TKNuklearMetalViewDelegate *_renderer;
