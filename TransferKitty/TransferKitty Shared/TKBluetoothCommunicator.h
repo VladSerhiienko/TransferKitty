@@ -3,10 +3,15 @@
 
 #include <CoreBluetooth/CoreBluetooth.h>
 
+#ifndef TK_STATIC_ASSERT
 #ifndef static_assert
 #include <assert.h>
 #include <AssertMacros.h>
-#define static_assert __Check_Compile_Time
+// #define static_assert __Check_Compile_Time
+#define TK_STATIC_ASSERT(condition) __Check_Compile_Time(condition)
+#else
+#define TK_STATIC_ASSERT(condition) static_assert(condition, "")
+#endif
 #endif
 
 typedef NS_ENUM( NSUInteger, TKBluetoothCommunicatorStatusBits ) {
@@ -51,6 +56,18 @@ typedef NS_ENUM( NSUInteger, TKBluetoothCommunicatorMessageType ) {
     TKBluetoothCommunicatorMessageTypeFailure = 5,
     TKBluetoothCommunicatorMessageTypeConfirm = 6,
     TKBluetoothCommunicatorMessageTypeFile = 7,
+};
+
+typedef NS_ENUM( NSUInteger, TKBluetoothCommunicatorWriteValueResult ) {
+    TKBluetoothCommunicatorWriteValueResultSuccessContinue = 0,
+    TKBluetoothCommunicatorWriteValueResultFailedReschedule = 1,
+    TKBluetoothCommunicatorWriteValueResultErrorPanic = 2,
+};
+
+typedef NS_ENUM( NSUInteger, TKBluetoothCommunicatorOperationExecutionResult ) {
+    TKBluetoothCommunicatorOperationExecutionResultSuccessContinue = 0,
+    TKBluetoothCommunicatorOperationExecutionResultFailedContinue = 1,
+    TKBluetoothCommunicatorOperationExecutionResultFailedRetryLater = 2,
 };
 
 static_assert(TKBluetoothCommunicatorMessageLength1ByteIndex == (TKBluetoothCommunicatorMessageLength0ByteIndex + 1), "");
@@ -186,6 +203,7 @@ static_assert(TKBluetoothCommunicatorMessageLengthIntegerByteLength == (TKBlueto
 - (instancetype)initWithBluetoothCommunicator:(TKBluetoothCommunicator*)bluetoothCommunicator;
 - (bool)scheduleMessageFrom:(TKBluetoothCommunicatorDevice*)device wholeMessageData:(NSData*)wholeMessageData;
 - (bool)scheduleMessageTo:(TKBluetoothCommunicatorDevice*)device wholeMessageData:(NSData*)wholeMessageData;
+- (void)scheduleIntroductionMessagesTo:(TKBluetoothCommunicatorDevice*)device;
 @end
 
 @protocol TKBluetoothCommunicatorDelegate < NSObject >
@@ -236,5 +254,17 @@ static_assert(TKBluetoothCommunicatorMessageLengthIntegerByteLength == (TKBlueto
 #define DCHECK(condition) [TKDebug dcheck:(condition) file:__FILE__ line:__LINE__ tag:__PRETTY_FUNCTION__ msg:#condition]
 #define DLOGF(format, ...) [TKDebug logf:format, __VA_ARGS__]
 #define DLOG(log) [TKDebug log:log]
+
+#ifndef TK_FUNC_NAME
+#define TK_FUNC_NAME __PRETTY_FUNCTION__
+#endif
+
+#ifndef TK_DEBUG
+#ifdef DEBUG
+#define TK_DEBUG 1
+#else
+#define TK_DEBUG 0
+#endif
+#endif
 
 #endif /* BluetoothCommunicator */

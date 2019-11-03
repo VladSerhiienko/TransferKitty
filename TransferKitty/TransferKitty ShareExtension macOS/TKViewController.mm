@@ -8,9 +8,10 @@
 
 #import "TKViewController.h"
 #import "TKNuklearMetalViewDelegate.h"
+#import "TKBluetoothCommunicator.h"
 #include "AppInput.h"
 
-@interface TKViewController ( ) < TKNuklearFrameDelegate > {
+@interface TKViewController ( ) < TKNuklearFrameDelegate, TKBluetoothCommunicatorDelegate > {
     apemode::platform::AppInput appInput;
     float scrollDampingFactor;
     bool didReceiveMouseDrag;
@@ -94,6 +95,38 @@
     }
     
     nk_end(ctx);
+}
+
+- (void)bluetoothCommunicator:(TKBluetoothCommunicator *)bluetoothCommunicator didChangeStatus:(TKBluetoothCommunicatorStatusBits)statusBits {
+    DLOGF( @"%s", TK_FUNC_NAME );
+}
+
+- (void)bluetoothCommunicator:(TKBluetoothCommunicator *)bluetoothCommunicator didConnectToDevice:(TKBluetoothCommunicatorDevice *)device {
+    DLOGF( @"%s", TK_FUNC_NAME );
+}
+
+- (void)bluetoothCommunicator:(TKBluetoothCommunicator *)bluetoothCommunicator didDisconnectDevice:(TKBluetoothCommunicatorDevice *)device {
+    DLOGF( @"%s", TK_FUNC_NAME );
+}
+
+- (void)bluetoothCommunicator:(TKBluetoothCommunicator *)bluetoothCommunicator didLog:(NSString *)log {
+    DLOGF( @"%s", TK_FUNC_NAME );
+}
+
+- (void)bluetoothCommunicator:(TKBluetoothCommunicator *)bluetoothCommunicator didReceiveValue:(NSData *)value orError:(NSError *)error fromDevice:(TKBluetoothCommunicatorDevice *)device {
+    DLOGF( @"%s", TK_FUNC_NAME );
+}
+
+- (void)bluetoothCommunicator:(TKBluetoothCommunicator *)bluetoothCommunicator didSubscribeToDevice:(TKBluetoothCommunicatorDevice *)device {
+    DLOGF( @"%s", TK_FUNC_NAME );
+}
+
+- (void)bluetoothCommunicator:(TKBluetoothCommunicator *)bluetoothCommunicator didUpdateDevice:(TKBluetoothCommunicatorDevice *)device {
+    DLOGF( @"%s", TK_FUNC_NAME );
+}
+
+- (void)bluetoothCommunicator:(TKBluetoothCommunicator *)bluetoothCommunicator didWriteValueOrError:(NSError *)error toDevice:(TKBluetoothCommunicatorDevice *)device {
+    DLOGF( @"%s", TK_FUNC_NAME );
 }
 
 @end
