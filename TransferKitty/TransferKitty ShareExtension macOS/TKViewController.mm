@@ -76,7 +76,7 @@
 //    [self.extensionContext cancelRequestWithError:cancelError];
 //}
 
-- (void)renderer:(nonnull TKNuklearMetalViewDelegate *)renderer currentFrame:(nonnull TKNuklearFrame *)currentFrame {
+- (void)renderer:(nonnull TKNuklearMetalViewDelegate *)renderer shouldUpdateFrame:(nonnull TKNuklearFrame *)currentFrame {
     // [self handleInput:&appInput context:currentFrame.contextPtr];
     // [self updateInput];
 

@@ -8,8 +8,14 @@
 
 #import "TKViewController.h"
 #import "TKNuklearMetalViewDelegate.h"
+#import "TKBluetoothCommunicator.h"
+#import "TKApp.h"
 
 #include "AppInput.h"
+#include "TKUIStatePopulator.h"
+
+@interface TKViewController () <TKAppInputDelegate>
+@end
 
 struct Tap {
     int state;
@@ -224,7 +230,7 @@ struct Tap {
     memcpy( appInput.Buttons[ 1 ], appInput.Buttons[ 0 ], sizeof( appInput.Buttons[ 0 ] ) );
 }
 
-- (void)renderer:(nonnull TKNuklearMetalViewDelegate *)renderer currentFrame:(nonnull TKNuklearFrame *)currentFrame {
+- (void)renderer:(nonnull TKNuklearMetalViewDelegate *)renderer shouldUpdateFrame:(nonnull TKNuklearFrame *)currentFrame {
     [self handleInput:&appInput context:currentFrame.contextPtr];
     [self updateInput];
 

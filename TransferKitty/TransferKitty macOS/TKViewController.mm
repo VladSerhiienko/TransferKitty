@@ -8,18 +8,29 @@
 
 #import "TKViewController.h"
 #import "TKNuklearMetalViewDelegate.h"
-#include "AppInput.h"
+#import "TKBluetoothCommunicator.h"
+#import "TKApp.h"
 
-@interface TKViewController ( ) < TKNuklearFrameDelegate > {
-    apemode::platform::AppInput appInput;
-    float scrollDampingFactor;
-    bool didReceiveMouseDrag;
-}
+#include "AppInput.h"
+#include "TKUIStatePopulator.h"
+#include "TKBlurHash.h"
+
+#import <Cocoa/Cocoa.h>
+
+#define kRedChannel     0
+#define kGreenChannel   1
+#define kBlueChannel    2
+
+@interface TKViewController () <TKAppInputDelegate>
 @end
 
 @implementation TKViewController {
+    TKApp* _app;
     MTKView *_view;
-    TKNuklearMetalViewDelegate *_renderer;
+    apemode::platform::AppInput appInput;
+    tk::UIStatePopulator populator;
+    float scrollDampingFactor;
+    bool didReceiveMouseDrag;
 }
 
 -(void)setMouseLocation:(NSEvent *)e {
@@ -77,41 +88,86 @@
     didReceiveMouseDrag = true;
 }
 
-- (void)viewDidLoad {
-    [super viewDidLoad];
+-(void)testBlurHash {
+    NSImage* image = [NSApp applicationIconImage];
+    NSSize imageSize = image.size;
+    NSRect imageRect = NSMakeRect(0, 0, imageSize.width, imageSize.height);
 
-    _view = (MTKView *)self.view;
-    _view.device = MTLCreateSystemDefaultDevice();
+    // Create a context to hold the image data
 
-    if(!_view.device) {
-        NSLog(@"Metal is not supported on this device");
-        self.view = [[NSView alloc] initWithFrame:self.view.frame];
-        return;
+    CGColorSpaceRef colorSpace = CGColorSpaceCreateWithName(kCGColorSpaceGenericRGB);
+
+    CGContextRef ctx = CGBitmapContextCreate(NULL,
+                                             imageSize.width,
+                                             imageSize.height,
+                                             8,
+                                             0,
+                                             colorSpace,
+                                             kCGImageAlphaPremultipliedLast);
+
+    // Wrap graphics context
+
+    NSGraphicsContext* gctx = [NSGraphicsContext graphicsContextWithCGContext:ctx flipped:NO];
+
+    // Make our bitmap context current and render the NSImage into it
+
+    [NSGraphicsContext setCurrentContext:gctx];
+    [image drawInRect:imageRect];
+    
+    size_t width = CGBitmapContextGetWidth(ctx);
+    size_t height = CGBitmapContextGetHeight(ctx);
+    uint32_t* pixel = (uint32_t*)CGBitmapContextGetData(ctx);
+
+    std::vector<uint8_t> imageBytes(width * height * 3);
+    for (unsigned y = 0; y < height; y++) {
+        for (unsigned x = 0; x < width; x++) {
+            const uint32_t rgba = *pixel;
+
+            // Extract colour components
+            const uint8_t red   = (rgba & 0x000000ff) >> 0;
+            const uint8_t green = (rgba & 0x0000ff00) >> 8;
+            const uint8_t blue  = (rgba & 0x00ff0000) >> 16;
+            
+            imageBytes[y * width * 3 + x * 3 + 0] = red;
+            imageBytes[y * width * 3 + x * 3 + 1] = green;
+            imageBytes[y * width * 3 + x * 3 + 2] = blue;
+            pixel++;
+        }
     }
     
-    _renderer = [[TKNuklearMetalViewDelegate alloc] initWithMetalKitView:_view];
-    [_renderer mtkView:_view drawableSizeWillChange:_view.drawableSize];
+    tk::BlurHash hash = tk::BlurHashCodec().blurHashForPixels(3, 3, (int)width, (int)height, imageBytes.data(), width * 3);
+    NSLog(@"hash = %s\n", (const char*)hash.buffer.data());
+    
+    tk::BlurHashImage hashedImg = tk::BlurHashCodec().imageForBlurHash(hash, 32, 32);
+    NSLog(@"img = %s, %zu, %zu\n", (const char*)hashedImg.buffer.data(), hashedImg.width, hashedImg.height);
+    
+}
 
-    _view.delegate = _renderer;
-    _renderer.delegate = self;
+- (void)viewDidLoad {
+    [super viewDidLoad];
+    [self testBlurHash];
 
     didReceiveMouseDrag = false;
     scrollDampingFactor = 0.1f;
+
+    _view = (MTKView *)self.view;
+    _view.device = MTLCreateSystemDefaultDevice();
+    
+    _app = [[TKApp alloc] initWithMetalKitView:_view];
+    _app.inputDelegate = self;
     
     [[_view window] makeFirstResponder:self];
+    [_app startCentral];
 }
 
--(int)handleInput:(const apemode::platform::AppInput *)inputState context:(struct nk_context*)contextPtr {
-    if (!inputState || !contextPtr) {
-        return 0;
-    }
-    
-    nk_input_begin(contextPtr);
+- (void)app:(nonnull TKApp *)app input:(nonnull TKAppInput *)input {
+    nk_context* contextPtr = (nk_context*)input.opaqueImplementationPtr;
+    if (!contextPtr) { return; }
 
-    const float mx = inputState->GetAnalogInput(apemode::platform::kAnalogInput_MouseX);
-    const float my = inputState->GetAnalogInput(apemode::platform::kAnalogInput_MouseY);
+    const float mx = appInput.GetAnalogInput(apemode::platform::kAnalogInput_MouseX);
+    const float my = appInput.GetAnalogInput(apemode::platform::kAnalogInput_MouseY);
 
-    if (inputState->IsFirstPressed(apemode::platform::kDigitalInput_Mouse0)) {
+    if (appInput.IsFirstPressed(apemode::platform::kDigitalInput_Mouse0)) {
         auto& mouse = contextPtr->input.mouse;
         mouse.pos.x = mx;
         mouse.pos.y = my;
@@ -123,7 +179,7 @@
         nk_input_button(contextPtr, NK_BUTTON_LEFT, mx, my, 1);
         // NSLog(@"nk_input_button: 1, NK_BUTTON_LEFT, [%i %i]", (int)mx, (int)my);
 
-    } else if (inputState->IsFirstReleased(apemode::platform::kDigitalInput_Mouse0)) {
+    } else if (appInput.IsFirstReleased(apemode::platform::kDigitalInput_Mouse0)) {
         auto& mouse = contextPtr->input.mouse;
         mouse.pos.x = mx;
         mouse.pos.y = my;
@@ -144,37 +200,11 @@
     }
     
     struct nk_vec2 scroll;
-    scroll.x = inputState->GetAnalogInput(apemode::platform::kAnalogInput_MouseHorzScroll);
-    scroll.y = inputState->GetAnalogInput(apemode::platform::kAnalogInput_MouseVertScroll);
+    scroll.x = appInput.GetAnalogInput(apemode::platform::kAnalogInput_MouseHorzScroll);
+    scroll.y = appInput.GetAnalogInput(apemode::platform::kAnalogInput_MouseVertScroll);
     nk_input_scroll(contextPtr, scroll);
 
-    nk_input_end(contextPtr);
-    return 1;
-}
-
--(void)updateInput {
     memcpy( appInput.Buttons[ 1 ], appInput.Buttons[ 0 ], sizeof( appInput.Buttons[ 0 ] ) );
-}
-
-- (void)renderer:(nonnull TKNuklearMetalViewDelegate *)renderer currentFrame:(nonnull TKNuklearFrame *)currentFrame {
-    [self handleInput:&appInput context:currentFrame.contextPtr];
-    [self updateInput];
-
-    struct nk_context* ctx = currentFrame.contextPtr;
-    if (nk_begin(ctx, "Demo (macOS)", nk_rect(50, 100, 500, 800),
-        NK_WINDOW_BORDER|NK_WINDOW_MOVABLE|NK_WINDOW_SCALABLE|
-        NK_WINDOW_CLOSABLE|NK_WINDOW_MINIMIZABLE|NK_WINDOW_TITLE)) {
-
-        nk_layout_row_dynamic(ctx, 50, 1);
-        
-        for (int i = 0; i < 128; ++i) {
-            if (nk_button_label(ctx, [[NSString stringWithFormat:@"button[%i]", i] UTF8String])) {
-                NSLog(@"\"%s\" pressed\n", [[NSString stringWithFormat:@"button[%i]", i] UTF8String]);
-            }
-        }
-    }
-    
-    nk_end(ctx);
 }
 
 @end

@@ -7,22 +7,8 @@
 //
 
 #import <MetalKit/MetalKit.h>
-
-#define NK_INCLUDE_FIXED_TYPES
-#define NK_INCLUDE_STANDARD_IO
-#define NK_INCLUDE_STANDARD_VARARGS
-#define NK_INCLUDE_DEFAULT_ALLOCATOR
-#define NK_INCLUDE_VERTEX_BUFFER_OUTPUT
-#define NK_INCLUDE_FONT_BAKING
-#define NK_INCLUDE_DEFAULT_FONT
-#include "nuklear.h"
-
-#ifndef outptr
-#define outptr _Nonnull
-#endif
-#ifndef outptr_opt
-#define outptr_opt _Nullable
-#endif
+#include "TKNuklearConfig.h"
+#include "TKConfig.h"
 
 typedef NS_ENUM(NSUInteger, TKNuklearBuiltinColorTheme) {
     TKNuklearColorBuiltinThemeBlack = 0,
@@ -66,5 +52,5 @@ typedef NS_ENUM(NSUInteger, TKNuklearBuiltinColorTheme) {
 
 @protocol TKNuklearFrameDelegate <NSObject>
 - (void)renderer:(nonnull TKNuklearRenderer*)renderer
-    currentFrame:(nonnull TKNuklearFrame*)currentFrame;
+    shouldUpdateFrame:(nonnull TKNuklearFrame*)currentFrame;
 @end

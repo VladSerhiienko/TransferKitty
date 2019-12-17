@@ -341,7 +341,7 @@ const size_t getFontByteLength(void);
     TKNuklearFrame* currentFrame = [self advanceFrameIndex];
     [self updateFrameViewport:currentFrame drawableSize:drawableSize];
     
-    [_frameDelegate renderer:self currentFrame:currentFrame];
+    [_frameDelegate renderer:self shouldUpdateFrame:currentFrame];
     
     [self appendDebugOverlay:currentFrame];
     [self uploadFrameBuffers:currentFrame];

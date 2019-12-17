@@ -1779,7 +1779,7 @@ static NSString* emptyStringInstance = @"";
         NSUInteger operationCount = 0;
         while ((void)(operationCount = [operations count]), operationCount) {
             TKBluetoothCommunicatorScheduledOperation* operation = [self synchronizedPeekFirstOperation:operations];
-            if (!operation) { [self synchronizedRemoveFirstOperation:operations]; continue; }
+            if (!operation) { assert(false); [self synchronizedRemoveFirstOperation:operations]; continue; }
     
             TKBluetoothCommunicatorOperationExecutionResult result = operationExecutor(device, operation);
             switch (result) {
@@ -1914,8 +1914,10 @@ static NSString* emptyStringInstance = @"";
         DCHECK(device && operation);
         
         if ([operation requiresResponse]) { [device setPendingWriteValue:true]; }
-        TKBluetoothCommunicatorWriteValueResult result;
-        result = [self.bluetoothCommunicator writeValue:[operation data] toDevice:device];
+        
+        TKBluetoothCommunicatorWriteValueResult result =
+            [self.bluetoothCommunicator writeValue:[operation data] toDevice:device];
+
         switch (result) {
             case TKBluetoothCommunicatorWriteValueResultSuccessContinue:
                 return TKBluetoothCommunicatorOperationExecutionResultSuccessContinue;

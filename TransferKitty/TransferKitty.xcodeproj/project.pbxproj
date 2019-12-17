@@ -53,6 +53,18 @@
 		F998F73B236E35A40025564F /* Metal.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CAE7EC5F235C51F400C4D217 /* Metal.framework */; };
 		F998F73C236E35A40025564F /* MetalKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CAE7EC5E235C51F400C4D217 /* MetalKit.framework */; };
 		F998F741236E3DD60025564F /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F998F740236E3DD60025564F /* QuartzCore.framework */; };
+		F998F7862385EA500025564F /* TKUIStatePopulator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F998F7852385EA500025564F /* TKUIStatePopulator.cpp */; };
+		F998F7872385EA500025564F /* TKUIStatePopulator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F998F7852385EA500025564F /* TKUIStatePopulator.cpp */; };
+		F998F7882385EA500025564F /* TKUIStatePopulator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F998F7852385EA500025564F /* TKUIStatePopulator.cpp */; };
+		F998F7892385EA500025564F /* TKUIStatePopulator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F998F7852385EA500025564F /* TKUIStatePopulator.cpp */; };
+		F998F78D238736960025564F /* TKApp.mm in Sources */ = {isa = PBXBuildFile; fileRef = F998F78B238736960025564F /* TKApp.mm */; };
+		F998F78E238736960025564F /* TKApp.mm in Sources */ = {isa = PBXBuildFile; fileRef = F998F78B238736960025564F /* TKApp.mm */; };
+		F998F78F238736960025564F /* TKApp.mm in Sources */ = {isa = PBXBuildFile; fileRef = F998F78B238736960025564F /* TKApp.mm */; };
+		F998F790238736960025564F /* TKApp.mm in Sources */ = {isa = PBXBuildFile; fileRef = F998F78B238736960025564F /* TKApp.mm */; };
+		F998F79423A70CF90025564F /* TKBlurHash.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F998F79323A70CF90025564F /* TKBlurHash.cpp */; };
+		F998F79523A70CF90025564F /* TKBlurHash.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F998F79323A70CF90025564F /* TKBlurHash.cpp */; };
+		F998F79623A70CF90025564F /* TKBlurHash.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F998F79323A70CF90025564F /* TKBlurHash.cpp */; };
+		F998F79723A70CF90025564F /* TKBlurHash.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F998F79323A70CF90025564F /* TKBlurHash.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -143,6 +155,18 @@
 		F998F72D236E312E0025564F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F998F72E236E312E0025564F /* TransferKitty.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = TransferKitty.entitlements; sourceTree = "<group>"; };
 		F998F740236E3DD60025564F /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		F998F7832385E6450025564F /* TKUIStatePopulator.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.h; fileEncoding = 4; path = TKUIStatePopulator.h; sourceTree = "<group>"; };
+		F998F7842385E6450025564F /* TKIUIState.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.h; fileEncoding = 4; path = TKIUIState.h; sourceTree = "<group>"; };
+		F998F7852385EA500025564F /* TKUIStatePopulator.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TKUIStatePopulator.cpp; sourceTree = "<group>"; };
+		F998F78A2385ED8A0025564F /* TKNuklearConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TKNuklearConfig.h; sourceTree = "<group>"; };
+		F998F78B238736960025564F /* TKApp.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = TKApp.mm; sourceTree = "<group>"; };
+		F998F78C238736960025564F /* TKApp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TKApp.h; sourceTree = "<group>"; };
+		F998F79123873F890025564F /* TKConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TKConfig.h; sourceTree = "<group>"; };
+		F998F79223A70CF90025564F /* TKBlurHash.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TKBlurHash.h; sourceTree = "<group>"; };
+		F998F79323A70CF90025564F /* TKBlurHash.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TKBlurHash.cpp; sourceTree = "<group>"; };
+		F998F79823A84B5D0025564F /* stb_image_resize.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = stb_image_resize.h; sourceTree = "<group>"; };
+		F998F79923A84B5D0025564F /* stb_image_write.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = stb_image_write.h; sourceTree = "<group>"; };
+		F998F79A23A84B5D0025564F /* stb_image.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = stb_image.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -208,13 +232,25 @@
 			isa = PBXGroup;
 			children = (
 				CACC74822354F93800FE3672 /* Assets.xcassets */,
+				F998F79823A84B5D0025564F /* stb_image_resize.h */,
+				F998F79923A84B5D0025564F /* stb_image_write.h */,
+				F998F79A23A84B5D0025564F /* stb_image.h */,
+				F998F79323A70CF90025564F /* TKBlurHash.cpp */,
+				F998F79223A70CF90025564F /* TKBlurHash.h */,
+				F998F79123873F890025564F /* TKConfig.h */,
 				CAE7EC46235C4F5A00C4D217 /* AppInput.h */,
-				CAE7EC47235C4F5A00C4D217 /* TKBluetoothCommunicator.h */,
-				CAE7EC45235C4F5A00C4D217 /* TKBluetoothCommunicator.m */,
-				CAE7EC49235C4F5A00C4D217 /* TKNuklearMetalViewDelegate.h */,
-				CAE7EC4A235C4F5A00C4D217 /* TKNuklearMetalViewDelegate.mm */,
 				CAE7EC4B235C4F5A00C4D217 /* nuklear.h */,
 				CAE7EC44235C4F5A00C4D217 /* Nuklear.metal */,
+				F998F78C238736960025564F /* TKApp.h */,
+				F998F78B238736960025564F /* TKApp.mm */,
+				CAE7EC47235C4F5A00C4D217 /* TKBluetoothCommunicator.h */,
+				CAE7EC45235C4F5A00C4D217 /* TKBluetoothCommunicator.m */,
+				F998F7842385E6450025564F /* TKIUIState.h */,
+				F998F78A2385ED8A0025564F /* TKNuklearConfig.h */,
+				CAE7EC49235C4F5A00C4D217 /* TKNuklearMetalViewDelegate.h */,
+				CAE7EC4A235C4F5A00C4D217 /* TKNuklearMetalViewDelegate.mm */,
+				F998F7852385EA500025564F /* TKUIStatePopulator.cpp */,
+				F998F7832385E6450025564F /* TKUIStatePopulator.h */,
 			);
 			path = "TransferKitty Shared";
 			sourceTree = "<group>";
@@ -463,9 +499,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F998F78D238736960025564F /* TKApp.mm in Sources */,
 				CACC748F2354F93800FE3672 /* TKViewController.mm in Sources */,
+				F998F7862385EA500025564F /* TKUIStatePopulator.cpp in Sources */,
 				CAE7EC4C235C4F5A00C4D217 /* Nuklear.metal in Sources */,
 				CACC74982354F93800FE3672 /* main.m in Sources */,
+				F998F79423A70CF90025564F /* TKBlurHash.cpp in Sources */,
 				CAE7EC52235C4F5A00C4D217 /* TKNuklearMetalViewDelegate.mm in Sources */,
 				CACC748C2354F93800FE3672 /* AppDelegate.m in Sources */,
 				CAE7EC4F235C4F5A00C4D217 /* TKBluetoothCommunicator.m in Sources */,
@@ -476,9 +515,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F998F78E238736960025564F /* TKApp.mm in Sources */,
 				CACC74A42354F93800FE3672 /* TKViewController.mm in Sources */,
+				F998F7872385EA500025564F /* TKUIStatePopulator.cpp in Sources */,
 				CAE7EC4D235C4F5A00C4D217 /* Nuklear.metal in Sources */,
 				CACC74AA2354F93800FE3672 /* main.m in Sources */,
+				F998F79523A70CF90025564F /* TKBlurHash.cpp in Sources */,
 				CAE7EC53235C4F5A00C4D217 /* TKNuklearMetalViewDelegate.mm in Sources */,
 				CACC74A12354F93800FE3672 /* AppDelegate.m in Sources */,
 				CAE7EC50235C4F5A00C4D217 /* TKBluetoothCommunicator.m in Sources */,
@@ -489,9 +531,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F998F79623A70CF90025564F /* TKBlurHash.cpp in Sources */,
 				CAE7EC54235C4F5A00C4D217 /* TKNuklearMetalViewDelegate.mm in Sources */,
 				CAE7EC4E235C4F5A00C4D217 /* Nuklear.metal in Sources */,
+				F998F78F238736960025564F /* TKApp.mm in Sources */,
 				CAE7EC51235C4F5A00C4D217 /* TKBluetoothCommunicator.m in Sources */,
+				F998F7882385EA500025564F /* TKUIStatePopulator.cpp in Sources */,
 				CACC74C12354F9AB00FE3672 /* TKViewController.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -500,9 +545,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F998F79723A70CF90025564F /* TKBlurHash.cpp in Sources */,
 				F998F738236E348C0025564F /* Nuklear.metal in Sources */,
 				F998F736236E348C0025564F /* TKBluetoothCommunicator.m in Sources */,
+				F998F790238736960025564F /* TKApp.mm in Sources */,
 				F998F737236E348C0025564F /* TKNuklearMetalViewDelegate.mm in Sources */,
+				F998F7892385EA500025564F /* TKUIStatePopulator.cpp in Sources */,
 				F998F729236E312E0025564F /* TKViewController.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
