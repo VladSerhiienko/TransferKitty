@@ -24,9 +24,9 @@
 		CAE7EC4C235C4F5A00C4D217 /* Nuklear.metal in Sources */ = {isa = PBXBuildFile; fileRef = CAE7EC44235C4F5A00C4D217 /* Nuklear.metal */; };
 		CAE7EC4D235C4F5A00C4D217 /* Nuklear.metal in Sources */ = {isa = PBXBuildFile; fileRef = CAE7EC44235C4F5A00C4D217 /* Nuklear.metal */; };
 		CAE7EC4E235C4F5A00C4D217 /* Nuklear.metal in Sources */ = {isa = PBXBuildFile; fileRef = CAE7EC44235C4F5A00C4D217 /* Nuklear.metal */; };
-		CAE7EC4F235C4F5A00C4D217 /* TKBluetoothCommunicator.m in Sources */ = {isa = PBXBuildFile; fileRef = CAE7EC45235C4F5A00C4D217 /* TKBluetoothCommunicator.m */; };
-		CAE7EC50235C4F5A00C4D217 /* TKBluetoothCommunicator.m in Sources */ = {isa = PBXBuildFile; fileRef = CAE7EC45235C4F5A00C4D217 /* TKBluetoothCommunicator.m */; };
-		CAE7EC51235C4F5A00C4D217 /* TKBluetoothCommunicator.m in Sources */ = {isa = PBXBuildFile; fileRef = CAE7EC45235C4F5A00C4D217 /* TKBluetoothCommunicator.m */; };
+		CAE7EC4F235C4F5A00C4D217 /* TKBluetoothCommunicator.mm in Sources */ = {isa = PBXBuildFile; fileRef = CAE7EC45235C4F5A00C4D217 /* TKBluetoothCommunicator.mm */; };
+		CAE7EC50235C4F5A00C4D217 /* TKBluetoothCommunicator.mm in Sources */ = {isa = PBXBuildFile; fileRef = CAE7EC45235C4F5A00C4D217 /* TKBluetoothCommunicator.mm */; };
+		CAE7EC51235C4F5A00C4D217 /* TKBluetoothCommunicator.mm in Sources */ = {isa = PBXBuildFile; fileRef = CAE7EC45235C4F5A00C4D217 /* TKBluetoothCommunicator.mm */; };
 		CAE7EC52235C4F5A00C4D217 /* TKNuklearMetalViewDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = CAE7EC4A235C4F5A00C4D217 /* TKNuklearMetalViewDelegate.mm */; };
 		CAE7EC53235C4F5A00C4D217 /* TKNuklearMetalViewDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = CAE7EC4A235C4F5A00C4D217 /* TKNuklearMetalViewDelegate.mm */; };
 		CAE7EC54235C4F5A00C4D217 /* TKNuklearMetalViewDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = CAE7EC4A235C4F5A00C4D217 /* TKNuklearMetalViewDelegate.mm */; };
@@ -45,7 +45,7 @@
 		F998F72C236E312E0025564F /* Main.xib in Resources */ = {isa = PBXBuildFile; fileRef = F998F72A236E312E0025564F /* Main.xib */; };
 		F998F731236E312E0025564F /* TransferKitty ShareExtension macOS.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = F998F723236E312E0025564F /* TransferKitty ShareExtension macOS.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		F998F735236E348C0025564F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CACC74822354F93800FE3672 /* Assets.xcassets */; };
-		F998F736236E348C0025564F /* TKBluetoothCommunicator.m in Sources */ = {isa = PBXBuildFile; fileRef = CAE7EC45235C4F5A00C4D217 /* TKBluetoothCommunicator.m */; };
+		F998F736236E348C0025564F /* TKBluetoothCommunicator.mm in Sources */ = {isa = PBXBuildFile; fileRef = CAE7EC45235C4F5A00C4D217 /* TKBluetoothCommunicator.mm */; };
 		F998F737236E348C0025564F /* TKNuklearMetalViewDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = CAE7EC4A235C4F5A00C4D217 /* TKNuklearMetalViewDelegate.mm */; };
 		F998F738236E348C0025564F /* Nuklear.metal in Sources */ = {isa = PBXBuildFile; fileRef = CAE7EC44235C4F5A00C4D217 /* Nuklear.metal */; };
 		F998F739236E359A0025564F /* AppKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F919AF5E236E16BA00E9EF75 /* AppKit.framework */; };
@@ -65,6 +65,10 @@
 		F998F79523A70CF90025564F /* TKBlurHash.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F998F79323A70CF90025564F /* TKBlurHash.cpp */; };
 		F998F79623A70CF90025564F /* TKBlurHash.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F998F79323A70CF90025564F /* TKBlurHash.cpp */; };
 		F998F79723A70CF90025564F /* TKBlurHash.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F998F79323A70CF90025564F /* TKBlurHash.cpp */; };
+		F998F79D23AD92B40025564F /* TKImageBuffer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F998F79C23AD92B40025564F /* TKImageBuffer.cpp */; };
+		F998F79E23AD92B40025564F /* TKImageBuffer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F998F79C23AD92B40025564F /* TKImageBuffer.cpp */; };
+		F998F79F23AD92B40025564F /* TKImageBuffer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F998F79C23AD92B40025564F /* TKImageBuffer.cpp */; };
+		F998F7A023AD92B40025564F /* TKImageBuffer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F998F79C23AD92B40025564F /* TKImageBuffer.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -134,7 +138,7 @@
 		CACC74C32354F9AB00FE3672 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/MainInterface.storyboard; sourceTree = "<group>"; };
 		CACC74C52354F9AB00FE3672 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		CAE7EC44235C4F5A00C4D217 /* Nuklear.metal */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.metal; path = Nuklear.metal; sourceTree = "<group>"; };
-		CAE7EC45235C4F5A00C4D217 /* TKBluetoothCommunicator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TKBluetoothCommunicator.m; sourceTree = "<group>"; };
+		CAE7EC45235C4F5A00C4D217 /* TKBluetoothCommunicator.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = TKBluetoothCommunicator.mm; sourceTree = "<group>"; };
 		CAE7EC46235C4F5A00C4D217 /* AppInput.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppInput.h; sourceTree = "<group>"; };
 		CAE7EC47235C4F5A00C4D217 /* TKBluetoothCommunicator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TKBluetoothCommunicator.h; sourceTree = "<group>"; };
 		CAE7EC49235C4F5A00C4D217 /* TKNuklearMetalViewDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TKNuklearMetalViewDelegate.h; sourceTree = "<group>"; };
@@ -147,6 +151,9 @@
 		CAE7EC5E235C51F400C4D217 /* MetalKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MetalKit.framework; path = System/Library/Frameworks/MetalKit.framework; sourceTree = SDKROOT; };
 		CAE7EC5F235C51F400C4D217 /* Metal.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Metal.framework; path = System/Library/Frameworks/Metal.framework; sourceTree = SDKROOT; };
 		F919AF5E236E16BA00E9EF75 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
+		F95CCF9D23AE8D3A004DEBFB /* TKOptional.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TKOptional.h; sourceTree = "<group>"; };
+		F95CCF9E23AFEA1D004DEBFB /* TKITexture.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TKITexture.h; sourceTree = "<group>"; };
+		F95CCF9F23AFEAF9004DEBFB /* TKFormat.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TKFormat.h; sourceTree = "<group>"; };
 		F998F723236E312E0025564F /* TransferKitty ShareExtension macOS.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "TransferKitty ShareExtension macOS.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
 		F998F725236E312E0025564F /* icon.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = icon.icns; sourceTree = "<group>"; };
 		F998F727236E312E0025564F /* TKViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TKViewController.h; sourceTree = "<group>"; };
@@ -167,6 +174,8 @@
 		F998F79823A84B5D0025564F /* stb_image_resize.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = stb_image_resize.h; sourceTree = "<group>"; };
 		F998F79923A84B5D0025564F /* stb_image_write.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = stb_image_write.h; sourceTree = "<group>"; };
 		F998F79A23A84B5D0025564F /* stb_image.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = stb_image.h; sourceTree = "<group>"; };
+		F998F79B23AAD8370025564F /* TKImageBuffer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TKImageBuffer.h; sourceTree = "<group>"; };
+		F998F79C23AD92B40025564F /* TKImageBuffer.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; fileEncoding = 4; path = TKImageBuffer.cpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -231,7 +240,12 @@
 		CACC747D2354F93500FE3672 /* TransferKitty Shared */ = {
 			isa = PBXGroup;
 			children = (
+				F95CCF9F23AFEAF9004DEBFB /* TKFormat.h */,
+				F95CCF9E23AFEA1D004DEBFB /* TKITexture.h */,
 				CACC74822354F93800FE3672 /* Assets.xcassets */,
+				F998F79C23AD92B40025564F /* TKImageBuffer.cpp */,
+				F998F79B23AAD8370025564F /* TKImageBuffer.h */,
+				F95CCF9D23AE8D3A004DEBFB /* TKOptional.h */,
 				F998F79823A84B5D0025564F /* stb_image_resize.h */,
 				F998F79923A84B5D0025564F /* stb_image_write.h */,
 				F998F79A23A84B5D0025564F /* stb_image.h */,
@@ -244,7 +258,7 @@
 				F998F78C238736960025564F /* TKApp.h */,
 				F998F78B238736960025564F /* TKApp.mm */,
 				CAE7EC47235C4F5A00C4D217 /* TKBluetoothCommunicator.h */,
-				CAE7EC45235C4F5A00C4D217 /* TKBluetoothCommunicator.m */,
+				CAE7EC45235C4F5A00C4D217 /* TKBluetoothCommunicator.mm */,
 				F998F7842385E6450025564F /* TKIUIState.h */,
 				F998F78A2385ED8A0025564F /* TKNuklearConfig.h */,
 				CAE7EC49235C4F5A00C4D217 /* TKNuklearMetalViewDelegate.h */,
@@ -507,7 +521,8 @@
 				F998F79423A70CF90025564F /* TKBlurHash.cpp in Sources */,
 				CAE7EC52235C4F5A00C4D217 /* TKNuklearMetalViewDelegate.mm in Sources */,
 				CACC748C2354F93800FE3672 /* AppDelegate.m in Sources */,
-				CAE7EC4F235C4F5A00C4D217 /* TKBluetoothCommunicator.m in Sources */,
+				F998F79D23AD92B40025564F /* TKImageBuffer.cpp in Sources */,
+				CAE7EC4F235C4F5A00C4D217 /* TKBluetoothCommunicator.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -523,7 +538,8 @@
 				F998F79523A70CF90025564F /* TKBlurHash.cpp in Sources */,
 				CAE7EC53235C4F5A00C4D217 /* TKNuklearMetalViewDelegate.mm in Sources */,
 				CACC74A12354F93800FE3672 /* AppDelegate.m in Sources */,
-				CAE7EC50235C4F5A00C4D217 /* TKBluetoothCommunicator.m in Sources */,
+				F998F79E23AD92B40025564F /* TKImageBuffer.cpp in Sources */,
+				CAE7EC50235C4F5A00C4D217 /* TKBluetoothCommunicator.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -535,8 +551,9 @@
 				CAE7EC54235C4F5A00C4D217 /* TKNuklearMetalViewDelegate.mm in Sources */,
 				CAE7EC4E235C4F5A00C4D217 /* Nuklear.metal in Sources */,
 				F998F78F238736960025564F /* TKApp.mm in Sources */,
-				CAE7EC51235C4F5A00C4D217 /* TKBluetoothCommunicator.m in Sources */,
+				CAE7EC51235C4F5A00C4D217 /* TKBluetoothCommunicator.mm in Sources */,
 				F998F7882385EA500025564F /* TKUIStatePopulator.cpp in Sources */,
+				F998F79F23AD92B40025564F /* TKImageBuffer.cpp in Sources */,
 				CACC74C12354F9AB00FE3672 /* TKViewController.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -547,10 +564,11 @@
 			files = (
 				F998F79723A70CF90025564F /* TKBlurHash.cpp in Sources */,
 				F998F738236E348C0025564F /* Nuklear.metal in Sources */,
-				F998F736236E348C0025564F /* TKBluetoothCommunicator.m in Sources */,
+				F998F736236E348C0025564F /* TKBluetoothCommunicator.mm in Sources */,
 				F998F790238736960025564F /* TKApp.mm in Sources */,
 				F998F737236E348C0025564F /* TKNuklearMetalViewDelegate.mm in Sources */,
 				F998F7892385EA500025564F /* TKUIStatePopulator.cpp in Sources */,
+				F998F7A023AD92B40025564F /* TKImageBuffer.cpp in Sources */,
 				F998F729236E312E0025564F /* TKViewController.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -620,7 +638,7 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LANGUAGE_STANDARD = "c++17";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
@@ -676,7 +694,7 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LANGUAGE_STANDARD = "c++17";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
