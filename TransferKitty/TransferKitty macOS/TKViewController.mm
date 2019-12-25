@@ -15,6 +15,8 @@
 
 #import <Cocoa/Cocoa.h>
 
+#include <atomic>
+
 #define kRedChannel 0
 #define kGreenChannel 1
 #define kBlueChannel 2
@@ -24,7 +26,7 @@
 
 @implementation TKViewController {
     TKApp *_app;
-    MTKView *_view;
+    TKView *_view;
     apemode::platform::AppInput appInput;
     float scrollDampingFactor;
     bool didReceiveMouseDrag;
@@ -53,10 +55,8 @@
 }
 
 - (void)scrollWheel:(NSEvent *)e {
-    appInput.Analogs[apemode::platform::kAnalogInput_MouseHorzScroll] =
-        e.deltaX * scrollDampingFactor;
-    appInput.Analogs[apemode::platform::kAnalogInput_MouseVertScroll] =
-        e.deltaY * scrollDampingFactor;
+    appInput.Analogs[apemode::platform::kAnalogInput_MouseHorzScroll] = e.deltaX * scrollDampingFactor;
+    appInput.Analogs[apemode::platform::kAnalogInput_MouseVertScroll] = e.deltaY * scrollDampingFactor;
 }
 
 - (void)rightMouseDown:(NSEvent *)e {
@@ -88,13 +88,92 @@
     didReceiveMouseDrag = true;
 }
 
+- (NSDragOperation)draggingEntered:(id<NSDraggingInfo>)sender {
+    NSLog(@"TKViewController.draggingEntered, %@\n", sender);
+
+    NSDragOperation expectedDragOperation = NSDragOperationGeneric | NSDragOperationLink | NSDragOperationCopy;
+    NSDragOperation dragOperationMask = [sender draggingSourceOperationMask];
+    NSDragOperation dragOperation = expectedDragOperation & dragOperationMask;
+    if (!dragOperation) { return NSDragOperationNone; }
+
+    NSPasteboard *pasteboard = [sender draggingPasteboard];
+    if (!pasteboard) { return NSDragOperationNone; }
+
+    NSArray<NSPasteboardItem *> *items = [pasteboard pasteboardItems];
+    if (!items) { return NSDragOperationNone; }
+
+    NSLog(@"items count = %lu\n", items.count);
+    for (NSUInteger i = 0; i < items.count; ++i) {
+        NSPasteboardItem *item = items[i];
+        if (!item) { continue; }
+        
+        NSLog(@"pasteboard item[%lu] = %@, types = %lu\n", i, item, item.types.count);
+
+        for (NSPasteboardType type in item.types) {
+            if ([type isEqualToString:NSPasteboardTypeFileURL]) {
+                NSData *data = [item dataForType:NSPasteboardTypeFileURL];
+                NSString *string = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+                NSURL *url = [[NSURL alloc] initWithString:string];
+                NSLog(@"file: %@ %@ %@ path = %@\n", data, string, url, url.path);
+                break;
+            } else if ([type isEqualToString:NSPasteboardTypeURL]) {
+                NSData *data = [item dataForType:NSPasteboardTypeURL];
+                NSString *string = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+                NSURL *url = [[NSURL alloc] initWithString:string];
+                NSLog(@"url: %@ %@ %@ %@\n", data, string, url, url.path);
+                break;
+            } else if ([type isEqualToString:NSPasteboardTypeString]) {
+                NSData *data = [item dataForType:NSPasteboardTypeString];
+                NSString *string = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+                NSLog(@"string: %@ %@\n", data, string);
+                break;
+            } else if ([type hasPrefix:@"dyn."]) {
+                NSData *data = [item dataForType:NSPasteboardTypeURL];
+                NSString *string = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+                NSLog(@"link: %@ %@\n", data, string);
+                break;
+            } else {
+                NSLog(@"pasteboard item unknown type: %@\n", type);
+            }
+        }
+    }
+
+    return dragOperation;
+}
+- (NSDragOperation)draggingUpdated:(id<NSDraggingInfo>)sender {
+    // NSLog(@"TKViewController.draggingUpdated, %@\n", sender);
+    return NSDragOperationNone;
+}
+- (void)draggingExited:(nullable id<NSDraggingInfo>)sender {
+    // NSLog(@"TKViewController.draggingExited, %@\n", sender);
+}
+- (BOOL)prepareForDragOperation:(id<NSDraggingInfo>)sender {
+    // NSLog(@"TKViewController.prepareForDragOperation, %@\n", sender);
+    return YES;
+}
+- (BOOL)performDragOperation:(id<NSDraggingInfo>)sender {
+    // NSLog(@"TKViewController.performDragOperation, %@\n", sender);
+    return YES;
+}
+- (void)concludeDragOperation:(nullable id<NSDraggingInfo>)sender {
+    // NSLog(@"TKViewController.concludeDragOperation, %@\n", sender);
+}
+- (void)draggingEnded:(id<NSDraggingInfo>)sender {
+    // NSLog(@"TKViewController.draggingEnded, %@\n", sender);
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
+    [self.view registerForDraggedTypes:[NSArray arrayWithObjects:NSPasteboardTypeFileURL,
+                                                                 NSPasteboardTypeString,
+                                                                 NSPasteboardTypeURL,
+                                                                 nil]];
 
     didReceiveMouseDrag = false;
     scrollDampingFactor = 0.1f;
 
-    _view = (MTKView *)self.view;
+    _view = (TKView *)self.view;
+    [_view setViewController:self];
     _view.device = MTLCreateSystemDefaultDevice();
 
     _app = [[TKApp alloc] initWithMetalKitView:_view];
@@ -106,14 +185,10 @@
 
 - (void)app:(nonnull TKApp *)app input:(nonnull TKAppInput *)input {
     nk_context *contextPtr = (nk_context *)input.opaqueImplementationPtr;
-    if (!contextPtr) {
-        return;
-    }
+    if (!contextPtr) { return; }
 
-    const float mx =
-        appInput.GetAnalogInput(apemode::platform::kAnalogInput_MouseX);
-    const float my =
-        appInput.GetAnalogInput(apemode::platform::kAnalogInput_MouseY);
+    const float mx = appInput.GetAnalogInput(apemode::platform::kAnalogInput_MouseX);
+    const float my = appInput.GetAnalogInput(apemode::platform::kAnalogInput_MouseY);
 
     if (appInput.IsFirstPressed(apemode::platform::kDigitalInput_Mouse0)) {
         auto &mouse = contextPtr->input.mouse;
@@ -128,8 +203,7 @@
         // NSLog(@"nk_input_button: 1, NK_BUTTON_LEFT, [%i %i]", (int)mx,
         // (int)my);
 
-    } else if (appInput.IsFirstReleased(
-                   apemode::platform::kDigitalInput_Mouse0)) {
+    } else if (appInput.IsFirstReleased(apemode::platform::kDigitalInput_Mouse0)) {
         auto &mouse = contextPtr->input.mouse;
         mouse.pos.x = mx;
         mouse.pos.y = my;
@@ -151,14 +225,32 @@
     }
 
     struct nk_vec2 scroll;
-    scroll.x = appInput.GetAnalogInput(
-        apemode::platform::kAnalogInput_MouseHorzScroll);
-    scroll.y = appInput.GetAnalogInput(
-        apemode::platform::kAnalogInput_MouseVertScroll);
+    scroll.x = appInput.GetAnalogInput(apemode::platform::kAnalogInput_MouseHorzScroll);
+    scroll.y = appInput.GetAnalogInput(apemode::platform::kAnalogInput_MouseVertScroll);
     nk_input_scroll(contextPtr, scroll);
 
-    memcpy(
-        appInput.Buttons[1], appInput.Buttons[0], sizeof(appInput.Buttons[0]));
+    memcpy(appInput.Buttons[1], appInput.Buttons[0], sizeof(appInput.Buttons[0]));
 }
 
+@end
+
+@implementation TKView {
+    TKViewController *_viewController;
+}
+
+// clang-format off
+- (BOOL)prepareForDragOperation:(id)sender { return YES; }
+- (NSDragOperation)draggingEntered:(id<NSDraggingInfo>)sender { return [_viewController draggingEntered:sender]; }
+- (NSDragOperation)draggingUpdated:(id<NSDraggingInfo>)sender { return [_viewController draggingUpdated:sender]; }
+- (void)draggingExited:(nullable id<NSDraggingInfo>)sender { return [_viewController draggingExited:sender]; }
+- (BOOL)performDragOperation:(id<NSDraggingInfo>)sender { return [_viewController performDragOperation:sender]; }
+- (void)concludeDragOperation:(nullable id<NSDraggingInfo>)sender { return [_viewController concludeDragOperation:sender]; }
+- (void)draggingEnded:(id<NSDraggingInfo>)sender { return [_viewController draggingEnded:sender]; }
+- (void)setViewController:(TKViewController *)viewController { _viewController = viewController; }
+// clang-format on
+
+- (instancetype)initWithFrame:(NSRect)frameRect {
+    self = [super initWithFrame:frameRect];
+    return self;
+}
 @end

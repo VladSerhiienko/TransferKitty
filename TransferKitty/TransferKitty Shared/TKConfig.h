@@ -30,9 +30,7 @@ namespace {
 template <typename T>
 constexpr void zeroMemory(T &obj) {
     TK_STATIC_ASSERT((std::is_pod_v<T>));
-    for (size_t i = 0; i < sizeof(obj); ++i) {
-        reinterpret_cast<uint8_t *>(&obj)[i] = 0;
-    }
+    for (size_t i = 0; i < sizeof(obj); ++i) { reinterpret_cast<uint8_t *>(&obj)[i] = 0; }
 } // zeroMemory
 template <typename T>
 constexpr void swap(T &a, T &b) {

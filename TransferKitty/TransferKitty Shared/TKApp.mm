@@ -17,65 +17,44 @@ class Texture : public tk::ITexture {
     tk::TOptional<nk_image_t> handle = {};
 
     void destruct() {
-        if (!device) {
-            return;
-        }
+        if (!device) { return; }
         [device releaseRetainedObject:texture];
+        texture = nil;
     }
 
 public:
     Texture() = default;
-    ~Texture() {
-        destruct();
-    }
+    ~Texture() { destruct(); }
 
     void release() {
         destruct();
-        texture = nil;
         handle.deinitialize();
     }
 
-    void setPlatformTexture(TKNuklearRenderer *device,
-                            id<MTLTexture> platformTexture) {
-        if (!device) {
-            return;
-        }
-        if (!platformTexture) {
-            return;
-        }
+    void setPlatformTexture(TKNuklearRenderer *device, id<MTLTexture> platformTexture) {
+        if (!device) { return; }
+        if (!platformTexture) { return; }
         texture = platformTexture;
         handle.initialize(nk_image_ptr((__bridge void *)texture));
     }
 
-    const void *opaquePlatformPtr() const override {
-        return texture ? (__bridge void *)texture : nullptr;
-    }
-    const void *opaqueImlementationPtr() const override {
-        return handle.get();
-    }
-    size_t width() const override {
-        return texture ? texture.width : 0;
-    }
-    size_t height() const override {
-        return texture ? texture.height : 0;
-    }
+    const void *opaquePlatformPtr() const override { return texture ? (__bridge void *)texture : nullptr; }
+    const void *opaqueImlementationPtr() const override { return handle.get(); }
+    size_t width() const override { return texture ? texture.width : 0; }
+    size_t height() const override { return texture ? texture.height : 0; }
 };
 }
 
 template <>
 id<MTLTexture> texturePlatformObject<id<MTLTexture>>(const ITexture *texture) {
-    const void *opaquePlatformPtr =
-        texture ? texture->opaquePlatformPtr() : nullptr;
+    const void *opaquePlatformPtr = texture ? texture->opaquePlatformPtr() : nullptr;
     return opaquePlatformPtr ? (__bridge id<MTLTexture>)opaquePlatformPtr : nil;
 }
 
 template <>
 nk_image_t textureImplementationObject(const ITexture *texture) {
-    const void *opaqueImlementationPtr =
-        texture ? texture->opaqueImlementationPtr() : nullptr;
-    if (opaqueImlementationPtr) {
-        return *(nk_image_t *)(opaqueImlementationPtr);
-    }
+    const void *opaqueImlementationPtr = texture ? texture->opaqueImlementationPtr() : nullptr;
+    if (opaqueImlementationPtr) { return *(nk_image_t *)(opaqueImlementationPtr); }
     return nk_image_t{};
 }
 }
@@ -106,13 +85,10 @@ nk_image_t textureImplementationObject(const ITexture *texture) {
 
 - (nullable instancetype)initWithMetalKitView:(nonnull MTKView *)view {
     self = [super init];
-    if (!self) {
-        return nil;
-    }
+    if (!self) { return nil; }
 
     _view = view;
-    _viewDelegate =
-        [[TKNuklearMetalViewDelegate alloc] initWithMetalKitView:_view];
+    _viewDelegate = [[TKNuklearMetalViewDelegate alloc] initWithMetalKitView:_view];
     [_viewDelegate mtkView:_view drawableSizeWillChange:_view.drawableSize];
 
     _renderer = _viewDelegate.renderer;
@@ -127,23 +103,16 @@ nk_image_t textureImplementationObject(const ITexture *texture) {
 
 - (void)testBlurHash {
     NSImage *objcIconImg = [NSApp applicationIconImage];
-    tk::utilities::ImageBuffer iconImg =
-        tk::utilities::exposeToImageBuffer(objcIconImg);
+    tk::utilities::ImageBuffer iconImg = tk::utilities::exposeToImageBuffer(objcIconImg);
 
-    tk::blurhash::BlurHash hash =
-        tk::blurhash::BlurHashCodec().encode(8, 8, iconImg);
+    tk::blurhash::BlurHash hash = tk::blurhash::BlurHashCodec().encode(8, 8, iconImg);
     NSLog(@"hash = %s\n", (const char *)hash.buffer);
 
-    tk::utilities::ImageBuffer hashedImg =
-        tk::blurhash::BlurHashCodec().decode(hash, 32, 32);
-    NSLog(@"img = %s, %zu, %zu\n",
-          (const char *)hashedImg.buffer.data(),
-          hashedImg.width,
-          hashedImg.height);
+    tk::utilities::ImageBuffer hashedImg = tk::blurhash::BlurHashCodec().decode(hash, 32, 32);
+    NSLog(@"img = %s, %zu, %zu\n", (const char *)hashedImg.buffer.data(), hashedImg.width, hashedImg.height);
 
     id<MTLTexture> iconTexture = [_renderer createTextureWithImage:&iconImg];
-    id<MTLTexture> hashedTexture =
-        [_renderer createTextureWithImage:&hashedImg];
+    id<MTLTexture> hashedTexture = [_renderer createTextureWithImage:&hashedImg];
 
     iconImgTexture.setPlatformTexture(_renderer, iconTexture);
     hashedImgTexture.setPlatformTexture(_renderer, hashedTexture);
@@ -174,16 +143,12 @@ nk_image_t textureImplementationObject(const ITexture *texture) {
     nk_input_end(frame.contextPtr);
 }
 
-- (void)renderer:(nonnull TKNuklearRenderer *)renderer
-    shouldUpdateFrame:(nonnull TKNuklearFrame *)frame {
+- (void)renderer:(nonnull TKNuklearRenderer *)renderer shouldUpdateFrame:(nonnull TKNuklearFrame *)frame {
     [self handleInput:frame];
 
     CGRect viewport = [frame viewport];
     tk::UIStateViewport bounds = {
-        25,
-        25,
-        static_cast<uint32_t>(viewport.size.width - 50),
-        static_cast<uint32_t>(viewport.size.height - 50)};
+        25, 25, static_cast<uint32_t>(viewport.size.width - 50), static_cast<uint32_t>(viewport.size.height - 50)};
 
     populator.populate(nullptr, hashedImgTexture, bounds, frame.contextPtr);
 }
@@ -194,8 +159,7 @@ nk_image_t textureImplementationObject(const ITexture *texture) {
 
 - (void)bluetoothCommunicator:(TKBluetoothCommunicator *)bluetoothCommunicator
           didChangeStatusFrom:(TKBluetoothCommunicatorStatusBits)statusBits
-                           to:(TKBluetoothCommunicatorStatusBits)
-                                  currentStatusBits {
+                           to:(TKBluetoothCommunicatorStatusBits)currentStatusBits {
     DLOGF(@"%s", TK_FUNC_NAME);
 }
 
@@ -209,8 +173,7 @@ nk_image_t textureImplementationObject(const ITexture *texture) {
     DLOGF(@"%s", TK_FUNC_NAME);
 }
 
-- (void)bluetoothCommunicator:(TKBluetoothCommunicator *)bluetoothCommunicator
-                       didLog:(NSString *)log {
+- (void)bluetoothCommunicator:(TKBluetoothCommunicator *)bluetoothCommunicator didLog:(NSString *)log {
     DLOGF(@"%s", TK_FUNC_NAME);
 }
 

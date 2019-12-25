@@ -7,6 +7,11 @@
 //
 
 #import <Cocoa/Cocoa.h>
+#import <MetalKit/MetalKit.h>
 
 @interface TKViewController : NSViewController
+@end
+
+@interface TKView : MTKView
+- (void)setViewController:(TKViewController*)viewController;
 @end

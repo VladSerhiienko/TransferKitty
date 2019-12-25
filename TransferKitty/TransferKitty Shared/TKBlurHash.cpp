@@ -45,26 +45,18 @@ struct stack_matrix {
     size_t n_columns = 0;
     T elements[MaxRows * MaxColumns];
 
-    constexpr T &at(size_t x, size_t y) {
-        return elements[y * n_columns + x];
-    }
-    constexpr const T &at(size_t x, size_t y) const {
-        return elements[y * n_columns + x];
-    }
+    constexpr T &at(size_t x, size_t y) { return elements[y * n_columns + x]; }
+    constexpr const T &at(size_t x, size_t y) const { return elements[y * n_columns + x]; }
 };
 
 using factor_stack_matrix =
-    stack_matrix<vec3,
-                 tk::blurhash::BlurHash::MAX_COMPONENT_COUNT,
-                 tk::blurhash::BlurHash::MAX_COMPONENT_COUNT>;
+    stack_matrix<vec3, tk::blurhash::BlurHash::MAX_COMPONENT_COUNT, tk::blurhash::BlurHash::MAX_COMPONENT_COUNT>;
 
 namespace {
 char characters[] =
     "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz#$%*+,-.:;=?"
     "@[]^_{|}~";
-vec3 multiplyBasisFunction(size_t n_components_x,
-                           size_t n_components_y,
-                           const tk::utilities::ImageBuffer &image);
+vec3 multiplyBasisFunction(size_t n_components_x, size_t n_components_y, const tk::utilities::ImageBuffer &image);
 char *encode83(int value, int length, char *destination);
 int decode83(const char *str, int from, int to);
 int linearTosRGB(float value);
@@ -75,27 +67,17 @@ vec3 decodeDC(int colorEnc);
 vec3 decodeAC(int value, float maxAc);
 float signedSqrt(float value);
 float signedSqr(float value);
-tk::utilities::ImageBuffer composeBitmap(size_t width,
-                                         size_t height,
-                                         size_t numCompX,
-                                         size_t numCompY,
-                                         const factor_stack_matrix &factors);
+tk::utilities::ImageBuffer composeBitmap(
+    size_t width, size_t height, size_t numCompX, size_t numCompY, const factor_stack_matrix &factors);
 } // namespace
 
-tk::blurhash::BlurHash tk::blurhash::BlurHashCodec::encode(
-    size_t n_component_x,
-    size_t n_component_y,
-    const tk::utilities::ImageBuffer &image) {
+tk::blurhash::BlurHash tk::blurhash::BlurHashCodec::encode(size_t n_component_x,
+                                                           size_t n_component_y,
+                                                           const tk::utilities::ImageBuffer &image) {
     BlurHash result = {};
 
-    if (n_component_x < BlurHash::MIN_COMPONENT_COUNT ||
-        n_component_x > BlurHash::MAX_COMPONENT_COUNT) {
-        return {};
-    }
-    if (n_component_y < BlurHash::MIN_COMPONENT_COUNT ||
-        n_component_y > BlurHash::MAX_COMPONENT_COUNT) {
-        return {};
-    }
+    if (n_component_x < BlurHash::MIN_COMPONENT_COUNT || n_component_x > BlurHash::MAX_COMPONENT_COUNT) { return {}; }
+    if (n_component_y < BlurHash::MIN_COMPONENT_COUNT || n_component_y > BlurHash::MAX_COMPONENT_COUNT) { return {}; }
 
     factor_stack_matrix factors{};
     factors.n_rows = n_component_y;
@@ -117,9 +99,7 @@ tk::blurhash::BlurHash tk::blurhash::BlurHashCodec::encode(
     int ac_count = int(n_component_x * n_component_y - 1);
     char *ptr = result.buffer;
 
-    int encoded_components =
-        int((n_component_x - 1) +
-            (n_component_y - 1) * BlurHash::MAX_COMPONENT_COUNT);
+    int encoded_components = int((n_component_x - 1) + (n_component_y - 1) * BlurHash::MAX_COMPONENT_COUNT);
 
     //
     // printf("size = %d\n", encoded_components);
@@ -134,12 +114,9 @@ tk::blurhash::BlurHash tk::blurhash::BlurHashCodec::encode(
     float max_value;
     if (ac_count > 0) {
         float actual_max_value = 0;
-        for (int i = 0; i < ac_count * 3; i++) {
-            actual_max_value = fmaxf(fabsf(ac[i]), actual_max_value);
-        }
+        for (int i = 0; i < ac_count * 3; i++) { actual_max_value = fmaxf(fabsf(ac[i]), actual_max_value); }
 
-        int quantised_max_value =
-            fmaxf(0, fminf(82, floorf(actual_max_value * 166 - 0.5)));
+        int quantised_max_value = fmaxf(0, fminf(82, floorf(actual_max_value * 166 - 0.5)));
         max_value = ((float)quantised_max_value + 1) / 166;
         ptr = encode83(quantised_max_value, 1, ptr);
 
@@ -185,11 +162,11 @@ tk::blurhash::BlurHash tk::blurhash::BlurHashCodec::encode(
 }
 
 // https://github.com/woltapp/blurhash/blob/master/Kotlin/lib/src/main/java/com/wolt/blurhashkt/BlurHashDecoder.kt
-tk::utilities::ImageBuffer tk::blurhash::BlurHashCodec::decode(
-    const BlurHash &hash, size_t width, size_t height, float punch) {
-    if (hash.size < 6) {
-        return {};
-    }
+tk::utilities::ImageBuffer tk::blurhash::BlurHashCodec::decode(const BlurHash &hash,
+                                                               size_t width,
+                                                               size_t height,
+                                                               float punch) {
+    if (hash.size < 6) { return {}; }
 
     //
     // printf("hash = %s\n", hash.buffer);
@@ -201,18 +178,14 @@ tk::utilities::ImageBuffer tk::blurhash::BlurHashCodec::decode(
     // printf("size = %d\n", numCompEnc);
     //
 
-    int n_components_x =
-        (n_components_encoded % BlurHash::MAX_COMPONENT_COUNT) + 1;
-    int n_components_y =
-        (n_components_encoded / BlurHash::MAX_COMPONENT_COUNT) + 1;
+    int n_components_x = (n_components_encoded % BlurHash::MAX_COMPONENT_COUNT) + 1;
+    int n_components_y = (n_components_encoded / BlurHash::MAX_COMPONENT_COUNT) + 1;
 
     //
     // printf("x = %d, y = %d\n", numCompX, numCompY);
     //
 
-    if (hash.size != (4 + 2 * n_components_x * n_components_y)) {
-        return {};
-    }
+    if (hash.size != (4 + 2 * n_components_x * n_components_y)) { return {}; }
 
     int max_ac_encoded = decode83(hash.buffer, 1, 2);
     float mac_ac = float(max_ac_encoded + 1) / 166.0f;
@@ -255,14 +228,11 @@ tk::utilities::ImageBuffer tk::blurhash::BlurHashCodec::decode(
         ++ac_ptr;
     }
 
-    return composeBitmap(
-        width, height, n_components_x, n_components_y, factors);
+    return composeBitmap(width, height, n_components_x, n_components_y, factors);
 }
 
 namespace {
-vec3 multiplyBasisFunction(size_t n_components_x,
-                           size_t n_components_y,
-                           const tk::utilities::ImageBuffer &image) {
+vec3 multiplyBasisFunction(size_t n_components_x, size_t n_components_y, const tk::utilities::ImageBuffer &image) {
     float r = 0, g = 0, b = 0;
     float normalization = (n_components_x == 0 && n_components_y == 0) ? 1 : 2;
 
@@ -270,14 +240,11 @@ vec3 multiplyBasisFunction(size_t n_components_x,
 
     for (size_t y = 0; y < image.height; y++) {
         for (size_t x = 0; x < image.width; x++) {
-            float basis = cosf(M_PI * n_components_x * x / image.width) *
-                          cosf(M_PI * n_components_y * y / image.height);
-            r += basis *
-                 sRGBToLinear(image.buffer[y * image.stride + px * x + 0]);
-            g += basis *
-                 sRGBToLinear(image.buffer[y * image.stride + px * x + 1]);
-            b += basis *
-                 sRGBToLinear(image.buffer[y * image.stride + px * x + 2]);
+            float basis =
+                cosf(M_PI * n_components_x * x / image.width) * cosf(M_PI * n_components_y * y / image.height);
+            r += basis * sRGBToLinear(image.buffer[y * image.stride + px * x + 0]);
+            g += basis * sRGBToLinear(image.buffer[y * image.stride + px * x + 1]);
+            b += basis * sRGBToLinear(image.buffer[y * image.stride + px * x + 2]);
         }
     }
 
@@ -291,12 +258,8 @@ vec3 multiplyBasisFunction(size_t n_components_x,
     return result;
 }
 
-float signedSqrt(float value) {
-    return copysignf(sqrtf(fabsf(value)), value);
-}
-float signedSqr(float value) {
-    return copysignf(value * value, value);
-}
+float signedSqrt(float value) { return copysignf(sqrtf(fabsf(value)), value); }
+float signedSqr(float value) { return copysignf(value * value, value); }
 
 int linearTosRGB(float value) {
     // assert(value >= 0.0f && value <= 1.0f);
@@ -341,12 +304,9 @@ vec3 decodeDC(int encoded_factors) {
 }
 
 int encodeAC(float r, float g, float b, float max_value) {
-    const int quantR = static_cast<int>(
-        fmaxf(0, fminf(18, floorf(signedSqrt(r / max_value) * 9.0f + 9.5f))));
-    const int quantG = static_cast<int>(
-        fmaxf(0, fminf(18, floorf(signedSqrt(g / max_value) * 9.0f + 9.5f))));
-    const int quantB = static_cast<int>(
-        fmaxf(0, fminf(18, floorf(signedSqrt(b / max_value) * 9.0f + 9.5f))));
+    const int quantR = static_cast<int>(fmaxf(0, fminf(18, floorf(signedSqrt(r / max_value) * 9.0f + 9.5f))));
+    const int quantG = static_cast<int>(fmaxf(0, fminf(18, floorf(signedSqrt(g / max_value) * 9.0f + 9.5f))));
+    const int quantB = static_cast<int>(fmaxf(0, fminf(18, floorf(signedSqrt(b / max_value) * 9.0f + 9.5f))));
     return quantR * 19 * 19 + quantG * 19 + quantB;
 }
 
@@ -361,9 +321,7 @@ vec3 decodeAC(int value, float max_ac) {
 
 int charIndex(int c) {
     for (int i = 0; i < (sizeof(characters) - 1); ++i) {
-        if (characters[i] == c) {
-            return i;
-        };
+        if (characters[i] == c) { return i; };
     }
 
     return -1;
@@ -374,9 +332,7 @@ int decode83(const char *str, int from, int to) {
     for (int i = from; i < to; ++i) {
         int c = str[i];
         int index = charIndex(c);
-        if (index != -1) {
-            result = result * 83 + index;
-        }
+        if (index != -1) { result = result * 83 + index; }
     }
 
     return result;
@@ -384,9 +340,7 @@ int decode83(const char *str, int from, int to) {
 
 char *encode83(int value, int length, char *destination) {
     int divisor = 1;
-    for (int i = 0; i < length - 1; i++) {
-        divisor *= 83;
-    }
+    for (int i = 0; i < length - 1; i++) { divisor *= 83; }
 
     for (int i = 0; i < length; i++) {
         int digit = (value / divisor) % 83;
@@ -397,18 +351,14 @@ char *encode83(int value, int length, char *destination) {
     return destination;
 }
 
-tk::utilities::ImageBuffer composeBitmap(size_t width,
-                                         size_t height,
-                                         size_t n_components_x,
-                                         size_t n_components_y,
-                                         const factor_stack_matrix &factors) {
+tk::utilities::ImageBuffer composeBitmap(
+    size_t width, size_t height, size_t n_components_x, size_t n_components_y, const factor_stack_matrix &factors) {
     static constexpr bool sRGB = tk::blurhash::BlurHashCodec::SRGB;
 
     tk::utilities::ImageBuffer bitmap;
     bitmap.width = width;
     bitmap.height = height;
-    bitmap.format =
-        sRGB ? tk::TK_FORMAT_R8G8B8A8_SRGB : tk::TK_FORMAT_R8G8B8A8_UNORM;
+    bitmap.format = sRGB ? tk::TK_FORMAT_R8G8B8A8_SRGB : tk::TK_FORMAT_R8G8B8A8_UNORM;
     bitmap.stride = width * tk::formatSize(bitmap.format);
     bitmap.buffer.resize(width * height * tk::formatSize(bitmap.format));
 
@@ -421,8 +371,7 @@ tk::utilities::ImageBuffer composeBitmap(size_t width,
 
             for (size_t j = 0; j < n_components_y; ++j) {
                 for (size_t i = 0; i < n_components_x; ++i) {
-                    float basis = (cos(M_PI * x * i / width) *
-                                   cos(M_PI * y * j / height));
+                    float basis = (cos(M_PI * x * i / width) * cos(M_PI * y * j / height));
                     vec3 factors_ij = factors.at(i, j);
                     r += factors_ij.x * basis;
                     g += factors_ij.y * basis;

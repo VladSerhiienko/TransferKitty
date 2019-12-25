@@ -65,15 +65,12 @@ bool UIStatePopulator::populate(const tk::IUIState *state,
     const float itemHeight = fontHeight * 5 + padding * 5.5;
     const float imageWidth = viewport.width * b; // - paddings/margins
 
-    nk_rect_t imgBounds =
-        calculateImageFittingRect({imageWidth, itemHeight},
-                                  {static_cast<float>(texture.width()),
-                                   static_cast<float>(texture.height())});
-    nk_rect_t viewportBounds =
-        nk_rect(viewport.x, viewport.y, viewport.width, viewport.height);
+    nk_vec2_t spaceSize = {imageWidth, itemHeight};
+    nk_vec2_t imageSize = {float(texture.width()), float(texture.height())};
+    nk_rect_t imgBounds = calculateImageFittingRect(spaceSize, imageSize);
+    nk_rect_t viewportBounds = nk_rect(viewport.x, viewport.y, viewport.width, viewport.height);
 
-    if (nk_begin(
-            nk, windowName.data(), viewportBounds, NK_WINDOW_NO_SCROLLBAR)) {
+    if (nk_begin(nk, windowName.data(), viewportBounds, NK_WINDOW_NO_SCROLLBAR)) {
         nk_layout_row_begin(nk, NK_DYNAMIC, itemHeight, 2);
 
         nk_layout_row_push(nk, b);
@@ -88,15 +85,9 @@ bool UIStatePopulator::populate(const tk::IUIState *state,
         nk_layout_row_push(nk, a);
         if (nk_group_begin(nk, textGroupName.data(), NK_WINDOW_NO_SCROLLBAR)) {
             nk_layout_row_dynamic(nk, fontHeight, 1);
-            if (nk_button_label(nk, kButton0)) {
-                printf("\"%s\" pressed\n", kButton0);
-            }
-            if (nk_button_label(nk, kButton1)) {
-                printf("\"%s\" pressed\n", kButton1);
-            }
-            if (nk_button_label(nk, kButton2)) {
-                printf("\"%s\" pressed\n", kButton2);
-            }
+            if (nk_button_label(nk, kButton0)) { printf("\"%s\" pressed\n", kButton0); }
+            if (nk_button_label(nk, kButton1)) { printf("\"%s\" pressed\n", kButton1); }
+            if (nk_button_label(nk, kButton2)) { printf("\"%s\" pressed\n", kButton2); }
             // if (nk_button_label(nk, kButton3)) { printf("\"%s\" pressed\n",
             // kButton3); } if (nk_button_label(nk, kButton4)) { printf("\"%s\"
             // pressed\n", kButton4); }
@@ -105,11 +96,7 @@ bool UIStatePopulator::populate(const tk::IUIState *state,
             static size_t maxProgress = 1000;
 
             nk_progress(nk, &currProgress, maxProgress, 1);
-            nk_labelf(nk,
-                      NK_TEXT_ALIGN_CENTERED,
-                      "%zu/%zu",
-                      currProgress,
-                      maxProgress);
+            nk_labelf(nk, NK_TEXT_ALIGN_CENTERED, "%zu/%zu", currProgress, maxProgress);
 
             ++currProgress;
             currProgress %= maxProgress;
@@ -120,10 +107,8 @@ bool UIStatePopulator::populate(const tk::IUIState *state,
         nk_layout_row_end(nk);
     }
 
-    nk_window_set_position(
-        nk, windowName.data(), nk_vec2(viewportBounds.x, viewport.y));
-    nk_window_set_size(
-        nk, windowName.data(), nk_vec2(viewportBounds.w, viewportBounds.h));
+    nk_window_set_position(nk, windowName.data(), nk_vec2(viewportBounds.x, viewport.y));
+    nk_window_set_size(nk, windowName.data(), nk_vec2(viewportBounds.w, viewportBounds.h));
     nk_end(nk);
 
     return true;

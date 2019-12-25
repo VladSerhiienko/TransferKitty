@@ -43,16 +43,15 @@ public:
 };
 
 class IUIDeviceState {
+    virtual const UIStateStatus status() const = 0;
     virtual size_t fileCount() const = 0;
     virtual const IUIFileState* file(int index) const = 0;
 };
 
 class IUIState {
 public:
-    virtual const UIStateStatus status() const = 0;
+    virtual size_t deviceCount() const = 0;
     virtual const IUIDeviceState* device(int index) const = 0;
-    virtual size_t connectedDeviceCount() const = 0;
-    virtual const IUIDeviceState* connectedDevice(int index) const = 0;
 };
 
 }

@@ -1,5 +1,5 @@
 BasedOnStyle: "Google"
-ColumnLimit: 80
+ColumnLimit: 120
 # ------------------------------
 Standard: Cpp11
 
@@ -15,10 +15,10 @@ BreakConstructorInitializersBeforeComma: true
 ConstructorInitializerAllOnOneLineOrOnePerLine: true
 ConstructorInitializerIndentWidth: 4
 
-AllowShortBlocksOnASingleLine: false
-AllowShortFunctionsOnASingleLine: None
-AllowShortIfStatementsOnASingleLine: false
-AllowShortLoopsOnASingleLine: false
+AllowShortBlocksOnASingleLine: true
+AllowShortFunctionsOnASingleLine: All
+AllowShortIfStatementsOnASingleLine: true
+AllowShortLoopsOnASingleLine: true
 AllowAllParametersOfDeclarationOnNextLine: true
 
 PointerAlignment: Left

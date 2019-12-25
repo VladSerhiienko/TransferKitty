@@ -20,12 +20,7 @@ struct BlurHash {
 class BlurHashCodec {
 public:
     static constexpr bool SRGB = true;
-    BlurHash encode(size_t n_component_x,
-                    size_t n_component_y,
-                    const tk::utilities::ImageBuffer &image);
-    tk::utilities::ImageBuffer decode(const BlurHash &hash,
-                                      size_t width,
-                                      size_t height,
-                                      float punch = 1.0f);
+    BlurHash encode(size_t n_component_x, size_t n_component_y, const tk::utilities::ImageBuffer &image);
+    tk::utilities::ImageBuffer decode(const BlurHash &hash, size_t width, size_t height, float punch = 1.0f);
 };
 } // namespace tk::blurhash

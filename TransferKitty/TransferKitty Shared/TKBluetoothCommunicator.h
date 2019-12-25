@@ -60,27 +60,19 @@ typedef NS_ENUM(NSUInteger, TKBluetoothCommunicatorOperationExecutionResult) {
     TKBluetoothCommunicatorOperationExecutionResultFailedRetryLater = 2,
 };
 
-TK_STATIC_ASSERT(sizeof(NSUInteger) ==
-                 sizeof(TKBluetoothCommunicatorStatusBits));
-TK_STATIC_ASSERT(sizeof(NSUInteger) ==
-                 sizeof(TKBluetoothCommunicatorMessageType));
-TK_STATIC_ASSERT(sizeof(NSUInteger) ==
-                 sizeof(TKBluetoothCommunicatorWriteValueResult));
-TK_STATIC_ASSERT(sizeof(NSUInteger) ==
-                 sizeof(TKBluetoothCommunicatorOperationExecutionResult));
+TK_STATIC_ASSERT(sizeof(NSUInteger) == sizeof(TKBluetoothCommunicatorStatusBits));
+TK_STATIC_ASSERT(sizeof(NSUInteger) == sizeof(TKBluetoothCommunicatorMessageType));
+TK_STATIC_ASSERT(sizeof(NSUInteger) == sizeof(TKBluetoothCommunicatorWriteValueResult));
+TK_STATIC_ASSERT(sizeof(NSUInteger) == sizeof(TKBluetoothCommunicatorOperationExecutionResult));
 
-static_assert(TKBluetoothCommunicatorMessageLength1ByteIndex ==
-                  (TKBluetoothCommunicatorMessageLength0ByteIndex + 1),
+static_assert(TKBluetoothCommunicatorMessageLength1ByteIndex == (TKBluetoothCommunicatorMessageLength0ByteIndex + 1),
               "");
-static_assert(TKBluetoothCommunicatorMessageLength2ByteIndex ==
-                  (TKBluetoothCommunicatorMessageLength1ByteIndex + 1),
+static_assert(TKBluetoothCommunicatorMessageLength2ByteIndex == (TKBluetoothCommunicatorMessageLength1ByteIndex + 1),
               "");
-static_assert(TKBluetoothCommunicatorMessageLength3ByteIndex ==
-                  (TKBluetoothCommunicatorMessageLength2ByteIndex + 1),
+static_assert(TKBluetoothCommunicatorMessageLength3ByteIndex == (TKBluetoothCommunicatorMessageLength2ByteIndex + 1),
               "");
 static_assert(TKBluetoothCommunicatorMessageLengthIntegerByteLength ==
-                  (TKBluetoothCommunicatorMessageLength3ByteIndex -
-                   TKBluetoothCommunicatorMessageLength0ByteIndex + 1),
+                  (TKBluetoothCommunicatorMessageLength3ByteIndex - TKBluetoothCommunicatorMessageLength0ByteIndex + 1),
               "");
 
 @interface NSStringUtilities : NSObject
@@ -120,8 +112,7 @@ static_assert(TKBluetoothCommunicatorMessageLengthIntegerByteLength ==
 + (NSUInteger)longMessageType:(NSUInteger)decoratedMessageType;
 + (NSUInteger)getMessageContentsByteLength:(NSData *)wholeMessageData;
 + (NSData *)intToBytes:(NSUInteger)integer;
-+ (void)intToBytes:(NSUInteger)integer
-           writeTo:(TKMutableSubdata *)mutableSubdata;
++ (void)intToBytes:(NSUInteger)integer writeTo:(TKMutableSubdata *)mutableSubdata;
 + (NSUInteger)bytesToInt:(TKSubdata *)subdata;
 + (NSData *)uuidToBytes:(NSUUID *)UUID;
 + (void)uuidToBytes:(NSUUID *)UUID writeTo:(TKMutableSubdata *)mutableSubdata;
@@ -165,14 +156,12 @@ static_assert(TKBluetoothCommunicatorMessageLengthIntegerByteLength ==
 @interface TKBluetoothCommunicator : NSObject
 + (id)instance;
 - (void)initCentralWithDelegate:(id<TKBluetoothCommunicatorDelegate>)delegate;
-- (void)initPeripheralWithDelegate:
-    (id<TKBluetoothCommunicatorDelegate>)delegate;
+- (void)initPeripheralWithDelegate:(id<TKBluetoothCommunicatorDelegate>)delegate;
 - (void)startAdvertising;
 - (void)stopAdvertising;
 - (void)startDiscoveringDevices;
 - (void)stopDiscoveringDevices;
-- (void)bluetoothCommunicatorDeviceDidUpdateProperty:
-    (TKBluetoothCommunicatorDevice *)device;
+- (void)bluetoothCommunicatorDeviceDidUpdateProperty:(TKBluetoothCommunicatorDevice *)device;
 - (NSArray *)connectedDevices;
 - (NSUUID *)getUUID;
 - (NSString *)getName;
@@ -181,14 +170,12 @@ static_assert(TKBluetoothCommunicatorMessageLengthIntegerByteLength ==
 - (NSUInteger)statusBits;
 - (bool)schedulerScheduleMessageFrom:(TKBluetoothCommunicatorDevice *)device
                     wholeMessageData:(NSData *)wholeMessageData;
-- (bool)schedulerScheduleMessageTo:(TKBluetoothCommunicatorDevice *)device
-                  wholeMessageData:(NSData *)wholeMessageData;
+- (bool)schedulerScheduleMessageTo:(TKBluetoothCommunicatorDevice *)device wholeMessageData:(NSData *)wholeMessageData;
 @end
 
 @interface TKBluetoothCommunicatorEncoder : NSObject
 - (TKBluetoothCommunicator *)bluetoothCommunicator;
-- (instancetype)initWithBluetoothCommunicator:
-    (TKBluetoothCommunicator *)bluetoothCommunicator;
+- (instancetype)initWithBluetoothCommunicator:(TKBluetoothCommunicator *)bluetoothCommunicator;
 - (NSData *)encodeConfirmationMessage:(TKBluetoothCommunicatorDevice *)device
                   responseMessageType:(NSUInteger)responseMessageType;
 - (NSData *)encodeUUIDMessage:(TKBluetoothCommunicatorDevice *)device
@@ -207,21 +194,18 @@ static_assert(TKBluetoothCommunicatorMessageLengthIntegerByteLength ==
 
 @interface TKBluetoothCommunicatorDecoder : NSObject
 - (TKBluetoothCommunicator *)bluetoothCommunicator;
-- (instancetype)initWithBluetoothCommunicator:
-    (TKBluetoothCommunicator *)bluetoothCommunicator;
+- (instancetype)initWithBluetoothCommunicator:(TKBluetoothCommunicator *)bluetoothCommunicator;
 - (void)decodeShortMessageFrom:(TKBluetoothCommunicatorDevice *)device
         undecoratedMessageType:(NSUInteger)undecoratedMessageType
               wholeMessageData:(NSData *)wholeMessageData;
 - (void)decodeWholeMessageFrom:(TKBluetoothCommunicatorDevice *)device
         undecoratedMessageType:(NSUInteger)undecoratedMessageType
                messageContents:(TKSubdata *)messageContents;
-- (void)decodeWholeFileMessageFrom:(TKBluetoothCommunicatorDevice *)device
-               fileMessageContents:(TKSubdata *)data;
+- (void)decodeWholeFileMessageFrom:(TKBluetoothCommunicatorDevice *)device fileMessageContents:(TKSubdata *)data;
 @end
 
 @interface TKBluetoothCommunicatorScheduledOperation : NSObject
-- (instancetype)initWithData:(NSData *)data
-            requiresResponse:(bool)requiresResponse;
+- (instancetype)initWithData:(NSData *)data requiresResponse:(bool)requiresResponse;
 - (NSData *)data;
 - (bool)requiresResponse;
 @end
@@ -230,20 +214,16 @@ static_assert(TKBluetoothCommunicatorMessageLengthIntegerByteLength ==
 - (TKBluetoothCommunicator *)bluetoothCommunicator;
 - (TKBluetoothCommunicatorEncoder *)bluetoothCommunicatorEncoder;
 - (TKBluetoothCommunicatorDecoder *)bluetoothCommunicatorDecoder;
-- (instancetype)initWithBluetoothCommunicator:
-    (TKBluetoothCommunicator *)bluetoothCommunicator;
-- (bool)scheduleMessageFrom:(TKBluetoothCommunicatorDevice *)device
-           wholeMessageData:(NSData *)wholeMessageData;
-- (bool)scheduleMessageTo:(TKBluetoothCommunicatorDevice *)device
-         wholeMessageData:(NSData *)wholeMessageData;
+- (instancetype)initWithBluetoothCommunicator:(TKBluetoothCommunicator *)bluetoothCommunicator;
+- (bool)scheduleMessageFrom:(TKBluetoothCommunicatorDevice *)device wholeMessageData:(NSData *)wholeMessageData;
+- (bool)scheduleMessageTo:(TKBluetoothCommunicatorDevice *)device wholeMessageData:(NSData *)wholeMessageData;
 - (void)scheduleIntroductionMessagesTo:(TKBluetoothCommunicatorDevice *)device;
 @end
 
 @protocol TKBluetoothCommunicatorDelegate <NSObject>
 - (void)bluetoothCommunicator:(TKBluetoothCommunicator *)bluetoothCommunicator
           didChangeStatusFrom:(TKBluetoothCommunicatorStatusBits)statusBits
-                           to:(TKBluetoothCommunicatorStatusBits)
-                                  currentStatusBits;
+                           to:(TKBluetoothCommunicatorStatusBits)currentStatusBits;
 
 - (void)bluetoothCommunicator:(TKBluetoothCommunicator *)bluetoothCommunicator
            didConnectToDevice:(TKBluetoothCommunicatorDevice *)device;
@@ -266,8 +246,7 @@ static_assert(TKBluetoothCommunicatorMessageLengthIntegerByteLength ==
          didWriteValueOrError:(NSError *)error
                      toDevice:(TKBluetoothCommunicatorDevice *)device;
 
-- (void)bluetoothCommunicator:(TKBluetoothCommunicator *)bluetoothCommunicator
-                       didLog:(NSString *)log;
+- (void)bluetoothCommunicator:(TKBluetoothCommunicator *)bluetoothCommunicator didLog:(NSString *)log;
 @end
 
 @interface TKFileSaver : NSObject
@@ -275,46 +254,24 @@ static_assert(TKBluetoothCommunicatorMessageLengthIntegerByteLength ==
 @end
 
 @interface TKDebug : NSObject
-+ (void)setBluetoothCommunicator:
-    (TKBluetoothCommunicator *)bluetoothCommunicator;
-+ (void)setBluetoothCommunicatorDelegate:
-    (id<TKBluetoothCommunicatorDelegate>)delegate;
++ (void)setBluetoothCommunicator:(TKBluetoothCommunicator *)bluetoothCommunicator;
++ (void)setBluetoothCommunicatorDelegate:(id<TKBluetoothCommunicatorDelegate>)delegate;
 + (void)logf:(NSString *)format, ...;
 + (void)log:(NSString *)msg;
-+ (void)checkf:(bool)condition
-          file:(NSString *)file
-          line:(int)line
-           tag:(NSString *)tag
-        format:(NSString *)format, ...;
-+ (void)check:(bool)condition
-         file:(NSString *)file
-         line:(int)line
-          tag:(NSString *)tag
-          msg:(NSString *)msg;
++ (void)checkf:(bool)condition file:(NSString *)file line:(int)line tag:(NSString *)tag format:(NSString *)format, ...;
++ (void)check:(bool)condition file:(NSString *)file line:(int)line tag:(NSString *)tag msg:(NSString *)msg;
 + (void)dcheckf:(bool)condition
            file:(const char *)file
            line:(int)line
             tag:(const char *)tag
          format:(const char *)format, ...;
-+ (void)dcheck:(bool)condition
-          file:(const char *)file
-          line:(int)line
-           tag:(const char *)tag
-           msg:(const char *)msg;
++ (void)dcheck:(bool)condition file:(const char *)file line:(int)line tag:(const char *)tag msg:(const char *)msg;
 @end
 
-#define DCHECKF(condition, format, ...)  \
-    [TKDebug dcheckf:(condition)         \
-                file:__FILE__            \
-                line:__LINE__            \
-                 tag:__PRETTY_FUNCTION__ \
-                 msg:format, __VA_ARGS__]
-#define DCHECK(condition)               \
-    [TKDebug dcheck:(condition)         \
-               file:__FILE__            \
-               line:__LINE__            \
-                tag:__PRETTY_FUNCTION__ \
-                msg:#condition]
+#define DCHECKF(condition, format, ...) \
+    [TKDebug dcheckf:(condition) file:__FILE__ line:__LINE__ tag:__PRETTY_FUNCTION__ msg:format, __VA_ARGS__]
+#define DCHECK(condition) \
+    [TKDebug dcheck:(condition) file:__FILE__ line:__LINE__ tag:__PRETTY_FUNCTION__ msg:#condition]
 #define DLOGF(format, ...) [TKDebug logf:format, __VA_ARGS__]
 #define DLOG(log) [TKDebug log:log]
 

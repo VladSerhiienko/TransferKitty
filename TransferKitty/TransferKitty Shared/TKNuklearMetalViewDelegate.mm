@@ -32,10 +32,8 @@ void Stopwatch::Start() {
 
 double Stopwatch::GetElapsedSeconds() const {
     using namespace std::chrono;
-    const high_resolution_clock::time_point currentTimePoint =
-        high_resolution_clock::now();
-    const duration<double> time_span =
-        duration_cast<duration<double>>(currentTimePoint - StartTimePoint);
+    const high_resolution_clock::time_point currentTimePoint = high_resolution_clock::now();
+    const duration<double> time_span = duration_cast<duration<double>>(currentTimePoint - StartTimePoint);
     return time_span.count();
 }
 
@@ -52,8 +50,7 @@ typedef struct EUINuklearState {
 
 @interface TKNuklearFrame ()
 @property(nonatomic, readwrite) struct nk_context *outptr contextPtr;
-@property(nonatomic, readwrite)
-    struct nk_convert_config *outptr convertConfigPtr;
+@property(nonatomic, readwrite) struct nk_convert_config *outptr convertConfigPtr;
 @property(nonatomic, readwrite) CGRect viewport;
 @end
 
@@ -101,8 +98,7 @@ typedef struct EUINuklearState {
 
 void nuklearClipboardPaste(nk_handle usr, struct nk_text_edit *edit);
 void nuklearClipboardCopy(nk_handle usr, const char *text, int len);
-void nuklearSetTheme(struct nk_context *ctx,
-                     enum TKNuklearBuiltinColorTheme theme);
+void nuklearSetTheme(struct nk_context *ctx, enum TKNuklearBuiltinColorTheme theme);
 const void *getFontBytes(void);
 const size_t getFontByteLength(void);
 
@@ -145,13 +141,10 @@ const size_t getFontByteLength(void);
 
 - (nullable instancetype)initWithMetalDevice:(nonnull id<MTLDevice>)device
                             colorPixelFormat:(MTLPixelFormat)colorPixelFormat
-                     depthStencilPixelFormat:
-                         (MTLPixelFormat)depthStencilPixelFormat
+                     depthStencilPixelFormat:(MTLPixelFormat)depthStencilPixelFormat
                                  sampleCount:(NSUInteger)sampleCount {
     self = [super init];
-    if (!self) {
-        return nil;
-    }
+    if (!self) { return nil; }
 
     _retainedList = [[NSMutableArray alloc] init];
 
@@ -172,12 +165,9 @@ const size_t getFontByteLength(void);
     }
 
     MTLVertexDescriptor *vertexDescriptor = [[MTLVertexDescriptor alloc] init];
-    MTLVertexAttributeDescriptor *positionAttributeDesc =
-        vertexDescriptor.attributes[0];
-    MTLVertexAttributeDescriptor *uvAttributeDesc =
-        vertexDescriptor.attributes[1];
-    MTLVertexAttributeDescriptor *colorAttributeDesc =
-        vertexDescriptor.attributes[2];
+    MTLVertexAttributeDescriptor *positionAttributeDesc = vertexDescriptor.attributes[0];
+    MTLVertexAttributeDescriptor *uvAttributeDesc = vertexDescriptor.attributes[1];
+    MTLVertexAttributeDescriptor *colorAttributeDesc = vertexDescriptor.attributes[2];
     positionAttributeDesc.bufferIndex = _vertexBufferIndex;
     positionAttributeDesc.offset = 0;
     positionAttributeDesc.format = MTLVertexFormatFloat2;
@@ -188,55 +178,43 @@ const size_t getFontByteLength(void);
     colorAttributeDesc.offset = 16;
     colorAttributeDesc.format = MTLVertexFormatUChar4Normalized;
 
-    MTLVertexBufferLayoutDescriptor *layout =
-        vertexDescriptor.layouts[_vertexBufferIndex];
+    MTLVertexBufferLayoutDescriptor *layout = vertexDescriptor.layouts[_vertexBufferIndex];
     layout.stride = 20;
     layout.stepRate = 1;
     layout.stepFunction = MTLVertexStepFunctionPerVertex;
 
     id<MTLLibrary> defaultLibrary = [_device newDefaultLibrary];
-    id<MTLFunction> vertexFunction =
-        [defaultLibrary newFunctionWithName:@"nkVertexShader"];
-    id<MTLFunction> fragmentFunction =
-        [defaultLibrary newFunctionWithName:@"nkFragmentShader"];
+    id<MTLFunction> vertexFunction = [defaultLibrary newFunctionWithName:@"nkVertexShader"];
+    id<MTLFunction> fragmentFunction = [defaultLibrary newFunctionWithName:@"nkFragmentShader"];
 
-    MTLRenderPipelineDescriptor *pipelineStateDescriptor =
-        [[MTLRenderPipelineDescriptor alloc] init];
+    MTLRenderPipelineDescriptor *pipelineStateDescriptor = [[MTLRenderPipelineDescriptor alloc] init];
     pipelineStateDescriptor.label = @"MyPipeline";
     pipelineStateDescriptor.sampleCount = sampleCount;
     pipelineStateDescriptor.vertexFunction = vertexFunction;
     pipelineStateDescriptor.fragmentFunction = fragmentFunction;
     pipelineStateDescriptor.vertexDescriptor = vertexDescriptor;
-    pipelineStateDescriptor.inputPrimitiveTopology =
-        MTLPrimitiveTopologyClassTriangle;
-    pipelineStateDescriptor.depthAttachmentPixelFormat =
-        depthStencilPixelFormat;
-    pipelineStateDescriptor.stencilAttachmentPixelFormat =
-        depthStencilPixelFormat;
+    pipelineStateDescriptor.inputPrimitiveTopology = MTLPrimitiveTopologyClassTriangle;
+    pipelineStateDescriptor.depthAttachmentPixelFormat = depthStencilPixelFormat;
+    pipelineStateDescriptor.stencilAttachmentPixelFormat = depthStencilPixelFormat;
 
-    MTLRenderPipelineColorAttachmentDescriptor *colorAttachment =
-        pipelineStateDescriptor.colorAttachments[0];
+    MTLRenderPipelineColorAttachmentDescriptor *colorAttachment = pipelineStateDescriptor.colorAttachments[0];
     colorAttachment.pixelFormat = colorPixelFormat;
     colorAttachment.blendingEnabled = YES;
     colorAttachment.sourceRGBBlendFactor = MTLBlendFactorSourceAlpha;
-    colorAttachment.destinationRGBBlendFactor =
-        MTLBlendFactorOneMinusSourceAlpha;
+    colorAttachment.destinationRGBBlendFactor = MTLBlendFactorOneMinusSourceAlpha;
     colorAttachment.rgbBlendOperation = MTLBlendOperationAdd;
     colorAttachment.sourceAlphaBlendFactor = MTLBlendFactorOneMinusSourceAlpha;
     colorAttachment.destinationAlphaBlendFactor = MTLBlendFactorZero;
     colorAttachment.writeMask = MTLColorWriteMaskAll;
 
     NSError *error = NULL;
-    _pipelineState =
-        [_device newRenderPipelineStateWithDescriptor:pipelineStateDescriptor
-                                                error:&error];
+    _pipelineState = [_device newRenderPipelineStateWithDescriptor:pipelineStateDescriptor error:&error];
     if (!_pipelineState) {
         NSLog(@"Failed to created pipeline state, error=\"%@\"", error);
         return nil;
     }
 
-    MTLDepthStencilDescriptor *depthStateDesc =
-        [[MTLDepthStencilDescriptor alloc] init];
+    MTLDepthStencilDescriptor *depthStateDesc = [[MTLDepthStencilDescriptor alloc] init];
     depthStateDesc.label = @"DepthStencil";
     depthStateDesc.depthCompareFunction = MTLCompareFunctionAlways;
     _depthState = [_device newDepthStencilStateWithDescriptor:depthStateDesc];
@@ -248,35 +226,22 @@ const size_t getFontByteLength(void);
 
     for (NSUInteger i = 0; i < FrameCount; i++) {
         TKNuklearFrame *currentFrame = _frame[i];
-        [currentFrame
-            uniformBuffer:
-                [_device newBufferWithLength:sizeof(matrix_float4x4)
-                                     options:MTLResourceStorageModeShared]];
-        [currentFrame
-            vertexBuffer:[_device
-                             newBufferWithLength:_bufferMaxSize
-                                         options:MTLResourceStorageModeShared]];
-        [currentFrame
-            indexBuffer:[_device
-                            newBufferWithLength:_bufferMaxSize
-                                        options:MTLResourceStorageModeShared]];
+        [currentFrame uniformBuffer:[_device newBufferWithLength:sizeof(matrix_float4x4)
+                                                         options:MTLResourceStorageModeShared]];
+        [currentFrame vertexBuffer:[_device newBufferWithLength:_bufferMaxSize options:MTLResourceStorageModeShared]];
+        [currentFrame indexBuffer:[_device newBufferWithLength:_bufferMaxSize options:MTLResourceStorageModeShared]];
 
-        [currentFrame uniformBuffer].label = [@"UniformBuffer"
-            stringByAppendingFormat:@"[Frame=%u]", (uint32_t)i];
-        [currentFrame vertexBuffer].label = [@"VertexBuffer"
-            stringByAppendingFormat:@"[Frame=%u]", (uint32_t)i];
-        [currentFrame indexBuffer].label =
-            [@"IndexBuffer" stringByAppendingFormat:@"[Frame=%u]", (uint32_t)i];
+        [currentFrame uniformBuffer].label = [@"UniformBuffer" stringByAppendingFormat:@"[Frame=%u]", (uint32_t)i];
+        [currentFrame vertexBuffer].label = [@"VertexBuffer" stringByAppendingFormat:@"[Frame=%u]", (uint32_t)i];
+        [currentFrame indexBuffer].label = [@"IndexBuffer" stringByAppendingFormat:@"[Frame=%u]", (uint32_t)i];
 
         if (i == 0) {
             nk_init_default(currentFrame.contextPtr, 0);
             currentFrame.contextPtr->clip.copy = nuklearClipboardCopy;
             currentFrame.contextPtr->clip.paste = nuklearClipboardPaste;
-            currentFrame.contextPtr->clip.userdata =
-                nk_handle_ptr((void *)CFBridgingRetain(self));
+            currentFrame.contextPtr->clip.userdata = nk_handle_ptr((void *)CFBridgingRetain(self));
 
-            NK_MEMSET(
-                currentFrame.convertConfigPtr, 0, sizeof(nk_convert_config));
+            NK_MEMSET(currentFrame.convertConfigPtr, 0, sizeof(nk_convert_config));
             currentFrame.convertConfigPtr->global_alpha = 1.0f;
             currentFrame.convertConfigPtr->line_AA = NK_ANTI_ALIASING_ON;
             currentFrame.convertConfigPtr->shape_AA = NK_ANTI_ALIASING_ON;
@@ -290,23 +255,18 @@ const size_t getFontByteLength(void);
     nk_font_atlas_init_default(&_nuklear._fontAtlas);
     nk_font_atlas_begin(&_nuklear._fontAtlas);
 
-    _nuklear._fontPtr = nk_font_atlas_add_from_memory(&_nuklear._fontAtlas,
-                                                      (void *)getFontBytes(),
-                                                      getFontByteLength(),
-                                                      48,
-                                                      0);
+    _nuklear._fontPtr =
+        nk_font_atlas_add_from_memory(&_nuklear._fontAtlas, (void *)getFontBytes(), getFontByteLength(), 48, 0);
 
     int imageWidth, imageHeight, imageBytesPerRow;
-    const void *imageBytes = nk_font_atlas_bake(
-        &_nuklear._fontAtlas, &imageWidth, &imageHeight, NK_FONT_ATLAS_RGBA32);
+    const void *imageBytes = nk_font_atlas_bake(&_nuklear._fontAtlas, &imageWidth, &imageHeight, NK_FONT_ATLAS_RGBA32);
     imageBytesPerRow = imageWidth * 4;
 
     // Indicate that each pixel has a blue, green, red, and alpha channel,
     // where each channel is an 8-bit unsigned normalized value
     // (i.e. 0 maps to 0.0 and 255 maps to 1.0).
     // Set the pixel dimensions of the texture
-    MTLTextureDescriptor *textureDescriptor =
-        [[MTLTextureDescriptor alloc] init];
+    MTLTextureDescriptor *textureDescriptor = [[MTLTextureDescriptor alloc] init];
     textureDescriptor.pixelFormat = MTLPixelFormatRGBA8Unorm;
     textureDescriptor.width = imageWidth;
     textureDescriptor.height = imageHeight;
@@ -318,35 +278,28 @@ const size_t getFontByteLength(void);
                       withBytes:imageBytes
                     bytesPerRow:imageBytesPerRow];
 
-    nk_font_atlas_end(&_nuklear._fontAtlas,
-                      nk_handle_ptr((void *)CFBridgingRetain(_fontTexture)),
-                      &_nuklear._drawNullTexture);
+    nk_font_atlas_end(
+        &_nuklear._fontAtlas, nk_handle_ptr((void *)CFBridgingRetain(_fontTexture)), &_nuklear._drawNullTexture);
 
     for (NSUInteger i = 0; i < FrameCount; ++i) {
         TKNuklearFrame *currentFrame = _frame[i];
         if (i == 0) {
-            nuklearSetTheme(currentFrame.contextPtr,
-                            TKNuklearColorBuiltinThemeBlue);
+            nuklearSetTheme(currentFrame.contextPtr, TKNuklearColorBuiltinThemeBlue);
             if (_nuklear._fontAtlas.default_font) {
-                nk_style_set_font(currentFrame.contextPtr,
-                                  &_nuklear._fontAtlas.default_font->handle);
+                nk_style_set_font(currentFrame.contextPtr, &_nuklear._fontAtlas.default_font->handle);
             }
 
             currentFrame.contextPtr->style.font = &_nuklear._fontPtr->handle;
             _nuklear._fontAtlas.default_font = _nuklear._fontPtr;
-            nk_style_set_font(currentFrame.contextPtr,
-                              &_nuklear._fontPtr->handle);
+            nk_style_set_font(currentFrame.contextPtr, &_nuklear._fontPtr->handle);
         }
     }
 
     return self;
 }
 
-- (nullable id<MTLTexture>)createTextureWithImage:
-    (nullable tk::utilities::ImageBuffer *)image {
-    if (!image) {
-        return nil;
-    }
+- (nullable id<MTLTexture>)createTextureWithImage:(nullable tk::utilities::ImageBuffer *)image {
+    if (!image) { return nil; }
 
     MTLPixelFormat pixelFormat;
     switch (image->format) {
@@ -368,9 +321,7 @@ const size_t getFontByteLength(void);
 }
 
 - (void)releaseRetainedObject:(nullable id)retainedObject {
-    if (!retainedObject) {
-        return;
-    }
+    if (!retainedObject) { return; }
 
     // https://developer.apple.com/documentation/foundation/nsmutablearray/1410689-removeobject?language=objc
     [_retainedList removeObject:retainedObject];
@@ -380,21 +331,16 @@ const size_t getFontByteLength(void);
                                              width:(NSUInteger)width
                                             height:(NSUInteger)height
                                        bytesPerRow:(NSUInteger)bytesPerRow
-                                             bytes:
-                                                 (nullable const void *)bytes {
-    if (format == MTLPixelFormatInvalid || !width || !height || !bytesPerRow) {
-        return nil;
-    }
+                                             bytes:(nullable const void *)bytes {
+    if (format == MTLPixelFormatInvalid || !width || !height || !bytesPerRow) { return nil; }
 
-    MTLTextureDescriptor *textureDescriptor =
-        [[MTLTextureDescriptor alloc] init];
+    MTLTextureDescriptor *textureDescriptor = [[MTLTextureDescriptor alloc] init];
     textureDescriptor.pixelFormat = format;
     textureDescriptor.width = width;
     textureDescriptor.height = height;
 
     // Create the texture from the device by using the descriptor
-    id<MTLTexture> texture =
-        [_device newTextureWithDescriptor:textureDescriptor];
+    id<MTLTexture> texture = [_device newTextureWithDescriptor:textureDescriptor];
     if (bytes) {
         [texture replaceRegion:MTLRegionMake2D(0, 0, width, height)
                    mipmapLevel:0
@@ -426,23 +372,15 @@ const size_t getFontByteLength(void);
     currentFrame.convertConfigPtr->null = _nuklear._drawNullTexture;
     currentFrame.convertConfigPtr->vertex_layout = _nuklear._vertexLayout;
     currentFrame.convertConfigPtr->vertex_size = 20;
-    currentFrame.convertConfigPtr->vertex_alignment =
-        NK_ALIGNOF(matrix_float4x4);
+    currentFrame.convertConfigPtr->vertex_alignment = NK_ALIGNOF(matrix_float4x4);
 
     /* setup buffers to load vertices and elements */
     struct nk_buffer vbuf, ebuf;
-    nk_buffer_init_fixed(
-        &vbuf, [currentFrame vertexBuffer].contents, _bufferMaxSize);
-    nk_buffer_init_fixed(
-        &ebuf, [currentFrame indexBuffer].contents, _bufferMaxSize);
-    nk_convert(currentFrame.contextPtr,
-               &_nuklear._cmdBuffer,
-               &vbuf,
-               &ebuf,
-               currentFrame.convertConfigPtr);
+    nk_buffer_init_fixed(&vbuf, [currentFrame vertexBuffer].contents, _bufferMaxSize);
+    nk_buffer_init_fixed(&ebuf, [currentFrame indexBuffer].contents, _bufferMaxSize);
+    nk_convert(currentFrame.contextPtr, &_nuklear._cmdBuffer, &vbuf, &ebuf, currentFrame.convertConfigPtr);
 
-    matrix_float4x4 *projectionMatrix =
-        (matrix_float4x4 *)[currentFrame uniformBuffer].contents;
+    matrix_float4x4 *projectionMatrix = (matrix_float4x4 *)[currentFrame uniformBuffer].contents;
     *projectionMatrix = _orthoMatrix;
 }
 
@@ -452,41 +390,29 @@ const size_t getFontByteLength(void);
     const CGFloat width = _nuklear._viewport.size.width;
     const CGFloat height = _nuklear._viewport.size.height;
 
-    if (nk_begin(ctx,
-                 "DebugOverlay",
-                 nk_rect(width - 300, height - 55, 295, 50),
-                 NK_WINDOW_NO_SCROLLBAR)) {
+    if (nk_begin(ctx, "DebugOverlay", nk_rect(width - 300, height - 55, 295, 50), NK_WINDOW_NO_SCROLLBAR)) {
         nk_layout_row_dynamic(ctx, 50, 1);
-        nk_labelf(ctx,
-                  NK_TEXT_CENTERED,
-                  "%u x %u",
-                  (uint32_t)width,
-                  (uint32_t)height);
+        nk_labelf(ctx, NK_TEXT_CENTERED, "%u x %u", (uint32_t)width, (uint32_t)height);
     }
     nk_end(ctx);
 }
 
 // Respond to drawable size or orientation changes here
-- (void)updateFrameViewport:(TKNuklearFrame *)currentFrame
-               drawableSize:(CGSize)drawableSize {
+- (void)updateFrameViewport:(TKNuklearFrame *)currentFrame drawableSize:(CGSize)drawableSize {
     _nuklear._viewport.size = drawableSize;
     [currentFrame setViewport:_nuklear._viewport];
 
-    float ortho[4][4] = {{2.0f, 0.0f, 0.0f, 0.0f},
-                         {0.0f, -2.0f, 0.0f, 0.0f},
-                         {0.0f, 0.0f, -1.0f, 0.0f},
-                         {-1.0f, 1.0f, 0.0f, 1.0f}};
+    float ortho[4][4] = {
+        {2.0f, 0.0f, 0.0f, 0.0f}, {0.0f, -2.0f, 0.0f, 0.0f}, {0.0f, 0.0f, -1.0f, 0.0f}, {-1.0f, 1.0f, 0.0f, 1.0f}};
 
     ortho[0][0] /= (float)drawableSize.width;
     ortho[1][1] /= (float)drawableSize.height;
 
-    static_assert(sizeof(_orthoMatrix) == sizeof(ortho),
-                  "Caught size mismatch.");
+    static_assert(sizeof(_orthoMatrix) == sizeof(ortho), "Caught size mismatch.");
     memcpy(&_orthoMatrix, ortho, sizeof(ortho));
 }
 
-- (void)drawNextFrameToRenderPass:
-            (nonnull MTLRenderPassDescriptor *)renderPassDescriptor
+- (void)drawNextFrameToRenderPass:(nonnull MTLRenderPassDescriptor *)renderPassDescriptor
                     commandBuffer:(nonnull id<MTLCommandBuffer>)commandBuffer
                      drawableSize:(CGSize)drawableSize {
     TKNuklearFrame *currentFrame = [self advanceFrameIndex];
@@ -497,35 +423,25 @@ const size_t getFontByteLength(void);
     [self appendDebugOverlay:currentFrame];
     [self uploadFrameBuffers:currentFrame];
 
-    id<MTLRenderCommandEncoder> renderEncoder =
-        [commandBuffer renderCommandEncoderWithDescriptor:renderPassDescriptor];
-    if (!renderEncoder) {
-        return;
-    }
+    id<MTLRenderCommandEncoder> renderEncoder = [commandBuffer renderCommandEncoderWithDescriptor:renderPassDescriptor];
+    if (!renderEncoder) { return; }
 
     renderEncoder.label = @"MyRenderEncoder";
-    [renderEncoder
-        pushDebugGroup:[NSString stringWithUTF8String:__PRETTY_FUNCTION__]];
+    [renderEncoder pushDebugGroup:[NSString stringWithUTF8String:__PRETTY_FUNCTION__]];
 
     [renderEncoder setFrontFacingWinding:MTLWindingCounterClockwise];
     [renderEncoder setCullMode:MTLCullModeNone];
     [renderEncoder setRenderPipelineState:_pipelineState];
     [renderEncoder setDepthStencilState:_depthState];
 
-    [renderEncoder setVertexBuffer:[currentFrame uniformBuffer]
-                            offset:0
-                           atIndex:_uniformBufferIndex];
-    [renderEncoder setVertexBuffer:[currentFrame vertexBuffer]
-                            offset:0
-                           atIndex:_vertexBufferIndex];
+    [renderEncoder setVertexBuffer:[currentFrame uniformBuffer] offset:0 atIndex:_uniformBufferIndex];
+    [renderEncoder setVertexBuffer:[currentFrame vertexBuffer] offset:0 atIndex:_vertexBufferIndex];
 
     MTLViewport viewport;
     viewport.originX = _nuklear._viewport.origin.x;
     viewport.originY = _nuklear._viewport.origin.y;
-    viewport.width =
-        _nuklear._viewport.size.width * _nuklear._viewportScale.width;
-    viewport.height =
-        _nuklear._viewport.size.height * _nuklear._viewportScale.height;
+    viewport.width = _nuklear._viewport.size.width * _nuklear._viewportScale.width;
+    viewport.height = _nuklear._viewport.size.height * _nuklear._viewportScale.height;
     viewport.znear = 0.0f;
     viewport.zfar = 1.0f;
 
@@ -534,9 +450,7 @@ const size_t getFontByteLength(void);
     NSUInteger indexOffset = 0;
     const struct nk_draw_command *cmd = NULL;
     nk_draw_foreach(cmd, currentFrame.contextPtr, &_nuklear._cmdBuffer) {
-        if (!cmd->elem_count) {
-            continue;
-        }
+        if (!cmd->elem_count) { continue; }
 
         CGRect sr;
         sr.origin.x = cmd->clip_rect.x * _nuklear._viewportScale.width;
@@ -545,12 +459,8 @@ const size_t getFontByteLength(void);
         sr.size.height = cmd->clip_rect.h * _nuklear._viewportScale.height;
         sr.origin.x = NK_CLAMP(0, sr.origin.x, _nuklear._viewport.size.width);
         sr.origin.y = NK_CLAMP(0, sr.origin.y, _nuklear._viewport.size.height);
-        sr.size.width = NK_CLAMP(
-            0, sr.size.width, _nuklear._viewport.size.width - sr.origin.x - 2);
-        sr.size.height =
-            NK_CLAMP(0,
-                     sr.size.height,
-                     _nuklear._viewport.size.height - sr.origin.y - 2);
+        sr.size.width = NK_CLAMP(0, sr.size.width, _nuklear._viewport.size.width - sr.origin.x - 2);
+        sr.size.height = NK_CLAMP(0, sr.size.height, _nuklear._viewport.size.height - sr.origin.y - 2);
 
         MTLScissorRect scissorRect;
         scissorRect.x = (NSUInteger)sr.origin.x;
@@ -561,8 +471,7 @@ const size_t getFontByteLength(void);
         [renderEncoder setScissorRect:scissorRect];
 
         void *textureHandle = cmd->texture.ptr;
-        id<MTLTexture> fragmentTextureId =
-            (__bridge id<MTLTexture>)(textureHandle);
+        id<MTLTexture> fragmentTextureId = (__bridge id<MTLTexture>)(textureHandle);
         [renderEncoder setFragmentTexture:fragmentTextureId atIndex:0];
 
         [renderEncoder drawIndexedPrimitives:MTLPrimitiveTypeTriangle
@@ -617,11 +526,10 @@ const size_t getFontByteLength(void);
         view.colorPixelFormat = MTLPixelFormatBGRA8Unorm_sRGB;
         view.sampleCount = 1;
 
-        _renderer = [[TKNuklearRenderer alloc]
-                initWithMetalDevice:_device
-                   colorPixelFormat:view.colorPixelFormat
-            depthStencilPixelFormat:view.depthStencilPixelFormat
-                        sampleCount:view.sampleCount];
+        _renderer = [[TKNuklearRenderer alloc] initWithMetalDevice:_device
+                                                  colorPixelFormat:view.colorPixelFormat
+                                           depthStencilPixelFormat:view.depthStencilPixelFormat
+                                                       sampleCount:view.sampleCount];
     }
 
     return self;
@@ -649,10 +557,7 @@ const size_t getFontByteLength(void);
 
 - (void)mtkView:(nonnull MTKView *)view drawableSizeWillChange:(CGSize)size {
     /// Respond to drawable size or orientation changes here
-    NSLog(@"%s: view.drawableSize = {%f %f}",
-          __PRETTY_FUNCTION__,
-          view.drawableSize.width,
-          view.drawableSize.height);
+    NSLog(@"%s: view.drawableSize = {%f %f}", __PRETTY_FUNCTION__, view.drawableSize.width, view.drawableSize.height);
 }
 
 @end
@@ -680,15 +585,10 @@ void nuklearClipboardCopy(nk_handle usr, const char *text, int len) {
 
 #include "droidsans.ttf.h"
 
-const void *getFontBytes() {
-    return s_droidSansTtf;
-}
-const size_t getFontByteLength() {
-    return sizeof(s_droidSansTtf);
-}
+const void *getFontBytes() { return s_droidSansTtf; }
+const size_t getFontByteLength() { return sizeof(s_droidSansTtf); }
 
-void nuklearSetTheme(struct nk_context *ctx,
-                     enum TKNuklearBuiltinColorTheme theme) {
+void nuklearSetTheme(struct nk_context *ctx, enum TKNuklearBuiltinColorTheme theme) {
     struct nk_color table[NK_COLOR_COUNT];
     if (theme == TKNuklearColorBuiltinThemeWhite) {
         table[NK_COLOR_TEXT] = nk_rgba(70, 70, 70, 255);
@@ -726,8 +626,7 @@ void nuklearSetTheme(struct nk_context *ctx,
         table[NK_COLOR_HEADER] = nk_rgba(181, 45, 69, 220);
         table[NK_COLOR_BORDER] = nk_rgba(51, 55, 67, 255);
         table[NK_COLOR_BUTTON] = nk_rgba(181, 45, 69, 255);
-        table[NK_COLOR_BUTTON_HOVER] = nk_rgba(
-            181, 45, 69, 255); // 195, 55, 75, 255 ); // 190, 50, 70, 255 );
+        table[NK_COLOR_BUTTON_HOVER] = nk_rgba(181, 45, 69, 255); // 195, 55, 75, 255 ); // 190, 50, 70, 255 );
         table[NK_COLOR_BUTTON_ACTIVE] = nk_rgba(195, 55, 75, 255);
         table[NK_COLOR_TOGGLE] = nk_rgba(51, 55, 67, 255);
         table[NK_COLOR_TOGGLE_HOVER] = nk_rgba(45, 60, 60, 255);

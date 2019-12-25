@@ -21,8 +21,7 @@ typedef NS_ENUM(NSUInteger, TKNuklearBuiltinColorTheme) {
 
 @interface TKNuklearFrame : NSObject
 @property(nonatomic, readonly) struct nk_context *outptr contextPtr;
-@property(nonatomic, readonly)
-    struct nk_convert_config *outptr convertConfigPtr;
+@property(nonatomic, readonly) struct nk_convert_config *outptr convertConfigPtr;
 @property(nonatomic, readonly) CGRect viewport;
 @property(nonatomic, readwrite) CGSize viewportScale;
 @end
@@ -35,20 +34,17 @@ typedef NS_ENUM(NSUInteger, TKNuklearBuiltinColorTheme) {
 
 - (nullable instancetype)initWithMetalDevice:(nonnull id<MTLDevice>)device
                             colorPixelFormat:(MTLPixelFormat)colorPixelFormat
-                     depthStencilPixelFormat:
-                         (MTLPixelFormat)depthStencilPixelFormat
+                     depthStencilPixelFormat:(MTLPixelFormat)depthStencilPixelFormat
                                  sampleCount:(NSUInteger)sampleCount;
 
-- (void)drawNextFrameToRenderPass:
-            (nonnull MTLRenderPassDescriptor *)renderPassDescriptor
+- (void)drawNextFrameToRenderPass:(nonnull MTLRenderPassDescriptor *)renderPassDescriptor
                     commandBuffer:(nonnull id<MTLCommandBuffer>)commandBuffer
                      drawableSize:(CGSize)drawableSize;
 
 - (void)releaseRetainedObject:(nullable id)retainedObject;
 
 // The result is retained, see releaseRetainedObject.
-- (nullable id<MTLTexture>)createTextureWithImage:
-    (nullable tk::utilities::ImageBuffer *)image;
+- (nullable id<MTLTexture>)createTextureWithImage:(nullable tk::utilities::ImageBuffer *)image;
 
 // The result is retained, see releaseRetainedObject.
 - (nullable id<MTLTexture>)createTextureWithFormat:(MTLPixelFormat)format
@@ -69,6 +65,5 @@ typedef NS_ENUM(NSUInteger, TKNuklearBuiltinColorTheme) {
 @end
 
 @protocol TKNuklearFrameDelegate <NSObject>
-- (void)renderer:(nonnull TKNuklearRenderer *)renderer
-    shouldUpdateFrame:(nonnull TKNuklearFrame *)currentFrame;
+- (void)renderer:(nonnull TKNuklearRenderer *)renderer shouldUpdateFrame:(nonnull TKNuklearFrame *)currentFrame;
 @end
