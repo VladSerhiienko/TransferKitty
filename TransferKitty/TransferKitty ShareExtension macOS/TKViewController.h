@@ -6,8 +6,10 @@
 //  Copyright © 2019 vserhiienko. All rights reserved.
 //
 
-#import <Cocoa/Cocoa.h>
+#import "TKMacOSViewController.h"
 
-@interface TKViewController : NSViewController
+@interface TKViewController : TKMacOSViewController
+@end
 
+@interface TKView : TKMacOSView
 @end

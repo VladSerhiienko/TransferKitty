@@ -1,4 +1,5 @@
 #import "TKBluetoothCommunicator.h"
+#import "TKFileSaver.h"
 
 #if TARGET_OS_IOS
 #import <UIKit/UIKit.h>
@@ -137,6 +138,9 @@ constexpr bool isBitSet(const T bits, const U bit) {
 @interface TKBluetoothCommunicator () <CBPeripheralManagerDelegate>
 @end
 
+@interface TKBluetoothCommunicator () <TKDebugLogger>
+@end
+
 @implementation TKBluetoothCommunicator {
     CBPeripheralManager *_peripheralManager;
     CBService *_peripheralService;
@@ -167,7 +171,7 @@ static TKBluetoothCommunicator *_instance = nil;
     @synchronized(self) {
         if (_instance == nil) {
             _instance = [[self alloc] init];
-            [TKDebug setBluetoothCommunicator:_instance];
+            [TKDebug addDebugLogger:_instance];
         }
     }
 
@@ -1311,6 +1315,12 @@ static TKBluetoothCommunicator *_instance = nil;
 
     return model;
 }
+
+- (void)debugObject:(NSObject *)debugObject didLog:(NSString *)log {
+    assert(debugObject == self && "Instances should match.");
+    [_delegate bluetoothCommunicator:self didLog:log];
+}
+
 @end
 
 @implementation TKBluetoothCommunicatorLongMessage {
@@ -2239,90 +2249,6 @@ static NSString *emptyStringInstance = @"";
         [_encoder encodeFriendlyModelMessage:device
                          responseMessageType:TKBluetoothCommunicatorMessageTypeDeviceFriendlyModel];
     [self scheduleMessageTo:device wholeMessageData:friendlyModelMsgData];
-}
-
-@end
-
-@implementation TKFileSaver
-+ (bool)saveFile:(NSString *)fileName fileData:(NSData *)fileData {
-    DCHECK(fileName && [fileName length] > 0);
-    DCHECK(fileData && [fileData length] > 0);
-
-    NSArray *documentsDirPaths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-    DCHECK(documentsDirPaths && [documentsDirPaths count] > 0);
-
-    NSString *documentsDirPath = [documentsDirPaths objectAtIndex:0];
-    DCHECK(documentsDirPath && [documentsDirPath length] > 0);
-
-    NSString *fullFilePath = [NSString stringWithFormat:@"%@/%@", documentsDirPath, fileName];
-    DCHECK(fullFilePath && [fullFilePath length] > 0);
-
-    return [fileData writeToFile:fullFilePath atomically:NO];
-}
-@end
-
-@implementation TKDebug
-
-static TKBluetoothCommunicator *_bluetoothCommunicator;
-static id<TKBluetoothCommunicatorDelegate> _bluetoothCommunicatorDelegate;
-
-+ (void)setBluetoothCommunicator:(TKBluetoothCommunicator *)bluetoothCommunicator {
-    _bluetoothCommunicator = bluetoothCommunicator;
-}
-+ (void)setBluetoothCommunicatorDelegate:(id<TKBluetoothCommunicatorDelegate>)delegate {
-    _bluetoothCommunicatorDelegate = delegate;
-}
-
-+ (void)logf:(NSString *)format, ... {
-    va_list args;
-    va_start(args, format);
-    NSString *log = [[NSString alloc] initWithFormat:format arguments:args];
-    [TKDebug log:log];
-    va_end(args);
-}
-
-+ (void)log:(NSString *)msg {
-    NSLog(@"%@", msg);
-    if (_bluetoothCommunicatorDelegate != nil && _bluetoothCommunicator != nil) {
-        [_bluetoothCommunicatorDelegate bluetoothCommunicator:_bluetoothCommunicator didLog:msg];
-    }
-}
-
-+ (void)raise:(NSString *)reason {
-    [TKDebug log:reason];
-    [[NSException exceptionWithName:@"RuntimeError" reason:reason userInfo:nil] raise];
-}
-
-+ (void)checkf:(bool)condition file:(NSString *)file line:(int)line tag:(NSString *)tag format:(NSString *)format, ... {
-    va_list args;
-    va_start(args, format);
-    NSString *msg = [[NSString alloc] initWithFormat:format arguments:args];
-    [TKDebug check:condition file:file line:line tag:tag msg:msg];
-    va_end(args);
-}
-
-+ (void)check:(bool)condition file:(NSString *)file line:(int)line tag:(NSString *)tag msg:(NSString *)msg {
-    if (TK_DEBUG && !condition) { [TKDebug raise:[NSString stringWithFormat:@"%@|'%@:%i': %@", tag, file, line, msg]]; }
-}
-
-+ (void)dcheckf:(bool)condition
-           file:(const char *)file
-           line:(int)line
-            tag:(const char *)tag
-         format:(const char *)format, ... {
-    if (TK_DEBUG && !condition) {
-        va_list args;
-        va_start(args, format);
-        NSString *msg = [[NSString alloc] initWithFormat:[NSString stringWithUTF8String:format] arguments:args];
-        [TKDebug dcheck:condition file:file line:line tag:tag msg:[msg UTF8String]];
-        va_end(args);
-    }
-}
-
-+ (void)dcheck:(bool)condition file:(const char *)file line:(int)line tag:(const char *)tag msg:(const char *)msg {
-    if (TK_DEBUG && !condition) {
-        [TKDebug raise:[NSString stringWithFormat:@"[%s] dcheck '%s:%i': %s", tag, file, line, msg]];
-    }
 }
 
 @end

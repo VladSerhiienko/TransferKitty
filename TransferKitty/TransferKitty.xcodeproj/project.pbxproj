@@ -40,6 +40,22 @@
 		CAE7EC63235C520400C4D217 /* Metal.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CAE7EC58235C51E100C4D217 /* Metal.framework */; };
 		CAE7EC64235C520400C4D217 /* MetalKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CAE7EC59235C51E100C4D217 /* MetalKit.framework */; };
 		F919AF64236E1A8E00E9EF75 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CACC74A52354F93800FE3672 /* Main.storyboard */; };
+		F96388BB23B80C1600BA6F2A /* TKMacOSViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = F96388B423B80C1600BA6F2A /* TKMacOSViewController.mm */; };
+		F96388BC23B80C1600BA6F2A /* TKMacOSViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = F96388B423B80C1600BA6F2A /* TKMacOSViewController.mm */; };
+		F96388BD23B80C1600BA6F2A /* TKMacOSViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = F96388B423B80C1600BA6F2A /* TKMacOSViewController.mm */; };
+		F96388BE23B80C1600BA6F2A /* TKMacOSViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = F96388B423B80C1600BA6F2A /* TKMacOSViewController.mm */; };
+		F96388BF23B80C1600BA6F2A /* TKDebug.mm in Sources */ = {isa = PBXBuildFile; fileRef = F96388B623B80C1600BA6F2A /* TKDebug.mm */; };
+		F96388C023B80C1600BA6F2A /* TKDebug.mm in Sources */ = {isa = PBXBuildFile; fileRef = F96388B623B80C1600BA6F2A /* TKDebug.mm */; };
+		F96388C123B80C1600BA6F2A /* TKDebug.mm in Sources */ = {isa = PBXBuildFile; fileRef = F96388B623B80C1600BA6F2A /* TKDebug.mm */; };
+		F96388C223B80C1600BA6F2A /* TKDebug.mm in Sources */ = {isa = PBXBuildFile; fileRef = F96388B623B80C1600BA6F2A /* TKDebug.mm */; };
+		F96388C323B80C1600BA6F2A /* TKFileSaver.mm in Sources */ = {isa = PBXBuildFile; fileRef = F96388B723B80C1600BA6F2A /* TKFileSaver.mm */; };
+		F96388C423B80C1600BA6F2A /* TKFileSaver.mm in Sources */ = {isa = PBXBuildFile; fileRef = F96388B723B80C1600BA6F2A /* TKFileSaver.mm */; };
+		F96388C523B80C1600BA6F2A /* TKFileSaver.mm in Sources */ = {isa = PBXBuildFile; fileRef = F96388B723B80C1600BA6F2A /* TKFileSaver.mm */; };
+		F96388C623B80C1600BA6F2A /* TKFileSaver.mm in Sources */ = {isa = PBXBuildFile; fileRef = F96388B723B80C1600BA6F2A /* TKFileSaver.mm */; };
+		F96388C723B80C1600BA6F2A /* TKNuklearMetalTexture.mm in Sources */ = {isa = PBXBuildFile; fileRef = F96388BA23B80C1600BA6F2A /* TKNuklearMetalTexture.mm */; };
+		F96388C823B80C1600BA6F2A /* TKNuklearMetalTexture.mm in Sources */ = {isa = PBXBuildFile; fileRef = F96388BA23B80C1600BA6F2A /* TKNuklearMetalTexture.mm */; };
+		F96388C923B80C1600BA6F2A /* TKNuklearMetalTexture.mm in Sources */ = {isa = PBXBuildFile; fileRef = F96388BA23B80C1600BA6F2A /* TKNuklearMetalTexture.mm */; };
+		F96388CA23B80C1600BA6F2A /* TKNuklearMetalTexture.mm in Sources */ = {isa = PBXBuildFile; fileRef = F96388BA23B80C1600BA6F2A /* TKNuklearMetalTexture.mm */; };
 		F998F726236E312E0025564F /* icon.icns in Resources */ = {isa = PBXBuildFile; fileRef = F998F725236E312E0025564F /* icon.icns */; };
 		F998F729236E312E0025564F /* TKViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = F998F728236E312E0025564F /* TKViewController.mm */; };
 		F998F72C236E312E0025564F /* Main.xib in Resources */ = {isa = PBXBuildFile; fileRef = F998F72A236E312E0025564F /* Main.xib */; };
@@ -154,6 +170,15 @@
 		F95CCF9D23AE8D3A004DEBFB /* TKOptional.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TKOptional.h; sourceTree = "<group>"; };
 		F95CCF9E23AFEA1D004DEBFB /* TKITexture.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TKITexture.h; sourceTree = "<group>"; };
 		F95CCF9F23AFEAF9004DEBFB /* TKFormat.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TKFormat.h; sourceTree = "<group>"; };
+		F96388B223B80C1600BA6F2A /* TKFileSaver.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TKFileSaver.h; sourceTree = "<group>"; };
+		F96388B323B80C1600BA6F2A /* TKDebug.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TKDebug.h; sourceTree = "<group>"; };
+		F96388B423B80C1600BA6F2A /* TKMacOSViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = TKMacOSViewController.mm; sourceTree = "<group>"; };
+		F96388B523B80C1600BA6F2A /* TKDefaultUIState.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TKDefaultUIState.h; sourceTree = "<group>"; };
+		F96388B623B80C1600BA6F2A /* TKDebug.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = TKDebug.mm; sourceTree = "<group>"; };
+		F96388B723B80C1600BA6F2A /* TKFileSaver.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = TKFileSaver.mm; sourceTree = "<group>"; };
+		F96388B823B80C1600BA6F2A /* TKNuklearMetalTexture.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TKNuklearMetalTexture.h; sourceTree = "<group>"; };
+		F96388B923B80C1600BA6F2A /* TKMacOSViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TKMacOSViewController.h; sourceTree = "<group>"; };
+		F96388BA23B80C1600BA6F2A /* TKNuklearMetalTexture.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = TKNuklearMetalTexture.mm; sourceTree = "<group>"; };
 		F998F723236E312E0025564F /* TransferKitty ShareExtension macOS.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "TransferKitty ShareExtension macOS.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
 		F998F725236E312E0025564F /* icon.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = icon.icns; sourceTree = "<group>"; };
 		F998F727236E312E0025564F /* TKViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TKViewController.h; sourceTree = "<group>"; };
@@ -240,9 +265,18 @@
 		CACC747D2354F93500FE3672 /* TransferKitty Shared */ = {
 			isa = PBXGroup;
 			children = (
+				CACC74822354F93800FE3672 /* Assets.xcassets */,
+				F96388B323B80C1600BA6F2A /* TKDebug.h */,
+				F96388B623B80C1600BA6F2A /* TKDebug.mm */,
+				F96388B523B80C1600BA6F2A /* TKDefaultUIState.h */,
+				F96388B223B80C1600BA6F2A /* TKFileSaver.h */,
+				F96388B723B80C1600BA6F2A /* TKFileSaver.mm */,
+				F96388B923B80C1600BA6F2A /* TKMacOSViewController.h */,
+				F96388B423B80C1600BA6F2A /* TKMacOSViewController.mm */,
+				F96388B823B80C1600BA6F2A /* TKNuklearMetalTexture.h */,
+				F96388BA23B80C1600BA6F2A /* TKNuklearMetalTexture.mm */,
 				F95CCF9F23AFEAF9004DEBFB /* TKFormat.h */,
 				F95CCF9E23AFEA1D004DEBFB /* TKITexture.h */,
-				CACC74822354F93800FE3672 /* Assets.xcassets */,
 				F998F79C23AD92B40025564F /* TKImageBuffer.cpp */,
 				F998F79B23AAD8370025564F /* TKImageBuffer.h */,
 				F95CCF9D23AE8D3A004DEBFB /* TKOptional.h */,
@@ -513,8 +547,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F96388BF23B80C1600BA6F2A /* TKDebug.mm in Sources */,
 				F998F78D238736960025564F /* TKApp.mm in Sources */,
+				F96388C323B80C1600BA6F2A /* TKFileSaver.mm in Sources */,
+				F96388BB23B80C1600BA6F2A /* TKMacOSViewController.mm in Sources */,
 				CACC748F2354F93800FE3672 /* TKViewController.mm in Sources */,
+				F96388C723B80C1600BA6F2A /* TKNuklearMetalTexture.mm in Sources */,
 				F998F7862385EA500025564F /* TKUIStatePopulator.cpp in Sources */,
 				CAE7EC4C235C4F5A00C4D217 /* Nuklear.metal in Sources */,
 				CACC74982354F93800FE3672 /* main.m in Sources */,
@@ -530,8 +568,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F96388C023B80C1600BA6F2A /* TKDebug.mm in Sources */,
 				F998F78E238736960025564F /* TKApp.mm in Sources */,
+				F96388C423B80C1600BA6F2A /* TKFileSaver.mm in Sources */,
+				F96388BC23B80C1600BA6F2A /* TKMacOSViewController.mm in Sources */,
 				CACC74A42354F93800FE3672 /* TKViewController.mm in Sources */,
+				F96388C823B80C1600BA6F2A /* TKNuklearMetalTexture.mm in Sources */,
 				F998F7872385EA500025564F /* TKUIStatePopulator.cpp in Sources */,
 				CAE7EC4D235C4F5A00C4D217 /* Nuklear.metal in Sources */,
 				CACC74AA2354F93800FE3672 /* main.m in Sources */,
@@ -547,6 +589,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F96388C123B80C1600BA6F2A /* TKDebug.mm in Sources */,
 				F998F79623A70CF90025564F /* TKBlurHash.cpp in Sources */,
 				CAE7EC54235C4F5A00C4D217 /* TKNuklearMetalViewDelegate.mm in Sources */,
 				CAE7EC4E235C4F5A00C4D217 /* Nuklear.metal in Sources */,
@@ -554,7 +597,10 @@
 				CAE7EC51235C4F5A00C4D217 /* TKBluetoothCommunicator.mm in Sources */,
 				F998F7882385EA500025564F /* TKUIStatePopulator.cpp in Sources */,
 				F998F79F23AD92B40025564F /* TKImageBuffer.cpp in Sources */,
+				F96388BD23B80C1600BA6F2A /* TKMacOSViewController.mm in Sources */,
+				F96388C923B80C1600BA6F2A /* TKNuklearMetalTexture.mm in Sources */,
 				CACC74C12354F9AB00FE3672 /* TKViewController.mm in Sources */,
+				F96388C523B80C1600BA6F2A /* TKFileSaver.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -562,6 +608,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F96388C223B80C1600BA6F2A /* TKDebug.mm in Sources */,
 				F998F79723A70CF90025564F /* TKBlurHash.cpp in Sources */,
 				F998F738236E348C0025564F /* Nuklear.metal in Sources */,
 				F998F736236E348C0025564F /* TKBluetoothCommunicator.mm in Sources */,
@@ -569,7 +616,10 @@
 				F998F737236E348C0025564F /* TKNuklearMetalViewDelegate.mm in Sources */,
 				F998F7892385EA500025564F /* TKUIStatePopulator.cpp in Sources */,
 				F998F7A023AD92B40025564F /* TKImageBuffer.cpp in Sources */,
+				F96388BE23B80C1600BA6F2A /* TKMacOSViewController.mm in Sources */,
+				F96388CA23B80C1600BA6F2A /* TKNuklearMetalTexture.mm in Sources */,
 				F998F729236E312E0025564F /* TKViewController.mm in Sources */,
+				F96388C623B80C1600BA6F2A /* TKFileSaver.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

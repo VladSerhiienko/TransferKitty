@@ -5,8 +5,8 @@ namespace tk {
 class ITexture {
 public:
     virtual ~ITexture() = default;
-    virtual const void* opaquePlatformPtr() const = 0;
-    virtual const void* opaqueImlementationPtr() const = 0;
+    virtual BridgedHandle opaquePlatformPtr() const = 0;
+    virtual BridgedHandle opaqueImlementationPtr() const = 0;
     virtual size_t width() const = 0;
     virtual size_t height() const = 0;
 };
@@ -16,4 +16,4 @@ T texturePlatformObject(const ITexture* texture);
 template <typename T>
 T textureImplementationObject(const ITexture* texture);
 
-}
+} // namespace tk

@@ -3,7 +3,8 @@
 
 namespace tk {
 enum UIFileStatus {
-    UIFileStatusPrepared = 0,
+    UIFileStatusUnknown = 0,
+    UIFileStatusPrepared,
     UIFileStatusQueued,
     UIFileStatusSending,
     UIFileStatusSent,
@@ -13,6 +14,7 @@ enum UIFileStatus {
 
 using UIStateStatus = uint64_t;
 enum UIStateStatusBits : uint64_t {
+    UIStateStatusBitUnknown = 0,
     UIStateStatusBitPeripheral = 1 << 0,
     UIStateStatusBitCentral = 1 << 1,
     UIStateStatusBitPreparedFiles = 1 << 2,
@@ -30,12 +32,11 @@ struct StringView {
 
 class IUIFilePreview {
 public:
-    
 };
 
 class IUIFileState {
 public:
-    virtual StringView name() const;
+    virtual StringView name() const = 0;
     virtual UIFileStatus status() const = 0;
     virtual float progress() const = 0;
     virtual size_t byteSize() const = 0;
@@ -43,6 +44,7 @@ public:
 };
 
 class IUIDeviceState {
+public:
     virtual const UIStateStatus status() const = 0;
     virtual size_t fileCount() const = 0;
     virtual const IUIFileState* file(int index) const = 0;
@@ -54,4 +56,4 @@ public:
     virtual const IUIDeviceState* device(int index) const = 0;
 };
 
-}
+} // namespace tk

@@ -45,17 +45,19 @@ struct stack_matrix {
     size_t n_columns = 0;
     T elements[MaxRows * MaxColumns];
 
-    constexpr T &at(size_t x, size_t y) { return elements[y * n_columns + x]; }
-    constexpr const T &at(size_t x, size_t y) const { return elements[y * n_columns + x]; }
+    constexpr T &at(const size_t x, const size_t y) { return elements[y * n_columns + x]; }
+    constexpr const T &at(const size_t x, const size_t y) const { return elements[y * n_columns + x]; }
 };
 
-using factor_stack_matrix =
-    stack_matrix<vec3, tk::blurhash::BlurHash::MAX_COMPONENT_COUNT, tk::blurhash::BlurHash::MAX_COMPONENT_COUNT>;
+using factor_stack_matrix = stack_matrix<vec3, tk::blurhash::MAX_COMPONENT_COUNT, tk::blurhash::MAX_COMPONENT_COUNT>;
 
 namespace {
 char characters[] =
-    "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz#$%*+,-.:;=?"
-    "@[]^_{|}~";
+    "0123456789"
+    "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+    "abcdefghijklmnopqrstuvwxyz"
+    "#$%*+,-.:;=?@[]^_{|}~";
+
 vec3 multiplyBasisFunction(size_t n_components_x, size_t n_components_y, const tk::utilities::ImageBuffer &image);
 char *encode83(int value, int length, char *destination);
 int decode83(const char *str, int from, int to);
@@ -67,8 +69,14 @@ vec3 decodeDC(int colorEnc);
 vec3 decodeAC(int value, float maxAc);
 float signedSqrt(float value);
 float signedSqr(float value);
+
+// clang-format off
 tk::utilities::ImageBuffer composeBitmap(
-    size_t width, size_t height, size_t numCompX, size_t numCompY, const factor_stack_matrix &factors);
+    size_t width, size_t height,
+    size_t numCompX, size_t numCompY,
+    const factor_stack_matrix &factors);
+// clang-format on
+
 } // namespace
 
 tk::blurhash::BlurHash tk::blurhash::BlurHashCodec::encode(size_t n_component_x,
@@ -76,12 +84,10 @@ tk::blurhash::BlurHash tk::blurhash::BlurHashCodec::encode(size_t n_component_x,
                                                            const tk::utilities::ImageBuffer &image) {
     BlurHash result = {};
 
-    if (n_component_x < BlurHash::MIN_COMPONENT_COUNT || n_component_x > BlurHash::MAX_COMPONENT_COUNT) { return {}; }
-    if (n_component_y < BlurHash::MIN_COMPONENT_COUNT || n_component_y > BlurHash::MAX_COMPONENT_COUNT) { return {}; }
+    if (n_component_x < MIN_COMPONENT_COUNT || n_component_x > MAX_COMPONENT_COUNT) { return {}; }
+    if (n_component_y < MIN_COMPONENT_COUNT || n_component_y > MAX_COMPONENT_COUNT) { return {}; }
 
-    factor_stack_matrix factors{};
-    factors.n_rows = n_component_y;
-    factors.n_columns = n_component_x;
+    factor_stack_matrix factors{n_component_y, n_component_x};
 
     for (uint8_t y = 0; y < n_component_y; y++) {
         for (uint8_t x = 0; x < n_component_x; x++) {
@@ -99,7 +105,7 @@ tk::blurhash::BlurHash tk::blurhash::BlurHashCodec::encode(size_t n_component_x,
     int ac_count = int(n_component_x * n_component_y - 1);
     char *ptr = result.buffer;
 
-    int encoded_components = int((n_component_x - 1) + (n_component_y - 1) * BlurHash::MAX_COMPONENT_COUNT);
+    int encoded_components = int((n_component_x - 1) + (n_component_y - 1) * MAX_COMPONENT_COUNT);
 
     //
     // printf("size = %d\n", encoded_components);
@@ -178,8 +184,8 @@ tk::utilities::ImageBuffer tk::blurhash::BlurHashCodec::decode(const BlurHash &h
     // printf("size = %d\n", numCompEnc);
     //
 
-    int n_components_x = (n_components_encoded % BlurHash::MAX_COMPONENT_COUNT) + 1;
-    int n_components_y = (n_components_encoded / BlurHash::MAX_COMPONENT_COUNT) + 1;
+    size_t n_components_x = (n_components_encoded % MAX_COMPONENT_COUNT) + 1;
+    size_t n_components_y = (n_components_encoded / MAX_COMPONENT_COUNT) + 1;
 
     //
     // printf("x = %d, y = %d\n", numCompX, numCompY);
@@ -194,9 +200,7 @@ tk::utilities::ImageBuffer tk::blurhash::BlurHashCodec::decode(const BlurHash &h
     // printf("max = %f, enc = %d\n", maxAc, maxAcEnc);
     //
 
-    factor_stack_matrix factors;
-    factors.n_rows = n_components_y;
-    factors.n_columns = n_components_x;
+    factor_stack_matrix factors{n_components_y, n_components_x};
 
     int encoded_dc = decode83(hash.buffer, 2, 6);
     vec3 decoded_dc = decodeDC(encoded_dc);
@@ -207,7 +211,7 @@ tk::utilities::ImageBuffer tk::blurhash::BlurHashCodec::decode(const BlurHash &h
     // pixel.v[1], pixel.v[2]);
     //
 
-    uint32_t ac_count = n_components_x * n_components_y - 1;
+    size_t ac_count = n_components_x * n_components_y - 1;
     vec3 *ac_ptr = (&factors.at(0, 0)) + 1;
 
     uint8_t buffer_char_index = 1;
@@ -265,7 +269,7 @@ int linearTosRGB(float value) {
     // assert(value >= 0.0f && value <= 1.0f);
     float v = fmaxf(0.0f, fminf(1.0f, value));
 
-    if constexpr (tk::blurhash::BlurHashCodec::SRGB) {
+    if constexpr (tk::blurhash::SRGB) {
         if (v <= 0.0031308) {
             return int(v * 12.92f * 255.0f + 0.5f);
         } else {
@@ -279,7 +283,7 @@ int linearTosRGB(float value) {
 float sRGBToLinear(int srgb) {
     assert(srgb <= 255);
     float v = (float)srgb / 255.0f;
-    if constexpr (tk::blurhash::BlurHashCodec::SRGB) {
+    if constexpr (tk::blurhash::SRGB) {
         if (v <= 0.04045f) {
             return v / 12.92f;
         } else {
@@ -353,7 +357,7 @@ char *encode83(int value, int length, char *destination) {
 
 tk::utilities::ImageBuffer composeBitmap(
     size_t width, size_t height, size_t n_components_x, size_t n_components_y, const factor_stack_matrix &factors) {
-    static constexpr bool sRGB = tk::blurhash::BlurHashCodec::SRGB;
+    static constexpr bool sRGB = tk::blurhash::SRGB;
 
     tk::utilities::ImageBuffer bitmap;
     bitmap.width = width;

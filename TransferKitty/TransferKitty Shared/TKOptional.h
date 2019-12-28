@@ -7,28 +7,28 @@ namespace tk {
 constexpr size_t DefaultAlignment = sizeof(void*) << 1;
 
 template <size_t Length, size_t Alignment = DefaultAlignment>
-struct TAlignedStorage {
+struct AlignedStorage {
     alignas(Alignment) uint8_t data[Length];
 };
 
 template <typename T>
-class TOptional {
+class Optional {
     static constexpr size_t Size = sizeof(T);
     static constexpr size_t Alignment = alignof(T);
     T* ptr = nullptr;
-    TAlignedStorage<Size, Alignment> storage = {};
+    AlignedStorage<Size, Alignment> storage = {};
 
 public:
-    TOptional() = default;
-    TOptional(const T& rhs) { initialize(rhs); }
-    TOptional(T&& rhs) { initialize(std::forward<T>(rhs)); }
-    ~TOptional() { deinitialize(); }
+    Optional() = default;
+    Optional(const T& rhs) { initialize(rhs); }
+    Optional(T&& rhs) { initialize(std::forward<T>(rhs)); }
+    ~Optional() { deinitialize(); }
 
-    TOptional(const TOptional& rhs) {
+    Optional(const Optional& rhs) {
         if (rhs.initialized()) { initialize(*rhs.get()); }
     }
 
-    TOptional(TOptional&& rhs) {
+    Optional(Optional&& rhs) {
         if (rhs.initialized()) {
             initialize(std::move(*rhs.get()));
             rhs.deinitialize();

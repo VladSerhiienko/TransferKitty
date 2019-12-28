@@ -6,12 +6,10 @@
 //  Copyright © 2019 vserhiienko. All rights reserved.
 //
 
-#import <Cocoa/Cocoa.h>
-#import <MetalKit/MetalKit.h>
+#import "TKMacOSViewController.h"
 
-@interface TKViewController : NSViewController
+@interface TKViewController : TKMacOSViewController
 @end
 
-@interface TKView : MTKView
-- (void)setViewController:(TKViewController*)viewController;
+@interface TKView : TKMacOSView
 @end

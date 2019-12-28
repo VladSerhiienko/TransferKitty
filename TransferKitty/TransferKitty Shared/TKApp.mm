@@ -5,59 +5,10 @@
 
 #include "AppInput.h"
 #include "TKBlurHash.h"
-#include "TKITexture.h"
+#include "TKDefaultUIState.h"
+#include "TKNuklearMetalTexture.h"
 #include "TKOptional.h"
 #include "TKUIStatePopulator.h"
-
-namespace tk {
-namespace {
-class Texture : public tk::ITexture {
-    TKNuklearRenderer *device = nil;
-    id<MTLTexture> texture = nil;
-    tk::TOptional<nk_image_t> handle = {};
-
-    void destruct() {
-        if (!device) { return; }
-        [device releaseRetainedObject:texture];
-        texture = nil;
-    }
-
-public:
-    Texture() = default;
-    ~Texture() { destruct(); }
-
-    void release() {
-        destruct();
-        handle.deinitialize();
-    }
-
-    void setPlatformTexture(TKNuklearRenderer *device, id<MTLTexture> platformTexture) {
-        if (!device) { return; }
-        if (!platformTexture) { return; }
-        texture = platformTexture;
-        handle.initialize(nk_image_ptr((__bridge void *)texture));
-    }
-
-    const void *opaquePlatformPtr() const override { return texture ? (__bridge void *)texture : nullptr; }
-    const void *opaqueImlementationPtr() const override { return handle.get(); }
-    size_t width() const override { return texture ? texture.width : 0; }
-    size_t height() const override { return texture ? texture.height : 0; }
-};
-}
-
-template <>
-id<MTLTexture> texturePlatformObject<id<MTLTexture>>(const ITexture *texture) {
-    const void *opaquePlatformPtr = texture ? texture->opaquePlatformPtr() : nullptr;
-    return opaquePlatformPtr ? (__bridge id<MTLTexture>)opaquePlatformPtr : nil;
-}
-
-template <>
-nk_image_t textureImplementationObject(const ITexture *texture) {
-    const void *opaqueImlementationPtr = texture ? texture->opaqueImlementationPtr() : nullptr;
-    if (opaqueImlementationPtr) { return *(nk_image_t *)(opaqueImlementationPtr); }
-    return nk_image_t{};
-}
-}
 
 @implementation TKAppInput
 - (void)setOpaqueImplementationPtr:(void *_Nonnull)opaqueImplementationPtr {
@@ -76,8 +27,8 @@ nk_image_t textureImplementationObject(const ITexture *texture) {
     NSArray *_btSharedItems;
     TKAppInput *_input;
     tk::UIStatePopulator populator;
-    tk::Texture iconImgTexture;
-    tk::Texture hashedImgTexture;
+    tk::NuklearMetalTexture iconImgTexture;
+    tk::NuklearMetalTexture hashedImgTexture;
 }
 
 - (void)dealloc {
@@ -114,8 +65,8 @@ nk_image_t textureImplementationObject(const ITexture *texture) {
     id<MTLTexture> iconTexture = [_renderer createTextureWithImage:&iconImg];
     id<MTLTexture> hashedTexture = [_renderer createTextureWithImage:&hashedImg];
 
-    iconImgTexture.setPlatformTexture(_renderer, iconTexture);
-    hashedImgTexture.setPlatformTexture(_renderer, hashedTexture);
+    iconImgTexture.setPlatformTexture(tk::boxPlatformObject(_renderer), tk::boxPlatformObject(iconTexture));
+    hashedImgTexture.setPlatformTexture(tk::boxPlatformObject(_renderer), tk::boxPlatformObject(hashedTexture));
 }
 
 - (void)startPeripheralWith:(nonnull NSArray *)sharedItems {
@@ -174,7 +125,7 @@ nk_image_t textureImplementationObject(const ITexture *texture) {
 }
 
 - (void)bluetoothCommunicator:(TKBluetoothCommunicator *)bluetoothCommunicator didLog:(NSString *)log {
-    DLOGF(@"%s", TK_FUNC_NAME);
+    // DLOGF(@"%s", TK_FUNC_NAME);
 }
 
 - (void)bluetoothCommunicator:(TKBluetoothCommunicator *)bluetoothCommunicator

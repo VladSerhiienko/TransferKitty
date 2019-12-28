@@ -5,6 +5,12 @@
 #include <type_traits>
 #include <utility>
 
+#include "TKDebug.h"
+
+#ifndef TK_FUNC_NAME
+#define TK_FUNC_NAME __PRETTY_FUNCTION__
+#endif
+
 #ifndef outptr
 #define outptr _Nonnull
 #endif
@@ -36,5 +42,18 @@ template <typename T>
 constexpr void swap(T &a, T &b) {
     std::swap(a, b);
 } // swap
+
+typedef void *BridgedHandle;
+#ifdef __OBJC__
+template <typename T>
+inline T bridgePlatformObject(BridgedHandle boxed) {
+    return (__bridge T)boxed;
+}
+template <typename T>
+inline BridgedHandle boxPlatformObject(T *platformObj) {
+    return (__bridge BridgedHandle)platformObj;
+}
+#endif
+
 } // namespace
 } // namespace tk
