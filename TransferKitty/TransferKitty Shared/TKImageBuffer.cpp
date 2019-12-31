@@ -2,10 +2,9 @@
 
 #ifdef __OBJC__
 #import <MetalKit/MetalKit.h>
-#endif // __OBJC__
 
 namespace tk::utilities {
-#ifdef __OBJC__
+#if !TARGET_OS_IOS
 ImageBuffer exposeToImageBuffer(NSImage* objcImage) {
     if (!objcImage) { return {}; }
 
@@ -28,7 +27,7 @@ ImageBuffer exposeToImageBuffer(NSImage* objcImage) {
     size_t height = CGBitmapContextGetHeight(context);
     uint32_t* pixel = (uint32_t*)CGBitmapContextGetData(context);
 
-    tk::utilities::ImageBuffer image;
+    ImageBuffer image;
     image.width = width;
     image.height = height;
     image.format = TK_FORMAT_R8G8B8A8_UNORM;
@@ -54,5 +53,39 @@ ImageBuffer exposeToImageBuffer(NSImage* objcImage) {
 
     return image;
 } // imageFromNSImage
+#else
+
+ImageBuffer exposeToImageBuffer(UIImage* objcImage) {
+    if (!objcImage) { return {}; }
+
+    if (objcImage.CGImage) {
+        CGImageRef cgImage = objcImage.CGImage;
+        // CGImagePixelFormatInfo pixelFormatInfo = CGImageGetPixelFormatInfo(cgImage);
+        CGDataProviderRef provider = CGImageGetDataProvider(objcImage.CGImage);
+        CFDataRef data = CGDataProviderCopyData(provider);
+        NSUInteger width = CGImageGetWidth(cgImage);
+        NSUInteger height = CGImageGetHeight(cgImage);
+        NSUInteger stride = CGImageGetBytesPerRow(cgImage);
+        NSUInteger bpp = CGImageGetBitsPerPixel(cgImage);
+        NSUInteger bpc = CGImageGetBitsPerComponent(cgImage);
+        const uint8_t* bytes = CFDataGetBytePtr(data);
+
+        NSLog(@"%lu, %lu, %lu, %lu, %lu, %p", width, height, stride, bpp, bpc, bytes);
+    }
+    // else if (objcImage.CIImage) {
+    //     CGDataProviderRef provider = CGImageGetDataProvider(objcImage.CGImage);
+    //     CFDataRef data = CGDataProviderCopyData(provider);
+    //     const uint8_t* bytes = CFDataGetBytePtr(data);
+    // } else {
+    //     CIImage* ciImage;
+    //     [ciImage pixelBuffer];
+    // }
+
+    ImageBuffer image = {};
+    return image;
+}
+
 #endif // __OBJC__
 } // namespace tk::utilities
+
+#endif // __OBJC__

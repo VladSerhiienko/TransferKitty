@@ -53,6 +53,9 @@
 }
 
 - (void)testBlurHash {
+    // UIImage *objcIconImg = [UIImage imageNamed:[[NSBundle
+    // mainBundle].infoDictionary[@"CFBundleIcons"][@"CFBundlePrimaryIcon"][@"CFBundleIconFiles"] firstObject]];
+
     NSImage *objcIconImg = [NSApp applicationIconImage];
     tk::utilities::ImageBuffer iconImg = tk::utilities::exposeToImageBuffer(objcIconImg);
 

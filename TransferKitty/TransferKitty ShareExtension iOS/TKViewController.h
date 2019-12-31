@@ -6,8 +6,13 @@
 //  Copyright © 2019 vserhiienko. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
+
+
+#import "TKiOSViewController.h"
 #import <Social/Social.h>
 
-@interface TKViewController : UIViewController
+@interface TKViewController : TKiOSViewController
+@end
+
+@interface TKView : TKiOSView
 @end

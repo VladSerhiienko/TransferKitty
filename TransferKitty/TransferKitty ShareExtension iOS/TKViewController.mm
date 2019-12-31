@@ -46,61 +46,8 @@
 //
 
 #import "TKViewController.h"
-#import "TKNuklearMetalViewDelegate.h"
 
-#import <Metal/Metal.h>
-#import <MetalKit/MetalKit.h>
-
-@interface TKViewController () <TKNuklearFrameDelegate>
-@end
-
-@implementation TKViewController {
-    MTKView *_view;
-    TKNuklearMetalViewDelegate *_renderer;
-}
-
-- (void)dealloc {
-    [_renderer deinit];
-}
-
-- (void)viewDidLoad {
-    [super viewDidLoad];
-
-    _view = (MTKView *)self.view;
-
-    _view.device = MTLCreateSystemDefaultDevice();
-    _view.backgroundColor = UIColor.blackColor;
-
-    if (!_view.device) {
-        NSLog(@"Metal is not supported on this device");
-        self.view = [[UIView alloc] initWithFrame:self.view.frame];
-        return;
-    }
-
-    _renderer = [[TKNuklearMetalViewDelegate alloc] initWithMetalKitView:_view];
-    [_renderer mtkView:_view drawableSizeWillChange:_view.bounds.size];
-
-    _view.delegate = _renderer;
-    _renderer.delegate = self;
-
-    [self printExtensionItems];
-}
-
-- (void)renderer:(nonnull TKNuklearMetalViewDelegate *)renderer
-    shouldUpdateFrame:(nonnull TKNuklearFrame *)currentFrame {
-    struct nk_context *ctx = currentFrame.contextPtr;
-
-    if (nk_begin(ctx,
-                 "Demo (iOS, Shared)",
-                 nk_rect(50, 100, 500, 800),
-                 NK_WINDOW_BORDER | NK_WINDOW_MOVABLE | NK_WINDOW_SCALABLE | NK_WINDOW_CLOSABLE |
-                     NK_WINDOW_MINIMIZABLE | NK_WINDOW_TITLE)) {
-        nk_layout_row_dynamic(ctx, 50, 2);
-        if (nk_button_label(ctx, "button")) { fprintf(stdout, "button pressed\n"); }
-    }
-
-    nk_end(ctx);
-}
+@implementation TKViewController
 
 // Do validation of contentText and/or NSExtensionContext attachments here
 - (BOOL)printExtensionItems {
@@ -189,4 +136,16 @@
     return @[];
 }
 
+- (void)viewDidLoad {
+    [super viewDidLoad];
+    [self prepareViewController];
+    [self printExtensionItems];
+}
+@end
+
+@implementation TKView
+- (instancetype)initWithFrame:(CGRect)frameRect device:(nullable id<MTLDevice>)device {
+    self = [super initWithFrame:frameRect device:device];
+    return self;
+}
 @end

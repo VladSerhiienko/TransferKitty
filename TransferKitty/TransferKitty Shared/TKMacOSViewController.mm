@@ -7,19 +7,13 @@
 //
 
 #import "TKMacOSViewController.h"
+#include "AppInput.h"
 #import "TKApp.h"
 #import "TKBluetoothCommunicator.h"
 #import "TKNuklearMetalViewDelegate.h"
 
-#include "AppInput.h"
-
 #import <Cocoa/Cocoa.h>
-
 #include <atomic>
-
-#define kRedChannel 0
-#define kGreenChannel 1
-#define kBlueChannel 2
 
 @interface TKMacOSViewController () <TKAppInputDelegate>
 @end
@@ -181,6 +175,10 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+}
+
+- (void)viewDidAppear {
+    [super viewDidAppear];
 }
 
 - (void)prepareViewController {

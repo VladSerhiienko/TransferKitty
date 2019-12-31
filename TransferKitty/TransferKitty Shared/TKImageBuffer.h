@@ -1,9 +1,14 @@
 #pragma once
 
 #include "TKFormat.h"
+#include "TKConfig.h"
 
 #ifdef __OBJC__
+#if !TARGET_OS_IOS
 #import <AppKit/NSImage.h>
+#else
+#import <UIKit/UIImage.h>
+#endif
 #endif
 
 #include <cstdint>
@@ -19,7 +24,11 @@ struct ImageBuffer {
 };
 
 #ifdef __OBJC__
+#if !TARGET_OS_IOS
 ImageBuffer exposeToImageBuffer(NSImage* objcImage);
+#else
+ImageBuffer exposeToImageBuffer(UIImage* objcImage);
 #endif
+#endif // __OBJC__
 
 }

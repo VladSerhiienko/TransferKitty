@@ -20,6 +20,15 @@
 	<string>1</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
+	<key>NSAppleMusicUsageDescription</key>
+	<string>Audio files transferring</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>Photo and video files transferring</string>
+	<key>UIBackgroundModes</key>
+	<array>
+		<string>fetch</string>
+		<string>remote-notification</string>
+	</array>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
 	<key>UIMainStoryboardFile</key>
@@ -27,7 +36,7 @@
 	<key>UIRequiredDeviceCapabilities</key>
 	<array>
 		<string>armv7</string>
-        <string>bluetooth-le</string>
+		<string>bluetooth-le</string>
 	</array>
 	<key>UIStatusBarHidden</key>
 	<true/>
@@ -44,17 +53,7 @@
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
-    
-    <key>UIBackgroundModes</key>
-    <array>
-        <string>fetch</string>
-        <string>remote-notification</string>
-    </array>
-    
-    <key>NSAppleMusicUsageDescription</key>
-    <string>Audio files transferring</string>
-    
-    <key>NSPhotoLibraryUsageDescription</key>
-    <string>Photo and video files transferring</string>
+    <key>NSBluetoothAlwaysUsageDescription</key>
+    <string>Our app uses bluetooth to find, connect and transfer data between different devices.</string>
 </dict>
 </plist>

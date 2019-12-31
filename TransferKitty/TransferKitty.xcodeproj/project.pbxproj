@@ -40,9 +40,7 @@
 		CAE7EC63235C520400C4D217 /* Metal.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CAE7EC58235C51E100C4D217 /* Metal.framework */; };
 		CAE7EC64235C520400C4D217 /* MetalKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CAE7EC59235C51E100C4D217 /* MetalKit.framework */; };
 		F919AF64236E1A8E00E9EF75 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CACC74A52354F93800FE3672 /* Main.storyboard */; };
-		F96388BB23B80C1600BA6F2A /* TKMacOSViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = F96388B423B80C1600BA6F2A /* TKMacOSViewController.mm */; };
 		F96388BC23B80C1600BA6F2A /* TKMacOSViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = F96388B423B80C1600BA6F2A /* TKMacOSViewController.mm */; };
-		F96388BD23B80C1600BA6F2A /* TKMacOSViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = F96388B423B80C1600BA6F2A /* TKMacOSViewController.mm */; };
 		F96388BE23B80C1600BA6F2A /* TKMacOSViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = F96388B423B80C1600BA6F2A /* TKMacOSViewController.mm */; };
 		F96388BF23B80C1600BA6F2A /* TKDebug.mm in Sources */ = {isa = PBXBuildFile; fileRef = F96388B623B80C1600BA6F2A /* TKDebug.mm */; };
 		F96388C023B80C1600BA6F2A /* TKDebug.mm in Sources */ = {isa = PBXBuildFile; fileRef = F96388B623B80C1600BA6F2A /* TKDebug.mm */; };
@@ -56,6 +54,12 @@
 		F96388C823B80C1600BA6F2A /* TKNuklearMetalTexture.mm in Sources */ = {isa = PBXBuildFile; fileRef = F96388BA23B80C1600BA6F2A /* TKNuklearMetalTexture.mm */; };
 		F96388C923B80C1600BA6F2A /* TKNuklearMetalTexture.mm in Sources */ = {isa = PBXBuildFile; fileRef = F96388BA23B80C1600BA6F2A /* TKNuklearMetalTexture.mm */; };
 		F96388CA23B80C1600BA6F2A /* TKNuklearMetalTexture.mm in Sources */ = {isa = PBXBuildFile; fileRef = F96388BA23B80C1600BA6F2A /* TKNuklearMetalTexture.mm */; };
+		F96388CC23BA656900BA6F2A /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F96388CB23BA656800BA6F2A /* UIKit.framework */; };
+		F96388CD23BA658300BA6F2A /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F96388CB23BA656800BA6F2A /* UIKit.framework */; };
+		F96388CF23BA686B00BA6F2A /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F96388CE23BA686B00BA6F2A /* CoreGraphics.framework */; };
+		F96388D023BA687200BA6F2A /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F96388CE23BA686B00BA6F2A /* CoreGraphics.framework */; };
+		F96388D323BA6B4900BA6F2A /* TKiOSViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = F96388D223BA6B4900BA6F2A /* TKiOSViewController.mm */; };
+		F96388D523BA6B4900BA6F2A /* TKiOSViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = F96388D223BA6B4900BA6F2A /* TKiOSViewController.mm */; };
 		F998F726236E312E0025564F /* icon.icns in Resources */ = {isa = PBXBuildFile; fileRef = F998F725236E312E0025564F /* icon.icns */; };
 		F998F729236E312E0025564F /* TKViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = F998F728236E312E0025564F /* TKViewController.mm */; };
 		F998F72C236E312E0025564F /* Main.xib in Resources */ = {isa = PBXBuildFile; fileRef = F998F72A236E312E0025564F /* Main.xib */; };
@@ -179,6 +183,10 @@
 		F96388B823B80C1600BA6F2A /* TKNuklearMetalTexture.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TKNuklearMetalTexture.h; sourceTree = "<group>"; };
 		F96388B923B80C1600BA6F2A /* TKMacOSViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TKMacOSViewController.h; sourceTree = "<group>"; };
 		F96388BA23B80C1600BA6F2A /* TKNuklearMetalTexture.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = TKNuklearMetalTexture.mm; sourceTree = "<group>"; };
+		F96388CB23BA656800BA6F2A /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS13.1.sdk/System/Library/Frameworks/UIKit.framework; sourceTree = DEVELOPER_DIR; };
+		F96388CE23BA686B00BA6F2A /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS13.1.sdk/System/Library/Frameworks/CoreGraphics.framework; sourceTree = DEVELOPER_DIR; };
+		F96388D123BA6B4900BA6F2A /* TKiOSViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TKiOSViewController.h; sourceTree = "<group>"; };
+		F96388D223BA6B4900BA6F2A /* TKiOSViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = TKiOSViewController.mm; sourceTree = "<group>"; };
 		F998F723236E312E0025564F /* TransferKitty ShareExtension macOS.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "TransferKitty ShareExtension macOS.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
 		F998F725236E312E0025564F /* icon.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = icon.icns; sourceTree = "<group>"; };
 		F998F727236E312E0025564F /* TKViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TKViewController.h; sourceTree = "<group>"; };
@@ -209,7 +217,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				CAE7EC5A235C51E100C4D217 /* Metal.framework in Frameworks */,
+				F96388CC23BA656900BA6F2A /* UIKit.framework in Frameworks */,
 				CAE7EC5B235C51E100C4D217 /* MetalKit.framework in Frameworks */,
+				F96388D023BA687200BA6F2A /* CoreGraphics.framework in Frameworks */,
 				CAE7EC57235C51D800C4D217 /* CoreBluetooth.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -229,7 +239,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				CAE7EC63235C520400C4D217 /* Metal.framework in Frameworks */,
+				F96388CD23BA658300BA6F2A /* UIKit.framework in Frameworks */,
 				CAE7EC64235C520400C4D217 /* MetalKit.framework in Frameworks */,
+				F96388CF23BA686B00BA6F2A /* CoreGraphics.framework in Frameworks */,
 				CAE7EC62235C51FE00C4D217 /* CoreBluetooth.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -271,8 +283,12 @@
 				F96388B523B80C1600BA6F2A /* TKDefaultUIState.h */,
 				F96388B223B80C1600BA6F2A /* TKFileSaver.h */,
 				F96388B723B80C1600BA6F2A /* TKFileSaver.mm */,
+				F998F78C238736960025564F /* TKApp.h */,
+				F998F78B238736960025564F /* TKApp.mm */,
 				F96388B923B80C1600BA6F2A /* TKMacOSViewController.h */,
 				F96388B423B80C1600BA6F2A /* TKMacOSViewController.mm */,
+				F96388D123BA6B4900BA6F2A /* TKiOSViewController.h */,
+				F96388D223BA6B4900BA6F2A /* TKiOSViewController.mm */,
 				F96388B823B80C1600BA6F2A /* TKNuklearMetalTexture.h */,
 				F96388BA23B80C1600BA6F2A /* TKNuklearMetalTexture.mm */,
 				F95CCF9F23AFEAF9004DEBFB /* TKFormat.h */,
@@ -289,8 +305,6 @@
 				CAE7EC46235C4F5A00C4D217 /* AppInput.h */,
 				CAE7EC4B235C4F5A00C4D217 /* nuklear.h */,
 				CAE7EC44235C4F5A00C4D217 /* Nuklear.metal */,
-				F998F78C238736960025564F /* TKApp.h */,
-				F998F78B238736960025564F /* TKApp.mm */,
 				CAE7EC47235C4F5A00C4D217 /* TKBluetoothCommunicator.h */,
 				CAE7EC45235C4F5A00C4D217 /* TKBluetoothCommunicator.mm */,
 				F998F7842385E6450025564F /* TKIUIState.h */,
@@ -357,6 +371,8 @@
 		CAE7EC55235C51D800C4D217 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				F96388CE23BA686B00BA6F2A /* CoreGraphics.framework */,
+				F96388CB23BA656800BA6F2A /* UIKit.framework */,
 				F998F740236E3DD60025564F /* QuartzCore.framework */,
 				F919AF5E236E16BA00E9EF75 /* AppKit.framework */,
 				CAE7EC5F235C51F400C4D217 /* Metal.framework */,
@@ -548,9 +564,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				F96388BF23B80C1600BA6F2A /* TKDebug.mm in Sources */,
+				F96388D323BA6B4900BA6F2A /* TKiOSViewController.mm in Sources */,
 				F998F78D238736960025564F /* TKApp.mm in Sources */,
 				F96388C323B80C1600BA6F2A /* TKFileSaver.mm in Sources */,
-				F96388BB23B80C1600BA6F2A /* TKMacOSViewController.mm in Sources */,
 				CACC748F2354F93800FE3672 /* TKViewController.mm in Sources */,
 				F96388C723B80C1600BA6F2A /* TKNuklearMetalTexture.mm in Sources */,
 				F998F7862385EA500025564F /* TKUIStatePopulator.cpp in Sources */,
@@ -592,12 +608,12 @@
 				F96388C123B80C1600BA6F2A /* TKDebug.mm in Sources */,
 				F998F79623A70CF90025564F /* TKBlurHash.cpp in Sources */,
 				CAE7EC54235C4F5A00C4D217 /* TKNuklearMetalViewDelegate.mm in Sources */,
+				F96388D523BA6B4900BA6F2A /* TKiOSViewController.mm in Sources */,
 				CAE7EC4E235C4F5A00C4D217 /* Nuklear.metal in Sources */,
 				F998F78F238736960025564F /* TKApp.mm in Sources */,
 				CAE7EC51235C4F5A00C4D217 /* TKBluetoothCommunicator.mm in Sources */,
 				F998F7882385EA500025564F /* TKUIStatePopulator.cpp in Sources */,
 				F998F79F23AD92B40025564F /* TKImageBuffer.cpp in Sources */,
-				F96388BD23B80C1600BA6F2A /* TKMacOSViewController.mm in Sources */,
 				F96388C923B80C1600BA6F2A /* TKNuklearMetalTexture.mm in Sources */,
 				CACC74C12354F9AB00FE3672 /* TKViewController.mm in Sources */,
 				F96388C523B80C1600BA6F2A /* TKFileSaver.mm in Sources */,

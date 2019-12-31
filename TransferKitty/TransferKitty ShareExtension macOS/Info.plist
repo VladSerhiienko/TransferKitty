@@ -40,5 +40,7 @@
 	</dict>
 	<key>NSHumanReadableCopyright</key>
 	<string>Copyright © 2019 vserhiienko. All rights reserved.</string>
+    <key>NSBluetoothAlwaysUsageDescription</key>
+    <string>Our app uses bluetooth to find, connect and transfer data between different devices.</string>
 </dict>
 </plist>

@@ -1,7 +1,7 @@
 #pragma once
 
 #ifndef TK_DEBUG
-#ifdef DEBUG
+#if defined(DEBUG) || defined(_DEBUG)
 #define TK_DEBUG 1
 #else // DEBUG
 #define TK_DEBUG 0
@@ -10,6 +10,7 @@
 
 #ifdef __OBJC__
 #import <Foundation/Foundation.h>
+#import "TargetConditionals.h"
 
 @protocol TKDebugLogger <NSObject>
 - (void)debugObject:(NSObject *)debugObject didLog:(NSString *)log;
@@ -27,11 +28,18 @@
 // clang-format on
 @end
 
-#define DCHECKF(condition, format, ...) \
-    [TKDebug dcheckf:(condition) file:__FILE__ line:__LINE__ tag:__PRETTY_FUNCTION__ msg:format, __VA_ARGS__]
-#define DCHECK(condition) \
-    [TKDebug dcheck:(condition) file:__FILE__ line:__LINE__ tag:__PRETTY_FUNCTION__ msg:#condition]
-#define DLOGF(format, ...) [TKDebug logf:format, __VA_ARGS__]
-#define DLOG(log) [TKDebug log:log]
+// clang-format off
+#define DCHECKF(condition, format, ...) [TKDebug dcheckf:(condition) file:__FILE__ line:__LINE__ tag:__PRETTY_FUNCTION__ msg:format, __VA_ARGS__]
+#define DCHECK(condition)               [TKDebug dcheck:(condition) file:__FILE__ line:__LINE__ tag:__PRETTY_FUNCTION__ msg:#condition]
+#define DLOGF(format, ...)              [TKDebug logf:format, __VA_ARGS__]
+#define DLOG(log)                       [TKDebug log:log]
+// clang-format on
+
+#else
+
+#define DCHECKF(condition, format, ...)
+#define DCHECK(condition)
+#define DLOGF(format, ...)
+#define DLOG(log)
 
 #endif // __OBJC__
