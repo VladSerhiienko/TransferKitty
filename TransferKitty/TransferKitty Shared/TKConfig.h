@@ -1,7 +1,9 @@
 #pragma once
 
+#include <algorithm>
 #include <cassert>
 #include <cstdint>
+#include <exception>
 #include <type_traits>
 #include <utility>
 
@@ -18,6 +20,10 @@
 #define outptr_opt _Nullable
 #endif
 
+#ifndef TK_ASSERT
+#define TK_ASSERT(...) assert(__VA_ARGS__)
+#endif
+
 #ifndef TK_STATIC_ASSERT
 #ifndef static_assert
 #include <AssertMacros.h>
@@ -30,6 +36,19 @@
 #endif
 
 #define TK_REDUNDANT(...) __VA_ARGS__
+
+#ifndef likely
+#define likely(x) (x)
+#endif
+
+#ifndef unlikely
+#define unlikely(x) (x)
+#endif
+
+#ifndef TK_PREDICT_TRUE
+#define TK_PREDICT_TRUE(x) likely(x)
+#define TK_PREDICT_FALSE(x) unlikely(x)
+#endif
 
 namespace tk {
 namespace {
@@ -56,4 +75,30 @@ inline BridgedHandle boxPlatformObject(T *platformObj) {
 #endif
 
 } // namespace
+
+namespace details {
+template <typename T = std::exception, typename... Args>
+[[noreturn]] constexpr void raiseError(Args &&... args) {
+    assert(false);
+    throw T(std::forward<Args...>(args...));
+}
+
+template <typename T = std::exception, typename... Args>
+inline constexpr void raiseErrorIf(const bool shouldRaiseError, Args &&... args) {
+    if (TK_PREDICT_FALSE(shouldRaiseError)) { raiseError<T, Args...>(std::forward<Args...>(args...)); }
+}
+} // namespace details
+
+template <typename T = std::exception, typename V, typename... Args>
+inline constexpr V &&passthroughOrRaiseErrorIf(V &&value, const bool shouldRaiseError, Args &&... args) {
+    details::raiseErrorIf<T, Args...>(TK_PREDICT_FALSE(shouldRaiseError), std::forward<Args...>(args...));
+    return std::forward<V>(value);
+}
+
+template <typename T = std::exception, typename V, typename... Args>
+inline constexpr V &&passthroughOrRaiseError(V &&value, Args &&... args) {
+    details::raiseError<T, Args...>(std::forward<Args...>(args...));
+    return std::forward<V>(value);
+}
+
 } // namespace tk

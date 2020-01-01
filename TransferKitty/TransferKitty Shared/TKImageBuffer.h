@@ -1,7 +1,7 @@
 #pragma once
 
-#include "TKFormat.h"
 #include "TKConfig.h"
+#include "TKFormat.h"
 
 #ifdef __OBJC__
 #if !TARGET_OS_IOS
@@ -22,6 +22,8 @@ struct ImageBuffer {
     size_t stride = 0;
     std::vector<uint8_t> buffer = {};
 };
+
+bool imageBufferEmpty(const ImageBuffer& imgBuffer);
 
 #ifdef __OBJC__
 #if !TARGET_OS_IOS

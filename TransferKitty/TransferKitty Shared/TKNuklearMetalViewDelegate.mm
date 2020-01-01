@@ -284,7 +284,7 @@ const size_t getFontByteLength(void);
     for (NSUInteger i = 0; i < FrameCount; ++i) {
         TKNuklearFrame *currentFrame = _frame[i];
         if (i == 0) {
-            nuklearSetTheme(currentFrame.contextPtr, TKNuklearColorBuiltinThemeBlue);
+            nuklearSetTheme(currentFrame.contextPtr, TKNuklearColorBuiltinThemeRed);
             if (_nuklear._fontAtlas.default_font) {
                 nk_style_set_font(currentFrame.contextPtr, &_nuklear._fontAtlas.default_font->handle);
             }

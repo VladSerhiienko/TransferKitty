@@ -53,10 +53,14 @@
 }
 
 - (void)testBlurHash {
-    // UIImage *objcIconImg = [UIImage imageNamed:[[NSBundle
-    // mainBundle].infoDictionary[@"CFBundleIcons"][@"CFBundlePrimaryIcon"][@"CFBundleIconFiles"] firstObject]];
-
+#if !TARGET_OS_IOS
     NSImage *objcIconImg = [NSApp applicationIconImage];
+#else
+    UIImage *objcIconImg = [UIImage
+        imageNamed:[[NSBundle mainBundle].infoDictionary[@"CFBundleIcons"][@"CFBundlePrimaryIcon"][@"CFBundleIconFiles"]
+                       firstObject]];
+#endif
+
     tk::utilities::ImageBuffer iconImg = tk::utilities::exposeToImageBuffer(objcIconImg);
 
     tk::blurhash::BlurHash hash = tk::blurhash::BlurHashCodec().encode(8, 8, iconImg);
@@ -100,9 +104,14 @@
 - (void)renderer:(nonnull TKNuklearRenderer *)renderer shouldUpdateFrame:(nonnull TKNuklearFrame *)frame {
     [self handleInput:frame];
 
+    uint32_t debugOffsetX = 0;
+    uint32_t debugOffsetY = 50;
+
     CGRect viewport = [frame viewport];
-    tk::UIStateViewport bounds = {
-        25, 25, static_cast<uint32_t>(viewport.size.width - 50), static_cast<uint32_t>(viewport.size.height - 50)};
+    tk::UIStateViewport bounds = {debugOffsetX,
+                                  debugOffsetY,
+                                  static_cast<uint32_t>(viewport.size.width - (debugOffsetX << 1)),
+                                  static_cast<uint32_t>(viewport.size.height - (debugOffsetY << 1))};
 
     populator.populate(nullptr, hashedImgTexture, bounds, frame.contextPtr);
 }

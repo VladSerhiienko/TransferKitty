@@ -89,6 +89,8 @@
 		F998F79E23AD92B40025564F /* TKImageBuffer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F998F79C23AD92B40025564F /* TKImageBuffer.cpp */; };
 		F998F79F23AD92B40025564F /* TKImageBuffer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F998F79C23AD92B40025564F /* TKImageBuffer.cpp */; };
 		F998F7A023AD92B40025564F /* TKImageBuffer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F998F79C23AD92B40025564F /* TKImageBuffer.cpp */; };
+		F9E2669123BD13A600745F52 /* CoreVideo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F9E2669023BD13A600745F52 /* CoreVideo.framework */; };
+		F9E2669223BD13AD00745F52 /* CoreVideo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F9E2669023BD13A600745F52 /* CoreVideo.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -209,6 +211,8 @@
 		F998F79A23A84B5D0025564F /* stb_image.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = stb_image.h; sourceTree = "<group>"; };
 		F998F79B23AAD8370025564F /* TKImageBuffer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TKImageBuffer.h; sourceTree = "<group>"; };
 		F998F79C23AD92B40025564F /* TKImageBuffer.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; fileEncoding = 4; path = TKImageBuffer.cpp; sourceTree = "<group>"; };
+		F9E2668F23BCF94400745F52 /* TKSpan.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TKSpan.h; sourceTree = "<group>"; };
+		F9E2669023BD13A600745F52 /* CoreVideo.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreVideo.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS13.1.sdk/System/Library/Frameworks/CoreVideo.framework; sourceTree = DEVELOPER_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -221,6 +225,7 @@
 				CAE7EC5B235C51E100C4D217 /* MetalKit.framework in Frameworks */,
 				F96388D023BA687200BA6F2A /* CoreGraphics.framework in Frameworks */,
 				CAE7EC57235C51D800C4D217 /* CoreBluetooth.framework in Frameworks */,
+				F9E2669123BD13A600745F52 /* CoreVideo.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -243,6 +248,7 @@
 				CAE7EC64235C520400C4D217 /* MetalKit.framework in Frameworks */,
 				F96388CF23BA686B00BA6F2A /* CoreGraphics.framework in Frameworks */,
 				CAE7EC62235C51FE00C4D217 /* CoreBluetooth.framework in Frameworks */,
+				F9E2669223BD13AD00745F52 /* CoreVideo.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -278,6 +284,8 @@
 			isa = PBXGroup;
 			children = (
 				CACC74822354F93800FE3672 /* Assets.xcassets */,
+				F998F79123873F890025564F /* TKConfig.h */,
+				F9E2668F23BCF94400745F52 /* TKSpan.h */,
 				F96388B323B80C1600BA6F2A /* TKDebug.h */,
 				F96388B623B80C1600BA6F2A /* TKDebug.mm */,
 				F96388B523B80C1600BA6F2A /* TKDefaultUIState.h */,
@@ -301,7 +309,6 @@
 				F998F79A23A84B5D0025564F /* stb_image.h */,
 				F998F79323A70CF90025564F /* TKBlurHash.cpp */,
 				F998F79223A70CF90025564F /* TKBlurHash.h */,
-				F998F79123873F890025564F /* TKConfig.h */,
 				CAE7EC46235C4F5A00C4D217 /* AppInput.h */,
 				CAE7EC4B235C4F5A00C4D217 /* nuklear.h */,
 				CAE7EC44235C4F5A00C4D217 /* Nuklear.metal */,
@@ -371,6 +378,7 @@
 		CAE7EC55235C51D800C4D217 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				F9E2669023BD13A600745F52 /* CoreVideo.framework */,
 				F96388CE23BA686B00BA6F2A /* CoreGraphics.framework */,
 				F96388CB23BA656800BA6F2A /* UIKit.framework */,
 				F998F740236E3DD60025564F /* QuartzCore.framework */,

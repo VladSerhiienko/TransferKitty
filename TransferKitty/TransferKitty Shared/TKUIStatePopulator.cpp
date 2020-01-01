@@ -62,6 +62,7 @@ bool UIStatePopulator::populate(const tk::IUIState *state,
     assert(nk && nk->style.font);
     const float fontHeight = nk->style.font->height;
     const float padding = 4;
+    const float imageVerticalPadding = 0.05;
     const float itemHeight = fontHeight * 5 + padding * 5.5;
     const float imageWidth = viewport.width * b; // - paddings/margins
 
@@ -69,6 +70,8 @@ bool UIStatePopulator::populate(const tk::IUIState *state,
     nk_vec2_t imageSize = {float(texture.width()), float(texture.height())};
     nk_rect_t imgBounds = calculateImageFittingRect(spaceSize, imageSize);
     nk_rect_t viewportBounds = nk_rect(viewport.x, viewport.y, viewport.width, viewport.height);
+    
+    imgBounds.h -= imageVerticalPadding;
 
     if (nk_begin(nk, windowName.data(), viewportBounds, NK_WINDOW_NO_SCROLLBAR)) {
         nk_layout_row_begin(nk, NK_DYNAMIC, itemHeight, 2);
