@@ -511,6 +511,78 @@
 		F9E2696F23C9313400745F52 /* ftobjs.c in Sources */ = {isa = PBXBuildFile; fileRef = F9E2696D23C9313400745F52 /* ftobjs.c */; };
 		F9E2697023C9313400745F52 /* ftobjs.c in Sources */ = {isa = PBXBuildFile; fileRef = F9E2696D23C9313400745F52 /* ftobjs.c */; };
 		F9E2697123C9313400745F52 /* ftobjs.c in Sources */ = {isa = PBXBuildFile; fileRef = F9E2696D23C9313400745F52 /* ftobjs.c */; };
+		F9E2698623C9C3A600745F52 /* fribidi-char-sets-utf8.c in Sources */ = {isa = PBXBuildFile; fileRef = F9E2697323C9C3A500745F52 /* fribidi-char-sets-utf8.c */; };
+		F9E2698723C9C3A600745F52 /* fribidi-char-sets-utf8.c in Sources */ = {isa = PBXBuildFile; fileRef = F9E2697323C9C3A500745F52 /* fribidi-char-sets-utf8.c */; };
+		F9E2698823C9C3A600745F52 /* fribidi-char-sets-utf8.c in Sources */ = {isa = PBXBuildFile; fileRef = F9E2697323C9C3A500745F52 /* fribidi-char-sets-utf8.c */; };
+		F9E2698923C9C3A600745F52 /* fribidi-char-sets-utf8.c in Sources */ = {isa = PBXBuildFile; fileRef = F9E2697323C9C3A500745F52 /* fribidi-char-sets-utf8.c */; };
+		F9E2698A23C9C3A600745F52 /* fribidi-char-sets-cap-rtl.c in Sources */ = {isa = PBXBuildFile; fileRef = F9E2697423C9C3A500745F52 /* fribidi-char-sets-cap-rtl.c */; };
+		F9E2698B23C9C3A600745F52 /* fribidi-char-sets-cap-rtl.c in Sources */ = {isa = PBXBuildFile; fileRef = F9E2697423C9C3A500745F52 /* fribidi-char-sets-cap-rtl.c */; };
+		F9E2698C23C9C3A600745F52 /* fribidi-char-sets-cap-rtl.c in Sources */ = {isa = PBXBuildFile; fileRef = F9E2697423C9C3A500745F52 /* fribidi-char-sets-cap-rtl.c */; };
+		F9E2698D23C9C3A600745F52 /* fribidi-char-sets-cap-rtl.c in Sources */ = {isa = PBXBuildFile; fileRef = F9E2697423C9C3A500745F52 /* fribidi-char-sets-cap-rtl.c */; };
+		F9E2698E23C9C3A600745F52 /* fribidi-joining-types.c in Sources */ = {isa = PBXBuildFile; fileRef = F9E2697523C9C3A500745F52 /* fribidi-joining-types.c */; };
+		F9E2698F23C9C3A600745F52 /* fribidi-joining-types.c in Sources */ = {isa = PBXBuildFile; fileRef = F9E2697523C9C3A500745F52 /* fribidi-joining-types.c */; };
+		F9E2699023C9C3A600745F52 /* fribidi-joining-types.c in Sources */ = {isa = PBXBuildFile; fileRef = F9E2697523C9C3A500745F52 /* fribidi-joining-types.c */; };
+		F9E2699123C9C3A600745F52 /* fribidi-joining-types.c in Sources */ = {isa = PBXBuildFile; fileRef = F9E2697523C9C3A500745F52 /* fribidi-joining-types.c */; };
+		F9E2699223C9C3A600745F52 /* fribidi-char-sets-iso8859-8.c in Sources */ = {isa = PBXBuildFile; fileRef = F9E2697623C9C3A500745F52 /* fribidi-char-sets-iso8859-8.c */; };
+		F9E2699323C9C3A600745F52 /* fribidi-char-sets-iso8859-8.c in Sources */ = {isa = PBXBuildFile; fileRef = F9E2697623C9C3A500745F52 /* fribidi-char-sets-iso8859-8.c */; };
+		F9E2699423C9C3A600745F52 /* fribidi-char-sets-iso8859-8.c in Sources */ = {isa = PBXBuildFile; fileRef = F9E2697623C9C3A500745F52 /* fribidi-char-sets-iso8859-8.c */; };
+		F9E2699523C9C3A600745F52 /* fribidi-char-sets-iso8859-8.c in Sources */ = {isa = PBXBuildFile; fileRef = F9E2697623C9C3A500745F52 /* fribidi-char-sets-iso8859-8.c */; };
+		F9E2699623C9C3A600745F52 /* fribidi-brackets.c in Sources */ = {isa = PBXBuildFile; fileRef = F9E2697723C9C3A500745F52 /* fribidi-brackets.c */; };
+		F9E2699723C9C3A600745F52 /* fribidi-brackets.c in Sources */ = {isa = PBXBuildFile; fileRef = F9E2697723C9C3A500745F52 /* fribidi-brackets.c */; };
+		F9E2699823C9C3A600745F52 /* fribidi-brackets.c in Sources */ = {isa = PBXBuildFile; fileRef = F9E2697723C9C3A500745F52 /* fribidi-brackets.c */; };
+		F9E2699923C9C3A600745F52 /* fribidi-brackets.c in Sources */ = {isa = PBXBuildFile; fileRef = F9E2697723C9C3A500745F52 /* fribidi-brackets.c */; };
+		F9E2699A23C9C3A600745F52 /* fribidi-joining.c in Sources */ = {isa = PBXBuildFile; fileRef = F9E2697823C9C3A500745F52 /* fribidi-joining.c */; };
+		F9E2699B23C9C3A600745F52 /* fribidi-joining.c in Sources */ = {isa = PBXBuildFile; fileRef = F9E2697823C9C3A500745F52 /* fribidi-joining.c */; };
+		F9E2699C23C9C3A600745F52 /* fribidi-joining.c in Sources */ = {isa = PBXBuildFile; fileRef = F9E2697823C9C3A500745F52 /* fribidi-joining.c */; };
+		F9E2699D23C9C3A600745F52 /* fribidi-joining.c in Sources */ = {isa = PBXBuildFile; fileRef = F9E2697823C9C3A500745F52 /* fribidi-joining.c */; };
+		F9E2699E23C9C3A600745F52 /* fribidi-arabic.c in Sources */ = {isa = PBXBuildFile; fileRef = F9E2697923C9C3A500745F52 /* fribidi-arabic.c */; };
+		F9E2699F23C9C3A600745F52 /* fribidi-arabic.c in Sources */ = {isa = PBXBuildFile; fileRef = F9E2697923C9C3A500745F52 /* fribidi-arabic.c */; };
+		F9E269A023C9C3A600745F52 /* fribidi-arabic.c in Sources */ = {isa = PBXBuildFile; fileRef = F9E2697923C9C3A500745F52 /* fribidi-arabic.c */; };
+		F9E269A123C9C3A600745F52 /* fribidi-arabic.c in Sources */ = {isa = PBXBuildFile; fileRef = F9E2697923C9C3A500745F52 /* fribidi-arabic.c */; };
+		F9E269A623C9C3A600745F52 /* fribidi-shape.c in Sources */ = {isa = PBXBuildFile; fileRef = F9E2697B23C9C3A500745F52 /* fribidi-shape.c */; };
+		F9E269A723C9C3A600745F52 /* fribidi-shape.c in Sources */ = {isa = PBXBuildFile; fileRef = F9E2697B23C9C3A500745F52 /* fribidi-shape.c */; };
+		F9E269A823C9C3A600745F52 /* fribidi-shape.c in Sources */ = {isa = PBXBuildFile; fileRef = F9E2697B23C9C3A500745F52 /* fribidi-shape.c */; };
+		F9E269A923C9C3A600745F52 /* fribidi-shape.c in Sources */ = {isa = PBXBuildFile; fileRef = F9E2697B23C9C3A500745F52 /* fribidi-shape.c */; };
+		F9E269AA23C9C3A600745F52 /* fribidi-bidi-types.c in Sources */ = {isa = PBXBuildFile; fileRef = F9E2697C23C9C3A500745F52 /* fribidi-bidi-types.c */; };
+		F9E269AB23C9C3A600745F52 /* fribidi-bidi-types.c in Sources */ = {isa = PBXBuildFile; fileRef = F9E2697C23C9C3A500745F52 /* fribidi-bidi-types.c */; };
+		F9E269AC23C9C3A600745F52 /* fribidi-bidi-types.c in Sources */ = {isa = PBXBuildFile; fileRef = F9E2697C23C9C3A500745F52 /* fribidi-bidi-types.c */; };
+		F9E269AD23C9C3A600745F52 /* fribidi-bidi-types.c in Sources */ = {isa = PBXBuildFile; fileRef = F9E2697C23C9C3A500745F52 /* fribidi-bidi-types.c */; };
+		F9E269AE23C9C3A600745F52 /* fribidi-deprecated.c in Sources */ = {isa = PBXBuildFile; fileRef = F9E2697D23C9C3A500745F52 /* fribidi-deprecated.c */; };
+		F9E269AF23C9C3A600745F52 /* fribidi-deprecated.c in Sources */ = {isa = PBXBuildFile; fileRef = F9E2697D23C9C3A500745F52 /* fribidi-deprecated.c */; };
+		F9E269B023C9C3A600745F52 /* fribidi-deprecated.c in Sources */ = {isa = PBXBuildFile; fileRef = F9E2697D23C9C3A500745F52 /* fribidi-deprecated.c */; };
+		F9E269B123C9C3A600745F52 /* fribidi-deprecated.c in Sources */ = {isa = PBXBuildFile; fileRef = F9E2697D23C9C3A500745F52 /* fribidi-deprecated.c */; };
+		F9E269B223C9C3A600745F52 /* fribidi-mirroring.c in Sources */ = {isa = PBXBuildFile; fileRef = F9E2697E23C9C3A500745F52 /* fribidi-mirroring.c */; };
+		F9E269B323C9C3A600745F52 /* fribidi-mirroring.c in Sources */ = {isa = PBXBuildFile; fileRef = F9E2697E23C9C3A500745F52 /* fribidi-mirroring.c */; };
+		F9E269B423C9C3A600745F52 /* fribidi-mirroring.c in Sources */ = {isa = PBXBuildFile; fileRef = F9E2697E23C9C3A500745F52 /* fribidi-mirroring.c */; };
+		F9E269B523C9C3A600745F52 /* fribidi-mirroring.c in Sources */ = {isa = PBXBuildFile; fileRef = F9E2697E23C9C3A500745F52 /* fribidi-mirroring.c */; };
+		F9E269B623C9C3A600745F52 /* fribidi-run.c in Sources */ = {isa = PBXBuildFile; fileRef = F9E2697F23C9C3A500745F52 /* fribidi-run.c */; };
+		F9E269B723C9C3A600745F52 /* fribidi-run.c in Sources */ = {isa = PBXBuildFile; fileRef = F9E2697F23C9C3A500745F52 /* fribidi-run.c */; };
+		F9E269B823C9C3A600745F52 /* fribidi-run.c in Sources */ = {isa = PBXBuildFile; fileRef = F9E2697F23C9C3A500745F52 /* fribidi-run.c */; };
+		F9E269B923C9C3A600745F52 /* fribidi-run.c in Sources */ = {isa = PBXBuildFile; fileRef = F9E2697F23C9C3A500745F52 /* fribidi-run.c */; };
+		F9E269BA23C9C3A600745F52 /* fribidi-bidi.c in Sources */ = {isa = PBXBuildFile; fileRef = F9E2698023C9C3A500745F52 /* fribidi-bidi.c */; };
+		F9E269BB23C9C3A600745F52 /* fribidi-bidi.c in Sources */ = {isa = PBXBuildFile; fileRef = F9E2698023C9C3A500745F52 /* fribidi-bidi.c */; };
+		F9E269BC23C9C3A600745F52 /* fribidi-bidi.c in Sources */ = {isa = PBXBuildFile; fileRef = F9E2698023C9C3A500745F52 /* fribidi-bidi.c */; };
+		F9E269BD23C9C3A600745F52 /* fribidi-bidi.c in Sources */ = {isa = PBXBuildFile; fileRef = F9E2698023C9C3A500745F52 /* fribidi-bidi.c */; };
+		F9E269BE23C9C3A600745F52 /* fribidi-char-sets-iso8859-6.c in Sources */ = {isa = PBXBuildFile; fileRef = F9E2698123C9C3A500745F52 /* fribidi-char-sets-iso8859-6.c */; };
+		F9E269BF23C9C3A600745F52 /* fribidi-char-sets-iso8859-6.c in Sources */ = {isa = PBXBuildFile; fileRef = F9E2698123C9C3A500745F52 /* fribidi-char-sets-iso8859-6.c */; };
+		F9E269C023C9C3A600745F52 /* fribidi-char-sets-iso8859-6.c in Sources */ = {isa = PBXBuildFile; fileRef = F9E2698123C9C3A500745F52 /* fribidi-char-sets-iso8859-6.c */; };
+		F9E269C123C9C3A600745F52 /* fribidi-char-sets-iso8859-6.c in Sources */ = {isa = PBXBuildFile; fileRef = F9E2698123C9C3A500745F52 /* fribidi-char-sets-iso8859-6.c */; };
+		F9E269C223C9C3A600745F52 /* fribidi-char-sets-cp1255.c in Sources */ = {isa = PBXBuildFile; fileRef = F9E2698223C9C3A500745F52 /* fribidi-char-sets-cp1255.c */; };
+		F9E269C323C9C3A600745F52 /* fribidi-char-sets-cp1255.c in Sources */ = {isa = PBXBuildFile; fileRef = F9E2698223C9C3A500745F52 /* fribidi-char-sets-cp1255.c */; };
+		F9E269C423C9C3A600745F52 /* fribidi-char-sets-cp1255.c in Sources */ = {isa = PBXBuildFile; fileRef = F9E2698223C9C3A500745F52 /* fribidi-char-sets-cp1255.c */; };
+		F9E269C523C9C3A600745F52 /* fribidi-char-sets-cp1255.c in Sources */ = {isa = PBXBuildFile; fileRef = F9E2698223C9C3A500745F52 /* fribidi-char-sets-cp1255.c */; };
+		F9E269C623C9C3A600745F52 /* fribidi-char-sets-cp1256.c in Sources */ = {isa = PBXBuildFile; fileRef = F9E2698323C9C3A500745F52 /* fribidi-char-sets-cp1256.c */; };
+		F9E269C723C9C3A600745F52 /* fribidi-char-sets-cp1256.c in Sources */ = {isa = PBXBuildFile; fileRef = F9E2698323C9C3A500745F52 /* fribidi-char-sets-cp1256.c */; };
+		F9E269C823C9C3A600745F52 /* fribidi-char-sets-cp1256.c in Sources */ = {isa = PBXBuildFile; fileRef = F9E2698323C9C3A500745F52 /* fribidi-char-sets-cp1256.c */; };
+		F9E269C923C9C3A600745F52 /* fribidi-char-sets-cp1256.c in Sources */ = {isa = PBXBuildFile; fileRef = F9E2698323C9C3A500745F52 /* fribidi-char-sets-cp1256.c */; };
+		F9E269CA23C9C3A600745F52 /* fribidi-char-sets.c in Sources */ = {isa = PBXBuildFile; fileRef = F9E2698423C9C3A500745F52 /* fribidi-char-sets.c */; };
+		F9E269CB23C9C3A600745F52 /* fribidi-char-sets.c in Sources */ = {isa = PBXBuildFile; fileRef = F9E2698423C9C3A500745F52 /* fribidi-char-sets.c */; };
+		F9E269CC23C9C3A600745F52 /* fribidi-char-sets.c in Sources */ = {isa = PBXBuildFile; fileRef = F9E2698423C9C3A500745F52 /* fribidi-char-sets.c */; };
+		F9E269CD23C9C3A600745F52 /* fribidi-char-sets.c in Sources */ = {isa = PBXBuildFile; fileRef = F9E2698423C9C3A500745F52 /* fribidi-char-sets.c */; };
+		F9E269CE23C9C3A600745F52 /* fribidi.c in Sources */ = {isa = PBXBuildFile; fileRef = F9E2698523C9C3A600745F52 /* fribidi.c */; };
+		F9E269CF23C9C3A600745F52 /* fribidi.c in Sources */ = {isa = PBXBuildFile; fileRef = F9E2698523C9C3A600745F52 /* fribidi.c */; };
+		F9E269D023C9C3A600745F52 /* fribidi.c in Sources */ = {isa = PBXBuildFile; fileRef = F9E2698523C9C3A600745F52 /* fribidi.c */; };
+		F9E269D123C9C3A600745F52 /* fribidi.c in Sources */ = {isa = PBXBuildFile; fileRef = F9E2698523C9C3A600745F52 /* fribidi.c */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -738,6 +810,24 @@
 		F9E2695E23C92DF700745F52 /* ftbzip2.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = ftbzip2.c; path = "TransferKitty Shared/freetype-2.10.1/src/bzip2/ftbzip2.c"; sourceTree = SOURCE_ROOT; };
 		F9E2696323C92EB400745F52 /* ft_tk_missing.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ft_tk_missing.cpp; sourceTree = "<group>"; };
 		F9E2696D23C9313400745F52 /* ftobjs.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = ftobjs.c; path = "TransferKitty Shared/freetype-2.10.1/src/base/ftobjs.c"; sourceTree = SOURCE_ROOT; };
+		F9E2697323C9C3A500745F52 /* fribidi-char-sets-utf8.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = "fribidi-char-sets-utf8.c"; path = "TransferKitty Shared/fribidi-1.0.8/lib/fribidi-char-sets-utf8.c"; sourceTree = SOURCE_ROOT; };
+		F9E2697423C9C3A500745F52 /* fribidi-char-sets-cap-rtl.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = "fribidi-char-sets-cap-rtl.c"; path = "TransferKitty Shared/fribidi-1.0.8/lib/fribidi-char-sets-cap-rtl.c"; sourceTree = SOURCE_ROOT; };
+		F9E2697523C9C3A500745F52 /* fribidi-joining-types.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = "fribidi-joining-types.c"; path = "TransferKitty Shared/fribidi-1.0.8/lib/fribidi-joining-types.c"; sourceTree = SOURCE_ROOT; };
+		F9E2697623C9C3A500745F52 /* fribidi-char-sets-iso8859-8.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = "fribidi-char-sets-iso8859-8.c"; path = "TransferKitty Shared/fribidi-1.0.8/lib/fribidi-char-sets-iso8859-8.c"; sourceTree = SOURCE_ROOT; };
+		F9E2697723C9C3A500745F52 /* fribidi-brackets.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = "fribidi-brackets.c"; path = "TransferKitty Shared/fribidi-1.0.8/lib/fribidi-brackets.c"; sourceTree = SOURCE_ROOT; };
+		F9E2697823C9C3A500745F52 /* fribidi-joining.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = "fribidi-joining.c"; path = "TransferKitty Shared/fribidi-1.0.8/lib/fribidi-joining.c"; sourceTree = SOURCE_ROOT; };
+		F9E2697923C9C3A500745F52 /* fribidi-arabic.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = "fribidi-arabic.c"; path = "TransferKitty Shared/fribidi-1.0.8/lib/fribidi-arabic.c"; sourceTree = SOURCE_ROOT; };
+		F9E2697B23C9C3A500745F52 /* fribidi-shape.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = "fribidi-shape.c"; path = "TransferKitty Shared/fribidi-1.0.8/lib/fribidi-shape.c"; sourceTree = SOURCE_ROOT; };
+		F9E2697C23C9C3A500745F52 /* fribidi-bidi-types.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = "fribidi-bidi-types.c"; path = "TransferKitty Shared/fribidi-1.0.8/lib/fribidi-bidi-types.c"; sourceTree = SOURCE_ROOT; };
+		F9E2697D23C9C3A500745F52 /* fribidi-deprecated.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = "fribidi-deprecated.c"; path = "TransferKitty Shared/fribidi-1.0.8/lib/fribidi-deprecated.c"; sourceTree = SOURCE_ROOT; };
+		F9E2697E23C9C3A500745F52 /* fribidi-mirroring.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = "fribidi-mirroring.c"; path = "TransferKitty Shared/fribidi-1.0.8/lib/fribidi-mirroring.c"; sourceTree = SOURCE_ROOT; };
+		F9E2697F23C9C3A500745F52 /* fribidi-run.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = "fribidi-run.c"; path = "TransferKitty Shared/fribidi-1.0.8/lib/fribidi-run.c"; sourceTree = SOURCE_ROOT; };
+		F9E2698023C9C3A500745F52 /* fribidi-bidi.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = "fribidi-bidi.c"; path = "TransferKitty Shared/fribidi-1.0.8/lib/fribidi-bidi.c"; sourceTree = SOURCE_ROOT; };
+		F9E2698123C9C3A500745F52 /* fribidi-char-sets-iso8859-6.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = "fribidi-char-sets-iso8859-6.c"; path = "TransferKitty Shared/fribidi-1.0.8/lib/fribidi-char-sets-iso8859-6.c"; sourceTree = SOURCE_ROOT; };
+		F9E2698223C9C3A500745F52 /* fribidi-char-sets-cp1255.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = "fribidi-char-sets-cp1255.c"; path = "TransferKitty Shared/fribidi-1.0.8/lib/fribidi-char-sets-cp1255.c"; sourceTree = SOURCE_ROOT; };
+		F9E2698323C9C3A500745F52 /* fribidi-char-sets-cp1256.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = "fribidi-char-sets-cp1256.c"; path = "TransferKitty Shared/fribidi-1.0.8/lib/fribidi-char-sets-cp1256.c"; sourceTree = SOURCE_ROOT; };
+		F9E2698423C9C3A500745F52 /* fribidi-char-sets.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = "fribidi-char-sets.c"; path = "TransferKitty Shared/fribidi-1.0.8/lib/fribidi-char-sets.c"; sourceTree = SOURCE_ROOT; };
+		F9E2698523C9C3A600745F52 /* fribidi.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = fribidi.c; path = "TransferKitty Shared/fribidi-1.0.8/lib/fribidi.c"; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -808,6 +898,7 @@
 		CACC747D2354F93500FE3672 /* TransferKitty Shared */ = {
 			isa = PBXGroup;
 			children = (
+				F9E2697223C9C36900745F52 /* FriBidi */,
 				F9E2671E23C924CB00745F52 /* FreeType */,
 				F9E2671823C9244000745F52 /* HarfBuzz */,
 				CACC74822354F93800FE3672 /* Assets.xcassets */,
@@ -944,33 +1035,32 @@
 		F9E2671E23C924CB00745F52 /* FreeType */ = {
 			isa = PBXGroup;
 			children = (
-				F9E2696D23C9313400745F52 /* ftobjs.c */,
-				F9E2696323C92EB400745F52 /* ft_tk_missing.cpp */,
-				F9E2695E23C92DF700745F52 /* ftbzip2.c */,
-				F9E2693D23C92DE300745F52 /* ftcbasic.c */,
-				F9E2693723C92DE300745F52 /* ftccmap.c */,
-				F9E2693823C92DE300745F52 /* ftcglyph.c */,
-				F9E2693923C92DE300745F52 /* ftcimage.c */,
-				F9E2693A23C92DE300745F52 /* ftcmanag.c */,
-				F9E2693C23C92DE300745F52 /* ftcmru.c */,
-				F9E2693B23C92DE300745F52 /* ftcsbits.c */,
+				F9E268FA23C92D3100745F52 /* adler32.c */,
+				F9E2671F23C9270D00745F52 /* autofit.c */,
+				F9E2672523C9275900745F52 /* bdf.c */,
+				F9E2672623C9275900745F52 /* cff.c */,
 				F9E2691B23C92DC000745F52 /* cidgload.c */,
 				F9E2691A23C92DC000745F52 /* cidload.c */,
 				F9E2691823C92DC000745F52 /* cidobjs.c */,
 				F9E2691923C92DC000745F52 /* cidparse.c */,
 				F9E2691C23C92DC000745F52 /* cidriver.c */,
-				F9E268FA23C92D3100745F52 /* adler32.c */,
-				F9E2671F23C9270D00745F52 /* autofit.c */,
-				F9E2672523C9275900745F52 /* bdf.c */,
-				F9E2672623C9275900745F52 /* cff.c */,
+				F9E2696323C92EB400745F52 /* ft_tk_missing.cpp */,
 				F9E267E423C92B7B00745F52 /* ftadvanc.c */,
 				F9E2677223C92B1900745F52 /* ftbbox.c */,
 				F9E267E623C92B7B00745F52 /* ftbdf.c */,
 				F9E2677923C92B1A00745F52 /* ftbitmap.c */,
+				F9E2695E23C92DF700745F52 /* ftbzip2.c */,
 				F9E267DE23C92B7A00745F52 /* ftcalc.c */,
+				F9E2693D23C92DE300745F52 /* ftcbasic.c */,
 				F9E2672723C9275900745F52 /* ftccache.c */,
+				F9E2693723C92DE300745F52 /* ftccmap.c */,
+				F9E2693823C92DE300745F52 /* ftcglyph.c */,
 				F9E267C923C92B4E00745F52 /* ftcid.c */,
+				F9E2693923C92DE300745F52 /* ftcimage.c */,
+				F9E2693A23C92DE300745F52 /* ftcmanag.c */,
+				F9E2693C23C92DE300745F52 /* ftcmru.c */,
 				F9E267E923C92B7B00745F52 /* ftcolor.c */,
+				F9E2693B23C92DE300745F52 /* ftcsbits.c */,
 				F9E267E123C92B7A00745F52 /* ftdbgmem.c */,
 				F9E2677123C92B1900745F52 /* ftdebug.c */,
 				F9E267CA23C92B4E00745F52 /* fterrors.c */,
@@ -988,6 +1078,7 @@
 				F9E2683523C92BC000745F52 /* ftlzw.c */,
 				F9E267E023C92B7A00745F52 /* ftmac.c */,
 				F9E2677823C92B1900745F52 /* ftmm.c */,
+				F9E2696D23C9313400745F52 /* ftobjs.c */,
 				F9E2676F23C92B1900745F52 /* ftotval.c */,
 				F9E267DA23C92B7A00745F52 /* ftoutln.c */,
 				F9E2677323C92B1900745F52 /* ftpatent.c */,
@@ -1050,6 +1141,31 @@
 				F9E268FB23C92D3100745F52 /* zutil.c */,
 			);
 			path = FreeType;
+			sourceTree = "<group>";
+		};
+		F9E2697223C9C36900745F52 /* FriBidi */ = {
+			isa = PBXGroup;
+			children = (
+				F9E2697923C9C3A500745F52 /* fribidi-arabic.c */,
+				F9E2697C23C9C3A500745F52 /* fribidi-bidi-types.c */,
+				F9E2698023C9C3A500745F52 /* fribidi-bidi.c */,
+				F9E2697723C9C3A500745F52 /* fribidi-brackets.c */,
+				F9E2697423C9C3A500745F52 /* fribidi-char-sets-cap-rtl.c */,
+				F9E2698223C9C3A500745F52 /* fribidi-char-sets-cp1255.c */,
+				F9E2698323C9C3A500745F52 /* fribidi-char-sets-cp1256.c */,
+				F9E2698123C9C3A500745F52 /* fribidi-char-sets-iso8859-6.c */,
+				F9E2697623C9C3A500745F52 /* fribidi-char-sets-iso8859-8.c */,
+				F9E2697323C9C3A500745F52 /* fribidi-char-sets-utf8.c */,
+				F9E2698423C9C3A500745F52 /* fribidi-char-sets.c */,
+				F9E2697D23C9C3A500745F52 /* fribidi-deprecated.c */,
+				F9E2697523C9C3A500745F52 /* fribidi-joining-types.c */,
+				F9E2697823C9C3A500745F52 /* fribidi-joining.c */,
+				F9E2697E23C9C3A500745F52 /* fribidi-mirroring.c */,
+				F9E2697F23C9C3A500745F52 /* fribidi-run.c */,
+				F9E2697B23C9C3A500745F52 /* fribidi-shape.c */,
+				F9E2698523C9C3A600745F52 /* fribidi.c */,
+			);
+			path = FriBidi;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -1220,16 +1336,21 @@
 				F9E268FC23C92D3100745F52 /* inflate.c in Sources */,
 				F9E2686723C92C8900745F52 /* t1load.c in Sources */,
 				F9E2689A23C92CD000745F52 /* ttgxvar.c in Sources */,
+				F9E269BE23C9C3A600745F52 /* fribidi-char-sets-iso8859-6.c in Sources */,
+				F9E2699E23C9C3A600745F52 /* fribidi-arabic.c in Sources */,
 				F9E2683A23C92BC000745F52 /* ftgzip.c in Sources */,
 				F9E267BD23C92B1A00745F52 /* ftwinfnt.c in Sources */,
+				F9E269B223C9C3A600745F52 /* fribidi-mirroring.c in Sources */,
 				F9E2681E23C92B7B00745F52 /* ftgloadr.c in Sources */,
 				F9E2689623C92CD000745F52 /* ttobjs.c in Sources */,
 				F9E2695623C92DE300745F52 /* ftcmru.c in Sources */,
+				F9E2699623C9C3A600745F52 /* fribidi-brackets.c in Sources */,
 				F9E267B923C92B1A00745F52 /* ftsystem.c in Sources */,
 				F9E2690423C92D3100745F52 /* infutil.c in Sources */,
 				F9E268A223C92CD000745F52 /* ttpload.c in Sources */,
 				F9E2686F23C92C8900745F52 /* t1afm.c in Sources */,
 				F9E268A623C92CD000745F52 /* ttsubpix.c in Sources */,
+				F9E2698623C9C3A600745F52 /* fribidi-char-sets-utf8.c in Sources */,
 				F9E268F123C92D1000745F52 /* ttload.c in Sources */,
 				F9E2680A23C92B7B00745F52 /* ftmac.c in Sources */,
 				F9E268ED23C92D1000745F52 /* ttpost.c in Sources */,
@@ -1245,6 +1366,7 @@
 				F96388BF23B80C1600BA6F2A /* TKDebug.mm in Sources */,
 				F9E2689223C92CD000745F52 /* ttgload.c in Sources */,
 				F9E2686323C92C8900745F52 /* t1gload.c in Sources */,
+				F9E2698A23C9C3A600745F52 /* fribidi-char-sets-cap-rtl.c in Sources */,
 				F9E2679123C92B1A00745F52 /* ftpatent.c in Sources */,
 				F96388D323BA6B4900BA6F2A /* TKiOSViewController.mm in Sources */,
 				F998F78D238736960025564F /* TKApp.mm in Sources */,
@@ -1260,13 +1382,18 @@
 				F9E2691023C92D3100745F52 /* adler32.c in Sources */,
 				F9E2678123C92B1A00745F52 /* ftotval.c in Sources */,
 				F9E2678923C92B1A00745F52 /* ftdebug.c in Sources */,
+				F9E269C623C9C3A600745F52 /* fribidi-char-sets-cp1256.c in Sources */,
 				F9E2678D23C92B1A00745F52 /* ftbbox.c in Sources */,
 				F9E2696E23C9313400745F52 /* ftobjs.c in Sources */,
 				F9E267B523C92B1A00745F52 /* ftpfr.c in Sources */,
 				F9E2675323C929E900745F52 /* ftraster.c in Sources */,
 				F9E2672023C9270D00745F52 /* autofit.c in Sources */,
+				F9E269C223C9C3A600745F52 /* fribidi-char-sets-cp1255.c in Sources */,
+				F9E269AE23C9C3A600745F52 /* fribidi-deprecated.c in Sources */,
+				F9E2699223C9C3A600745F52 /* fribidi-char-sets-iso8859-8.c in Sources */,
 				F9E2694623C92DE300745F52 /* ftcglyph.c in Sources */,
 				F9E267B123C92B1A00745F52 /* ftglyph.c in Sources */,
+				F9E269A623C9C3A600745F52 /* fribidi-shape.c in Sources */,
 				F9E2691E23C92DC000745F52 /* cidobjs.c in Sources */,
 				F9E267FE23C92B7B00745F52 /* md5.c in Sources */,
 				F9E268CD23C92D1000745F52 /* ttcolr.c in Sources */,
@@ -1297,6 +1424,7 @@
 				F9E267D423C92B4E00745F52 /* ftstream.c in Sources */,
 				F9E2682223C92B7B00745F52 /* ftbdf.c in Sources */,
 				F9E2678523C92B1A00745F52 /* ftgxval.c in Sources */,
+				F9E269B623C9C3A600745F52 /* fribidi-run.c in Sources */,
 				F9E268C123C92D1000745F52 /* sfdriver.c in Sources */,
 				F9E2692623C92DC000745F52 /* cidload.c in Sources */,
 				F9E2691423C92D3100745F52 /* zutil.c in Sources */,
@@ -1314,17 +1442,22 @@
 				F9E2680223C92B7B00745F52 /* ftcalc.c in Sources */,
 				F9E2690023C92D3100745F52 /* inftrees.c in Sources */,
 				F9E2676B23C92A3500745F52 /* winfnt.c in Sources */,
+				F9E2699A23C9C3A600745F52 /* fribidi-joining.c in Sources */,
+				F9E269CA23C9C3A600745F52 /* fribidi-char-sets.c in Sources */,
 				CACC748C2354F93800FE3672 /* AppDelegate.m in Sources */,
 				F9E2674923C929BB00745F52 /* pshinter.c in Sources */,
+				F9E269AA23C9C3A600745F52 /* fribidi-bidi-types.c in Sources */,
 				F9E268DD23C92D1000745F52 /* sfobjs.c in Sources */,
 				F9E267FA23C92B7B00745F52 /* ftrfork.c in Sources */,
 				F9E267A523C92B1A00745F52 /* ftmm.c in Sources */,
 				F9E2684223C92BC000745F52 /* ftlzw.c in Sources */,
 				F998F79D23AD92B40025564F /* TKImageBuffer.cpp in Sources */,
+				F9E269BA23C9C3A600745F52 /* fribidi-bidi.c in Sources */,
 				F9E2682E23C92B7B00745F52 /* ftcolor.c in Sources */,
 				F9E2694A23C92DE300745F52 /* ftcimage.c in Sources */,
 				F9E2692A23C92DC000745F52 /* cidgload.c in Sources */,
 				F9E267EE23C92B7B00745F52 /* ftsnames.c in Sources */,
+				F9E2698E23C9C3A600745F52 /* fribidi-joining-types.c in Sources */,
 				F9E267F223C92B7B00745F52 /* ftoutln.c in Sources */,
 				F9E2674523C929BB00745F52 /* psnames.c in Sources */,
 				CAE7EC4F235C4F5A00C4D217 /* TKBluetoothCommunicator.mm in Sources */,
@@ -1336,6 +1469,7 @@
 				F9E268D123C92D1000745F52 /* sfwoff.c in Sources */,
 				F9E2685123C92C1B00745F52 /* ftrend1.c in Sources */,
 				F9E2692E23C92DC000745F52 /* cidriver.c in Sources */,
+				F9E269CE23C9C3A600745F52 /* fribidi.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1346,16 +1480,21 @@
 				F9E268FD23C92D3100745F52 /* inflate.c in Sources */,
 				F9E2686823C92C8900745F52 /* t1load.c in Sources */,
 				F9E2689B23C92CD000745F52 /* ttgxvar.c in Sources */,
+				F9E269BF23C9C3A600745F52 /* fribidi-char-sets-iso8859-6.c in Sources */,
+				F9E2699F23C9C3A600745F52 /* fribidi-arabic.c in Sources */,
 				F9E2683B23C92BC000745F52 /* ftgzip.c in Sources */,
 				F9E267BE23C92B1A00745F52 /* ftwinfnt.c in Sources */,
+				F9E269B323C9C3A600745F52 /* fribidi-mirroring.c in Sources */,
 				F9E2681F23C92B7B00745F52 /* ftgloadr.c in Sources */,
 				F9E2689723C92CD000745F52 /* ttobjs.c in Sources */,
 				F9E2695723C92DE300745F52 /* ftcmru.c in Sources */,
+				F9E2699723C9C3A600745F52 /* fribidi-brackets.c in Sources */,
 				F9E267BA23C92B1A00745F52 /* ftsystem.c in Sources */,
 				F9E2690523C92D3100745F52 /* infutil.c in Sources */,
 				F9E268A323C92CD000745F52 /* ttpload.c in Sources */,
 				F9E2687023C92C8900745F52 /* t1afm.c in Sources */,
 				F9E268A723C92CD000745F52 /* ttsubpix.c in Sources */,
+				F9E2698723C9C3A600745F52 /* fribidi-char-sets-utf8.c in Sources */,
 				F9E268F223C92D1000745F52 /* ttload.c in Sources */,
 				F9E2680B23C92B7B00745F52 /* ftmac.c in Sources */,
 				F9E268EE23C92D1000745F52 /* ttpost.c in Sources */,
@@ -1371,6 +1510,7 @@
 				F96388C023B80C1600BA6F2A /* TKDebug.mm in Sources */,
 				F9E2689323C92CD000745F52 /* ttgload.c in Sources */,
 				F9E2686423C92C8900745F52 /* t1gload.c in Sources */,
+				F9E2698B23C9C3A600745F52 /* fribidi-char-sets-cap-rtl.c in Sources */,
 				F9E2679223C92B1A00745F52 /* ftpatent.c in Sources */,
 				F998F78E238736960025564F /* TKApp.mm in Sources */,
 				F96388C423B80C1600BA6F2A /* TKFileSaver.mm in Sources */,
@@ -1386,13 +1526,18 @@
 				F9E2691123C92D3100745F52 /* adler32.c in Sources */,
 				F9E2678223C92B1A00745F52 /* ftotval.c in Sources */,
 				F9E2678A23C92B1A00745F52 /* ftdebug.c in Sources */,
+				F9E269C723C9C3A600745F52 /* fribidi-char-sets-cp1256.c in Sources */,
 				F9E2678E23C92B1A00745F52 /* ftbbox.c in Sources */,
 				F9E2696F23C9313400745F52 /* ftobjs.c in Sources */,
 				F9E267B623C92B1A00745F52 /* ftpfr.c in Sources */,
 				F9E2675423C929E900745F52 /* ftraster.c in Sources */,
 				F9E2672123C9270D00745F52 /* autofit.c in Sources */,
+				F9E269C323C9C3A600745F52 /* fribidi-char-sets-cp1255.c in Sources */,
+				F9E269AF23C9C3A600745F52 /* fribidi-deprecated.c in Sources */,
+				F9E2699323C9C3A600745F52 /* fribidi-char-sets-iso8859-8.c in Sources */,
 				F9E2694723C92DE300745F52 /* ftcglyph.c in Sources */,
 				F9E267B223C92B1A00745F52 /* ftglyph.c in Sources */,
+				F9E269A723C9C3A600745F52 /* fribidi-shape.c in Sources */,
 				F9E2691F23C92DC000745F52 /* cidobjs.c in Sources */,
 				F9E267FF23C92B7B00745F52 /* md5.c in Sources */,
 				F9E268CE23C92D1000745F52 /* ttcolr.c in Sources */,
@@ -1423,6 +1568,7 @@
 				F9E267D523C92B4E00745F52 /* ftstream.c in Sources */,
 				F9E2682323C92B7B00745F52 /* ftbdf.c in Sources */,
 				F9E2678623C92B1A00745F52 /* ftgxval.c in Sources */,
+				F9E269B723C9C3A600745F52 /* fribidi-run.c in Sources */,
 				F9E268C223C92D1000745F52 /* sfdriver.c in Sources */,
 				F9E2692723C92DC000745F52 /* cidload.c in Sources */,
 				F9E2691523C92D3100745F52 /* zutil.c in Sources */,
@@ -1440,17 +1586,22 @@
 				F9E2680323C92B7B00745F52 /* ftcalc.c in Sources */,
 				F9E2690123C92D3100745F52 /* inftrees.c in Sources */,
 				F9E2676C23C92A3500745F52 /* winfnt.c in Sources */,
+				F9E2699B23C9C3A600745F52 /* fribidi-joining.c in Sources */,
+				F9E269CB23C9C3A600745F52 /* fribidi-char-sets.c in Sources */,
 				CACC74A12354F93800FE3672 /* AppDelegate.m in Sources */,
 				F9E2674A23C929BB00745F52 /* pshinter.c in Sources */,
+				F9E269AB23C9C3A600745F52 /* fribidi-bidi-types.c in Sources */,
 				F9E268DE23C92D1000745F52 /* sfobjs.c in Sources */,
 				F9E267FB23C92B7B00745F52 /* ftrfork.c in Sources */,
 				F9E267A623C92B1A00745F52 /* ftmm.c in Sources */,
 				F9E2684323C92BC000745F52 /* ftlzw.c in Sources */,
 				F998F79E23AD92B40025564F /* TKImageBuffer.cpp in Sources */,
+				F9E269BB23C9C3A600745F52 /* fribidi-bidi.c in Sources */,
 				F9E2682F23C92B7B00745F52 /* ftcolor.c in Sources */,
 				F9E2694B23C92DE300745F52 /* ftcimage.c in Sources */,
 				F9E2692B23C92DC000745F52 /* cidgload.c in Sources */,
 				F9E267EF23C92B7B00745F52 /* ftsnames.c in Sources */,
+				F9E2698F23C9C3A600745F52 /* fribidi-joining-types.c in Sources */,
 				F9E267F323C92B7B00745F52 /* ftoutln.c in Sources */,
 				F9E2674623C929BB00745F52 /* psnames.c in Sources */,
 				CAE7EC50235C4F5A00C4D217 /* TKBluetoothCommunicator.mm in Sources */,
@@ -1462,6 +1613,7 @@
 				F9E268D223C92D1000745F52 /* sfwoff.c in Sources */,
 				F9E2685223C92C1B00745F52 /* ftrend1.c in Sources */,
 				F9E2692F23C92DC000745F52 /* cidriver.c in Sources */,
+				F9E269CF23C9C3A600745F52 /* fribidi.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1470,8 +1622,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				F9E2678B23C92B1A00745F52 /* ftdebug.c in Sources */,
+				F9E2699423C9C3A600745F52 /* fribidi-char-sets-iso8859-8.c in Sources */,
+				F9E2698C23C9C3A600745F52 /* fribidi-char-sets-cap-rtl.c in Sources */,
 				F9E2690223C92D3100745F52 /* inftrees.c in Sources */,
 				F96388C123B80C1600BA6F2A /* TKDebug.mm in Sources */,
+				F9E269B823C9C3A600745F52 /* fribidi-run.c in Sources */,
 				F9E268A423C92CD000745F52 /* ttpload.c in Sources */,
 				F9E2687923C92CB400745F52 /* t42objs.c in Sources */,
 				F9E2674723C929BB00745F52 /* psnames.c in Sources */,
@@ -1489,10 +1644,12 @@
 				CAE7EC54235C4F5A00C4D217 /* TKNuklearMetalViewDelegate.mm in Sources */,
 				F9E2691223C92D3100745F52 /* adler32.c in Sources */,
 				F9E2689C23C92CD000745F52 /* ttgxvar.c in Sources */,
+				F9E2699823C9C3A600745F52 /* fribidi-brackets.c in Sources */,
 				F9E2694C23C92DE300745F52 /* ftcimage.c in Sources */,
 				F9E2696123C92DF700745F52 /* ftbzip2.c in Sources */,
 				F9E268C323C92D1000745F52 /* sfdriver.c in Sources */,
 				F9E268E323C92D1000745F52 /* ttcmap.c in Sources */,
+				F9E269C423C9C3A600745F52 /* fribidi-char-sets-cp1255.c in Sources */,
 				F9E267A723C92B1A00745F52 /* ftmm.c in Sources */,
 				F9E2692023C92DC000745F52 /* cidobjs.c in Sources */,
 				F9E2690A23C92D3100745F52 /* infblock.c in Sources */,
@@ -1514,6 +1671,7 @@
 				F9E2689423C92CD000745F52 /* ttgload.c in Sources */,
 				F9E2697023C9313400745F52 /* ftobjs.c in Sources */,
 				F96388D523BA6B4900BA6F2A /* TKiOSViewController.mm in Sources */,
+				F9E269C823C9C3A600745F52 /* fribidi-char-sets-cp1256.c in Sources */,
 				F9E267C323C92B1A00745F52 /* ftfstype.c in Sources */,
 				F9E2680423C92B7B00745F52 /* ftcalc.c in Sources */,
 				F9E268EB23C92D1000745F52 /* pngshim.c in Sources */,
@@ -1525,7 +1683,10 @@
 				F9E268A823C92CD000745F52 /* ttsubpix.c in Sources */,
 				F9E2695C23C92DE300745F52 /* ftcbasic.c in Sources */,
 				F9E2692423C92DC000745F52 /* cidparse.c in Sources */,
+				F9E269B023C9C3A600745F52 /* fribidi-deprecated.c in Sources */,
+				F9E269B423C9C3A600745F52 /* fribidi-mirroring.c in Sources */,
 				F9E268B223C92CEC00745F52 /* ftgrays.c in Sources */,
+				F9E269A823C9C3A600745F52 /* fribidi-shape.c in Sources */,
 				F9E2678723C92B1A00745F52 /* ftgxval.c in Sources */,
 				F9E2682423C92B7B00745F52 /* ftbdf.c in Sources */,
 				F9E268F323C92D1000745F52 /* ttload.c in Sources */,
@@ -1540,12 +1701,14 @@
 				F9E267F823C92B7B00745F52 /* ftlcdfil.c in Sources */,
 				F9E2673C23C9298D00745F52 /* pcf.c in Sources */,
 				F9E267AF23C92B1A00745F52 /* ftinit.c in Sources */,
+				F9E2698823C9C3A600745F52 /* fribidi-char-sets-utf8.c in Sources */,
 				F998F78F238736960025564F /* TKApp.mm in Sources */,
 				F9E2680C23C92B7B00745F52 /* ftmac.c in Sources */,
 				F9E2696623C92EB400745F52 /* ft_tk_missing.cpp in Sources */,
 				F9E2685323C92C1B00745F52 /* ftrend1.c in Sources */,
 				CAE7EC51235C4F5A00C4D217 /* TKBluetoothCommunicator.mm in Sources */,
 				F998F7882385EA500025564F /* TKUIStatePopulator.cpp in Sources */,
+				F9E269A023C9C3A600745F52 /* fribidi-arabic.c in Sources */,
 				F9E2693023C92DC000745F52 /* cidriver.c in Sources */,
 				F9E2676D23C92A3500745F52 /* winfnt.c in Sources */,
 				F998F79F23AD92B40025564F /* TKImageBuffer.cpp in Sources */,
@@ -1564,17 +1727,23 @@
 				F9E2682823C92B7B00745F52 /* ftpsprop.c in Sources */,
 				F9E268E723C92D1000745F52 /* ttcpal.c in Sources */,
 				F9E268DF23C92D1000745F52 /* sfobjs.c in Sources */,
+				F9E269D023C9C3A600745F52 /* fribidi.c in Sources */,
 				F9E268C723C92D1000745F52 /* ttsbit.c in Sources */,
+				F9E269CC23C9C3A600745F52 /* fribidi-char-sets.c in Sources */,
 				CACC74C12354F9AB00FE3672 /* TKViewController.mm in Sources */,
+				F9E269C023C9C3A600745F52 /* fribidi-char-sets-iso8859-6.c in Sources */,
 				F9E2689823C92CD000745F52 /* ttobjs.c in Sources */,
 				F9E2686923C92C8900745F52 /* t1load.c in Sources */,
 				F9E2681C23C92B7B00745F52 /* ftadvanc.c in Sources */,
+				F9E2699C23C9C3A600745F52 /* fribidi-joining.c in Sources */,
+				F9E269BC23C9C3A600745F52 /* fribidi-bidi.c in Sources */,
 				F9E2695823C92DE300745F52 /* ftcmru.c in Sources */,
 				F9E267BB23C92B1A00745F52 /* ftsystem.c in Sources */,
 				F9E2678323C92B1A00745F52 /* ftotval.c in Sources */,
 				F9E2671C23C9248D00745F52 /* harfbuzz.cc in Sources */,
 				F9E2695023C92DE300745F52 /* ftcmanag.c in Sources */,
 				F9E267D623C92B4E00745F52 /* ftstream.c in Sources */,
+				F9E269AC23C9C3A600745F52 /* fribidi-bidi-types.c in Sources */,
 				F9E268DB23C92D1000745F52 /* ttkern.c in Sources */,
 				F9E267FC23C92B7B00745F52 /* ftrfork.c in Sources */,
 				F9E268D723C92D1000745F52 /* ttbdf.c in Sources */,
@@ -1585,6 +1754,7 @@
 				F9E2689023C92CD000745F52 /* ttdriver.c in Sources */,
 				F9E268CB23C92D1000745F52 /* ttmtx.c in Sources */,
 				F9E2687123C92C8900745F52 /* t1afm.c in Sources */,
+				F9E2699023C9C3A600745F52 /* fribidi-joining-types.c in Sources */,
 				F9E2674023C9298D00745F52 /* pfr.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1594,8 +1764,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				F9E2678C23C92B1A00745F52 /* ftdebug.c in Sources */,
+				F9E2699523C9C3A600745F52 /* fribidi-char-sets-iso8859-8.c in Sources */,
+				F9E2698D23C9C3A600745F52 /* fribidi-char-sets-cap-rtl.c in Sources */,
 				F9E2690323C92D3100745F52 /* inftrees.c in Sources */,
 				F96388C223B80C1600BA6F2A /* TKDebug.mm in Sources */,
+				F9E269B923C9C3A600745F52 /* fribidi-run.c in Sources */,
 				F9E268A523C92CD000745F52 /* ttpload.c in Sources */,
 				F9E2687A23C92CB400745F52 /* t42objs.c in Sources */,
 				F9E2674823C929BB00745F52 /* psnames.c in Sources */,
@@ -1613,10 +1786,12 @@
 				F998F738236E348C0025564F /* Nuklear.metal in Sources */,
 				F9E2691323C92D3100745F52 /* adler32.c in Sources */,
 				F9E2689D23C92CD000745F52 /* ttgxvar.c in Sources */,
+				F9E2699923C9C3A600745F52 /* fribidi-brackets.c in Sources */,
 				F9E2694D23C92DE300745F52 /* ftcimage.c in Sources */,
 				F9E2696223C92DF700745F52 /* ftbzip2.c in Sources */,
 				F9E268C423C92D1000745F52 /* sfdriver.c in Sources */,
 				F9E268E423C92D1000745F52 /* ttcmap.c in Sources */,
+				F9E269C523C9C3A600745F52 /* fribidi-char-sets-cp1255.c in Sources */,
 				F9E267A823C92B1A00745F52 /* ftmm.c in Sources */,
 				F9E2692123C92DC000745F52 /* cidobjs.c in Sources */,
 				F9E2690B23C92D3100745F52 /* infblock.c in Sources */,
@@ -1638,6 +1813,7 @@
 				F9E2689523C92CD000745F52 /* ttgload.c in Sources */,
 				F9E2697123C9313400745F52 /* ftobjs.c in Sources */,
 				F998F736236E348C0025564F /* TKBluetoothCommunicator.mm in Sources */,
+				F9E269C923C9C3A600745F52 /* fribidi-char-sets-cp1256.c in Sources */,
 				F9E267C423C92B1A00745F52 /* ftfstype.c in Sources */,
 				F9E2680523C92B7B00745F52 /* ftcalc.c in Sources */,
 				F9E268EC23C92D1000745F52 /* pngshim.c in Sources */,
@@ -1649,7 +1825,10 @@
 				F9E268A923C92CD000745F52 /* ttsubpix.c in Sources */,
 				F9E2695D23C92DE300745F52 /* ftcbasic.c in Sources */,
 				F9E2692523C92DC000745F52 /* cidparse.c in Sources */,
+				F9E269B123C9C3A600745F52 /* fribidi-deprecated.c in Sources */,
+				F9E269B523C9C3A600745F52 /* fribidi-mirroring.c in Sources */,
 				F9E268B323C92CEC00745F52 /* ftgrays.c in Sources */,
+				F9E269A923C9C3A600745F52 /* fribidi-shape.c in Sources */,
 				F9E2678823C92B1A00745F52 /* ftgxval.c in Sources */,
 				F9E2682523C92B7B00745F52 /* ftbdf.c in Sources */,
 				F9E268F423C92D1000745F52 /* ttload.c in Sources */,
@@ -1664,12 +1843,14 @@
 				F9E267F923C92B7B00745F52 /* ftlcdfil.c in Sources */,
 				F9E2673D23C9298D00745F52 /* pcf.c in Sources */,
 				F9E267B023C92B1A00745F52 /* ftinit.c in Sources */,
+				F9E2698923C9C3A600745F52 /* fribidi-char-sets-utf8.c in Sources */,
 				F998F737236E348C0025564F /* TKNuklearMetalViewDelegate.mm in Sources */,
 				F9E2680D23C92B7B00745F52 /* ftmac.c in Sources */,
 				F9E2696723C92EB400745F52 /* ft_tk_missing.cpp in Sources */,
 				F9E2685423C92C1B00745F52 /* ftrend1.c in Sources */,
 				F998F7892385EA500025564F /* TKUIStatePopulator.cpp in Sources */,
 				F998F7A023AD92B40025564F /* TKImageBuffer.cpp in Sources */,
+				F9E269A123C9C3A600745F52 /* fribidi-arabic.c in Sources */,
 				F9E2693123C92DC000745F52 /* cidriver.c in Sources */,
 				F9E2676E23C92A3500745F52 /* winfnt.c in Sources */,
 				F96388BE23B80C1600BA6F2A /* TKMacOSViewController.mm in Sources */,
@@ -1688,17 +1869,23 @@
 				F9E2682923C92B7B00745F52 /* ftpsprop.c in Sources */,
 				F9E268E823C92D1000745F52 /* ttcpal.c in Sources */,
 				F9E268E023C92D1000745F52 /* sfobjs.c in Sources */,
+				F9E269D123C9C3A600745F52 /* fribidi.c in Sources */,
 				F9E268C823C92D1000745F52 /* ttsbit.c in Sources */,
+				F9E269CD23C9C3A600745F52 /* fribidi-char-sets.c in Sources */,
 				F998F729236E312E0025564F /* TKViewController.mm in Sources */,
+				F9E269C123C9C3A600745F52 /* fribidi-char-sets-iso8859-6.c in Sources */,
 				F9E2689923C92CD000745F52 /* ttobjs.c in Sources */,
 				F9E2686A23C92C8900745F52 /* t1load.c in Sources */,
 				F9E2681D23C92B7B00745F52 /* ftadvanc.c in Sources */,
+				F9E2699D23C9C3A600745F52 /* fribidi-joining.c in Sources */,
+				F9E269BD23C9C3A600745F52 /* fribidi-bidi.c in Sources */,
 				F9E2695923C92DE300745F52 /* ftcmru.c in Sources */,
 				F9E267BC23C92B1A00745F52 /* ftsystem.c in Sources */,
 				F9E2678423C92B1A00745F52 /* ftotval.c in Sources */,
 				F9E2671D23C9248E00745F52 /* harfbuzz.cc in Sources */,
 				F9E2695123C92DE300745F52 /* ftcmanag.c in Sources */,
 				F9E267D723C92B4E00745F52 /* ftstream.c in Sources */,
+				F9E269AD23C9C3A600745F52 /* fribidi-bidi-types.c in Sources */,
 				F9E268DC23C92D1000745F52 /* ttkern.c in Sources */,
 				F9E267FD23C92B7B00745F52 /* ftrfork.c in Sources */,
 				F9E268D823C92D1000745F52 /* ttbdf.c in Sources */,
@@ -1709,6 +1896,7 @@
 				F9E2689123C92CD000745F52 /* ttdriver.c in Sources */,
 				F9E268CC23C92D1000745F52 /* ttmtx.c in Sources */,
 				F9E2687223C92C8900745F52 /* t1afm.c in Sources */,
+				F9E2699123C9C3A600745F52 /* fribidi-joining-types.c in Sources */,
 				F9E2674123C9298D00745F52 /* pfr.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1816,6 +2004,7 @@
 					"FT2_BUILD_LIBRARY=1",
 					"DEBUG=1",
 					"$(inherited)",
+					"HAVE_CONFIG_H=1",
 				);
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
@@ -1824,8 +2013,15 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				HEADER_SEARCH_PATHS = (
+					"$PROJECT_DIR/TransferKitty\\ Shared/FreeType",
 					"$PROJECT_DIR/TransferKitty\\ Shared/freetype-2.10.1/src",
 					"$PROJECT_DIR/TransferKitty\\ Shared/freetype-2.10.1/include",
+					"$PROJECT_DIR/TransferKitty\\ Shared/harfbuzz-2.6.4/src",
+					"$PROJECT_DIR/TransferKitty\\ Shared/fribidi-1.0.8/build/gen.tab",
+					"$PROJECT_DIR/TransferKitty\\ Shared/fribidi-1.0.8/build/lib",
+					"$PROJECT_DIR/TransferKitty\\ Shared/fribidi-1.0.8/build",
+					"$PROJECT_DIR/TransferKitty\\ Shared/fribidi-1.0.8/lib",
+					"$PROJECT_DIR/TransferKitty\\ Shared/HarfBuzz",
 				);
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
@@ -1871,7 +2067,10 @@
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_NO_COMMON_BLOCKS = YES;
-				GCC_PREPROCESSOR_DEFINITIONS = "FT2_BUILD_LIBRARY=1";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"FT2_BUILD_LIBRARY=1",
+					"HAVE_CONFIG_H=1",
+				);
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
 				GCC_WARN_UNDECLARED_SELECTOR = YES;
@@ -1879,8 +2078,15 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				HEADER_SEARCH_PATHS = (
+					"$PROJECT_DIR/TransferKitty\\ Shared/FreeType",
 					"$PROJECT_DIR/TransferKitty\\ Shared/freetype-2.10.1/src",
 					"$PROJECT_DIR/TransferKitty\\ Shared/freetype-2.10.1/include",
+					"$PROJECT_DIR/TransferKitty\\ Shared/harfbuzz-2.6.4/src",
+					"$PROJECT_DIR/TransferKitty\\ Shared/fribidi-1.0.8/build/gen.tab",
+					"$PROJECT_DIR/TransferKitty\\ Shared/fribidi-1.0.8/build/lib",
+					"$PROJECT_DIR/TransferKitty\\ Shared/fribidi-1.0.8/build",
+					"$PROJECT_DIR/TransferKitty\\ Shared/fribidi-1.0.8/lib",
+					"$PROJECT_DIR/TransferKitty\\ Shared/HarfBuzz",
 				);
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;

@@ -97,3 +97,6 @@ Icon
 Network Trash Folder
 Temporary Items
 .apdisk
+TransferKitty/TransferKitty Shared/fribidi-1.0.8/bin/*
+TransferKitty/TransferKitty Shared/fribidi-1.0.8/autom4te.cache/*
+TransferKitty/TransferKitty Shared/fribidi-1.0.8/lib/.deps/*
