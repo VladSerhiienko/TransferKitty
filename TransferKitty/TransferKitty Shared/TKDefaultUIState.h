@@ -4,6 +4,7 @@
 
 #include "TKIUIState.h"
 #include "TKOptional.h"
+#include "EASTL/bonus/ring_buffer.h"
 
 namespace tk {
 
@@ -35,16 +36,20 @@ public:
 public:
     const UIStateStatus status() const override { return _status; }
     size_t fileCount() const override { return _files.size(); }
-    const IUIFileState* file(int index) const override { return &_files[index]; }
+    const IUIFileState* file(size_t index) const override { return &_files[index]; }
 };
 
 class DefaultUIState : public IUIState {
 public:
     std::vector<DefaultUIDeviceState> _devices = {};
+    eastl::ring_buffer<std::string> _debugLogs{256};
 
 public:
     size_t deviceCount() const override { return _devices.size(); }
-    const IUIDeviceState* device(int index) const override { return &_devices[index]; }
+    const IUIDeviceState* device(size_t index) const override { return &_devices[index]; }
+    
+    size_t debugLogCount() const override { return _debugLogs.size(); }
+    StringView debugLog(size_t index) const override { auto& log = _debugLogs[index]; return StringView{log.c_str(), log.size()}; }
 };
 
 } // namespace tk

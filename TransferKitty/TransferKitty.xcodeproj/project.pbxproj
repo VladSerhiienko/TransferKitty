@@ -89,6 +89,46 @@
 		F998F79E23AD92B40025564F /* TKImageBuffer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F998F79C23AD92B40025564F /* TKImageBuffer.cpp */; };
 		F998F79F23AD92B40025564F /* TKImageBuffer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F998F79C23AD92B40025564F /* TKImageBuffer.cpp */; };
 		F998F7A023AD92B40025564F /* TKImageBuffer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F998F79C23AD92B40025564F /* TKImageBuffer.cpp */; };
+		F99A752223CA61020061389F /* hashtable.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F99A751923CA61020061389F /* hashtable.cpp */; };
+		F99A752323CA61020061389F /* hashtable.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F99A751923CA61020061389F /* hashtable.cpp */; };
+		F99A752423CA61020061389F /* hashtable.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F99A751923CA61020061389F /* hashtable.cpp */; };
+		F99A752523CA61020061389F /* hashtable.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F99A751923CA61020061389F /* hashtable.cpp */; };
+		F99A752623CA61020061389F /* numeric_limits.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F99A751A23CA61020061389F /* numeric_limits.cpp */; };
+		F99A752723CA61020061389F /* numeric_limits.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F99A751A23CA61020061389F /* numeric_limits.cpp */; };
+		F99A752823CA61020061389F /* numeric_limits.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F99A751A23CA61020061389F /* numeric_limits.cpp */; };
+		F99A752923CA61020061389F /* numeric_limits.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F99A751A23CA61020061389F /* numeric_limits.cpp */; };
+		F99A752A23CA61020061389F /* allocator_eastl.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F99A751B23CA61020061389F /* allocator_eastl.cpp */; };
+		F99A752B23CA61020061389F /* allocator_eastl.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F99A751B23CA61020061389F /* allocator_eastl.cpp */; };
+		F99A752C23CA61020061389F /* allocator_eastl.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F99A751B23CA61020061389F /* allocator_eastl.cpp */; };
+		F99A752D23CA61020061389F /* allocator_eastl.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F99A751B23CA61020061389F /* allocator_eastl.cpp */; };
+		F99A752E23CA61020061389F /* red_black_tree.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F99A751C23CA61020061389F /* red_black_tree.cpp */; };
+		F99A752F23CA61020061389F /* red_black_tree.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F99A751C23CA61020061389F /* red_black_tree.cpp */; };
+		F99A753023CA61020061389F /* red_black_tree.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F99A751C23CA61020061389F /* red_black_tree.cpp */; };
+		F99A753123CA61020061389F /* red_black_tree.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F99A751C23CA61020061389F /* red_black_tree.cpp */; };
+		F99A753223CA61020061389F /* thread_support.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F99A751D23CA61020061389F /* thread_support.cpp */; };
+		F99A753323CA61020061389F /* thread_support.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F99A751D23CA61020061389F /* thread_support.cpp */; };
+		F99A753423CA61020061389F /* thread_support.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F99A751D23CA61020061389F /* thread_support.cpp */; };
+		F99A753523CA61020061389F /* thread_support.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F99A751D23CA61020061389F /* thread_support.cpp */; };
+		F99A753623CA61020061389F /* fixed_pool.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F99A751E23CA61020061389F /* fixed_pool.cpp */; };
+		F99A753723CA61020061389F /* fixed_pool.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F99A751E23CA61020061389F /* fixed_pool.cpp */; };
+		F99A753823CA61020061389F /* fixed_pool.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F99A751E23CA61020061389F /* fixed_pool.cpp */; };
+		F99A753923CA61020061389F /* fixed_pool.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F99A751E23CA61020061389F /* fixed_pool.cpp */; };
+		F99A753A23CA61020061389F /* assert.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F99A751F23CA61020061389F /* assert.cpp */; };
+		F99A753B23CA61020061389F /* assert.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F99A751F23CA61020061389F /* assert.cpp */; };
+		F99A753C23CA61020061389F /* assert.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F99A751F23CA61020061389F /* assert.cpp */; };
+		F99A753D23CA61020061389F /* assert.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F99A751F23CA61020061389F /* assert.cpp */; };
+		F99A753E23CA61020061389F /* string.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F99A752023CA61020061389F /* string.cpp */; };
+		F99A753F23CA61020061389F /* string.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F99A752023CA61020061389F /* string.cpp */; };
+		F99A754023CA61020061389F /* string.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F99A752023CA61020061389F /* string.cpp */; };
+		F99A754123CA61020061389F /* string.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F99A752023CA61020061389F /* string.cpp */; };
+		F99A754223CA61020061389F /* intrusive_list.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F99A752123CA61020061389F /* intrusive_list.cpp */; };
+		F99A754323CA61020061389F /* intrusive_list.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F99A752123CA61020061389F /* intrusive_list.cpp */; };
+		F99A754423CA61020061389F /* intrusive_list.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F99A752123CA61020061389F /* intrusive_list.cpp */; };
+		F99A754523CA61020061389F /* intrusive_list.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F99A752123CA61020061389F /* intrusive_list.cpp */; };
+		F99A754723CA65A20061389F /* tk_eastl_allocator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F99A754623CA65A20061389F /* tk_eastl_allocator.cpp */; };
+		F99A754823CA65A20061389F /* tk_eastl_allocator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F99A754623CA65A20061389F /* tk_eastl_allocator.cpp */; };
+		F99A754923CA65A20061389F /* tk_eastl_allocator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F99A754623CA65A20061389F /* tk_eastl_allocator.cpp */; };
+		F99A754A23CA65A20061389F /* tk_eastl_allocator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F99A754623CA65A20061389F /* tk_eastl_allocator.cpp */; };
 		F9E2669123BD13A600745F52 /* CoreVideo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F9E2669023BD13A600745F52 /* CoreVideo.framework */; };
 		F9E2669223BD13AD00745F52 /* CoreVideo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F9E2669023BD13A600745F52 /* CoreVideo.framework */; };
 		F9E2671A23C9247100745F52 /* harfbuzz.cc in Sources */ = {isa = PBXBuildFile; fileRef = F9E2671923C9247000745F52 /* harfbuzz.cc */; };
@@ -703,6 +743,16 @@
 		F998F79A23A84B5D0025564F /* stb_image.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = stb_image.h; sourceTree = "<group>"; };
 		F998F79B23AAD8370025564F /* TKImageBuffer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TKImageBuffer.h; sourceTree = "<group>"; };
 		F998F79C23AD92B40025564F /* TKImageBuffer.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; fileEncoding = 4; path = TKImageBuffer.cpp; sourceTree = "<group>"; };
+		F99A751923CA61020061389F /* hashtable.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = hashtable.cpp; path = "TransferKitty Shared/eastl-master/source/hashtable.cpp"; sourceTree = SOURCE_ROOT; };
+		F99A751A23CA61020061389F /* numeric_limits.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = numeric_limits.cpp; path = "TransferKitty Shared/eastl-master/source/numeric_limits.cpp"; sourceTree = SOURCE_ROOT; };
+		F99A751B23CA61020061389F /* allocator_eastl.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = allocator_eastl.cpp; path = "TransferKitty Shared/eastl-master/source/allocator_eastl.cpp"; sourceTree = SOURCE_ROOT; };
+		F99A751C23CA61020061389F /* red_black_tree.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = red_black_tree.cpp; path = "TransferKitty Shared/eastl-master/source/red_black_tree.cpp"; sourceTree = SOURCE_ROOT; };
+		F99A751D23CA61020061389F /* thread_support.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = thread_support.cpp; path = "TransferKitty Shared/eastl-master/source/thread_support.cpp"; sourceTree = SOURCE_ROOT; };
+		F99A751E23CA61020061389F /* fixed_pool.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = fixed_pool.cpp; path = "TransferKitty Shared/eastl-master/source/fixed_pool.cpp"; sourceTree = SOURCE_ROOT; };
+		F99A751F23CA61020061389F /* assert.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = assert.cpp; path = "TransferKitty Shared/eastl-master/source/assert.cpp"; sourceTree = SOURCE_ROOT; };
+		F99A752023CA61020061389F /* string.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = string.cpp; path = "TransferKitty Shared/eastl-master/source/string.cpp"; sourceTree = SOURCE_ROOT; };
+		F99A752123CA61020061389F /* intrusive_list.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = intrusive_list.cpp; path = "TransferKitty Shared/eastl-master/source/intrusive_list.cpp"; sourceTree = SOURCE_ROOT; };
+		F99A754623CA65A20061389F /* tk_eastl_allocator.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = tk_eastl_allocator.cpp; sourceTree = "<group>"; };
 		F9E2668F23BCF94400745F52 /* TKSpan.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TKSpan.h; sourceTree = "<group>"; };
 		F9E2669023BD13A600745F52 /* CoreVideo.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreVideo.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS13.1.sdk/System/Library/Frameworks/CoreVideo.framework; sourceTree = DEVELOPER_DIR; };
 		F9E2671923C9247000745F52 /* harfbuzz.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = harfbuzz.cc; path = "TransferKitty Shared/harfbuzz-2.6.4/src/harfbuzz.cc"; sourceTree = SOURCE_ROOT; };
@@ -898,6 +948,7 @@
 		CACC747D2354F93500FE3672 /* TransferKitty Shared */ = {
 			isa = PBXGroup;
 			children = (
+				F99A751823CA60E40061389F /* EASTL */,
 				F99A751723C9D8070061389F /* Nuklear */,
 				F9E2697223C9C36900745F52 /* FriBidi */,
 				F9E2671E23C924CB00745F52 /* FreeType */,
@@ -1030,6 +1081,23 @@
 				CAE7EC4B235C4F5A00C4D217 /* nuklear.h */,
 			);
 			path = Nuklear;
+			sourceTree = "<group>";
+		};
+		F99A751823CA60E40061389F /* EASTL */ = {
+			isa = PBXGroup;
+			children = (
+				F99A754623CA65A20061389F /* tk_eastl_allocator.cpp */,
+				F99A751B23CA61020061389F /* allocator_eastl.cpp */,
+				F99A751F23CA61020061389F /* assert.cpp */,
+				F99A751E23CA61020061389F /* fixed_pool.cpp */,
+				F99A751923CA61020061389F /* hashtable.cpp */,
+				F99A752123CA61020061389F /* intrusive_list.cpp */,
+				F99A751A23CA61020061389F /* numeric_limits.cpp */,
+				F99A751C23CA61020061389F /* red_black_tree.cpp */,
+				F99A752023CA61020061389F /* string.cpp */,
+				F99A751D23CA61020061389F /* thread_support.cpp */,
+			);
+			path = EASTL;
 			sourceTree = "<group>";
 		};
 		F9E2671823C9244000745F52 /* HarfBuzz */ = {
@@ -1358,6 +1426,7 @@
 				F9E268A223C92CD000745F52 /* ttpload.c in Sources */,
 				F9E2686F23C92C8900745F52 /* t1afm.c in Sources */,
 				F9E268A623C92CD000745F52 /* ttsubpix.c in Sources */,
+				F99A752A23CA61020061389F /* allocator_eastl.cpp in Sources */,
 				F9E2698623C9C3A600745F52 /* fribidi-char-sets-utf8.c in Sources */,
 				F9E268F123C92D1000745F52 /* ttload.c in Sources */,
 				F9E2680A23C92B7B00745F52 /* ftmac.c in Sources */,
@@ -1392,6 +1461,7 @@
 				F9E2678923C92B1A00745F52 /* ftdebug.c in Sources */,
 				F9E269C623C9C3A600745F52 /* fribidi-char-sets-cp1256.c in Sources */,
 				F9E2678D23C92B1A00745F52 /* ftbbox.c in Sources */,
+				F99A754723CA65A20061389F /* tk_eastl_allocator.cpp in Sources */,
 				F9E2696E23C9313400745F52 /* ftobjs.c in Sources */,
 				F9E267B523C92B1A00745F52 /* ftpfr.c in Sources */,
 				F9E2675323C929E900745F52 /* ftraster.c in Sources */,
@@ -1407,6 +1477,7 @@
 				F9E268CD23C92D1000745F52 /* ttcolr.c in Sources */,
 				F9E2671A23C9247100745F52 /* harfbuzz.cc in Sources */,
 				F9E2681223C92B7B00745F52 /* ftfntfmt.c in Sources */,
+				F99A752223CA61020061389F /* hashtable.cpp in Sources */,
 				F9E268D523C92D1000745F52 /* ttbdf.c in Sources */,
 				F9E267EA23C92B7B00745F52 /* ftutil.c in Sources */,
 				F9E2674D23C929BB00745F52 /* psaux.c in Sources */,
@@ -1416,6 +1487,7 @@
 				F998F7862385EA500025564F /* TKUIStatePopulator.cpp in Sources */,
 				F9E2681A23C92B7B00745F52 /* ftadvanc.c in Sources */,
 				CAE7EC4C235C4F5A00C4D217 /* Nuklear.metal in Sources */,
+				F99A754223CA61020061389F /* intrusive_list.cpp in Sources */,
 				CACC74982354F93800FE3672 /* main.m in Sources */,
 				F9E2672C23C9275900745F52 /* bdf.c in Sources */,
 				F998F79423A70CF90025564F /* TKBlurHash.cpp in Sources */,
@@ -1428,6 +1500,7 @@
 				CAE7EC52235C4F5A00C4D217 /* TKNuklearMetalViewDelegate.mm in Sources */,
 				F9E2695A23C92DE300745F52 /* ftcbasic.c in Sources */,
 				F9E2673E23C9298D00745F52 /* pfr.c in Sources */,
+				F99A752623CA61020061389F /* numeric_limits.cpp in Sources */,
 				F9E267CC23C92B4E00745F52 /* ftcid.c in Sources */,
 				F9E267D423C92B4E00745F52 /* ftstream.c in Sources */,
 				F9E2682223C92B7B00745F52 /* ftbdf.c in Sources */,
@@ -1436,6 +1509,7 @@
 				F9E268C123C92D1000745F52 /* sfdriver.c in Sources */,
 				F9E2692623C92DC000745F52 /* cidload.c in Sources */,
 				F9E2691423C92D3100745F52 /* zutil.c in Sources */,
+				F99A753E23CA61020061389F /* string.cpp in Sources */,
 				F9E2695F23C92DF700745F52 /* ftbzip2.c in Sources */,
 				F9E2690C23C92D3100745F52 /* infcodes.c in Sources */,
 				F9E2679D23C92B1A00745F52 /* ftgasp.c in Sources */,
@@ -1474,8 +1548,12 @@
 				F9E268E523C92D1000745F52 /* ttcpal.c in Sources */,
 				F9E2681623C92B7B00745F52 /* fthash.c in Sources */,
 				F9E2673A23C9298D00745F52 /* pcf.c in Sources */,
+				F99A752E23CA61020061389F /* red_black_tree.cpp in Sources */,
+				F99A753623CA61020061389F /* fixed_pool.cpp in Sources */,
 				F9E268D123C92D1000745F52 /* sfwoff.c in Sources */,
 				F9E2685123C92C1B00745F52 /* ftrend1.c in Sources */,
+				F99A753223CA61020061389F /* thread_support.cpp in Sources */,
+				F99A753A23CA61020061389F /* assert.cpp in Sources */,
 				F9E2692E23C92DC000745F52 /* cidriver.c in Sources */,
 				F9E269CE23C9C3A600745F52 /* fribidi.c in Sources */,
 			);
@@ -1502,6 +1580,7 @@
 				F9E268A323C92CD000745F52 /* ttpload.c in Sources */,
 				F9E2687023C92C8900745F52 /* t1afm.c in Sources */,
 				F9E268A723C92CD000745F52 /* ttsubpix.c in Sources */,
+				F99A752B23CA61020061389F /* allocator_eastl.cpp in Sources */,
 				F9E2698723C9C3A600745F52 /* fribidi-char-sets-utf8.c in Sources */,
 				F9E268F223C92D1000745F52 /* ttload.c in Sources */,
 				F9E2680B23C92B7B00745F52 /* ftmac.c in Sources */,
@@ -1536,6 +1615,7 @@
 				F9E2678A23C92B1A00745F52 /* ftdebug.c in Sources */,
 				F9E269C723C9C3A600745F52 /* fribidi-char-sets-cp1256.c in Sources */,
 				F9E2678E23C92B1A00745F52 /* ftbbox.c in Sources */,
+				F99A754823CA65A20061389F /* tk_eastl_allocator.cpp in Sources */,
 				F9E2696F23C9313400745F52 /* ftobjs.c in Sources */,
 				F9E267B623C92B1A00745F52 /* ftpfr.c in Sources */,
 				F9E2675423C929E900745F52 /* ftraster.c in Sources */,
@@ -1551,6 +1631,7 @@
 				F9E268CE23C92D1000745F52 /* ttcolr.c in Sources */,
 				F9E2671B23C9248D00745F52 /* harfbuzz.cc in Sources */,
 				F9E2681323C92B7B00745F52 /* ftfntfmt.c in Sources */,
+				F99A752323CA61020061389F /* hashtable.cpp in Sources */,
 				F9E268D623C92D1000745F52 /* ttbdf.c in Sources */,
 				F9E267EB23C92B7B00745F52 /* ftutil.c in Sources */,
 				F9E2674E23C929BB00745F52 /* psaux.c in Sources */,
@@ -1560,6 +1641,7 @@
 				F998F7872385EA500025564F /* TKUIStatePopulator.cpp in Sources */,
 				F9E2681B23C92B7B00745F52 /* ftadvanc.c in Sources */,
 				CAE7EC4D235C4F5A00C4D217 /* Nuklear.metal in Sources */,
+				F99A754323CA61020061389F /* intrusive_list.cpp in Sources */,
 				CACC74AA2354F93800FE3672 /* main.m in Sources */,
 				F9E2672D23C9275900745F52 /* bdf.c in Sources */,
 				F998F79523A70CF90025564F /* TKBlurHash.cpp in Sources */,
@@ -1572,6 +1654,7 @@
 				CAE7EC53235C4F5A00C4D217 /* TKNuklearMetalViewDelegate.mm in Sources */,
 				F9E2695B23C92DE300745F52 /* ftcbasic.c in Sources */,
 				F9E2673F23C9298D00745F52 /* pfr.c in Sources */,
+				F99A752723CA61020061389F /* numeric_limits.cpp in Sources */,
 				F9E267CD23C92B4E00745F52 /* ftcid.c in Sources */,
 				F9E267D523C92B4E00745F52 /* ftstream.c in Sources */,
 				F9E2682323C92B7B00745F52 /* ftbdf.c in Sources */,
@@ -1580,6 +1663,7 @@
 				F9E268C223C92D1000745F52 /* sfdriver.c in Sources */,
 				F9E2692723C92DC000745F52 /* cidload.c in Sources */,
 				F9E2691523C92D3100745F52 /* zutil.c in Sources */,
+				F99A753F23CA61020061389F /* string.cpp in Sources */,
 				F9E2696023C92DF700745F52 /* ftbzip2.c in Sources */,
 				F9E2690D23C92D3100745F52 /* infcodes.c in Sources */,
 				F9E2679E23C92B1A00745F52 /* ftgasp.c in Sources */,
@@ -1618,8 +1702,12 @@
 				F9E268E623C92D1000745F52 /* ttcpal.c in Sources */,
 				F9E2681723C92B7B00745F52 /* fthash.c in Sources */,
 				F9E2673B23C9298D00745F52 /* pcf.c in Sources */,
+				F99A752F23CA61020061389F /* red_black_tree.cpp in Sources */,
+				F99A753723CA61020061389F /* fixed_pool.cpp in Sources */,
 				F9E268D223C92D1000745F52 /* sfwoff.c in Sources */,
 				F9E2685223C92C1B00745F52 /* ftrend1.c in Sources */,
+				F99A753323CA61020061389F /* thread_support.cpp in Sources */,
+				F99A753B23CA61020061389F /* assert.cpp in Sources */,
 				F9E2692F23C92DC000745F52 /* cidriver.c in Sources */,
 				F9E269CF23C9C3A600745F52 /* fribidi.c in Sources */,
 			);
@@ -1639,6 +1727,7 @@
 				F9E2687923C92CB400745F52 /* t42objs.c in Sources */,
 				F9E2674723C929BB00745F52 /* psnames.c in Sources */,
 				F9E2682C23C92B7B00745F52 /* fttrigon.c in Sources */,
+				F99A752423CA61020061389F /* hashtable.cpp in Sources */,
 				F9E2683C23C92BC000745F52 /* ftgzip.c in Sources */,
 				F9E267A323C92B1A00745F52 /* ftstroke.c in Sources */,
 				F9E268CF23C92D1000745F52 /* ttcolr.c in Sources */,
@@ -1647,13 +1736,17 @@
 				F9E2674F23C929BB00745F52 /* psaux.c in Sources */,
 				F9E2672223C9270D00745F52 /* autofit.c in Sources */,
 				F9E268FE23C92D3100745F52 /* inflate.c in Sources */,
+				F99A752823CA61020061389F /* numeric_limits.cpp in Sources */,
 				F9E267F023C92B7B00745F52 /* ftsnames.c in Sources */,
 				F9E268EF23C92D1000745F52 /* ttpost.c in Sources */,
 				CAE7EC54235C4F5A00C4D217 /* TKNuklearMetalViewDelegate.mm in Sources */,
+				F99A754423CA61020061389F /* intrusive_list.cpp in Sources */,
 				F9E2691223C92D3100745F52 /* adler32.c in Sources */,
 				F9E2689C23C92CD000745F52 /* ttgxvar.c in Sources */,
+				F99A754023CA61020061389F /* string.cpp in Sources */,
 				F9E2699823C9C3A600745F52 /* fribidi-brackets.c in Sources */,
 				F9E2694C23C92DE300745F52 /* ftcimage.c in Sources */,
+				F99A753C23CA61020061389F /* assert.cpp in Sources */,
 				F9E2696123C92DF700745F52 /* ftbzip2.c in Sources */,
 				F9E268C323C92D1000745F52 /* sfdriver.c in Sources */,
 				F9E268E323C92D1000745F52 /* ttcmap.c in Sources */,
@@ -1668,6 +1761,7 @@
 				F9E267C723C92B1A00745F52 /* ftsynth.c in Sources */,
 				F9E2686523C92C8900745F52 /* t1gload.c in Sources */,
 				F9E267AB23C92B1A00745F52 /* ftbitmap.c in Sources */,
+				F99A753023CA61020061389F /* red_black_tree.cpp in Sources */,
 				F9E2679723C92B1A00745F52 /* fttype1.c in Sources */,
 				F9E2675523C929E900745F52 /* ftraster.c in Sources */,
 				F9E2688523C92CB400745F52 /* t42parse.c in Sources */,
@@ -1681,6 +1775,7 @@
 				F96388D523BA6B4900BA6F2A /* TKiOSViewController.mm in Sources */,
 				F9E269C823C9C3A600745F52 /* fribidi-char-sets-cp1256.c in Sources */,
 				F9E267C323C92B1A00745F52 /* ftfstype.c in Sources */,
+				F99A753423CA61020061389F /* thread_support.cpp in Sources */,
 				F9E2680423C92B7B00745F52 /* ftcalc.c in Sources */,
 				F9E268EB23C92D1000745F52 /* pngshim.c in Sources */,
 				F9E2684423C92BC000745F52 /* ftlzw.c in Sources */,
@@ -1688,6 +1783,7 @@
 				F9E267B723C92B1A00745F52 /* ftpfr.c in Sources */,
 				F9E2673223C9275900745F52 /* cff.c in Sources */,
 				CAE7EC4E235C4F5A00C4D217 /* Nuklear.metal in Sources */,
+				F99A752C23CA61020061389F /* allocator_eastl.cpp in Sources */,
 				F9E268A823C92CD000745F52 /* ttsubpix.c in Sources */,
 				F9E2695C23C92DE300745F52 /* ftcbasic.c in Sources */,
 				F9E2692423C92DC000745F52 /* cidparse.c in Sources */,
@@ -1711,6 +1807,7 @@
 				F9E267AF23C92B1A00745F52 /* ftinit.c in Sources */,
 				F9E2698823C9C3A600745F52 /* fribidi-char-sets-utf8.c in Sources */,
 				F998F78F238736960025564F /* TKApp.mm in Sources */,
+				F99A753823CA61020061389F /* fixed_pool.cpp in Sources */,
 				F9E2680C23C92B7B00745F52 /* ftmac.c in Sources */,
 				F9E2696623C92EB400745F52 /* ft_tk_missing.cpp in Sources */,
 				F9E2685323C92C1B00745F52 /* ftrend1.c in Sources */,
@@ -1739,6 +1836,7 @@
 				F9E268C723C92D1000745F52 /* ttsbit.c in Sources */,
 				F9E269CC23C9C3A600745F52 /* fribidi-char-sets.c in Sources */,
 				CACC74C12354F9AB00FE3672 /* TKViewController.mm in Sources */,
+				F99A754923CA65A20061389F /* tk_eastl_allocator.cpp in Sources */,
 				F9E269C023C9C3A600745F52 /* fribidi-char-sets-iso8859-6.c in Sources */,
 				F9E2689823C92CD000745F52 /* ttobjs.c in Sources */,
 				F9E2686923C92C8900745F52 /* t1load.c in Sources */,
@@ -1781,6 +1879,7 @@
 				F9E2687A23C92CB400745F52 /* t42objs.c in Sources */,
 				F9E2674823C929BB00745F52 /* psnames.c in Sources */,
 				F9E2682D23C92B7B00745F52 /* fttrigon.c in Sources */,
+				F99A752523CA61020061389F /* hashtable.cpp in Sources */,
 				F9E2683D23C92BC000745F52 /* ftgzip.c in Sources */,
 				F9E267A423C92B1A00745F52 /* ftstroke.c in Sources */,
 				F9E268D023C92D1000745F52 /* ttcolr.c in Sources */,
@@ -1789,13 +1888,17 @@
 				F9E2675023C929BB00745F52 /* psaux.c in Sources */,
 				F9E2672323C9270D00745F52 /* autofit.c in Sources */,
 				F9E268FF23C92D3100745F52 /* inflate.c in Sources */,
+				F99A752923CA61020061389F /* numeric_limits.cpp in Sources */,
 				F9E267F123C92B7B00745F52 /* ftsnames.c in Sources */,
 				F9E268F023C92D1000745F52 /* ttpost.c in Sources */,
 				F998F738236E348C0025564F /* Nuklear.metal in Sources */,
+				F99A754523CA61020061389F /* intrusive_list.cpp in Sources */,
 				F9E2691323C92D3100745F52 /* adler32.c in Sources */,
 				F9E2689D23C92CD000745F52 /* ttgxvar.c in Sources */,
+				F99A754123CA61020061389F /* string.cpp in Sources */,
 				F9E2699923C9C3A600745F52 /* fribidi-brackets.c in Sources */,
 				F9E2694D23C92DE300745F52 /* ftcimage.c in Sources */,
+				F99A753D23CA61020061389F /* assert.cpp in Sources */,
 				F9E2696223C92DF700745F52 /* ftbzip2.c in Sources */,
 				F9E268C423C92D1000745F52 /* sfdriver.c in Sources */,
 				F9E268E423C92D1000745F52 /* ttcmap.c in Sources */,
@@ -1810,6 +1913,7 @@
 				F9E267C823C92B1A00745F52 /* ftsynth.c in Sources */,
 				F9E2686623C92C8900745F52 /* t1gload.c in Sources */,
 				F9E267AC23C92B1A00745F52 /* ftbitmap.c in Sources */,
+				F99A753123CA61020061389F /* red_black_tree.cpp in Sources */,
 				F9E2679823C92B1A00745F52 /* fttype1.c in Sources */,
 				F9E2675623C929E900745F52 /* ftraster.c in Sources */,
 				F9E2688623C92CB400745F52 /* t42parse.c in Sources */,
@@ -1823,6 +1927,7 @@
 				F998F736236E348C0025564F /* TKBluetoothCommunicator.mm in Sources */,
 				F9E269C923C9C3A600745F52 /* fribidi-char-sets-cp1256.c in Sources */,
 				F9E267C423C92B1A00745F52 /* ftfstype.c in Sources */,
+				F99A753523CA61020061389F /* thread_support.cpp in Sources */,
 				F9E2680523C92B7B00745F52 /* ftcalc.c in Sources */,
 				F9E268EC23C92D1000745F52 /* pngshim.c in Sources */,
 				F9E2684523C92BC000745F52 /* ftlzw.c in Sources */,
@@ -1830,6 +1935,7 @@
 				F9E267B823C92B1A00745F52 /* ftpfr.c in Sources */,
 				F9E2673323C9275900745F52 /* cff.c in Sources */,
 				F998F790238736960025564F /* TKApp.mm in Sources */,
+				F99A752D23CA61020061389F /* allocator_eastl.cpp in Sources */,
 				F9E268A923C92CD000745F52 /* ttsubpix.c in Sources */,
 				F9E2695D23C92DE300745F52 /* ftcbasic.c in Sources */,
 				F9E2692523C92DC000745F52 /* cidparse.c in Sources */,
@@ -1853,6 +1959,7 @@
 				F9E267B023C92B1A00745F52 /* ftinit.c in Sources */,
 				F9E2698923C9C3A600745F52 /* fribidi-char-sets-utf8.c in Sources */,
 				F998F737236E348C0025564F /* TKNuklearMetalViewDelegate.mm in Sources */,
+				F99A753923CA61020061389F /* fixed_pool.cpp in Sources */,
 				F9E2680D23C92B7B00745F52 /* ftmac.c in Sources */,
 				F9E2696723C92EB400745F52 /* ft_tk_missing.cpp in Sources */,
 				F9E2685423C92C1B00745F52 /* ftrend1.c in Sources */,
@@ -1881,6 +1988,7 @@
 				F9E268C823C92D1000745F52 /* ttsbit.c in Sources */,
 				F9E269CD23C9C3A600745F52 /* fribidi-char-sets.c in Sources */,
 				F998F729236E312E0025564F /* TKViewController.mm in Sources */,
+				F99A754A23CA65A20061389F /* tk_eastl_allocator.cpp in Sources */,
 				F9E269C123C9C3A600745F52 /* fribidi-char-sets-iso8859-6.c in Sources */,
 				F9E2689923C92CD000745F52 /* ttobjs.c in Sources */,
 				F9E2686A23C92C8900745F52 /* t1load.c in Sources */,
@@ -2031,6 +2139,20 @@
 					"$PROJECT_DIR/TransferKitty\\ Shared/fribidi-1.0.8/lib",
 					"$PROJECT_DIR/TransferKitty\\ Shared/HarfBuzz",
 					"$PROJECT_DIR/TransferKitty\\ Shared/Nuklear",
+					"$PROJECT_DIR/TransferKitty\\ Shared/eastl-master/include",
+					"$PROJECT_DIR/TransferKitty\\ Shared/eastl-master/include/bonus",
+					"$PROJECT_DIR/TransferKitty\\ Shared/eastl-master/include/internal",
+					"$PROJECT_DIR/TransferKitty\\ Shared/eastl-master/test/source",
+					"$PROJECT_DIR/TransferKitty\\ Shared/eastl-master/test/packages/EAAssert/include",
+					"$PROJECT_DIR/TransferKitty\\ Shared/eastl-master/test/packages/EABase/include",
+					"$PROJECT_DIR/TransferKitty\\ Shared/eastl-master/test/packages/EABase/include/Common",
+					"$PROJECT_DIR/TransferKitty\\ Shared/eastl-master/test/packages/EAMain/include",
+					"$PROJECT_DIR/TransferKitty\\ Shared/eastl-master/test/packages/EAStdC/include",
+					"$PROJECT_DIR/TransferKitty\\ Shared/eastl-master/test/packages/EATest/include",
+					"$PROJECT_DIR/TransferKitty\\ Shared/eastl-master/test/packages/EAStdC/source",
+					"$PROJECT_DIR/TransferKitty\\ Shared/eastl-master/test/packages/EATest/source",
+					"$PROJECT_DIR/TransferKitty\\ Shared/eastl-master/test/packages/EAThread/include",
+					"$PROJECT_DIR/TransferKitty\\ Shared/EASTL",
 				);
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
@@ -2097,6 +2219,20 @@
 					"$PROJECT_DIR/TransferKitty\\ Shared/fribidi-1.0.8/lib",
 					"$PROJECT_DIR/TransferKitty\\ Shared/HarfBuzz",
 					"$PROJECT_DIR/TransferKitty\\ Shared/Nuklear",
+					"$PROJECT_DIR/TransferKitty\\ Shared/eastl-master/include",
+					"$PROJECT_DIR/TransferKitty\\ Shared/eastl-master/include/bonus",
+					"$PROJECT_DIR/TransferKitty\\ Shared/eastl-master/include/internal",
+					"$PROJECT_DIR/TransferKitty\\ Shared/eastl-master/test/source",
+					"$PROJECT_DIR/TransferKitty\\ Shared/eastl-master/test/packages/EAAssert/include",
+					"$PROJECT_DIR/TransferKitty\\ Shared/eastl-master/test/packages/EABase/include",
+					"$PROJECT_DIR/TransferKitty\\ Shared/eastl-master/test/packages/EABase/include/Common",
+					"$PROJECT_DIR/TransferKitty\\ Shared/eastl-master/test/packages/EAMain/include",
+					"$PROJECT_DIR/TransferKitty\\ Shared/eastl-master/test/packages/EAStdC/include",
+					"$PROJECT_DIR/TransferKitty\\ Shared/eastl-master/test/packages/EATest/include",
+					"$PROJECT_DIR/TransferKitty\\ Shared/eastl-master/test/packages/EAStdC/source",
+					"$PROJECT_DIR/TransferKitty\\ Shared/eastl-master/test/packages/EATest/source",
+					"$PROJECT_DIR/TransferKitty\\ Shared/eastl-master/test/packages/EAThread/include",
+					"$PROJECT_DIR/TransferKitty\\ Shared/EASTL",
 				);
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;

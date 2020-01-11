@@ -29,6 +29,7 @@
     tk::UIStatePopulator populator;
     tk::NuklearMetalTexture iconImgTexture;
     tk::NuklearMetalTexture hashedImgTexture;
+    tk::DefaultUIState defaultState;
 }
 
 - (void)dealloc {
@@ -113,7 +114,7 @@
                                   static_cast<uint32_t>(viewport.size.width - (debugOffsetX << 1)),
                                   static_cast<uint32_t>(viewport.size.height - (debugOffsetY << 1))};
 
-    populator.populate(nullptr, hashedImgTexture, bounds, frame.contextPtr);
+    populator.populate(&defaultState, hashedImgTexture, bounds, frame.contextPtr);
 }
 
 //
@@ -138,6 +139,7 @@
 
 - (void)bluetoothCommunicator:(TKBluetoothCommunicator *)bluetoothCommunicator didLog:(NSString *)log {
     // DLOGF(@"%s", TK_FUNC_NAME);
+    defaultState._debugLogs.push_back(std::string([log cStringUsingEncoding:NSUTF8StringEncoding]));
 }
 
 - (void)bluetoothCommunicator:(TKBluetoothCommunicator *)bluetoothCommunicator

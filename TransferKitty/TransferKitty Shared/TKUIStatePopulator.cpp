@@ -108,6 +108,12 @@ bool UIStatePopulator::populate(const tk::IUIState *state,
         }
 
         nk_layout_row_end(nk);
+
+        nk_layout_row_dynamic(nk, fontHeight, 1);
+        nk_label(nk, "Logs:", NK_TEXT_ALIGN_LEFT);
+        for (size_t i = 0; i < state->debugLogCount(); ++i) {
+            nk_label(nk, state->debugLog(i).data, NK_TEXT_ALIGN_LEFT);
+        }
     }
 
     nk_window_set_position(nk, windowName.data(), nk_vec2(viewportBounds.x, viewport.y));
