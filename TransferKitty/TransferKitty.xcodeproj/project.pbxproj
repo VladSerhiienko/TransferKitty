@@ -898,6 +898,7 @@
 		CACC747D2354F93500FE3672 /* TransferKitty Shared */ = {
 			isa = PBXGroup;
 			children = (
+				F99A751723C9D8070061389F /* Nuklear */,
 				F9E2697223C9C36900745F52 /* FriBidi */,
 				F9E2671E23C924CB00745F52 /* FreeType */,
 				F9E2671823C9244000745F52 /* HarfBuzz */,
@@ -922,13 +923,9 @@
 				F998F79C23AD92B40025564F /* TKImageBuffer.cpp */,
 				F998F79B23AAD8370025564F /* TKImageBuffer.h */,
 				F95CCF9D23AE8D3A004DEBFB /* TKOptional.h */,
-				F998F79823A84B5D0025564F /* stb_image_resize.h */,
-				F998F79923A84B5D0025564F /* stb_image_write.h */,
-				F998F79A23A84B5D0025564F /* stb_image.h */,
 				F998F79323A70CF90025564F /* TKBlurHash.cpp */,
 				F998F79223A70CF90025564F /* TKBlurHash.h */,
 				CAE7EC46235C4F5A00C4D217 /* AppInput.h */,
-				CAE7EC4B235C4F5A00C4D217 /* nuklear.h */,
 				CAE7EC44235C4F5A00C4D217 /* Nuklear.metal */,
 				CAE7EC47235C4F5A00C4D217 /* TKBluetoothCommunicator.h */,
 				CAE7EC45235C4F5A00C4D217 /* TKBluetoothCommunicator.mm */,
@@ -1022,6 +1019,17 @@
 				F998F72E236E312E0025564F /* TransferKitty.entitlements */,
 			);
 			path = "TransferKitty ShareExtension macOS";
+			sourceTree = "<group>";
+		};
+		F99A751723C9D8070061389F /* Nuklear */ = {
+			isa = PBXGroup;
+			children = (
+				F998F79823A84B5D0025564F /* stb_image_resize.h */,
+				F998F79923A84B5D0025564F /* stb_image_write.h */,
+				F998F79A23A84B5D0025564F /* stb_image.h */,
+				CAE7EC4B235C4F5A00C4D217 /* nuklear.h */,
+			);
+			path = Nuklear;
 			sourceTree = "<group>";
 		};
 		F9E2671823C9244000745F52 /* HarfBuzz */ = {
@@ -2022,6 +2030,7 @@
 					"$PROJECT_DIR/TransferKitty\\ Shared/fribidi-1.0.8/build",
 					"$PROJECT_DIR/TransferKitty\\ Shared/fribidi-1.0.8/lib",
 					"$PROJECT_DIR/TransferKitty\\ Shared/HarfBuzz",
+					"$PROJECT_DIR/TransferKitty\\ Shared/Nuklear",
 				);
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
@@ -2087,6 +2096,7 @@
 					"$PROJECT_DIR/TransferKitty\\ Shared/fribidi-1.0.8/build",
 					"$PROJECT_DIR/TransferKitty\\ Shared/fribidi-1.0.8/lib",
 					"$PROJECT_DIR/TransferKitty\\ Shared/HarfBuzz",
+					"$PROJECT_DIR/TransferKitty\\ Shared/Nuklear",
 				);
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
