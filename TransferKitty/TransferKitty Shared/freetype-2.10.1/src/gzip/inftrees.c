@@ -6,6 +6,10 @@
 #include "zutil.h"
 #include "inftrees.h"
 
+#ifndef FT_UNUSED
+#define FT_UNUSED(...)
+#endif
+
 #if !defined(BUILDFIXED) && !defined(STDC)
 #  define BUILDFIXED   /* non ANSI compilers may not accept inffixed.h */
 #endif

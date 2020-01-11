@@ -9,6 +9,10 @@
 #include "infcodes.h"
 #include "infutil.h"
 
+#undef zmemcpy
+#define zmemcpy tk_zmemcpy
+void tk_zmemcpy(Bytef* dest, const Bytef* source, uInt  len);
+
 
 /* simplify the use of the inflate_huft type with some defines */
 #define exop word.what.Exop

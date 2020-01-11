@@ -11,7 +11,6 @@
 extern void exit OF((int));
 #endif
 
-
 #ifndef HAVE_MEMCPY
 
 void zmemcpy(dest, source, len)
@@ -160,6 +159,8 @@ void  zcfree (voidpf opaque, voidpf ptr)
 extern voidp  ft_scalloc OF((uInt items, uInt size));
 extern void   ft_sfree   OF((voidpf ptr));
 #endif
+extern voidp  ft_scalloc OF((uInt items, uInt size));
+extern void   ft_sfree   OF((voidpf ptr));
 
 voidpf zcalloc (opaque, items, size)
     voidpf opaque;

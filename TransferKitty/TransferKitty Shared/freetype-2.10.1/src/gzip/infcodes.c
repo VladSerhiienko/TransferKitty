@@ -9,6 +9,9 @@
 #include "infcodes.h"
 #include "infutil.h"
 
+#undef  SLOW
+#define SLOW  1
+
 /* simplify the use of the inflate_huft type with some defines */
 #define exop word.what.Exop
 #define bits word.what.Bits

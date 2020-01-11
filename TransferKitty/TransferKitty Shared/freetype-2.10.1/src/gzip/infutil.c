@@ -9,6 +9,14 @@
 #include "infcodes.h"
 #include "infutil.h"
 
+//void zmemcpy(Bytef* dest, const Bytef* source, uInt  len);
+
+#undef zmemcpy
+#define zmemcpy tk_zmemcpy
+inline void tk_zmemcpy(Bytef* dest, const Bytef* source, uInt  len){
+    memcpy(dest, source, len);
+}
+
 
 /* And'ing with mask[n] masks the lower n bits */
 local const uInt inflate_mask[17] = {
