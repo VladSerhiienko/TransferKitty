@@ -268,19 +268,24 @@ static TKBluetoothCommunicator *_instance = nil;
         CBCharacteristicPropertyRead | CBCharacteristicPropertyWrite | CBCharacteristicPropertyNotify;
     CBAttributePermissions permissions = CBAttributePermissionsReadable | CBAttributePermissionsWriteable;
 
-    uint8_t enableNotificationBytes[] = {0x01, 0x00};
-    static_assert(sizeof(enableNotificationBytes) == 2, "");
-    NSData *enableNotificationValue = [[NSData alloc] initWithBytes:enableNotificationBytes length:2];
+    // https://stackoverflow.com/questions/18622608/how-do-you-create-a-descriptor-for-a-mutable-characteristic
 
-    NSString *dataRespondString = @"DATA_RESPOND";
-    // NSData *dataRespondValue = [dataRespondString dataUsingEncoding:NSUTF8StringEncoding];
+    CBUUID *userDescriptionUUID =
+        [CBUUID UUIDWithString:CBUUIDCharacteristicUserDescriptionString]; // or set it to the actual UUID->2901
+    CBMutableDescriptor *userDescriptionDescriptor = [[CBMutableDescriptor alloc] initWithType:userDescriptionUUID
+                                                                                         value:@"DATA_RESPOND"];
 
-    CBDescriptor *clientConfigurationDescriptor =
-        [[CBMutableDescriptor alloc] initWithType:[_descriptorUUIDs objectAtIndex:0] value:enableNotificationValue];
-    CBDescriptor *userDescriptionDescriptor =
-        [[CBMutableDescriptor alloc] initWithType:[_descriptorUUIDs objectAtIndex:1] value:dataRespondString];
-    NSArray<CBDescriptor *> *peripheralDescriptors =
-        [[NSArray alloc] initWithObjects:clientConfigurationDescriptor, userDescriptionDescriptor, nil];
+    // uint8_t enableNotificationBytes[] = {0x01, 0x00};
+    // static_assert(sizeof(enableNotificationBytes) == 2, "");
+    // NSData *enableNotificationValue = [[NSData alloc] initWithBytes:enableNotificationBytes length:2];
+    // NSString *dataRespondString = @"DATA_RESPOND";
+    // // NSData *dataRespondValue = [dataRespondString dataUsingEncoding:NSUTF8StringEncoding];
+    // CBDescriptor *clientConfigurationDescriptor =
+    //     [[CBMutableDescriptor alloc] initWithType:[_descriptorUUIDs objectAtIndex:0] value:enableNotificationValue];
+    // CBDescriptor *userDescriptionDescriptor =
+    //     [[CBMutableDescriptor alloc] initWithType:[_descriptorUUIDs objectAtIndex:1] value:dataRespondString];
+
+    NSArray<CBDescriptor *> *peripheralDescriptors = [[NSArray alloc] initWithObjects:userDescriptionDescriptor, nil];
 
     CBMutableCharacteristic *peripheralCharacteristic =
         [[CBMutableCharacteristic alloc] initWithType:[_characteristicUUIDs objectAtIndex:0]
