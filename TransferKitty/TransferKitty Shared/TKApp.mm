@@ -182,7 +182,7 @@ using tk::unsetBit;
 - (void)bluetoothCommunicator:(TKBluetoothCommunicator *)bluetoothCommunicator
           didDisconnectDevice:(TKBluetoothCommunicatorDevice *)device {
     DLOGF(@"%s", TK_FUNC_NAME);
-    
+
     auto deviceStateIt = std::find_if(
         defaultState._devices.begin() + 1, defaultState._devices.end(), [&](const tk::DefaultUIDeviceState &state) {
             return state._hash == [device hash];
@@ -220,7 +220,8 @@ using tk::unsetBit;
         deviceStateIt->_name = [[device getName] cStringUsingEncoding:NSUTF8StringEncoding];
         deviceStateIt->_model = [[device getModel] cStringUsingEncoding:NSUTF8StringEncoding];
         deviceStateIt->_friendlyModel = [[device getFriendlyModel] cStringUsingEncoding:NSUTF8StringEncoding];
-        deviceStateIt->_uuidString = [[NSStringUtilities uuidStringOrEmptyString:[device getUUID]] cStringUsingEncoding:NSUTF8StringEncoding];
+        deviceStateIt->_uuidString =
+            [[NSStringUtilities uuidStringOrEmptyString:[device getUUID]] cStringUsingEncoding:NSUTF8StringEncoding];
     }
 }
 

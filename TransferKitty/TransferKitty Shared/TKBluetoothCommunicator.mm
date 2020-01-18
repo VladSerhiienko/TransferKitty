@@ -2028,7 +2028,7 @@ static NSString *emptyStringInstance = @"";
 }
 
 - (void)executeOperations:(NSMutableDictionary *)operationDictionary
-        skipWithPendingWrites:(BOOL)skipWithPendingWrites
+    skipWithPendingWrites:(BOOL)skipWithPendingWrites
         operationExecutor:(TKBluetoothCommunicatorOperationExecutionResult (^)(id device, id data))operationExecutor {
     NSArray *allKeys = nil;
     @synchronized(operationDictionary) {
@@ -2036,13 +2036,17 @@ static NSString *emptyStringInstance = @"";
     }
 
     const NSUInteger keyCount = [allKeys count];
-    for (NSUInteger i = 0; i < keyCount; ++i) {
+    DLOGF(@"%s: devices = %u", TK_FUNC_NAME, keyCount);
 
+    for (NSUInteger i = 0; i < keyCount; ++i) {
         TKBluetoothCommunicatorDevice *device = [allKeys objectAtIndex:i];
         DCHECK(device != nil);
         // DLOGF(@"%s: device = %p, executing operations", TK_FUNC_NAME, device);
 
-        if (!device) { continue; }
+        if (!device) {
+            assert(false);
+            continue;
+        }
         if (skipWithPendingWrites && [device pendingWriteValue]) {
             DLOGF(@"%s: device = %p, skipping with pending write", TK_FUNC_NAME, device);
             continue;
@@ -2050,7 +2054,10 @@ static NSString *emptyStringInstance = @"";
 
         NSMutableArray *operations = [self synchronizedGetOperationsOrNil:device
                                                       operationDictionary:operationDictionary];
-        if (!operations) { continue; }
+        if (!operations) {
+            DLOGF(@"%s: device = %p, no scheduled operations", TK_FUNC_NAME, device);
+            continue;
+        }
 
         NSUInteger operationCount = 0;
         while ((void)(operationCount = [operations count]), operationCount) {
@@ -2185,55 +2192,58 @@ static NSString *emptyStringInstance = @"";
 - (void)executeReads {
     DLOGF(@"%s: scheduled reads count = %u", TK_FUNC_NAME, _scheduledReads.count);
     [self executeOperations:_scheduledReads
-          skipWithPendingWrites:false
-          operationExecutor:^(id deviceId, id operationId) {
-            TKBluetoothCommunicatorDevice *device = deviceId;
-            TKBluetoothCommunicatorScheduledOperation *operation = operationId;
-            DCHECK(device && operation);
+        skipWithPendingWrites:false
+            operationExecutor:^(id deviceId, id operationId) {
+              TKBluetoothCommunicatorDevice *device = deviceId;
+              TKBluetoothCommunicatorScheduledOperation *operation = operationId;
+              DCHECK(device && operation);
 
-            DLOGF(@"%s: device = %p, executing read operation, setting pending write to false", TK_FUNC_NAME, device);
-            [device setPendingWriteValue:false];
+              DLOGF(@"%s: device = %p, executing read operation, setting pending write to false", TK_FUNC_NAME, device);
+              [device setPendingWriteValue:false];
 
-            NSUInteger responseMessageType = [self decodeReceivedMessageAndRespond:device
-                                                               receivedMessageData:[operation data]];
+              NSUInteger responseMessageType = [self decodeReceivedMessageAndRespond:device
+                                                                 receivedMessageData:[operation data]];
 
-            NSData *responseMessageData = [self encodeResponse:device messageType:responseMessageType];
-            if (responseMessageData) {
-                DLOGF(@"%s: Responding with message type: %u, reflushing", TK_FUNC_NAME, responseMessageType);
-                [self scheduleMessageTo:device wholeMessageData:responseMessageData shouldFlush:false];
-                self->_shouldReflush = true;
-            }
+              NSData *responseMessageData = [self encodeResponse:device messageType:responseMessageType];
+              if (responseMessageData) {
+                  DLOGF(@"%s: Responding with message type: %u, reflushing", TK_FUNC_NAME, responseMessageType);
+                  [self scheduleMessageTo:device wholeMessageData:responseMessageData shouldFlush:false];
+                  self->_shouldReflush = true;
+              }
 
-            return TKBluetoothCommunicatorOperationExecutionResultSuccessContinue;
-          }];
+              return TKBluetoothCommunicatorOperationExecutionResultSuccessContinue;
+            }];
 }
 
 - (void)executeWrites {
     DLOGF(@"%s: scheduled writes count = %u", TK_FUNC_NAME, _scheduledWrites.count);
     [self executeOperations:_scheduledWrites
-      skipWithPendingWrites:true
-          operationExecutor:^(id deviceId, id operationId) {
-            TKBluetoothCommunicatorDevice *device = deviceId;
-            TKBluetoothCommunicatorScheduledOperation *operation = operationId;
-            DCHECK(device && operation);
-            DLOGF(@"%s: device = %p, executing write operation", TK_FUNC_NAME, device);
+        skipWithPendingWrites:true
+            operationExecutor:^(id deviceId, id operationId) {
+              TKBluetoothCommunicatorDevice *device = deviceId;
+              TKBluetoothCommunicatorScheduledOperation *operation = operationId;
+              DCHECK(device && operation);
+              DLOGF(@"%s: device = %p, executing write operation", TK_FUNC_NAME, device);
 
-            TKBluetoothCommunicatorWriteValueResult result = [self.bluetoothCommunicator writeValue:[operation data] toDevice:device];
-            switch (result) {
-                case TKBluetoothCommunicatorWriteValueResultSuccessContinue:
-                    if ([operation requiresResponse]) {
-                        DLOGF(@"%s: device = %p, write operation succeeded, setting pending write to true", TK_FUNC_NAME, device);
-                        [device setPendingWriteValue:true];
-                    }
+              TKBluetoothCommunicatorWriteValueResult result = [self.bluetoothCommunicator writeValue:[operation data]
+                                                                                             toDevice:device];
+              switch (result) {
+                  case TKBluetoothCommunicatorWriteValueResultSuccessContinue:
+                      if ([operation requiresResponse]) {
+                          DLOGF(@"%s: device = %p, write operation succeeded, setting pending write to true",
+                                TK_FUNC_NAME,
+                                device);
+                          [device setPendingWriteValue:true];
+                      }
 
-                    return TKBluetoothCommunicatorOperationExecutionResultSuccessContinue;
+                      return TKBluetoothCommunicatorOperationExecutionResultSuccessContinue;
 
-                case TKBluetoothCommunicatorWriteValueResultFailedReschedule:
-                    return TKBluetoothCommunicatorOperationExecutionResultFailedRetryLater;
-                default:
-                    return TKBluetoothCommunicatorOperationExecutionResultFailedContinue;
-            }
-          }];
+                  case TKBluetoothCommunicatorWriteValueResultFailedReschedule:
+                      return TKBluetoothCommunicatorOperationExecutionResultFailedRetryLater;
+                  default:
+                      return TKBluetoothCommunicatorOperationExecutionResultFailedContinue;
+              }
+            }];
 }
 
 - (void)flush {
