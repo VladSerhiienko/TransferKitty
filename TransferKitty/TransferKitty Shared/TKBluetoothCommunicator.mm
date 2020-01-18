@@ -2198,7 +2198,7 @@ static NSString *emptyStringInstance = @"";
               TKBluetoothCommunicatorScheduledOperation *operation = operationId;
               DCHECK(device && operation);
 
-              DLOGF(@"%s: device = %p, executing read operation, setting pending write to false", TK_FUNC_NAME, device);
+              DLOGF(@"%s: device = %p, executing read operation", TK_FUNC_NAME, device);
               [device setPendingWriteValue:false];
 
               NSUInteger responseMessageType = [self decodeReceivedMessageAndRespond:device
@@ -2236,11 +2236,14 @@ static NSString *emptyStringInstance = @"";
                           [device setPendingWriteValue:true];
                       }
 
+                      DLOGF(@"%s: device = %p, write operation succeeded", TK_FUNC_NAME, device);
                       return TKBluetoothCommunicatorOperationExecutionResultSuccessContinue;
 
                   case TKBluetoothCommunicatorWriteValueResultFailedReschedule:
+                      DLOGF(@"%s: device = %p, write operation rescheduled", TK_FUNC_NAME, device);
                       return TKBluetoothCommunicatorOperationExecutionResultFailedRetryLater;
                   default:
+                      DLOGF(@"%s: device = %p, write operation failed", TK_FUNC_NAME, device);
                       return TKBluetoothCommunicatorOperationExecutionResultFailedContinue;
               }
             }];
