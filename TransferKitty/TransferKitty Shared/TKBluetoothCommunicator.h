@@ -75,6 +75,7 @@ static_assert(TKBluetoothCommunicatorMessageLengthIntegerByteLength ==(TKBluetoo
 + (bool)isNilOrEmpty:(NSString *)string;
 + (NSString *)stringOrEmptyString:(NSString *)maybeNullString;
 + (NSString *)uuidStringOrEmptyString:(NSUUID *)maybeNullUUID;
++ (NSString *)toDebugString:(TKBluetoothCommunicatorStatusBits)bits;
 @end
 
 @interface TKSubdata : NSObject
@@ -156,6 +157,7 @@ static_assert(TKBluetoothCommunicatorMessageLengthIntegerByteLength ==(TKBluetoo
 - (void)stopAdvertising;
 - (void)startDiscoveringDevices;
 - (void)stopDiscoveringDevices;
+- (void)publishServices;
 - (void)bluetoothCommunicatorDeviceDidUpdateProperty:(TKBluetoothCommunicatorDevice *)device;
 - (NSArray *)connectedDevices;
 - (NSUUID *)getUUID;
@@ -213,6 +215,7 @@ static_assert(TKBluetoothCommunicatorMessageLengthIntegerByteLength ==(TKBluetoo
 - (bool)scheduleMessageFrom:(TKBluetoothCommunicatorDevice *)device wholeMessageData:(NSData *)wholeMessageData;
 - (bool)scheduleMessageTo:(TKBluetoothCommunicatorDevice *)device wholeMessageData:(NSData *)wholeMessageData;
 - (void)scheduleIntroductionMessagesTo:(TKBluetoothCommunicatorDevice *)device;
+- (void)flush;
 @end
 
 @protocol TKBluetoothCommunicatorDelegate <NSObject>

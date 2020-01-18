@@ -29,6 +29,7 @@ import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 
 import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.UUID;
@@ -49,8 +50,8 @@ import java.util.UUID;
 public class TKBluetoothCommunicator {
     private static final String TAG = TKBluetoothCommunicator.class.getSimpleName();
     private static final String EMPTY_STRING = "";
+    public static final Charset UTF_8 = StandardCharsets.UTF_8;
     private static final TKBluetoothCommunicator instance = new TKBluetoothCommunicator();
-    public static final Charset UTF_8 = Charset.forName("UTF-8");
 
     @Contract(pure = true)
     public static TKBluetoothCommunicator getInstance() {
@@ -116,8 +117,12 @@ public class TKBluetoothCommunicator {
     public String getName() { return _name; }
     public String getModel() { return Build.MODEL; }
     public String getFriendlyModel() { return Build.MANUFACTURER + " " + Build.PRODUCT; }
+
     public TKBluetoothCommunicatorScheduler getScheduler() {
         return _scheduler;
+    }
+    public Context getAppContext() {
+        return _associatedActivity.getApplicationContext();
     }
 
     private void setStatusBits(final long statusBits) {
@@ -322,6 +327,61 @@ public class TKBluetoothCommunicator {
         }
     }
 
+    public void initPeripheralWith(final Activity activity,
+                                   final TKBluetoothCommunicatorDelegate delegate) {
+
+        if (TKBluetoothCommunicatorStatusBits.isBitSet(_statusBits, TKBluetoothCommunicatorStatusBits.WAITING_FOR_USER_INPUT)) {
+            /* This function must have been called for the second time from
+             * the parent activity after a user was asked to turn on the Bluetooth device.
+             */
+            startPeripheralAfterUserInput(delegate);
+        } else if (TKBluetoothCommunicatorStatusBits.isBitSet(_statusBits, TKBluetoothCommunicatorStatusBits.UNSUPPORTED)) {
+            /* We set UNSUPPORTED previously, nothing to dcheck now.
+             */
+            setStatusBits(TKBluetoothCommunicatorStatusBits.UNSUPPORTED);
+        } else if (_statusBits == TKBluetoothCommunicatorStatusBits.INITIAL) {
+            /* The first call to this function, ensure nothing was set previously.
+             */
+            TKDebug.dcheck(_delegate == null, TAG, "_delegate == null");
+            TKDebug.dcheck(_associatedActivity == null, TAG, "_associatedActivity == null");
+
+            /* Generate or read previously generated UUID for this device.
+             */
+            _associatedActivity = activity;
+            prepareUUID();
+            prepareName();
+
+            /* Set the delegate and the associated activity.
+             * Try to initialize the bluetooth adapter.
+             */
+            _delegate = delegate;
+            _bluetoothManager = (BluetoothManager) _associatedActivity.getSystemService(Context.BLUETOOTH_SERVICE);
+            _bluetoothAdapter = _bluetoothManager != null ? _bluetoothManager.getAdapter() : null;
+
+            TKDebug.dlog(Log.INFO, TAG, "_bluetoothManager=" + _bluetoothManager);
+            TKDebug.dlog(Log.INFO, TAG, "_bluetoothAdapter=" + _bluetoothAdapter);
+
+            if (_bluetoothAdapter == null) {
+                /* Set UNSUPPORTED status.
+                 */
+                setStatusBits(TKBluetoothCommunicatorStatusBits.UNSUPPORTED);
+            } else if (_bluetoothAdapter.isEnabled()) {
+                /* We are ok to try to start this device as a peripheral.
+                 */
+                startPeripheral();
+            } else {
+                assert _delegate != null;
+                assert _associatedActivity != null;
+
+                /* Request user to turn on the bluetooth device.
+                 */
+                setStatusBits(TKBluetoothCommunicatorStatusBits.WAITING_FOR_USER_INPUT);
+                Intent enableBluetoothIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
+                _associatedActivity.startActivityForResult(enableBluetoothIntent, INTENT_REQUEST_ENABLE_BLUETOOTH);
+            }
+        }
+    }
+
     public void panic(@NotNull final TKBluetoothCommunicatorDevice device) {
         TKDebug.dlog(Log.ERROR, TAG, "panic: canceling connection with the device, forgetting the device, " + device.toString());
 
@@ -382,61 +442,6 @@ public class TKBluetoothCommunicator {
         }
     }
 
-    public void initPeripheralWith(final Activity activity,
-                                   final TKBluetoothCommunicatorDelegate delegate) {
-
-        if (TKBluetoothCommunicatorStatusBits.isBitSet(_statusBits, TKBluetoothCommunicatorStatusBits.WAITING_FOR_USER_INPUT)) {
-            /* This function must have been called for the second time from
-             * the parent activity after a user was asked to turn on the Bluetooth device.
-             */
-            startPeripheralAfterUserInput(delegate);
-        } else if (TKBluetoothCommunicatorStatusBits.isBitSet(_statusBits, TKBluetoothCommunicatorStatusBits.UNSUPPORTED)) {
-            /* We set UNSUPPORTED previously, nothing to dcheck now.
-             */
-            setStatusBits(TKBluetoothCommunicatorStatusBits.UNSUPPORTED);
-        } else if (_statusBits == TKBluetoothCommunicatorStatusBits.INITIAL) {
-            /* The first call to this function, ensure nothing was set previously.
-             */
-            TKDebug.dcheck(_delegate == null, TAG, "_delegate == null");
-            TKDebug.dcheck(_associatedActivity == null, TAG, "_associatedActivity == null");
-
-            /* Generate or read previously generated UUID for this device.
-             */
-            _associatedActivity = activity;
-            prepareUUID();
-            prepareName();
-
-            /* Set the delegate and the associated activity.
-             * Try to initialize the bluetooth adapter.
-             */
-            _delegate = delegate;
-            _bluetoothManager = (BluetoothManager) _associatedActivity.getSystemService(Context.BLUETOOTH_SERVICE);
-            _bluetoothAdapter = _bluetoothManager != null ? _bluetoothManager.getAdapter() : null;
-
-            TKDebug.dlog(Log.INFO, TAG, "_bluetoothManager=" + _bluetoothManager);
-            TKDebug.dlog(Log.INFO, TAG, "_bluetoothAdapter=" + _bluetoothAdapter);
-
-            if (_bluetoothAdapter == null) {
-                /* Set UNSUPPORTED status.
-                 */
-                setStatusBits(TKBluetoothCommunicatorStatusBits.UNSUPPORTED);
-            } else if (_bluetoothAdapter.isEnabled()) {
-                /* We are ok to try to start this device as a peripheral.
-                 */
-                startPeripheral();
-            } else {
-                assert _delegate != null;
-                assert _associatedActivity != null;
-
-                /* Request user to turn on the bluetooth device.
-                 */
-                setStatusBits(TKBluetoothCommunicatorStatusBits.WAITING_FOR_USER_INPUT);
-                Intent enableBluetoothIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
-                _associatedActivity.startActivityForResult(enableBluetoothIntent, INTENT_REQUEST_ENABLE_BLUETOOTH);
-            }
-        }
-    }
-
     public void bluetoothCommunicatorDeviceDidChangeProperty(@NotNull final TKBluetoothCommunicatorDevice device) {
         _delegate.bluetoothCommunicatorDidUpdateDevice(this, device);
     }
@@ -485,10 +490,6 @@ public class TKBluetoothCommunicator {
         }
     }
 
-    public Context getAppContext() {
-        return _associatedActivity.getApplicationContext();
-    }
-
     private void bluetoothGattServerDidRequestWrite(@NotNull final BluetoothDevice bluetoothDevice,
                                                     final int requestId,
                                                     @NotNull final BluetoothGattCharacteristic characteristic,
@@ -531,7 +532,6 @@ public class TKBluetoothCommunicator {
                 panic(device);
             }
         }
-
     }
 
     private void bluetoothGattServerDidRequestRead(@NotNull final BluetoothDevice device,

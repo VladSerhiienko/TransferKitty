@@ -4,8 +4,8 @@
 namespace tk {
 namespace {
 // clang-format off
-inline TKNuklearRenderer* getPlatformDevice(BridgedHandle device) { return bridgePlatformObject<TKNuklearRenderer*>(device); }
-inline id<MTLTexture> getPlatformTexture(BridgedHandle texture) { return bridgePlatformObject<id<MTLTexture>>(texture); }
+inline TKNuklearRenderer* getPlatformDevice(BridgedHandle device) { return unboxPlatformObject<TKNuklearRenderer*>(device); }
+inline id<MTLTexture> getPlatformTexture(BridgedHandle texture) { return unboxPlatformObject<id<MTLTexture>>(texture); }
 // clang-format on
 }
 

@@ -45,6 +45,10 @@ public:
 
 class IUIDeviceState {
 public:
+    virtual StringView name() const = 0;
+    virtual StringView model() const = 0;
+    virtual StringView friendlyModel() const = 0;
+    virtual StringView uuidString() const = 0;
     virtual const UIStateStatus status() const = 0;
     virtual size_t fileCount() const = 0;
     virtual const IUIFileState* file(size_t index) const = 0;
@@ -54,7 +58,7 @@ class IUIState {
 public:
     virtual size_t deviceCount() const = 0;
     virtual const IUIDeviceState* device(size_t index) const = 0;
-    
+
     virtual size_t debugLogCount() const = 0;
     virtual StringView debugLog(size_t index) const = 0;
 };

@@ -57,6 +57,7 @@ bool UIStatePopulator::populate(const tk::IUIState *state,
                                 nk_context *nk) {
     constexpr std::string_view windowName = "UIStatePopulator";
     constexpr std::string_view imageGroupName = "GroupImg";
+    constexpr std::string_view logGroupName = "GroupLogs";
     constexpr std::string_view textGroupName = "GroupText";
 
     assert(nk && nk->style.font);
@@ -73,47 +74,62 @@ bool UIStatePopulator::populate(const tk::IUIState *state,
     
     imgBounds.h -= imageVerticalPadding;
 
-    if (nk_begin(nk, windowName.data(), viewportBounds, NK_WINDOW_NO_SCROLLBAR)) {
-        nk_layout_row_begin(nk, NK_DYNAMIC, itemHeight, 2);
+    if (nk_begin(nk, windowName.data(), viewportBounds, 0)) {
+        for (size_t i = 0; i < state->deviceCount(); ++i) {
+            nk_layout_row_begin(nk, NK_DYNAMIC, itemHeight, 2);
 
-        nk_layout_row_push(nk, b);
-        if (nk_group_begin(nk, imageGroupName.data(), NK_WINDOW_NO_SCROLLBAR)) {
-            nk_layout_space_begin(nk, NK_DYNAMIC, itemHeight, 1);
-            nk_layout_space_push(nk, imgBounds);
-            nk_image(nk, textureImplementationObject<nk_image_t>(&texture));
-            nk_layout_space_end(nk);
-            nk_group_end(nk);
-        }
+            nk_layout_row_push(nk, b);
+            if (nk_group_begin(nk, imageGroupName.data(), NK_WINDOW_NO_SCROLLBAR)) {
+                nk_layout_space_begin(nk, NK_DYNAMIC, itemHeight, 1);
+                nk_layout_space_push(nk, imgBounds);
+                nk_image(nk, textureImplementationObject<nk_image_t>(&texture));
+                nk_layout_space_end(nk);
+                nk_group_end(nk);
+            }
 
-        nk_layout_row_push(nk, a);
-        if (nk_group_begin(nk, textGroupName.data(), NK_WINDOW_NO_SCROLLBAR)) {
-            nk_layout_row_dynamic(nk, fontHeight, 1);
-            if (nk_button_label(nk, kButton0)) { printf("\"%s\" pressed\n", kButton0); }
-            if (nk_button_label(nk, kButton1)) { printf("\"%s\" pressed\n", kButton1); }
-            if (nk_button_label(nk, kButton2)) { printf("\"%s\" pressed\n", kButton2); }
-            // if (nk_button_label(nk, kButton3)) { printf("\"%s\" pressed\n",
-            // kButton3); } if (nk_button_label(nk, kButton4)) { printf("\"%s\"
-            // pressed\n", kButton4); }
+            nk_layout_row_push(nk, a);
+            if (nk_group_begin(nk, textGroupName.data(), NK_WINDOW_NO_SCROLLBAR)) {
+                nk_layout_row_dynamic(nk, fontHeight, 1);
+                
+                nk_labelf(nk, NK_TEXT_ALIGN_LEFT, "%s", state->device(i)->name().data);
+                nk_labelf(nk, NK_TEXT_ALIGN_LEFT, "%s", state->device(i)->model().data);
+                nk_labelf(nk, NK_TEXT_ALIGN_LEFT, "%s", state->device(i)->friendlyModel().data);
+                nk_labelf(nk, NK_TEXT_ALIGN_LEFT, "%s", state->device(i)->uuidString().data);
+                
+                // if (nk_button_label(nk, kButton0)) { printf("\"%s\" pressed\n", kButton0); }
+                // if (nk_button_label(nk, kButton1)) { printf("\"%s\" pressed\n", kButton1); }
+                // if (nk_button_label(nk, kButton2)) { printf("\"%s\" pressed\n", kButton2); }
+                // if (nk_button_label(nk, kButton3)) { printf("\"%s\" pressed\n",
+                // kButton3); } if (nk_button_label(nk, kButton4)) { printf("\"%s\"
+                // pressed\n", kButton4); }
 
-            static size_t currProgress = 0;
-            static size_t maxProgress = 1000;
+                // static size_t currProgress = 0;
+                // static size_t maxProgress = 1000;
 
-            nk_progress(nk, &currProgress, maxProgress, 1);
-            nk_labelf(nk, NK_TEXT_ALIGN_CENTERED, "%zu/%zu", currProgress, maxProgress);
+                // nk_progress(nk, &currProgress, maxProgress, 1);
+                // nk_labelf(nk, NK_TEXT_ALIGN_CENTERED, "%zu/%zu", currProgress, maxProgress);
 
-            ++currProgress;
-            currProgress %= maxProgress;
+                // ++currProgress;
+                // currProgress %= maxProgress;
 
-            nk_group_end(nk);
-        }
+                nk_group_end(nk);
+            }
 
         nk_layout_row_end(nk);
-
-        nk_layout_row_dynamic(nk, fontHeight, 1);
-        nk_label(nk, "Logs:", NK_TEXT_ALIGN_LEFT);
-        for (size_t i = 0; i < state->debugLogCount(); ++i) {
-            nk_label(nk, state->debugLog(i).data, NK_TEXT_ALIGN_LEFT);
         }
+        
+        
+        //nk_layout_row_begin(nk, NK_DYNAMIC, viewport.height - itemHeight - padding * 3, 1);
+        //nk_layout_row_push(nk, 1);
+        //if (nk_group_begin(nk, logGroupName.data(), 0)) {
+            nk_layout_row_dynamic(nk, fontHeight, 1);
+            nk_label(nk, "Logs:", NK_TEXT_ALIGN_LEFT);
+            for (size_t i = 0; i < state->debugLogCount(); ++i) {
+                nk_label(nk, state->debugLog(i).data, NK_TEXT_ALIGN_LEFT);
+            }
+        //    nk_group_end(nk);
+        //}
+        //nk_layout_row_end(nk);
     }
 
     nk_window_set_position(nk, windowName.data(), nk_vec2(viewportBounds.x, viewport.y));

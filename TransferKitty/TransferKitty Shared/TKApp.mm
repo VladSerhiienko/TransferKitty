@@ -10,6 +10,10 @@
 #include "TKOptional.h"
 #include "TKUIStatePopulator.h"
 
+using tk::setBit;
+using tk::isBitSet;
+using tk::unsetBit;
+
 @implementation TKAppInput
 - (void)setOpaqueImplementationPtr:(void *_Nonnull)opaqueImplementationPtr {
     _opaqueImplementationPtr = opaqueImplementationPtr;
@@ -50,6 +54,12 @@
     _input = [[TKAppInput alloc] init];
 
     [self testBlurHash];
+
+    // TODO: This will help avoiding reallocations and bugs with multithreading.
+    //       But since we want to support even more devices potentially, must be fixed.
+    defaultState._devices.reserve(512);
+    defaultState._devices.emplace_back();
+
     return self;
 }
 
@@ -77,18 +87,28 @@
     hashedImgTexture.setPlatformTexture(tk::boxPlatformObject(_renderer), tk::boxPlatformObject(hashedTexture));
 }
 
+- (void)resetThisDevice {
+    defaultState._devices.resize(1);
+    auto &thisDevice = defaultState._devices.front();
+    thisDevice._name = [[_bt getName] cStringUsingEncoding:NSUTF8StringEncoding];
+    thisDevice._model = [[_bt getModel] cStringUsingEncoding:NSUTF8StringEncoding];
+    thisDevice._friendlyModel = [[_bt getFriendlyModel] cStringUsingEncoding:NSUTF8StringEncoding];
+    thisDevice._uuidString =
+        [[NSStringUtilities uuidStringOrEmptyString:[_bt getUUID]] cStringUsingEncoding:NSUTF8StringEncoding];
+}
+
 - (void)startPeripheralWith:(nonnull NSArray *)sharedItems {
     _btSharedItems = sharedItems;
     _bt = [TKBluetoothCommunicator instance];
     [_bt initPeripheralWithDelegate:self];
-    // [_bt startAdvertising];
+    [self resetThisDevice];
 }
 
 - (void)startCentral {
     _bt = [TKBluetoothCommunicator instance];
     _btSharedItems = nil;
     [_bt initCentralWithDelegate:self];
-    // [_bt startDiscoveringDevices];
+    [self resetThisDevice];
 }
 
 //
@@ -124,21 +144,56 @@
 - (void)bluetoothCommunicator:(TKBluetoothCommunicator *)bluetoothCommunicator
           didChangeStatusFrom:(TKBluetoothCommunicatorStatusBits)statusBits
                            to:(TKBluetoothCommunicatorStatusBits)currentStatusBits {
-    DLOGF(@"%s", TK_FUNC_NAME);
+    DLOGF(@"%s: %@ > %@",
+          TK_FUNC_NAME,
+          [NSStringUtilities toDebugString:statusBits],
+          [NSStringUtilities toDebugString:currentStatusBits]);
+
+    if (isBitSet(currentStatusBits, TKBluetoothCommunicatorStatusBitCentral)) {
+        DLOGF(@"%s: Starting discovering", TK_FUNC_NAME);
+        [bluetoothCommunicator startDiscoveringDevices];
+    } else if (isBitSet(currentStatusBits, TKBluetoothCommunicatorStatusBitPeripheral) &&
+               !isBitSet(currentStatusBits, TKBluetoothCommunicatorStatusBitPublishedService) &&
+               !isBitSet(currentStatusBits, TKBluetoothCommunicatorStatusBitPublishingService)) {
+        DLOGF(@"%s: Starting publishing", TK_FUNC_NAME);
+        [bluetoothCommunicator publishServices];
+    } else if (isBitSet(currentStatusBits, TKBluetoothCommunicatorStatusBitPeripheral) &&
+               !isBitSet(currentStatusBits, TKBluetoothCommunicatorStatusBitPublishingService) &&
+               isBitSet(currentStatusBits, TKBluetoothCommunicatorStatusBitPublishedService)) {
+        DLOGF(@"%s: Starting advertising", TK_FUNC_NAME);
+        [bluetoothCommunicator startAdvertising];
+    }
 }
 
 - (void)bluetoothCommunicator:(TKBluetoothCommunicator *)bluetoothCommunicator
            didConnectToDevice:(TKBluetoothCommunicatorDevice *)device {
     DLOGF(@"%s", TK_FUNC_NAME);
+
+    defaultState._devices.emplace_back();
+    auto &deviceState = defaultState._devices.back();
+    deviceState._name = [[device getName] cStringUsingEncoding:NSUTF8StringEncoding];
+    deviceState._model = [[device getModel] cStringUsingEncoding:NSUTF8StringEncoding];
+    deviceState._friendlyModel = [[device getFriendlyModel] cStringUsingEncoding:NSUTF8StringEncoding];
+    deviceState._uuidString =
+        [[NSStringUtilities uuidStringOrEmptyString:[device getUUID]] cStringUsingEncoding:NSUTF8StringEncoding];
 }
 
 - (void)bluetoothCommunicator:(TKBluetoothCommunicator *)bluetoothCommunicator
           didDisconnectDevice:(TKBluetoothCommunicatorDevice *)device {
     DLOGF(@"%s", TK_FUNC_NAME);
+
+    std::string uuidString =
+        [[NSStringUtilities uuidStringOrEmptyString:[device getUUID]] cStringUsingEncoding:NSUTF8StringEncoding];
+
+    auto deviceStateIt = std::find_if(
+        defaultState._devices.begin() + 1, defaultState._devices.end(), [&uuidString](const tk::IUIDeviceState &state) {
+            return strcmp(state.name().data, uuidString.c_str()) == 0;
+        });
+
+    if (deviceStateIt != defaultState._devices.end()) { defaultState._devices.erase(deviceStateIt); }
 }
 
 - (void)bluetoothCommunicator:(TKBluetoothCommunicator *)bluetoothCommunicator didLog:(NSString *)log {
-    // DLOGF(@"%s", TK_FUNC_NAME);
     defaultState._debugLogs.push_back(std::string([log cStringUsingEncoding:NSUTF8StringEncoding]));
 }
 
@@ -157,6 +212,21 @@
 - (void)bluetoothCommunicator:(TKBluetoothCommunicator *)bluetoothCommunicator
               didUpdateDevice:(TKBluetoothCommunicatorDevice *)device {
     DLOGF(@"%s", TK_FUNC_NAME);
+
+    std::string uuidString =
+        [[NSStringUtilities uuidStringOrEmptyString:[device getUUID]] cStringUsingEncoding:NSUTF8StringEncoding];
+    auto deviceStateIt = std::find_if(
+        defaultState._devices.begin() + 1, defaultState._devices.end(), [&uuidString](const tk::IUIDeviceState &state) {
+            return strcmp(state.name().data, uuidString.c_str()) == 0;
+        });
+
+    if (deviceStateIt != defaultState._devices.end()) {
+        deviceStateIt->_name = [[device getName] cStringUsingEncoding:NSUTF8StringEncoding];
+        deviceStateIt->_model = [[device getModel] cStringUsingEncoding:NSUTF8StringEncoding];
+        deviceStateIt->_friendlyModel = [[device getFriendlyModel] cStringUsingEncoding:NSUTF8StringEncoding];
+        deviceStateIt->_uuidString =
+            [[NSStringUtilities uuidStringOrEmptyString:[device getUUID]] cStringUsingEncoding:NSUTF8StringEncoding];
+    }
 }
 
 - (void)bluetoothCommunicator:(TKBluetoothCommunicator *)bluetoothCommunicator

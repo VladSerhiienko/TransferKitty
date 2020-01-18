@@ -10,6 +10,7 @@
 #include "TKDebug.h"
 
 #ifndef TK_FUNC_NAME
+//#define TK_FUNC_NAME ""
 #define TK_FUNC_NAME __PRETTY_FUNCTION__
 #endif
 
@@ -65,7 +66,7 @@ constexpr void swap(T &a, T &b) {
 typedef void *BridgedHandle;
 #ifdef __OBJC__
 template <typename T>
-inline T bridgePlatformObject(BridgedHandle boxed) {
+inline T unboxPlatformObject(BridgedHandle boxed) {
     return (__bridge T)boxed;
 }
 template <typename T>
@@ -99,6 +100,22 @@ template <typename T = std::exception, typename V, typename... Args>
 inline constexpr V &&passthroughOrRaiseError(V &&value, Args &&... args) {
     details::raiseError<T, Args...>(std::forward<Args...>(args...));
     return std::forward<V>(value);
+}
+
+template <typename T, typename U>
+constexpr T unsetBit(const T bits, const U bit) {
+    TK_STATIC_ASSERT(sizeof(T) == sizeof(U));
+    return bits & T(~bit);
+}
+template <typename T, typename U>
+constexpr T setBit(const T bits, const U bit) {
+    TK_STATIC_ASSERT(sizeof(T) == sizeof(U));
+    return bits | T(bit);
+}
+template <typename T, typename U>
+constexpr bool isBitSet(const T bits, const U bit) {
+    TK_STATIC_ASSERT(sizeof(T) == sizeof(U));
+    return (bits & T(bit)) == T(bit);
 }
 
 } // namespace tk

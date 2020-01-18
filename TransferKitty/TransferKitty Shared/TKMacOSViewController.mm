@@ -202,7 +202,7 @@
     _app.inputDelegate = self;
 
     [[_view window] makeFirstResponder:self];
-    [_app startCentral];
+    [_app startPeripheralWith:nil];
 }
 
 - (void)app:(nonnull TKApp *)app input:(nonnull TKAppInput *)input {
