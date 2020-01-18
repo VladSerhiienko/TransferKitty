@@ -1,6 +1,7 @@
 #pragma once
 
 #include <string>
+#include <unordered_set>
 
 #include "EASTL/bonus/ring_buffer.h"
 #include "TKIUIState.h"
@@ -30,6 +31,7 @@ public:
 
 class DefaultUIDeviceState : public IUIDeviceState {
 public:
+    uint64_t _hash = 0;
     std::string _name = "";
     std::string _model = "";
     std::string _friendlyModel = "";

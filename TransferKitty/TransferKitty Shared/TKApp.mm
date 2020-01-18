@@ -171,6 +171,7 @@ using tk::unsetBit;
 
     defaultState._devices.emplace_back();
     auto &deviceState = defaultState._devices.back();
+    deviceState._hash = [device hash];
     deviceState._name = [[device getName] cStringUsingEncoding:NSUTF8StringEncoding];
     deviceState._model = [[device getModel] cStringUsingEncoding:NSUTF8StringEncoding];
     deviceState._friendlyModel = [[device getFriendlyModel] cStringUsingEncoding:NSUTF8StringEncoding];
@@ -181,13 +182,10 @@ using tk::unsetBit;
 - (void)bluetoothCommunicator:(TKBluetoothCommunicator *)bluetoothCommunicator
           didDisconnectDevice:(TKBluetoothCommunicatorDevice *)device {
     DLOGF(@"%s", TK_FUNC_NAME);
-
-    std::string uuidString =
-        [[NSStringUtilities uuidStringOrEmptyString:[device getUUID]] cStringUsingEncoding:NSUTF8StringEncoding];
-
+    
     auto deviceStateIt = std::find_if(
-        defaultState._devices.begin() + 1, defaultState._devices.end(), [&uuidString](const tk::IUIDeviceState &state) {
-            return strcmp(state.name().data, uuidString.c_str()) == 0;
+        defaultState._devices.begin() + 1, defaultState._devices.end(), [&](const tk::DefaultUIDeviceState &state) {
+            return state._hash == [device hash];
         });
 
     if (deviceStateIt != defaultState._devices.end()) { defaultState._devices.erase(deviceStateIt); }
@@ -213,19 +211,16 @@ using tk::unsetBit;
               didUpdateDevice:(TKBluetoothCommunicatorDevice *)device {
     DLOGF(@"%s", TK_FUNC_NAME);
 
-    std::string uuidString =
-        [[NSStringUtilities uuidStringOrEmptyString:[device getUUID]] cStringUsingEncoding:NSUTF8StringEncoding];
     auto deviceStateIt = std::find_if(
-        defaultState._devices.begin() + 1, defaultState._devices.end(), [&uuidString](const tk::IUIDeviceState &state) {
-            return strcmp(state.name().data, uuidString.c_str()) == 0;
+        defaultState._devices.begin() + 1, defaultState._devices.end(), [&](const tk::DefaultUIDeviceState &state) {
+            return state._hash == [device hash];
         });
 
     if (deviceStateIt != defaultState._devices.end()) {
         deviceStateIt->_name = [[device getName] cStringUsingEncoding:NSUTF8StringEncoding];
         deviceStateIt->_model = [[device getModel] cStringUsingEncoding:NSUTF8StringEncoding];
         deviceStateIt->_friendlyModel = [[device getFriendlyModel] cStringUsingEncoding:NSUTF8StringEncoding];
-        deviceStateIt->_uuidString =
-            [[NSStringUtilities uuidStringOrEmptyString:[device getUUID]] cStringUsingEncoding:NSUTF8StringEncoding];
+        deviceStateIt->_uuidString = [[NSStringUtilities uuidStringOrEmptyString:[device getUUID]] cStringUsingEncoding:NSUTF8StringEncoding];
     }
 }
 

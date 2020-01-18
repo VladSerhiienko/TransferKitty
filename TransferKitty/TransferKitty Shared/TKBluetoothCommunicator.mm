@@ -2040,7 +2040,7 @@ static NSString *emptyStringInstance = @"";
 
         TKBluetoothCommunicatorDevice *device = [allKeys objectAtIndex:i];
         DCHECK(device != nil);
-        DLOGF(@"%s: device = %p, executing operations", TK_FUNC_NAME, device);
+        // DLOGF(@"%s: device = %p, executing operations", TK_FUNC_NAME, device);
 
         if (!device) { continue; }
         if (skipWithPendingWrites && [device pendingWriteValue]) {
