@@ -7,6 +7,8 @@
 
 #include <stdatomic.h>
 #import <sys/utsname.h>
+#include <unordered_set>
+#include <unordered_map>
 
 #ifndef TK_UUID_KEY
 #define TK_UUID_KEY @"BluetoothCommunicatorUUID"
@@ -84,9 +86,9 @@ using tk::unsetBit;
     [self setDeviceFriendlyModel:friendlyModel];
     [[self bluetoothCommunicator] bluetoothCommunicatorDeviceDidUpdateProperty:self];
 }
-- (NSObject*)dictKey {
+- (NSUUID*)dictKey {
     DCHECK(self.peripheral || self.central);
-    return self.peripheral ? self.peripheral: self.central;
+    return self.peripheral ? self.peripheral.identifier: self.central.identifier;
 }
 
 - (BOOL)isEqual:(id)object {
@@ -144,8 +146,10 @@ using tk::unsetBit;
     NSArray<CBUUID *> *_serviceUUIDs;
     NSArray<CBUUID *> *_characteristicUUIDs;
     NSArray<CBUUID *> *_descriptorUUIDs;
-    NSMutableSet *_connectingDevices;
-    NSMutableDictionary *_connectedDevices;
+    // NSMutableSet *_connectingDevices;
+    // NSMutableDictionary *_connectedDevices;
+    std::unordered_set<NSUUID*>_connectingDevices;
+    std::unordered_map<NSUUID*, TKBluetoothCommunicatorDevice*> _connectedDevices;
     NSUUID *_UUID;
     NSString *_name;
     NSString *_model;
@@ -311,15 +315,18 @@ static TKBluetoothCommunicator *_instance = nil;
     NSUInteger statusBits = setBit(_statusBits, TKBluetoothCommunicatorStatusBitStartingAdvertising);
     [self setStatusBits:statusBits];
 
-    if (_connectedDevices == nil) {
-        _connectedDevices = [[NSMutableDictionary alloc] init];
-        _connectingDevices = [[NSMutableSet alloc] init];
-        DLOGF(@"%s: Created peripheral list.", TK_FUNC_NAME);
-    } else {
-        DLOGF(@"%s: Clearing peripheral list.", TK_FUNC_NAME);
-        [_connectedDevices removeAllObjects];
-        [_connectingDevices removeAllObjects];
-    }
+    _connectedDevices.clear();
+    _connectingDevices.clear();
+    
+    // if (_connectedDevices == nil) {
+    //     _connectedDevices = [[NSMutableDictionary alloc] init];
+    //     _connectingDevices = [[NSMutableSet alloc] init];
+    //     DLOGF(@"%s: Created peripheral list.", TK_FUNC_NAME);
+    // } else {
+    //     DLOGF(@"%s: Clearing peripheral list.", TK_FUNC_NAME);
+    //     [_connectedDevices removeAllObjects];
+    //     [_connectingDevices removeAllObjects];
+    // }
 
     NSDictionary *advertisementData =
         @{CBAdvertisementDataServiceUUIDsKey : _serviceUUIDs, CBAdvertisementDataLocalNameKey : @"TK"};
@@ -411,24 +418,41 @@ static TKBluetoothCommunicator *_instance = nil;
     [self setStatusBits:statusBits];
 }
 
-- (TKBluetoothCommunicatorDevice *)centralDidSubscribe:(CBCentral *)central
-                                      toCharacteristic:(CBCharacteristic *)characteristic {
-    TKBluetoothCommunicatorDevice *device = [_connectedDevices objectForKey:central];
-    if (device) {
+- (TKBluetoothCommunicatorDevice *)deviceByIdentifier:(NSUUID*)identifier {
+    auto it = _connectedDevices.find(identifier);
+    if (it != _connectedDevices.end()) {
+        TKBluetoothCommunicatorDevice *device = it->second;
         assert(device.bluetoothCommunicator == self);
-        assert(device.central == central);
         return device;
     }
+    
+    return nil;
+}
 
+- (TKBluetoothCommunicatorDevice *)removeDeviceByIdentifier:(NSUUID*)identifier {
+    auto it = _connectedDevices.find(identifier);
+    if (it != _connectedDevices.end()) {
+        TKBluetoothCommunicatorDevice *device = it->second;
+        _connectedDevices.erase(it);
+        return device;
+    }
+    
+    return nil;
+}
+
+- (TKBluetoothCommunicatorDevice *)centralDidSubscribe:(CBCentral *)central
+                                      toCharacteristic:(CBCharacteristic *)characteristic {
+    TKBluetoothCommunicatorDevice *device = [self deviceByIdentifier:central.identifier];
+    if (device) { return device; }
+    
     device = [[TKBluetoothCommunicatorDevice alloc] init];
     if (!device) { return nil; }
 
-    [_connectedDevices setObject:device forKey:central];
-
+    _connectedDevices.insert(std::make_pair(central.identifier, device));
     device.bluetoothCommunicator = self;
     device.central = central;
     device.mtu = [central maximumUpdateValueLength];
-    device.localId = [_connectedDevices count];
+    device.localId = _connectedDevices.size();
     device.characteristic = characteristic;
     device.pendingWriteValue = false;
 
@@ -437,7 +461,7 @@ static TKBluetoothCommunicator *_instance = nil;
 }
 
 - (void)centralDidUnsubscribe:(CBCentral *)central toCharacteristic:(CBCharacteristic *)characteristic {
-    TKBluetoothCommunicatorDevice* device = [_connectedDevices objectForKey:central];
+    TKBluetoothCommunicatorDevice *device = [self deviceByIdentifier:central.identifier];
     [self cancelConnectionForDevice:device];
 }
 
@@ -469,7 +493,7 @@ static TKBluetoothCommunicator *_instance = nil;
         return;
     }
     
-    if (TKBluetoothCommunicatorDevice* device = [_connectedDevices objectForKey:request.central]) {
+    if (TKBluetoothCommunicatorDevice* device = [self deviceByIdentifier:request.central.identifier]) {
         DLOGF(@"%s: device that requested read: name=%@, uuid=%@", TK_FUNC_NAME, device.deviceName, device.deviceUUID);
         
         request.value = nil;
@@ -496,7 +520,7 @@ static TKBluetoothCommunicator *_instance = nil;
         }
 
         DLOGF(@"%s: request@%u = %@", TK_FUNC_NAME, i, request);
-        if (TKBluetoothCommunicatorDevice *device = [_connectedDevices objectForKey:request.central]) {
+        if (TKBluetoothCommunicatorDevice *device = [self deviceByIdentifier:request.central.identifier]) {
             if (![_scheduler scheduleMessageFrom:device wholeMessageData:request.value]) {
                 [self cancelConnectionForDevice:device];
             }
@@ -516,7 +540,7 @@ static TKBluetoothCommunicator *_instance = nil;
     DLOGF(@"%s", TK_FUNC_NAME);
 
 #ifdef TK_PERIPHERAL_ONE_SUBSCRIPTION
-    if ([_connectedDevices count] > 0) {
+    if (_connectedDevices.size() > 0) {
         DLOGF(@"%s: Skipping subscription request, only subscription is allowed.", TK_FUNC_NAME);
         return;
     }
@@ -543,7 +567,7 @@ static TKBluetoothCommunicator *_instance = nil;
     assert(device);
 
 #ifdef TK_PERIPHERAL_ONE_SUBSCRIPTION
-    assert([_connectedDevices count] == 1);
+    assert(_connectedDevices.size() == 1);
     [self stopAdvertising];
 #endif
 
@@ -581,7 +605,7 @@ static TKBluetoothCommunicator *_instance = nil;
     [self centralDidUnsubscribe:central toCharacteristic:characteristic];
 
 #ifdef TK_PERIPHERAL_ONE_SUBSCRIPTION
-    assert([_connectedDevices count] == 0);
+    assert(_connectedDevices.size() == 0);
     [self startAdvertising];
 #endif
 }
@@ -615,14 +639,13 @@ static TKBluetoothCommunicator *_instance = nil;
 - (void)cancelConnectionForDevice:(TKBluetoothCommunicatorDevice *)device {
     DLOGF(@"%s", TK_FUNC_NAME);
     
+    [self removeDeviceByIdentifier:[device dictKey]];
     if ([device peripheral]) {
-        [_connectedDevices removeObjectForKey:[device peripheral]];
         [_centralManager cancelPeripheralConnection:[device peripheral]];
-        [_delegate bluetoothCommunicator:self didDisconnectDevice:device];
     } else if ([device central]) {
-        [_connectedDevices removeObjectForKey:[device central]];
-        [_delegate bluetoothCommunicator:self didDisconnectDevice:device];
+        [self removeDeviceByIdentifier:[device dictKey]];
     }
+    [_delegate bluetoothCommunicator:self didDisconnectDevice:device];
 }
 
 // CBPeripheralDelegate
@@ -645,7 +668,7 @@ static TKBluetoothCommunicator *_instance = nil;
 
     DLOGF(@"%s: characteristic=%@, UUID=%@", TK_FUNC_NAME, characteristic, characteristic.UUID);
 
-    TKBluetoothCommunicatorDevice *device = [_connectedDevices objectForKey:peripheral];
+    TKBluetoothCommunicatorDevice *device = [self deviceByIdentifier:peripheral.identifier];
     if (device == nil || ([device peripheral] != peripheral) || ([device characteristic] != characteristic)) {
         DLOGF(@"%s: Caught unexpected peripheral.", TK_FUNC_NAME);
         return;
@@ -676,7 +699,7 @@ static TKBluetoothCommunicator *_instance = nil;
 
     DLOGF(@"%s: peripheral=%@, UUID=%@, name=%@", TK_FUNC_NAME, peripheral, peripheral.identifier, peripheral.name);
 
-    TKBluetoothCommunicatorDevice *device = [_connectedDevices objectForKey:peripheral];
+    TKBluetoothCommunicatorDevice *device = [self deviceByIdentifier:peripheral.identifier];
     if (device == nil || ([device peripheral] != peripheral) || ([device service] != service)) {
         DLOGF(@"%s: Caught unexpected peripheral.", TK_FUNC_NAME);
         return;
@@ -737,7 +760,7 @@ static TKBluetoothCommunicator *_instance = nil;
         return;
     }
 
-    TKBluetoothCommunicatorDevice *device = [_connectedDevices objectForKey:peripheral];
+    TKBluetoothCommunicatorDevice *device = [self deviceByIdentifier:peripheral.identifier];
     if (device == nil || ([device peripheral] != peripheral)) {
         DLOGF(@"%s: Caught unexpected peripheral.", TK_FUNC_NAME);
         return;
@@ -765,7 +788,7 @@ static TKBluetoothCommunicator *_instance = nil;
 
     DLOGF(@"%s: peripheral=%@, UUID=%@, name=%@", TK_FUNC_NAME, peripheral, peripheral.identifier, peripheral.name);
 
-    TKBluetoothCommunicatorDevice *device = [_connectedDevices objectForKey:peripheral];
+    TKBluetoothCommunicatorDevice *device = [self deviceByIdentifier:peripheral.identifier];
     if (device == nil || ([device peripheral] != peripheral)) {
         DLOGF(@"%s: Caught unexpected peripheral.", TK_FUNC_NAME);
         return;
@@ -828,13 +851,14 @@ static TKBluetoothCommunicator *_instance = nil;
     // DLOGF( @"%s: _centralManager=%@", TK_FUNC_NAME, _centralManager );
     DLOGF(@"%s: peripheral=%@, UUID=%@, name=%@", TK_FUNC_NAME, peripheral, peripheral.identifier, peripheral.name);
 
-    TKBluetoothCommunicatorDevice *device = [_connectedDevices objectForKey:peripheral];
+    TKBluetoothCommunicatorDevice *device = [self deviceByIdentifier:peripheral.identifier];
     if (device == nil) {
         DLOGF(@"%s: Device was not connected, panic.", TK_FUNC_NAME);
         return;
     }
 
-    [_connectedDevices removeObjectForKey:peripheral];
+    [self removeDeviceByIdentifier:peripheral.identifier];
+    // [_connectedDevices removeObjectForKey:peripheral];
     [_delegate bluetoothCommunicator:self didDisconnectDevice:device];
 
     NSUInteger statusBits = unsetBit(_statusBits, TKBluetoothCommunicatorStatusBitConnected);
@@ -872,10 +896,11 @@ static TKBluetoothCommunicator *_instance = nil;
     [device setMtu:withResponse];
 
     [device setPeripheral:peripheral];
-    [device setLocalId:[_connectedDevices count]];
+    [device setLocalId:_connectedDevices.size()];
     [device setPendingWriteValue:false];
 
-    [_connectedDevices setObject:device forKey:peripheral];
+    _connectedDevices.insert(std::make_pair(peripheral.identifier, device));
+    // [_connectedDevices setObject:device forKey:peripheral];
     // [_connectingDevices removeObject:peripheral];
     [_delegate bluetoothCommunicator:self didConnectToDevice:device];
 
@@ -955,11 +980,12 @@ static TKBluetoothCommunicator *_instance = nil;
         if ([_serviceUUIDs containsObject:advertisedServiceUUID]) {
             // DLOGF(@"%s: Found matching service, UUID=%@.", TK_FUNC_NAME, advertisedServiceUUID);
 
-            if ([_connectingDevices containsObject:peripheral]) {
+            if (_connectingDevices.find(peripheral.identifier) != _connectingDevices.end()) {
+            // if ([_connectingDevices containsObject:peripheral]) {
                 // DLOGF(@"%s: Already connecting to this peripheral.", TK_FUNC_NAME);
                 continue;
             }
-            if ([_connectedDevices objectForKey:peripheral] != nil) {
+            if ([self deviceByIdentifier:peripheral.identifier] != nil) {
                 // DLOGF(@"%s: Already connected to this peripheral.", TK_FUNC_NAME);
                 continue;
             }
@@ -970,10 +996,11 @@ static TKBluetoothCommunicator *_instance = nil;
 
             DLOGF(@"%s: Connecting to the peripheral.", TK_FUNC_NAME);
 
-            const bool notEmpty = [_connectedDevices count] > 0 || [_connectingDevices count] > 0;
+            const bool notEmpty = (_connectedDevices.size() > 0) || (_connectingDevices.size() > 0);
             (void)notEmpty;
 
-            [_connectingDevices addObject:peripheral];
+            // [_connectingDevices addObject:peripheral];
+            _connectingDevices.insert(peripheral.identifier);
             [_centralManager connectPeripheral:peripheral options:nil];
 
             NSUInteger statusBits = setBit(_statusBits, TKBluetoothCommunicatorStatusBitConnecting);
@@ -983,10 +1010,10 @@ static TKBluetoothCommunicator *_instance = nil;
     }
 }
 
-- (NSArray *)connectedDevices {
-    DLOGF(@"%s", TK_FUNC_NAME);
-    return [_connectedDevices allValues];
-}
+//- (NSArray *)connectedDevices {
+//    DLOGF(@"%s", TK_FUNC_NAME);
+//    return [_connectedDevices allValues];
+//}
 
 - (void)bluetoothCommunicatorDeviceDidUpdateProperty:(TKBluetoothCommunicatorDevice *)device {
     [_delegate bluetoothCommunicator:self didUpdateDevice:device];
@@ -1056,7 +1083,7 @@ static TKBluetoothCommunicator *_instance = nil;
                              error:(nullable NSError *)error {
     DLOGF(@"%s", TK_FUNC_NAME);
 
-    TKBluetoothCommunicatorDevice *device = [_connectedDevices objectForKey:peripheral];
+    TKBluetoothCommunicatorDevice *device = [self deviceByIdentifier:peripheral.identifier];
     if (device == nil || ([device peripheral] != peripheral) || ([device characteristic] != characteristic)) {
         DLOGF(@"%s: Caught unexpected peripheral.", TK_FUNC_NAME);
         return;
@@ -1094,7 +1121,8 @@ static TKBluetoothCommunicator *_instance = nil;
 
     DLOGF(@"%s: Stopping scanning.", TK_FUNC_NAME);
 
-    [_connectingDevices removeAllObjects];
+    // [_connectingDevices removeAllObjects];
+    _connectingDevices.clear();
     [_centralManager stopScan];
 
     [self setStatusBits:unsetBit(_statusBits, TKBluetoothCommunicatorStatusBitScanning)];
@@ -1129,15 +1157,18 @@ static TKBluetoothCommunicator *_instance = nil;
 
     NSDictionary *scanningOptions = @{CBCentralManagerScanOptionAllowDuplicatesKey : @YES};
 
-    if (_connectedDevices == nil) {
-        _connectedDevices = [[NSMutableDictionary alloc] init];
-        _connectingDevices = [[NSMutableSet alloc] init];
-        DLOGF(@"%s: Created peripheral list.", TK_FUNC_NAME);
-    } else {
-        DLOGF(@"%s: Clearing peripheral list.", TK_FUNC_NAME);
-        [_connectedDevices removeAllObjects];
-        [_connectingDevices removeAllObjects];
-    }
+    _connectedDevices.clear();
+    _connectingDevices.clear();
+
+    // if (_connectedDevices == nil) {
+    //     _connectedDevices = [[NSMutableDictionary alloc] init];
+    //     _connectingDevices = [[NSMutableSet alloc] init];
+    //     DLOGF(@"%s: Created peripheral list.", TK_FUNC_NAME);
+    // } else {
+    //     DLOGF(@"%s: Clearing peripheral list.", TK_FUNC_NAME);
+    //     [_connectedDevices removeAllObjects];
+    //     [_connectingDevices removeAllObjects];
+    // }
 
     DLOGF(@"%s: Starting discovering peripherals.", TK_FUNC_NAME);
 
@@ -2181,6 +2212,8 @@ static NSString *emptyStringInstance = @"";
             TKBluetoothCommunicatorScheduledOperation *operation = operationId;
             DCHECK(device && operation);
 
+        
+            DLOGF(@"%s: READ", TK_FUNC_NAME);
             [device setPendingWriteValue:false];
             
             NSUInteger responseMessageType = [self decodeReceivedMessageAndRespond:device receivedMessageData:[operation data]];
@@ -2203,6 +2236,8 @@ static NSString *emptyStringInstance = @"";
             TKBluetoothCommunicatorDevice *device = deviceId;
             TKBluetoothCommunicatorScheduledOperation *operation = operationId;
             DCHECK(device && operation);
+        
+            DLOGF(@"%s: WRITE", TK_FUNC_NAME);
 
             TKBluetoothCommunicatorWriteValueResult result = [self.bluetoothCommunicator writeValue:[operation data]
                                                                                            toDevice:device];

@@ -256,7 +256,7 @@ const size_t getFontByteLength(void);
     nk_font_atlas_begin(&_nuklear._fontAtlas);
 
     _nuklear._fontPtr =
-        nk_font_atlas_add_from_memory(&_nuklear._fontAtlas, (void *)getFontBytes(), getFontByteLength(), 48, 0);
+        nk_font_atlas_add_from_memory(&_nuklear._fontAtlas, (void *)getFontBytes(), getFontByteLength(), 12, 0);
 
     int imageWidth, imageHeight, imageBytesPerRow;
     const void *imageBytes = nk_font_atlas_bake(&_nuklear._fontAtlas, &imageWidth, &imageHeight, NK_FONT_ATLAS_RGBA32);
