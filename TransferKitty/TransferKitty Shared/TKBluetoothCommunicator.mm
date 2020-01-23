@@ -471,6 +471,7 @@ static TKBluetoothCommunicator *_instance = nil;
     }
 
     if (request.offset != 0) {
+        DLOGF(@"%s: responding to request, invalid offset.", TK_FUNC_NAME);
         [_peripheralManager respondToRequest:request withResult:CBATTErrorInvalidOffset];
         return;
     }
@@ -479,8 +480,10 @@ static TKBluetoothCommunicator *_instance = nil;
         DLOGF(@"%s: device that requested read: name=%@, uuid=%@", TK_FUNC_NAME, device.deviceName, device.deviceUUID);
 
         request.value = nil;
+        DLOGF(@"%s: responding to request, success.", TK_FUNC_NAME);
         [_peripheralManager respondToRequest:request withResult:CBATTErrorSuccess];
     } else {
+        DLOGF(@"%s: responding to request, read not permitted.", TK_FUNC_NAME);
         [_peripheralManager respondToRequest:request withResult:CBATTErrorReadNotPermitted];
         return;
     }
@@ -491,24 +494,41 @@ static TKBluetoothCommunicator *_instance = nil;
 // Android: bluetoothGattServerDidRequestWrite
 - (void)peripheralManager:(CBPeripheralManager *)peripheral
     didReceiveWriteRequests:(NSArray<CBATTRequest *> *)requests {
-    DLOGF(@"%s: requests: %u", TK_FUNC_NAME, requests ? requests.count : 0);
+    constexpr CBATTError BAD_RESPONSE = CBATTErrorWriteNotPermitted;
+    constexpr CBATTError GOOD_RESPONSE = CBATTErrorSuccess;
+    
+    DLOGF(@"%s: received %u write requests.", TK_FUNC_NAME, requests ? requests.count : 0);
 
     for (NSUInteger i = 0; i < requests.count; ++i) {
         CBATTRequest *request = [requests objectAtIndex:i];
-
-        if (!request || !request.central) {
-            DLOGF(@"%s: request@%u", TK_FUNC_NAME, requests ? requests.count : 0);
+        
+        DCHECK(request);
+        DCHECK(request.value);
+        DCHECK(request.central);
+        
+        if (!request || !request.value || !request.central) {
+            DLOGF(@"%s: caught invalid request, responding with error.", TK_FUNC_NAME);
+            [_peripheralManager respondToRequest:request withResult:BAD_RESPONSE];
             continue;
         }
-
-        DLOGF(@"%s: request@%u = %@", TK_FUNC_NAME, i, request);
-        if (TKBluetoothCommunicatorDevice *device = [_connectedDevices objectForKey:request.central]) {
-            if (![_scheduler scheduleMessageFrom:device wholeMessageData:request.value]) {
-                [self cancelConnectionForDevice:device];
-            }
-        } else {
-            DLOGF(@"%s: Failed to find associated connected device.", TK_FUNC_NAME);
-            DCHECK(false);
+        
+        NSData* value = [NSData dataWithData:request.value];
+        DCHECK(value);
+        
+        TKBluetoothCommunicatorDevice *device = [_connectedDevices objectForKey:request.central];
+        DCHECK(device);
+        
+        if (!device) {
+            DLOGF(@"%s: failed to find connected device, responding with error.", TK_FUNC_NAME);
+            [_peripheralManager respondToRequest:request withResult:BAD_RESPONSE];
+            continue;
+        }
+        
+        DLOGF(@"%s: received a valid request, respoding with success.", TK_FUNC_NAME);
+        [_peripheralManager respondToRequest:request withResult:GOOD_RESPONSE];
+        
+        if (![_scheduler scheduleMessageFrom:device wholeMessageData:value]) {
+            [self cancelConnectionForDevice:device];
         }
     }
 }
@@ -523,14 +543,14 @@ static TKBluetoothCommunicator *_instance = nil;
 
 #ifdef TK_PERIPHERAL_ONE_SUBSCRIPTION
     if ([_connectedDevices count] > 0) {
-        DLOGF(@"%s: Skipping subscription request, only subscription is allowed.", TK_FUNC_NAME);
+        DLOGF(@"%s: skipping subscription request, only subscription is allowed.", TK_FUNC_NAME);
         return;
     }
 #endif
 
-    assert(peripheralManager && peripheralManager == _peripheralManager);
-    assert(characteristic && characteristic == _peripheralService.characteristics[0]);
-    assert(central);
+    DCHECK(peripheralManager && peripheralManager == _peripheralManager);
+    DCHECK(characteristic && characteristic == _peripheralService.characteristics[0]);
+    DCHECK(central);
 
     if (!peripheralManager) {
         DLOGF(@"%s: peripheral is not available, update is skipped.", TK_FUNC_NAME);
@@ -546,10 +566,10 @@ static TKBluetoothCommunicator *_instance = nil;
     }
 
     TKBluetoothCommunicatorDevice *device = [self centralDidSubscribe:central toCharacteristic:characteristic];
-    assert(device);
+    DCHECK(device);
 
 #ifdef TK_PERIPHERAL_ONE_SUBSCRIPTION
-    assert([_connectedDevices count] == 1);
+    DCHECK([_connectedDevices count] == 1);
     [self stopAdvertising];
 #endif
 
@@ -567,9 +587,9 @@ static TKBluetoothCommunicator *_instance = nil;
                              central:(CBCentral *)central
     didUnsubscribeFromCharacteristic:(CBCharacteristic *)characteristic {
     DLOGF(@"%s", TK_FUNC_NAME);
-    assert(peripheralManager && peripheralManager == _peripheralManager);
-    assert(characteristic && characteristic == _peripheralService.characteristics[0]);
-    assert(central);
+    DCHECK(peripheralManager && peripheralManager == _peripheralManager);
+    DCHECK(characteristic && characteristic == _peripheralService.characteristics[0]);
+    DCHECK(central);
 
     if (!peripheralManager) {
         DLOGF(@"%s: peripheral is not available, update is skipped.", TK_FUNC_NAME);
@@ -600,11 +620,7 @@ static TKBluetoothCommunicator *_instance = nil;
     DLOGF(@"%s", TK_FUNC_NAME);
     if (isBitSet(_statusBits,
                  TKBluetoothCommunicatorStatusBitStartingCentral | TKBluetoothCommunicatorStatusBitCentral)) {
-        [TKDebug check:false
-                  file:@__FILE__
-                  line:__LINE__
-                   tag:@"BluetoothCommunicator"
-                   msg:@"Already running a central role."];
+        DCHECKF(false, "Already running a central role.");
         return;
     }
 
@@ -1045,15 +1061,16 @@ static TKBluetoothCommunicator *_instance = nil;
         if ([_peripheralManager updateValue:value
                           forCharacteristic:_peripheralCharacteristic
                        onSubscribedCentrals:@[ central ]]) {
-            DLOGF(@"%s: Value for characterisic is updated successfully.", TK_FUNC_NAME);
+            DLOGF(@"%s: peripheral manager updated value for characterisic.", TK_FUNC_NAME);
             return TKBluetoothCommunicatorWriteValueResultSuccessContinue;
         }
 
-        DLOGF(@"%s: Failed to update value for characterisic.", TK_FUNC_NAME);
+        DLOGF(@"%s: peripheral manager failed to update value for characterisic.", TK_FUNC_NAME);
         // peripheralManagerIsReadyToUpdateSubscribers
         return TKBluetoothCommunicatorWriteValueResultFailedReschedule;
     }
 
+    DLOGF(@"%s: writing value failed, panic.", TK_FUNC_NAME);
     return TKBluetoothCommunicatorWriteValueResultErrorPanic;
 }
 
@@ -1917,8 +1934,8 @@ static NSString *emptyStringInstance = @"";
     TKBluetoothCommunicator *_bluetoothCommunicator;
     TKBluetoothCommunicatorEncoder *_encoder;
     TKBluetoothCommunicatorDecoder *_decoder;
-    dispatch_queue_t _readQueue;
-    dispatch_queue_t _writeQueue;
+    // dispatch_queue_t _readQueue;
+    // dispatch_queue_t _writeQueue;
     NSMutableDictionary *_scheduledReads;
     NSMutableDictionary *_scheduledWrites;
     NSMutableDictionary *_longMessages;
@@ -1939,8 +1956,8 @@ static NSString *emptyStringInstance = @"";
     _bluetoothCommunicator = bluetoothCommunicator;
     _encoder = [[TKBluetoothCommunicatorEncoder alloc] initWithBluetoothCommunicator:bluetoothCommunicator];
     _decoder = [[TKBluetoothCommunicatorDecoder alloc] initWithBluetoothCommunicator:bluetoothCommunicator];
-    _readQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0);
-    _writeQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
+    // _readQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0);
+    // _writeQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
 
     _scheduledReads = [[NSMutableDictionary alloc] init];
     _scheduledWrites = [[NSMutableDictionary alloc] init];
