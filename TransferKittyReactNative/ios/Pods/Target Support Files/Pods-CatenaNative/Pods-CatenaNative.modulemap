@@ -1,0 +1,6 @@
+module Pods_CatenaNative {
+  umbrella header "Pods-CatenaNative-umbrella.h"
+
+  export *
+  module * { export * }
+}

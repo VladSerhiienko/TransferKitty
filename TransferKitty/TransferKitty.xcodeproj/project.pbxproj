@@ -2245,14 +2245,14 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = CP4Y4M4WP5;
+				DEVELOPMENT_TEAM = NT55EP9MP6;
 				INFOPLIST_FILE = "$(SRCROOT)/TransferKitty iOS/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 12.2;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = vserhiienko.TransferKitty;
+				PRODUCT_BUNDLE_IDENTIFIER = vsromanc.TransferKitty;
 				PRODUCT_NAME = TransferKitty;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -2265,14 +2265,14 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = CP4Y4M4WP5;
+				DEVELOPMENT_TEAM = NT55EP9MP6;
 				INFOPLIST_FILE = "$(SRCROOT)/TransferKitty iOS/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 12.2;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = vserhiienko.TransferKitty;
+				PRODUCT_BUNDLE_IDENTIFIER = vsromanc.TransferKitty;
 				PRODUCT_NAME = TransferKitty;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -2287,14 +2287,14 @@
 				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				DEVELOPMENT_TEAM = CP4Y4M4WP5;
+				DEVELOPMENT_TEAM = NT55EP9MP6;
 				INFOPLIST_FILE = "$(SRCROOT)/TransferKitty macOS/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.14;
-				PRODUCT_BUNDLE_IDENTIFIER = vserhiienko.TransferKitty;
+				PRODUCT_BUNDLE_IDENTIFIER = vsromanc.TransferKitty;
 				PRODUCT_NAME = TransferKitty;
 				SDKROOT = macosx;
 			};
@@ -2307,14 +2307,14 @@
 				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				DEVELOPMENT_TEAM = CP4Y4M4WP5;
+				DEVELOPMENT_TEAM = NT55EP9MP6;
 				INFOPLIST_FILE = "$(SRCROOT)/TransferKitty macOS/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.14;
-				PRODUCT_BUNDLE_IDENTIFIER = vserhiienko.TransferKitty;
+				PRODUCT_BUNDLE_IDENTIFIER = vsromanc.TransferKitty;
 				PRODUCT_NAME = TransferKitty;
 				SDKROOT = macosx;
 			};
@@ -2325,7 +2325,7 @@
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = CP4Y4M4WP5;
+				DEVELOPMENT_TEAM = NT55EP9MP6;
 				INFOPLIST_FILE = "$(SRCROOT)/TransferKitty ShareExtension iOS/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 12.2;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -2333,7 +2333,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = vserhiienko.TransferKitty.ShareExtension.iOS;
+				PRODUCT_BUNDLE_IDENTIFIER = vsromanc.TransferKitty.ShareExtension.iOS;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
@@ -2346,7 +2346,7 @@
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = CP4Y4M4WP5;
+				DEVELOPMENT_TEAM = NT55EP9MP6;
 				INFOPLIST_FILE = "$(SRCROOT)/TransferKitty ShareExtension iOS/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 12.2;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -2354,7 +2354,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = vserhiienko.TransferKitty.ShareExtension.iOS;
+				PRODUCT_BUNDLE_IDENTIFIER = vsromanc.TransferKitty.ShareExtension.iOS;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
@@ -2371,7 +2371,7 @@
 				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				DEVELOPMENT_TEAM = CP4Y4M4WP5;
+				DEVELOPMENT_TEAM = NT55EP9MP6;
 				ENABLE_HARDENED_RUNTIME = YES;
 				INFOPLIST_FILE = "$(SRCROOT)/TransferKitty ShareExtension macOS/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -2380,7 +2380,7 @@
 					"@executable_path/../../../../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.14;
-				PRODUCT_BUNDLE_IDENTIFIER = vserhiienko.TransferKitty.ShareExtension.macOS;
+				PRODUCT_BUNDLE_IDENTIFIER = vsromanc.TransferKitty.ShareExtension.macOS;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
 				SKIP_INSTALL = YES;
@@ -2395,7 +2395,7 @@
 				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				DEVELOPMENT_TEAM = CP4Y4M4WP5;
+				DEVELOPMENT_TEAM = NT55EP9MP6;
 				ENABLE_HARDENED_RUNTIME = YES;
 				INFOPLIST_FILE = "$(SRCROOT)/TransferKitty ShareExtension macOS/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -2404,7 +2404,7 @@
 					"@executable_path/../../../../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.14;
-				PRODUCT_BUNDLE_IDENTIFIER = vserhiienko.TransferKitty.ShareExtension.macOS;
+				PRODUCT_BUNDLE_IDENTIFIER = vsromanc.TransferKitty.ShareExtension.macOS;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
 				SKIP_INSTALL = YES;

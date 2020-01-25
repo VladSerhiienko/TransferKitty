@@ -1,0 +1,1 @@
+../../../../../node_modules/react-native-bluetooth-status/ios/RNBluetoothManager.h

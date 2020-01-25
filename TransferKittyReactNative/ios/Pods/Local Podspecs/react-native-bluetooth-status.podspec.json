@@ -1,0 +1,21 @@
+{
+  "name": "react-native-bluetooth-status",
+  "version": "1.4.2",
+  "summary": "React-Native library to query and manage bluetooth state of the device (iOS and Android)",
+  "license": "MIT",
+  "authors": "Juha Linnanen",
+  "homepage": "https://github.com/solinor/react-native-bluetooth-status#readme",
+  "platforms": {
+    "ios": "9.0"
+  },
+  "source": {
+    "git": "https://github.com/react-native-community/react-native-webview.git",
+    "tag": "v1.4.2"
+  },
+  "source_files": "ios/**/*.{h,m}",
+  "dependencies": {
+    "React": [
+
+    ]
+  }
+}
