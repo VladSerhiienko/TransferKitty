@@ -2252,7 +2252,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = vsromanc.TransferKitty;
+				PRODUCT_BUNDLE_IDENTIFIER = vserhiienko.TransferKitty;
 				PRODUCT_NAME = TransferKitty;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -2272,7 +2272,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = vsromanc.TransferKitty;
+				PRODUCT_BUNDLE_IDENTIFIER = vserhiienko.TransferKitty;
 				PRODUCT_NAME = TransferKitty;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -2294,7 +2294,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.14;
-				PRODUCT_BUNDLE_IDENTIFIER = vsromanc.TransferKitty;
+				PRODUCT_BUNDLE_IDENTIFIER = vserhiienko.TransferKitty;
 				PRODUCT_NAME = TransferKitty;
 				SDKROOT = macosx;
 			};
@@ -2314,7 +2314,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.14;
-				PRODUCT_BUNDLE_IDENTIFIER = vsromanc.TransferKitty;
+				PRODUCT_BUNDLE_IDENTIFIER = vserhiienko.TransferKitty;
 				PRODUCT_NAME = TransferKitty;
 				SDKROOT = macosx;
 			};
@@ -2333,7 +2333,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = vsromanc.TransferKitty.ShareExtension.iOS;
+				PRODUCT_BUNDLE_IDENTIFIER = vserhiienko.TransferKitty.ShareExtension.iOS;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
@@ -2354,7 +2354,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = vsromanc.TransferKitty.ShareExtension.iOS;
+				PRODUCT_BUNDLE_IDENTIFIER = vserhiienko.TransferKitty.ShareExtension.iOS;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
@@ -2380,7 +2380,7 @@
 					"@executable_path/../../../../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.14;
-				PRODUCT_BUNDLE_IDENTIFIER = vsromanc.TransferKitty.ShareExtension.macOS;
+				PRODUCT_BUNDLE_IDENTIFIER = vserhiienko.TransferKitty.ShareExtension.macOS;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
 				SKIP_INSTALL = YES;
@@ -2404,7 +2404,7 @@
 					"@executable_path/../../../../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.14;
-				PRODUCT_BUNDLE_IDENTIFIER = vsromanc.TransferKitty.ShareExtension.macOS;
+				PRODUCT_BUNDLE_IDENTIFIER = vserhiienko.TransferKitty.ShareExtension.macOS;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
 				SKIP_INSTALL = YES;
