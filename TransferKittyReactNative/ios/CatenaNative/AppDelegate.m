@@ -44,8 +44,11 @@
   return extraModules;
 }
 
-- (NSURL *)sourceURLForBridge:(RCTBridge *)bridge {
-#ifdef DEBUG
+- (NSURL *)sourceURLForBridge:(RCTBridge *)bridge
+{
+#if DEBUG
+  NSURL *jsUrl = [[RCTBundleURLProvider sharedSettings] jsBundleURLForBundleRoot:@"index" fallbackResource:nil];
+  [[RCTBundleURLProvider sharedSettings] setJsLocation:jsUrl.host];
   return [[RCTBundleURLProvider sharedSettings] jsBundleURLForBundleRoot:@"index" fallbackResource:nil];
 #else
   return [[NSBundle mainBundle] URLForResource:@"main" withExtension:@"jsbundle"];

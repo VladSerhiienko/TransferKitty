@@ -1,60 +1,44 @@
 #import "ReactNativeShareExtension.h"
-#import <MobileCoreServices/MobileCoreServices.h>
-#import <React/RCTBundleURLProvider.h>
+#import <React/RCTBridge.h>
 #import <React/RCTRootView.h>
+//#import <React/RCTBridgeDelegate.h>
+#import <React/RCTBundleURLProvider.h>
 
-#define URL_IDENTIFIER @"public.url"
-#define IMAGE_IDENTIFIER @"public.image"
-#define TEXT_IDENTIFIER (NSString *)kUTTypePlainText
+@interface ShareViewController ()
 
-NSExtensionContext* extensionContext;
+@end
 
-@implementation ReactNativeShareExtension {
-    NSTimer *autoTimer;
-    NSString* type;
-    NSString* value;
-}
+@implementation ShareViewController
 
-- (UIView*) shareView {
-    NSURL *jsCodeLocation;
+- (void)loadView {
+  NSURL *jsCodeLocation;
 
-    jsCodeLocation = [[RCTBundleURLProvider sharedSettings] jsBundleURLForBundleRoot:@"share.ios" fallbackResource:nil];
+  jsCodeLocation = [[RCTBundleURLProvider sharedSettings] jsBundleURLForBundleRoot:@"share.ios" fallbackResource:nil];
 
-    NSDictionary *initialProps = [NSDictionary dictionaryWithObject:[NSNumber numberWithBool: TRUE] forKey:@"isShareExtension"];
-    RCTRootView *rootView = [[RCTRootView alloc] initWithBundleURL:jsCodeLocation
-                                                        moduleName:@"CatenaShare"
-                                                 initialProperties:initialProps
-                                                     launchOptions:nil];
-    rootView.backgroundColor = nil;
-
-    // Uncomment for console output in Xcode console for release mode on device:
-//     RCTSetLogThreshold(RCTLogLevelInfo - 1);
-    
-    return rootView;
-}
-
-RCT_EXPORT_MODULE();
-
-- (void)viewDidLoad {
-  [super viewDidLoad];
-  extensionContext = self.extensionContext;
-  UIView *rootView = [self shareView];
-  if (rootView.backgroundColor == nil) {
-    rootView.backgroundColor = [[UIColor alloc] initWithRed:1 green:1 blue:1 alpha:0.1];
-  }
-  
+  NSDictionary *initialProps = [NSDictionary dictionaryWithObject:[NSNumber numberWithBool: TRUE] forKey:@"isShareExtension"];
+  RCTRootView *rootView = [[RCTRootView alloc] initWithBundleURL:jsCodeLocation
+                                                      moduleName:@"CatenaShare"
+                                               initialProperties:initialProps
+                                                   launchOptions:nil];
+  rootView.backgroundColor = nil;
   self.view = rootView;
 }
 
-- (BOOL) requiresMainQueueSetup
-{
-  return NO;
+- (BOOL)isContentValid {
+    // Do validation of contentText and/or NSExtensionContext attachments here
+    return YES;
 }
 
+- (void)didSelectPost {
+    // This is called after the user selects Post. Do the upload of contentText and/or NSExtensionContext attachments.
 
-RCT_EXPORT_METHOD(close) {
-  [extensionContext completeRequestReturningItems:nil
-                                completionHandler:nil];
+    // Inform the host that we're done, so it un-blocks its UI. Note: Alternatively you could call super's -didSelectPost, which will similarly complete the extension context.
+    [self.extensionContext completeRequestReturningItems:@[] completionHandler:nil];
+}
+
+- (NSArray *)configurationItems {
+    // To add configuration options via table cells at the bottom of the sheet, return an array of SLComposeSheetConfigurationItem here.
+    return @[];
 }
 
 @end

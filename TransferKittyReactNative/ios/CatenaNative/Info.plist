@@ -2,8 +2,6 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>NSBluetoothAlwaysUsageDescription</key>
-	<string>Sending something...</string>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
 	<key>CFBundleDisplayName</key>
@@ -39,6 +37,8 @@
 			</dict>
 		</dict>
 	</dict>
+	<key>NSBluetoothAlwaysUsageDescription</key>
+	<string>Sending something...</string>
 	<key>NSCalendarsUsageDescription</key>
 	<string>Allow Catena to access your calendar</string>
 	<key>NSCameraUsageDescription</key>
@@ -54,13 +54,20 @@
 	<key>NSMicrophoneUsageDescription</key>
 	<string>Allow Catena to access your microphone</string>
 	<key>NSMotionUsageDescription</key>
-	<string>Allow Catena to access your device&apos;s accelerometer</string>
+	<string>Allow Catena to access your device's accelerometer</string>
 	<key>NSPhotoLibraryAddUsageDescription</key>
 	<string>Give Catena periences permission to save photos</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>Give Catena periences permission to access your photos</string>
 	<key>NSRemindersUsageDescription</key>
 	<string>Allow Catena to access your reminders</string>
+	<key>UIBackgroundModes</key>
+	<array>
+		<string>bluetooth-central</string>
+		<string>bluetooth-peripheral</string>
+		<string>fetch</string>
+		<string>remote-notification</string>
+	</array>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
 	<key>UIRequiredDeviceCapabilities</key>

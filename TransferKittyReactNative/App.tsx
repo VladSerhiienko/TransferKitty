@@ -11,12 +11,12 @@ export default function App() {
         <ShareHeader />
         <View style={styles.transparentContent}>
           <View style={styles.loader}>
-              <LottieView
-                style={styles.lottieView}
-                source={require('./assets/moving-eye.json')}
-                autoPlay
-                loop
-              />
+            <LottieView
+              style={styles.lottieView}
+              source={require('./assets/moving-eye.json')}
+              autoPlay
+              loop
+            />
             <Text style={styles.textContent}>Looking for someone around...</Text>
           </View>
         </View>

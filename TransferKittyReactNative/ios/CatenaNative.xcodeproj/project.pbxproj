@@ -94,6 +94,7 @@
 		2502ACF51380E8237829647D /* libPods-CatenaNative.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-CatenaNative.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2700BA4FD6DC23651DDD3A39 /* libPods-CatenaNative-CatenaShare.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-CatenaNative-CatenaShare.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2D16E6891FA4F8E400B85C8A /* libReact.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libReact.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		87B5E6B923DE2EDE00EB1A44 /* CatenaShare.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = CatenaShare.entitlements; sourceTree = "<group>"; };
 		87F8218123DC6F9A00D0C4F1 /* libDoubleConversion.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libDoubleConversion.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		87F8218223DC6F9A00D0C4F1 /* libEXAppLoaderProvider.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libEXAppLoaderProvider.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		87F8218323DC6F9A00D0C4F1 /* libEXConstants.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libEXConstants.a; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -1457,6 +1458,7 @@
 		87F821EC23DC901500D0C4F1 /* CatenaShare */ = {
 			isa = PBXGroup;
 			children = (
+				87B5E6B923DE2EDE00EB1A44 /* CatenaShare.entitlements */,
 				87F821EE23DC901500D0C4F1 /* ReactNativeShareExtension.m */,
 				87F821F023DC901500D0C4F1 /* MainInterface.storyboard */,
 				87F821F323DC901500D0C4F1 /* Info.plist */,
@@ -1952,6 +1954,7 @@
 				CLANG_ENABLE_OBJC_WEAK = YES;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_ENTITLEMENTS = CatenaShare/CatenaShare.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				DEVELOPMENT_TEAM = NT55EP9MP6;
@@ -1991,6 +1994,7 @@
 				CLANG_ENABLE_OBJC_WEAK = YES;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_ENTITLEMENTS = CatenaShare/CatenaShare.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
