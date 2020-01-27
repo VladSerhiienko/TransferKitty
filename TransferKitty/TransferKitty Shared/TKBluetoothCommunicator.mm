@@ -496,37 +496,37 @@ static TKBluetoothCommunicator *_instance = nil;
     didReceiveWriteRequests:(NSArray<CBATTRequest *> *)requests {
     constexpr CBATTError BAD_RESPONSE = CBATTErrorWriteNotPermitted;
     constexpr CBATTError GOOD_RESPONSE = CBATTErrorSuccess;
-    
+
     DLOGF(@"%s: received %u write requests.", TK_FUNC_NAME, requests ? requests.count : 0);
 
     for (NSUInteger i = 0; i < requests.count; ++i) {
         CBATTRequest *request = [requests objectAtIndex:i];
-        
+
         DCHECK(request);
         DCHECK(request.value);
         DCHECK(request.central);
-        
+
         if (!request || !request.value || !request.central) {
             DLOGF(@"%s: caught invalid request, responding with error.", TK_FUNC_NAME);
             [_peripheralManager respondToRequest:request withResult:BAD_RESPONSE];
             continue;
         }
-        
-        NSData* value = [NSData dataWithData:request.value];
+
+        NSData *value = [NSData dataWithData:request.value];
         DCHECK(value);
-        
+
         TKBluetoothCommunicatorDevice *device = [_connectedDevices objectForKey:request.central];
         DCHECK(device);
-        
+
         if (!device) {
             DLOGF(@"%s: failed to find connected device, responding with error.", TK_FUNC_NAME);
             [_peripheralManager respondToRequest:request withResult:BAD_RESPONSE];
             continue;
         }
-        
+
         DLOGF(@"%s: received a valid request, respoding with success.", TK_FUNC_NAME);
         [_peripheralManager respondToRequest:request withResult:GOOD_RESPONSE];
-        
+
         if (![_scheduler scheduleMessageFrom:device wholeMessageData:value]) {
             [self cancelConnectionForDevice:device];
         }

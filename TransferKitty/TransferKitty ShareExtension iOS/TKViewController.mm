@@ -64,10 +64,12 @@
         for (NSExtensionItem *inputItem in inputItems) {
             if (inputItem && [inputItem attachments]) {
                 NSLog(@"attachments: %lu", [[inputItem attachments] count]);
+                NSLog(@"input iteam: %@", inputItem);
 
                 for (NSItemProvider *itemProvider in [inputItem attachments]) {
                     if (itemProvider) {
                         NSLog(@"attachment: suggested name: %@", [itemProvider suggestedName]);
+                        NSLog(@"attachment: (d)description: %@", [itemProvider debugDescription]);
                         NSLog(@"          :    description: %@", [itemProvider description]);
 
                         // if ([itemProvider
@@ -88,20 +90,21 @@
                             [itemProvider loadItemForTypeIdentifier:@"public.image"
                                                             options:nil
                                                   completionHandler:^(id<NSSecureCoding> item, NSError *error) {
+                                                    if (error) {
+                                                        NSLog(@"          : error: %@", error);
+                                                        return;
+                                                    }
+
                                                     UIImage *sharedImage = nil;
                                                     if ([(NSObject *)item isKindOfClass:[NSURL class]]) {
                                                         sharedImage = [UIImage
                                                             imageWithData:[NSData dataWithContentsOfURL:(NSURL *)item]];
-                                                        NSLog(@"          : image from "
-                                                              @"url: %@",
-                                                              sharedImage);
-                                                    }
-
-                                                    if ([(NSObject *)item isKindOfClass:[UIImage class]]) {
+                                                        NSLog(@"          : image from url: %@", sharedImage);
+                                                    } else if ([(NSObject *)item isKindOfClass:[UIImage class]]) {
                                                         sharedImage = (UIImage *)item;
-                                                        NSLog(@"          :    image "
-                                                              @"item: %@",
-                                                              sharedImage);
+                                                        NSLog(@"          : image item: %@", sharedImage);
+                                                    } else {
+                                                        NSLog(@"          : image item: %@, unexpected class", item);
                                                     }
                                                   }];
                         }
@@ -138,8 +141,8 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [self prepareViewController];
     [self printExtensionItems];
+    [self prepareViewController];
 }
 @end
 
