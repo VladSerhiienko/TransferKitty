@@ -1,18 +1,19 @@
 #import "ReactNativeShareExtension.h"
 #import <React/RCTBridge.h>
 #import <React/RCTRootView.h>
-//#import <React/RCTBridgeDelegate.h>
 #import <React/RCTBundleURLProvider.h>
 
-@interface ShareViewController ()
+#import <UMCore/UMModuleRegistry.h>
+#import <UMReactNativeAdapter/UMNativeModulesProxy.h>
+#import <UMReactNativeAdapter/UMModuleRegistryAdapter.h>
 
+@interface ShareViewController ()
 @end
 
 @implementation ShareViewController
 
 - (void)loadView {
   NSURL *jsCodeLocation;
-
   jsCodeLocation = [[RCTBundleURLProvider sharedSettings] jsBundleURLForBundleRoot:@"share.ios" fallbackResource:nil];
 
   NSDictionary *initialProps = [NSDictionary dictionaryWithObject:[NSNumber numberWithBool: TRUE] forKey:@"isShareExtension"];
