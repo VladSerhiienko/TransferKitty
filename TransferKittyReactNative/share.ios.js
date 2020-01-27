@@ -1,4 +1,4 @@
 import { AppRegistry } from 'react-native';
-import App from './App';
+import CatenaShare from './App';
 
-AppRegistry.registerComponent('CatenaShare', () => App);
+AppRegistry.registerComponent('CatenaShare', () => CatenaShare);
