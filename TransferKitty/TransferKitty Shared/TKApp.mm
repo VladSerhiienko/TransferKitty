@@ -11,7 +11,7 @@
 #include "TKUIStatePopulator.h"
 
 using tk::setBit;
-using tk::isBitSet;
+using tk::hasBit;
 using tk::unsetBit;
 
 @implementation TKAppInput
@@ -149,17 +149,17 @@ using tk::unsetBit;
           [NSStringUtilities toDebugString:statusBits],
           [NSStringUtilities toDebugString:currentStatusBits]);
 
-    if (isBitSet(currentStatusBits, TKBluetoothCommunicatorStatusBitCentral)) {
+    if (hasBit(currentStatusBits, TKBluetoothCommunicatorStatusBitCentral)) {
         DLOGF(@"%s: Starting discovering", TK_FUNC_NAME);
         [bluetoothCommunicator startDiscoveringDevices];
-    } else if (isBitSet(currentStatusBits, TKBluetoothCommunicatorStatusBitPeripheral) &&
-               !isBitSet(currentStatusBits, TKBluetoothCommunicatorStatusBitPublishedService) &&
-               !isBitSet(currentStatusBits, TKBluetoothCommunicatorStatusBitPublishingService)) {
+    } else if (hasBit(currentStatusBits, TKBluetoothCommunicatorStatusBitPeripheral) &&
+               !hasBit(currentStatusBits, TKBluetoothCommunicatorStatusBitPublishedService) &&
+               !hasBit(currentStatusBits, TKBluetoothCommunicatorStatusBitPublishingService)) {
         DLOGF(@"%s: Starting publishing", TK_FUNC_NAME);
         [bluetoothCommunicator publishServices];
-    } else if (isBitSet(currentStatusBits, TKBluetoothCommunicatorStatusBitPeripheral) &&
-               !isBitSet(currentStatusBits, TKBluetoothCommunicatorStatusBitPublishingService) &&
-               isBitSet(currentStatusBits, TKBluetoothCommunicatorStatusBitPublishedService)) {
+    } else if (hasBit(currentStatusBits, TKBluetoothCommunicatorStatusBitPeripheral) &&
+               !hasBit(currentStatusBits, TKBluetoothCommunicatorStatusBitPublishingService) &&
+               hasBit(currentStatusBits, TKBluetoothCommunicatorStatusBitPublishedService)) {
         DLOGF(@"%s: Starting advertising", TK_FUNC_NAME);
         [bluetoothCommunicator startAdvertising];
     }

@@ -113,7 +113,7 @@ constexpr T setBit(const T bits, const U bit) {
     return bits | T(bit);
 }
 template <typename T, typename U>
-constexpr bool isBitSet(const T bits, const U bit) {
+constexpr bool hasBit(const T bits, const U bit) {
     TK_STATIC_ASSERT(sizeof(T) == sizeof(U));
     return (bits & T(bit)) == T(bit);
 }

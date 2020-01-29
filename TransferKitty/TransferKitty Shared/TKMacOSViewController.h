@@ -6,6 +6,7 @@
 //  Copyright © 2019 vserhiienko. All rights reserved.
 //
 
+#pragma once
 #import <Cocoa/Cocoa.h>
 #import <MetalKit/MetalKit.h>
 

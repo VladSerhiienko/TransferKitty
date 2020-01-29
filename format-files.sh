@@ -1,5 +1,7 @@
 clang-format --style=file -i "TransferKitty/TransferKitty ShareExtension macOS/TKViewController.h"
 clang-format --style=file -i "TransferKitty/TransferKitty ShareExtension macOS/TKViewController.mm"
+clang-format --style=file -i "TransferKitty/TransferKitty Shared/TKExtensionContextUtils.h"
+clang-format --style=file -i "TransferKitty/TransferKitty Shared/TKExtensionContextUtils.mm"
 clang-format --style=file -i "TransferKitty/TransferKitty Shared/TKApp.h"
 clang-format --style=file -i "TransferKitty/TransferKitty Shared/TKApp.mm"
 clang-format --style=file -i "TransferKitty/TransferKitty Shared/TKBluetoothCommunicator.h"

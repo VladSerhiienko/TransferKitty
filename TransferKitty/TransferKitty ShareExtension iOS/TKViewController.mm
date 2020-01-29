@@ -46,76 +46,10 @@
 //
 
 #import "TKViewController.h"
+#import "TKExtensionContextUtils.h"
 
-@implementation TKViewController
-
-// Do validation of contentText and/or NSExtensionContext attachments here
-- (BOOL)printExtensionItems {
-    if (!self || !self.extensionContext) { return YES; }
-
-    // NSLog(@"------ isContentValid ------");
-    // NSLog(@"content: %@", self.contentText);
-
-    if (self.extensionContext.inputItems) {
-        NSLog(@"------");
-        NSArray *inputItems = self.extensionContext.inputItems;
-        NSLog(@"inputs: %lu", (unsigned long)[self.extensionContext.inputItems count]);
-
-        for (NSExtensionItem *inputItem in inputItems) {
-            if (inputItem && [inputItem attachments]) {
-                NSLog(@"attachments: %lu", [[inputItem attachments] count]);
-                NSLog(@"input iteam: %@", inputItem);
-
-                for (NSItemProvider *itemProvider in [inputItem attachments]) {
-                    if (itemProvider) {
-                        NSLog(@"attachment: suggested name: %@", [itemProvider suggestedName]);
-                        NSLog(@"attachment: (d)description: %@", [itemProvider debugDescription]);
-                        NSLog(@"          :    description: %@", [itemProvider description]);
-
-                        // if ([itemProvider
-                        // hasItemConformingToTypeIdentifier:@"public.url"]) {
-                        //     [itemProvider
-                        //     loadItemForTypeIdentifier:@"public.url"
-                        //     options:nil
-                        //                   completionHandler:^(NSURL *url,
-                        //                   NSError *error)
-                        //                   {
-                        //                       NSString *urlString =
-                        //                       url.absoluteString; NSLog(@" :
-                        //                       public url: %@", urlString);
-                        //                   }];
-                        // }
-
-                        if ([itemProvider hasItemConformingToTypeIdentifier:@"public.image"]) {
-                            [itemProvider loadItemForTypeIdentifier:@"public.image"
-                                                            options:nil
-                                                  completionHandler:^(id<NSSecureCoding> item, NSError *error) {
-                                                    if (error) {
-                                                        NSLog(@"          : error: %@", error);
-                                                        return;
-                                                    }
-
-                                                    UIImage *sharedImage = nil;
-                                                    if ([(NSObject *)item isKindOfClass:[NSURL class]]) {
-                                                        sharedImage = [UIImage
-                                                            imageWithData:[NSData dataWithContentsOfURL:(NSURL *)item]];
-                                                        NSLog(@"          : image from url: %@", sharedImage);
-                                                    } else if ([(NSObject *)item isKindOfClass:[UIImage class]]) {
-                                                        sharedImage = (UIImage *)item;
-                                                        NSLog(@"          : image item: %@", sharedImage);
-                                                    } else {
-                                                        NSLog(@"          : image item: %@, unexpected class", item);
-                                                    }
-                                                  }];
-                        }
-                    }
-                }
-            }
-        }
-    }
-
-    NSLog(@"------ xxxxxxxxxxxxxx ------");
-    return YES;
+@implementation TKViewController {
+    TKAttachmentContext* _context;
 }
 
 - (BOOL)isContentValid {
@@ -141,7 +75,12 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [self printExtensionItems];
+    
+    if (self.extensionContext) {
+        _context = [TKAttachmentContext attachmentContextWithExtensionContext:self.extensionContext];
+        DCHECK(_context);
+    }
+    
     [self prepareViewController];
 }
 @end

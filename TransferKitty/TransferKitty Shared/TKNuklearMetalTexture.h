@@ -1,3 +1,4 @@
+#pragma once
 #include "TKITexture.h"
 #include "TKNuklearConfig.h"
 #include "TKOptional.h"

@@ -6,6 +6,7 @@
 //  Copyright © 2019 vserhiienko. All rights reserved.
 //
 
+#pragma once
 #import <MetalKit/MetalKit.h>
 #import <UIKit/UIKit.h>
 

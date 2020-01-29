@@ -60,6 +60,10 @@
 		F96388D023BA687200BA6F2A /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F96388CE23BA686B00BA6F2A /* CoreGraphics.framework */; };
 		F96388D323BA6B4900BA6F2A /* TKiOSViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = F96388D223BA6B4900BA6F2A /* TKiOSViewController.mm */; };
 		F96388D523BA6B4900BA6F2A /* TKiOSViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = F96388D223BA6B4900BA6F2A /* TKiOSViewController.mm */; };
+		F97FC03923E13B9400209DEE /* TKExtensionContextUtils.mm in Sources */ = {isa = PBXBuildFile; fileRef = F97FC03723E13B9300209DEE /* TKExtensionContextUtils.mm */; };
+		F97FC03A23E13C1900209DEE /* TKExtensionContextUtils.mm in Sources */ = {isa = PBXBuildFile; fileRef = F97FC03723E13B9300209DEE /* TKExtensionContextUtils.mm */; };
+		F97FC03B23E13C1900209DEE /* TKExtensionContextUtils.mm in Sources */ = {isa = PBXBuildFile; fileRef = F97FC03723E13B9300209DEE /* TKExtensionContextUtils.mm */; };
+		F97FC03C23E13C1900209DEE /* TKExtensionContextUtils.mm in Sources */ = {isa = PBXBuildFile; fileRef = F97FC03723E13B9300209DEE /* TKExtensionContextUtils.mm */; };
 		F998F726236E312E0025564F /* icon.icns in Resources */ = {isa = PBXBuildFile; fileRef = F998F725236E312E0025564F /* icon.icns */; };
 		F998F729236E312E0025564F /* TKViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = F998F728236E312E0025564F /* TKViewController.mm */; };
 		F998F72C236E312E0025564F /* Main.xib in Resources */ = {isa = PBXBuildFile; fileRef = F998F72A236E312E0025564F /* Main.xib */; };
@@ -721,6 +725,8 @@
 		F96388CE23BA686B00BA6F2A /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS13.1.sdk/System/Library/Frameworks/CoreGraphics.framework; sourceTree = DEVELOPER_DIR; };
 		F96388D123BA6B4900BA6F2A /* TKiOSViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TKiOSViewController.h; sourceTree = "<group>"; };
 		F96388D223BA6B4900BA6F2A /* TKiOSViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = TKiOSViewController.mm; sourceTree = "<group>"; };
+		F97FC03723E13B9300209DEE /* TKExtensionContextUtils.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = TKExtensionContextUtils.mm; sourceTree = "<group>"; };
+		F97FC03823E13B9300209DEE /* TKExtensionContextUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TKExtensionContextUtils.h; sourceTree = "<group>"; };
 		F998F723236E312E0025564F /* TransferKitty ShareExtension macOS.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "TransferKitty ShareExtension macOS.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
 		F998F725236E312E0025564F /* icon.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = icon.icns; sourceTree = "<group>"; };
 		F998F727236E312E0025564F /* TKViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TKViewController.h; sourceTree = "<group>"; };
@@ -966,6 +972,8 @@
 				F96388B423B80C1600BA6F2A /* TKMacOSViewController.mm */,
 				F96388D123BA6B4900BA6F2A /* TKiOSViewController.h */,
 				F96388D223BA6B4900BA6F2A /* TKiOSViewController.mm */,
+				F97FC03823E13B9300209DEE /* TKExtensionContextUtils.h */,
+				F97FC03723E13B9300209DEE /* TKExtensionContextUtils.mm */,
 				F96388B823B80C1600BA6F2A /* TKNuklearMetalTexture.h */,
 				F96388BA23B80C1600BA6F2A /* TKNuklearMetalTexture.mm */,
 				F95CCF9F23AFEAF9004DEBFB /* TKFormat.h */,
@@ -1497,6 +1505,7 @@
 				F9E267C123C92B1A00745F52 /* ftfstype.c in Sources */,
 				F9E2689E23C92CD000745F52 /* ttinterp.c in Sources */,
 				F9E2688323C92CB400745F52 /* t42parse.c in Sources */,
+				F97FC03923E13B9400209DEE /* TKExtensionContextUtils.mm in Sources */,
 				CAE7EC52235C4F5A00C4D217 /* TKNuklearMetalViewDelegate.mm in Sources */,
 				F9E2695A23C92DE300745F52 /* ftcbasic.c in Sources */,
 				F9E2673E23C9298D00745F52 /* pfr.c in Sources */,
@@ -1651,6 +1660,7 @@
 				F9E267C223C92B1A00745F52 /* ftfstype.c in Sources */,
 				F9E2689F23C92CD000745F52 /* ttinterp.c in Sources */,
 				F9E2688423C92CB400745F52 /* t42parse.c in Sources */,
+				F97FC03C23E13C1900209DEE /* TKExtensionContextUtils.mm in Sources */,
 				CAE7EC53235C4F5A00C4D217 /* TKNuklearMetalViewDelegate.mm in Sources */,
 				F9E2695B23C92DE300745F52 /* ftcbasic.c in Sources */,
 				F9E2673F23C9298D00745F52 /* pfr.c in Sources */,
@@ -1743,6 +1753,7 @@
 				F99A754423CA61020061389F /* intrusive_list.cpp in Sources */,
 				F9E2691223C92D3100745F52 /* adler32.c in Sources */,
 				F9E2689C23C92CD000745F52 /* ttgxvar.c in Sources */,
+				F97FC03B23E13C1900209DEE /* TKExtensionContextUtils.mm in Sources */,
 				F99A754023CA61020061389F /* string.cpp in Sources */,
 				F9E2699823C9C3A600745F52 /* fribidi-brackets.c in Sources */,
 				F9E2694C23C92DE300745F52 /* ftcimage.c in Sources */,
@@ -1895,6 +1906,7 @@
 				F99A754523CA61020061389F /* intrusive_list.cpp in Sources */,
 				F9E2691323C92D3100745F52 /* adler32.c in Sources */,
 				F9E2689D23C92CD000745F52 /* ttgxvar.c in Sources */,
+				F97FC03A23E13C1900209DEE /* TKExtensionContextUtils.mm in Sources */,
 				F99A754123CA61020061389F /* string.cpp in Sources */,
 				F9E2699923C9C3A600745F52 /* fribidi-brackets.c in Sources */,
 				F9E2694D23C92DE300745F52 /* ftcimage.c in Sources */,

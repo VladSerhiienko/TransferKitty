@@ -1,5 +1,5 @@
 #pragma once
-
+#pragma once
 #include "TKConfig.h"
 #include "TKFormat.h"
 

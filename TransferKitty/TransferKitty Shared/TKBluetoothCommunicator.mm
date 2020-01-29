@@ -18,7 +18,7 @@
 #endif
 
 using tk::setBit;
-using tk::isBitSet;
+using tk::hasBit;
 using tk::unsetBit;
 
 // static const NSTimeInterval kScanningTimeoutSeconds   = 10.0;
@@ -242,8 +242,8 @@ static TKBluetoothCommunicator *_instance = nil;
 
 - (void)initPeripheralWithDelegate:(id<TKBluetoothCommunicatorDelegate>)delegate {
     DLOGF(@"%s", TK_FUNC_NAME);
-    if (isBitSet(_statusBits,
-                 TKBluetoothCommunicatorStatusBitStartingPeripheral | TKBluetoothCommunicatorStatusBitPeripheral)) {
+    if (hasBit(_statusBits,
+               TKBluetoothCommunicatorStatusBitStartingPeripheral | TKBluetoothCommunicatorStatusBitPeripheral)) {
         [TKDebug check:false
                   file:@__FILE__
                   line:__LINE__
@@ -308,8 +308,8 @@ static TKBluetoothCommunicator *_instance = nil;
 }
 
 - (void)startAdvertising {
-    if (isBitSet(_statusBits, TKBluetoothCommunicatorStatusBitStartingAdvertising)) { return; }
-    if (isBitSet(_statusBits, TKBluetoothCommunicatorStatusBitAdvertising)) { return; }
+    if (hasBit(_statusBits, TKBluetoothCommunicatorStatusBitStartingAdvertising)) { return; }
+    if (hasBit(_statusBits, TKBluetoothCommunicatorStatusBitAdvertising)) { return; }
 
     assert(_peripheralManager);
     assert(!_peripheralManager.isAdvertising);
@@ -335,8 +335,8 @@ static TKBluetoothCommunicator *_instance = nil;
 }
 
 - (void)stopAdvertising {
-    if (isBitSet(_statusBits, TKBluetoothCommunicatorStatusBitStartingAdvertising) ||
-        isBitSet(_statusBits, TKBluetoothCommunicatorStatusBitAdvertising)) {
+    if (hasBit(_statusBits, TKBluetoothCommunicatorStatusBitStartingAdvertising) ||
+        hasBit(_statusBits, TKBluetoothCommunicatorStatusBitAdvertising)) {
         [_peripheralManager stopAdvertising];
 
         NSUInteger statusBits = unsetBit(_statusBits, TKBluetoothCommunicatorStatusBitStartingAdvertising);
@@ -360,8 +360,8 @@ static TKBluetoothCommunicator *_instance = nil;
         return;
     }
     DCHECK(peripheralManager && peripheralManager == _peripheralManager);
-    DCHECK(isBitSet(_statusBits, TKBluetoothCommunicatorStatusBitStartingAdvertising));
-    DCHECK(!isBitSet(_statusBits, TKBluetoothCommunicatorStatusBitAdvertising));
+    DCHECK(hasBit(_statusBits, TKBluetoothCommunicatorStatusBitStartingAdvertising));
+    DCHECK(!hasBit(_statusBits, TKBluetoothCommunicatorStatusBitAdvertising));
 
     NSUInteger statusBits = unsetBit(_statusBits, TKBluetoothCommunicatorStatusBitStartingAdvertising);
 
@@ -397,8 +397,8 @@ static TKBluetoothCommunicator *_instance = nil;
 
     DCHECK(peripheralManager && peripheralManager == _peripheralManager);
     DCHECK(service && service.UUID == _peripheralService.UUID);
-    DCHECK(isBitSet(_statusBits, TKBluetoothCommunicatorStatusBitPublishingService));
-    DCHECK(!isBitSet(_statusBits, TKBluetoothCommunicatorStatusBitPublishedService));
+    DCHECK(hasBit(_statusBits, TKBluetoothCommunicatorStatusBitPublishingService));
+    DCHECK(!hasBit(_statusBits, TKBluetoothCommunicatorStatusBitPublishedService));
 
     NSUInteger statusBits = unsetBit(_statusBits, TKBluetoothCommunicatorStatusBitPublishingService);
 
@@ -618,8 +618,8 @@ static TKBluetoothCommunicator *_instance = nil;
 
 - (void)initCentralWithDelegate:(id<TKBluetoothCommunicatorDelegate>)delegate {
     DLOGF(@"%s", TK_FUNC_NAME);
-    if (isBitSet(_statusBits,
-                 TKBluetoothCommunicatorStatusBitStartingCentral | TKBluetoothCommunicatorStatusBitCentral)) {
+    if (hasBit(_statusBits,
+               TKBluetoothCommunicatorStatusBitStartingCentral | TKBluetoothCommunicatorStatusBitCentral)) {
         DCHECKF(false, "Already running a central role.");
         return;
     }
@@ -1459,10 +1459,10 @@ static TKBluetoothCommunicator *_instance = nil;
     return (NSUInteger)decoratedMessageType;
 }
 + (bool)isShortMessage:(NSUInteger)decoratedMessageType {
-    return isBitSet(decoratedMessageType, TKBluetoothCommunicatorMessageShortBit);
+    return hasBit(decoratedMessageType, TKBluetoothCommunicatorMessageShortBit);
 }
 + (bool)isEncryptedMessage:(NSUInteger)decoratedMessageType {
-    return isBitSet(decoratedMessageType, TKBluetoothCommunicatorMessageEncryptedBit);
+    return hasBit(decoratedMessageType, TKBluetoothCommunicatorMessageEncryptedBit);
 }
 + (NSUInteger)undecorateMessageType:(NSUInteger)decoratedMessageType {
     decoratedMessageType = unsetBit(decoratedMessageType, TKBluetoothCommunicatorMessageShortBit);
@@ -2216,24 +2216,24 @@ static NSString *emptyStringInstance = @"";
     [self executeOperations:_scheduledReads
         skipWithPendingWrites:false
             operationExecutor:^(id deviceId, id operationId) {
-              TKBluetoothCommunicatorDevice *device = deviceId;
-              TKBluetoothCommunicatorScheduledOperation *operation = operationId;
-              DCHECK(device && operation);
+                TKBluetoothCommunicatorDevice *device = deviceId;
+                TKBluetoothCommunicatorScheduledOperation *operation = operationId;
+                DCHECK(device && operation);
 
-              DLOGF(@"%s: device = %p, executing read operation", TK_FUNC_NAME, device);
-              [device setPendingWriteValue:false];
+                DLOGF(@"%s: device = %p, executing read operation", TK_FUNC_NAME, device);
+                [device setPendingWriteValue:false];
 
-              NSUInteger responseMessageType = [self decodeReceivedMessageAndRespond:device
-                                                                 receivedMessageData:[operation data]];
+                NSUInteger responseMessageType = [self decodeReceivedMessageAndRespond:device
+                                                                   receivedMessageData:[operation data]];
 
-              NSData *responseMessageData = [self encodeResponse:device messageType:responseMessageType];
-              if (responseMessageData) {
-                  DLOGF(@"%s: Responding with message type: %u, reflushing", TK_FUNC_NAME, responseMessageType);
-                  [self scheduleMessageTo:device wholeMessageData:responseMessageData shouldFlush:false];
-                  self->_shouldReflush = true;
-              }
+                NSData *responseMessageData = [self encodeResponse:device messageType:responseMessageType];
+                if (responseMessageData) {
+                    DLOGF(@"%s: Responding with message type: %u, reflushing", TK_FUNC_NAME, responseMessageType);
+                    [self scheduleMessageTo:device wholeMessageData:responseMessageData shouldFlush:false];
+                    self->_shouldReflush = true;
+                }
 
-              return TKBluetoothCommunicatorOperationExecutionResultSuccessContinue;
+                return TKBluetoothCommunicatorOperationExecutionResultSuccessContinue;
             }];
 }
 
@@ -2242,32 +2242,32 @@ static NSString *emptyStringInstance = @"";
     [self executeOperations:_scheduledWrites
         skipWithPendingWrites:true
             operationExecutor:^(id deviceId, id operationId) {
-              TKBluetoothCommunicatorDevice *device = deviceId;
-              TKBluetoothCommunicatorScheduledOperation *operation = operationId;
-              DCHECK(device && operation);
-              DLOGF(@"%s: device = %p, executing write operation", TK_FUNC_NAME, device);
+                TKBluetoothCommunicatorDevice *device = deviceId;
+                TKBluetoothCommunicatorScheduledOperation *operation = operationId;
+                DCHECK(device && operation);
+                DLOGF(@"%s: device = %p, executing write operation", TK_FUNC_NAME, device);
 
-              TKBluetoothCommunicatorWriteValueResult result = [self.bluetoothCommunicator writeValue:[operation data]
-                                                                                             toDevice:device];
-              switch (result) {
-                  case TKBluetoothCommunicatorWriteValueResultSuccessContinue:
-                      if ([operation requiresResponse]) {
-                          DLOGF(@"%s: device = %p, write operation succeeded, setting pending write to true",
-                                TK_FUNC_NAME,
-                                device);
-                          [device setPendingWriteValue:true];
-                      }
+                TKBluetoothCommunicatorWriteValueResult result = [self.bluetoothCommunicator writeValue:[operation data]
+                                                                                               toDevice:device];
+                switch (result) {
+                    case TKBluetoothCommunicatorWriteValueResultSuccessContinue:
+                        if ([operation requiresResponse]) {
+                            DLOGF(@"%s: device = %p, write operation succeeded, setting pending write to true",
+                                  TK_FUNC_NAME,
+                                  device);
+                            [device setPendingWriteValue:true];
+                        }
 
-                      DLOGF(@"%s: device = %p, write operation succeeded", TK_FUNC_NAME, device);
-                      return TKBluetoothCommunicatorOperationExecutionResultSuccessContinue;
+                        DLOGF(@"%s: device = %p, write operation succeeded", TK_FUNC_NAME, device);
+                        return TKBluetoothCommunicatorOperationExecutionResultSuccessContinue;
 
-                  case TKBluetoothCommunicatorWriteValueResultFailedReschedule:
-                      DLOGF(@"%s: device = %p, write operation rescheduled", TK_FUNC_NAME, device);
-                      return TKBluetoothCommunicatorOperationExecutionResultFailedRetryLater;
-                  default:
-                      DLOGF(@"%s: device = %p, write operation failed", TK_FUNC_NAME, device);
-                      return TKBluetoothCommunicatorOperationExecutionResultFailedContinue;
-              }
+                    case TKBluetoothCommunicatorWriteValueResultFailedReschedule:
+                        DLOGF(@"%s: device = %p, write operation rescheduled", TK_FUNC_NAME, device);
+                        return TKBluetoothCommunicatorOperationExecutionResultFailedRetryLater;
+                    default:
+                        DLOGF(@"%s: device = %p, write operation failed", TK_FUNC_NAME, device);
+                        return TKBluetoothCommunicatorOperationExecutionResultFailedContinue;
+                }
             }];
 }
 

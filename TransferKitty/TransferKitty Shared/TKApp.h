@@ -1,6 +1,4 @@
-
-#ifndef TKApp_h
-#define TKApp_h
+#pragma once
 
 #import <CoreFoundation/CoreFoundation.h>
 #import <MetalKit/MetalKit.h>
@@ -23,5 +21,3 @@
 @protocol TKAppInputDelegate <NSObject>
 - (void)app:(nonnull TKApp *)app input:(nonnull TKAppInput *)input;
 @end
-
-#endif

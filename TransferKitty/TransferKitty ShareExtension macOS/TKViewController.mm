@@ -7,110 +7,44 @@
 //
 
 #import "TKViewController.h"
+#import "TKExtensionContextUtils.h"
 
-@implementation TKViewController
-- (void)viewDidLoad {
-    [super viewDidLoad];
+@implementation TKViewController {
+    TKAttachmentContext *_context;
 }
 
-// Do validation of contentText and/or NSExtensionContext attachments here
-- (BOOL)printExtensionItems {
-    if (!self || !self.extensionContext) { return YES; }
-
-    // NSLog(@"------ isContentValid ------");
-    // NSLog(@"content: %@", self.contentText);
-
-    if (self.extensionContext.inputItems) {
-        NSLog(@"------");
-        NSArray *inputItems = self.extensionContext.inputItems;
-        NSLog(@"inputs: %lu", (unsigned long)[self.extensionContext.inputItems count]);
-
-        for (NSExtensionItem *inputItem in inputItems) {
-            if (inputItem && [inputItem attachments]) {
-                NSLog(@"attachments: %lu", [[inputItem attachments] count]);
-                NSLog(@"input iteam: %@", inputItem);
-
-                for (NSItemProvider *itemProvider in [inputItem attachments]) {
-                    if (itemProvider) {
-                        NSLog(@"attachment: suggested name: %@", [itemProvider suggestedName]);
-                        NSLog(@"attachment: (d)description: %@", [itemProvider debugDescription]);
-                        NSLog(@"          :    description: %@", [itemProvider description]);
-
-                        if ([itemProvider hasItemConformingToTypeIdentifier:@"public.file-url"]) {
-                            [itemProvider loadItemForTypeIdentifier:@"public.file-url"
-                                                            options:nil
-                                                  completionHandler:^(id<NSSecureCoding> item, NSError *error) {
-                                                    if (error) {
-                                                        NSLog(@"          : file url error: %@", error);
-                                                        return;
-                                                    }
-
-                                                    if ([(NSObject *)item isKindOfClass:[NSURL class]]) {
-                                                        NSURL *url = (NSURL *)item;
-                                                        NSLog(@"          : file url: %@", url);
-                                                    } else {
-                                                        NSLog(@"          : file url item: %@, unexpected class", item);
-                                                    }
-                                                  }];
-                        }
-
-                        if ([itemProvider hasItemConformingToTypeIdentifier:@"public.url"]) {
-                            [itemProvider loadItemForTypeIdentifier:@"public.url"
-                                                            options:nil
-                                                  completionHandler:^(id<NSSecureCoding> item, NSError *error) {
-                                                    if (error) {
-                                                        NSLog(@"          : url error: %@", error);
-                                                        return;
-                                                    }
-
-                                                    if ([(NSObject *)item isKindOfClass:[NSURL class]]) {
-                                                        NSURL *url = (NSURL *)item;
-                                                        NSLog(@"          : url: %@", url);
-                                                    } else {
-                                                        NSLog(@"          : url item: %@, unexpected class", item);
-                                                    }
-                                                  }];
-                        }
-
-                        if ([itemProvider hasItemConformingToTypeIdentifier:@"public.image"]) {
-                            [itemProvider loadItemForTypeIdentifier:@"public.image"
-                                                            options:nil
-                                                  completionHandler:^(id<NSSecureCoding> item, NSError *error) {
-                                                    if (error) {
-                                                        NSLog(@"          : error: %@", error);
-                                                        return;
-                                                    }
-
-                                                    NSImage *sharedImage = nil;
-                                                    if ([(NSObject *)item isKindOfClass:[NSURL class]]) {
-                                                        NSData *data = [NSData dataWithContentsOfURL:(NSURL *)item];
-                                                        sharedImage = [[NSImage alloc] initWithData:data];
-                                                        NSLog(@"          : image from url: %@", sharedImage);
-                                                    } else if ([(NSObject *)item isKindOfClass:[NSData class]]) {
-                                                        NSData *data = (NSData *)item;
-                                                        sharedImage = [[NSImage alloc] initWithData:data];
-                                                        NSLog(@"          : image from url: %@", sharedImage);
-                                                    } else if ([(NSObject *)item isKindOfClass:[NSImage class]]) {
-                                                        sharedImage = (NSImage *)item;
-                                                        NSLog(@"          : image item: %@", sharedImage);
-                                                    } else {
-                                                        NSLog(@"          : image item: %@, unexpected class", item);
-                                                    }
-                                                  }];
-                        }
-                    }
-                }
-            }
-        }
-    }
-
-    NSLog(@"------ xxxxxxxxxxxxxx ------");
+- (BOOL)isContentValid {
+    // Do validation of contentText and/or NSExtensionContext attachments here
     return YES;
 }
 
+- (void)didSelectPost {
+    // This is called after the user selects Post. Do the upload of contentText
+    // and/or NSExtensionContext attachments.
+
+    // Inform the host that we're done, so it un-blocks its UI. Note:
+    // Alternatively you could call super's -didSelectPost, which will similarly
+    // complete the extension context.
+    [self.extensionContext completeRequestReturningItems:@[] completionHandler:nil];
+}
+
+- (NSArray *)configurationItems {
+    // To add configuration options via table cells at the bottom of the sheet,
+    // return an array of SLComposeSheetConfigurationItem here.
+    return @[];
+}
+
+- (void)viewDidLoad {
+    [super viewDidLoad];
+}
 - (void)viewDidAppear {
     [super viewDidAppear];
-    [self printExtensionItems];
+
+    if (self.extensionContext) {
+        _context = [TKAttachmentContext attachmentContextWithExtensionContext:self.extensionContext];
+        DCHECK(_context);
+    }
+
     [self prepareViewController];
 }
 
