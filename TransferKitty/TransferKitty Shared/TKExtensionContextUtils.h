@@ -30,9 +30,11 @@ typedef NS_ENUM(NSUInteger, TKAttachmentStatusBits) {
 
 @interface TKAttachmentContext : NSObject
 + (instancetype)attachmentContextWithExtensionContext:(NSExtensionContext*)context;
-- (void)prepareNames;   // Only debugging
-- (void)prepareBuffers; // Only debugging
 - (NSArray*)attachments;
+// Only debugging, each attachment should be processed separately on demand due to memory limits
+// Each processed attachment must be freed ASAP.
+- (void)prepareNames;
+- (void)prepareBuffers;
 @end
 
 #endif // __OBJC__

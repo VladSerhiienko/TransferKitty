@@ -40,6 +40,7 @@
 - (void)viewDidAppear {
     [super viewDidAppear];
 
+    DCHECK(self.extensionContext);
     if (self.extensionContext) {
         _context = [TKAttachmentContext attachmentContextWithExtensionContext:self.extensionContext];
         DCHECK(_context);

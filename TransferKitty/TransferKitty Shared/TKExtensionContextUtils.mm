@@ -17,7 +17,7 @@ using tk::unsetBit;
 
 @implementation TKAttachment {
     NSItemProvider *_itemProvider;
-    NSURL *_itemURL;
+    NSURL *_url;
     NSString *_name;
     NSData *_data;
     id _image;
@@ -72,9 +72,9 @@ static NSString *kPublicImage = @"public.image"; // [NSString stringWithUTF8Stri
     }
 
     if ([itemObj isKindOfClass:[NSURL class]]) {
-        _itemURL = (NSURL *)item;
-        _name = _itemURL.lastPathComponent;
-        NSLog(@"%s: type='%@', url={%@}", TK_FUNC_NAME, typeIdentifier, _itemURL);
+        _url = (NSURL *)item;
+        _name = _url.lastPathComponent;
+        NSLog(@"%s: type='%@', url={%@}", TK_FUNC_NAME, typeIdentifier, _url);
 
         _statusBits.fetch_or(TKAttachmentStatusBitLoadedURL, std::memory_order_release);
         _statusBits.fetch_and(~TKAttachmentStatusBitLoadingURL, std::memory_order_release);
@@ -112,7 +112,11 @@ static NSString *kPublicImage = @"public.image"; // [NSString stringWithUTF8Stri
     }
 
     if ([itemObj isKindOfClass:[NSURL class]]) {
-        _data = [NSData dataWithContentsOfURL:(NSURL *)item];
+        NSURL* url = (NSURL *)item;
+        DCHECK([url isEqual:_url] && _name);
+        _data = [NSData dataWithContentsOfURL:url];
+        
+        // TODO: Only for preview generation/debugging, we transfer only the data (buffer) objects.
         _image = [self imageFromData:_data];
 
         NSLog(@"%s: type='%@', image={%@}', data={%@}", TK_FUNC_NAME, typeIdentifier, _image, _data);
@@ -121,6 +125,8 @@ static NSString *kPublicImage = @"public.image"; // [NSString stringWithUTF8Stri
         _statusBits.fetch_and(~TKAttachmentStatusBitLoadingData, std::memory_order_release);
     } else if ([itemObj isKindOfClass:[NSData class]]) {
         _data = (NSData *)item;
+        
+        // TODO: Only for preview generation/debugging, we transfer only the data (buffer) objects.
         _image = [self imageFromData:_data];
 
         NSLog(@"%s: type='%@', image={%@}', data={%@}", TK_FUNC_NAME, typeIdentifier, _image, _data);
@@ -190,6 +196,8 @@ static NSString *kPublicImage = @"public.image"; // [NSString stringWithUTF8Stri
                                        [self didLoadItem:item orError:error forTypeIdentifier:kPublicURL];
                                    }];
         } else if ([_itemProvider hasItemConformingToTypeIdentifier:kPublicImage]) {
+            // iOS case: instead of two providers (URL, image) we receive only an image provider.
+            // For an image provider we receive a URL instance.
             [_itemProvider loadItemForTypeIdentifier:kPublicImage
                                              options:nil
                                    completionHandler:^(id<NSSecureCoding> item, NSError *error) {
@@ -246,12 +254,14 @@ static NSString *kPublicImage = @"public.image"; // [NSString stringWithUTF8Stri
 }
 
 + (instancetype)attachmentContextWithExtensionContext:(NSExtensionContext *)context {
+    DCHECK(context);
     return [[TKAttachmentContext alloc] initWithContext:context];
 }
 
 - (instancetype)initWithContext:(NSExtensionContext *)context {
     self = [super init];
     if (self) {
+        DCHECK(context);
         _context = context;
         [self initAttachments];
     }
@@ -259,6 +269,8 @@ static NSString *kPublicImage = @"public.image"; // [NSString stringWithUTF8Stri
 }
 
 - (void)initAttachments {
+    DCHECK(_context);
+    
     _attachments = [[NSMutableArray alloc] init];
     DCHECK(_attachments);
 
