@@ -966,10 +966,6 @@
 		CACC747D2354F93500FE3672 /* TransferKitty Shared */ = {
 			isa = PBXGroup;
 			children = (
-				F97FC04323E2A7E100209DEE /* TKDeviceInfoUtilities.h */,
-				F97FC04423E2A7E100209DEE /* TKDeviceInfoUtilities.mm */,
-				F97FC03D23E2952100209DEE /* TKStringUtilities.h */,
-				F97FC03E23E2952100209DEE /* TKStringUtilities.mm */,
 				F99A751823CA60E40061389F /* EASTL */,
 				F99A751723C9D8070061389F /* Nuklear */,
 				F9E2697223C9C36900745F52 /* FriBidi */,
@@ -982,6 +978,10 @@
 				F96388B623B80C1600BA6F2A /* TKDebug.mm */,
 				F96388B223B80C1600BA6F2A /* TKFileSaver.h */,
 				F96388B723B80C1600BA6F2A /* TKFileSaver.mm */,
+				F97FC04323E2A7E100209DEE /* TKDeviceInfoUtilities.h */,
+				F97FC04423E2A7E100209DEE /* TKDeviceInfoUtilities.mm */,
+				F97FC03D23E2952100209DEE /* TKStringUtilities.h */,
+				F97FC03E23E2952100209DEE /* TKStringUtilities.mm */,
 				F998F78C238736960025564F /* TKApp.h */,
 				F998F78B238736960025564F /* TKApp.mm */,
 				F96388B923B80C1600BA6F2A /* TKMacOSViewController.h */,
