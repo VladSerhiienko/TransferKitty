@@ -46,9 +46,9 @@ using tk::unsetBit;
 }
 
 // clang-format off
-static NSString *kPublicFileURL = @"public.file-url"; // [NSString stringWithUTF8String:CFStringGetCStringPtr(kUTTypeFileURL, kCFStringEncodingUTF8)];
-static NSString *kPublicURL = @"public.url"; // [NSString stringWithUTF8String:CFStringGetCStringPtr(kUTTypeURL, kCFStringEncodingUTF8)];
-static NSString *kPublicImage = @"public.image"; // [NSString stringWithUTF8String:CFStringGetCStringPtr(kUTTypeImage, kCFStringEncodingUTF8)];
+static NSString *kPublicFileURL = @"public.file-url";
+static NSString *kPublicURL = @"public.url";
+static NSString *kPublicImage = @"public.image";
 // clang-format on
 
 + (NSArray *)supportedTypeIdentifiers {
@@ -361,6 +361,7 @@ static NSString *kPublicImage = @"public.image"; // [NSString stringWithUTF8Stri
                     for (NSString *supportedTypeIdentifier in [TKAttachment supportedTypeIdentifiers]) {
                         if ([itemProvider hasItemConformingToTypeIdentifier:supportedTypeIdentifier]) {
                             [_attachments addObject:[TKAttachment attachmentWithItemProvider:itemProvider]];
+                            DLOGF(@"%s: adding an attachment for the item provider={%@}", TK_FUNC_NAME, itemProvider);
                             break;
                         }
                     }
