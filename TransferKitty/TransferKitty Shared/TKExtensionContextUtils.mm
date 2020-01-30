@@ -15,6 +15,27 @@ using tk::setBit;
 using tk::hasBit;
 using tk::unsetBit;
 
+@implementation TKStringUtilities (TKAttachmentStatusBits)
++ (NSString *)attachmentBitsToString:(TKAttachmentStatusBits)bits {
+    NSMutableString *mutableString = [[NSMutableString alloc] initWithCapacity:128];
+
+    // clang-format off
+    if (bits == TKAttachmentStatusBitInitial) { [mutableString appendString:@"Initial|"]; }
+    if (bits &  TKAttachmentStatusBitHasURL) { [mutableString appendString:@"HasURL|"]; }
+    if (bits &  TKAttachmentStatusBitLoadingURL) { [mutableString appendString:@"LoadingURL|"]; }
+    if (bits &  TKAttachmentStatusBitLoadedURL) { [mutableString appendString:@"LoadedURL|"]; }
+    if (bits &  TKAttachmentStatusBitErrorURL) { [mutableString appendString:@"ErrorURL|"]; }
+    if (bits &  TKAttachmentStatusBitHasData) { [mutableString appendString:@"HasData|"]; }
+    if (bits &  TKAttachmentStatusBitLoadingData) { [mutableString appendString:@"LoadingData|"]; }
+    if (bits &  TKAttachmentStatusBitLoadedData) { [mutableString appendString:@"LoadedData|"]; }
+    if (bits &  TKAttachmentStatusBitErrorData) { [mutableString appendString:@"ErrorData|"]; }
+    // clang-format on
+
+    [mutableString deleteCharactersInRange:NSMakeRange([mutableString length] - 1, 1)];
+    return mutableString;
+}
+@end
+
 @implementation TKAttachment {
     NSItemProvider *_itemProvider;
     NSURL *_url;
@@ -44,7 +65,26 @@ static NSString *kPublicImage = @"public.image"; // [NSString stringWithUTF8Stri
     if (self) {
         if (itemProvider) {
             _itemProvider = itemProvider;
-            _statusBits.store(TKAttachmentStatusBitInitial);
+
+            NSUInteger status = [_itemProvider hasItemConformingToTypeIdentifier:kPublicFileURL]
+                                    ? TKAttachmentStatusBitHasURL
+                                    : TKAttachmentStatusBitInitial;
+            status |= [_itemProvider hasItemConformingToTypeIdentifier:kPublicURL] ? TKAttachmentStatusBitHasURL
+                                                                                   : TKAttachmentStatusBitInitial;
+            status |= [_itemProvider hasItemConformingToTypeIdentifier:kPublicImage] ? TKAttachmentStatusBitHasData
+                                                                                     : TKAttachmentStatusBitInitial;
+
+#if TARGET_OS_IOS
+            // iOS case: Provides a URL instance for an image request.
+            status |= [_itemProvider hasItemConformingToTypeIdentifier:kPublicImage] ? TKAttachmentStatusBitHasURL
+                                                                                     : TKAttachmentStatusBitInitial;
+#endif
+
+            DLOGF(@"%s: attachment %p, status='%@'",
+                  TK_FUNC_NAME,
+                  self,
+                  [TKStringUtilities attachmentBitsToString:TKAttachmentStatusBits(status)]);
+            _statusBits = status;
         }
     }
     return self;
@@ -54,35 +94,57 @@ static NSString *kPublicImage = @"public.image"; // [NSString stringWithUTF8Stri
     return TKAttachmentStatusBits(_statusBits.load(std::memory_order_consume));
 }
 
+- (NSString *)goodName:(NSURL *)url {
+    DLOGF(@"%s: url={%@}, isFileURL=%i, isFileReferenceURL=%i, hasDirectoryPath=%i",
+          TK_FUNC_NAME,
+          url,
+          [url isFileURL],
+          [url isFileReferenceURL],
+          [url hasDirectoryPath]);
+
+    NSArray *pathComponents = url.pathComponents;
+    if (pathComponents && pathComponents.count >= 2) {
+        NSString *name = pathComponents[pathComponents.count - 1];
+        NSString *directory = pathComponents[pathComponents.count - 2];
+        return [NSString stringWithFormat:@"%@-%@", directory, name];
+    }
+
+    NSString *lastPathComponent = url.lastPathComponent;
+    if (lastPathComponent) { return lastPathComponent; }
+
+    return [[[NSUUID UUID] UUIDString] stringByAppendingString:@"-TK.bin"];
+}
+
 - (void)didLoadURL:(id<NSSecureCoding>)item orError:(NSError *)error forTypeIdentifier:(NSString *)typeIdentifier {
     if (error) {
         _statusBits.fetch_or(TKAttachmentStatusBitErrorURL, std::memory_order_release);
         _statusBits.fetch_and(~TKAttachmentStatusBitLoadedURL, std::memory_order_release);
         _statusBits.fetch_and(~TKAttachmentStatusBitLoadingURL, std::memory_order_release);
-        NSLog(@"%s: type='%@', error='%@'", TK_FUNC_NAME, typeIdentifier, error);
+        DLOGF(@"%s: type='%@', error='%@'", TK_FUNC_NAME, typeIdentifier, error);
         return;
     }
 
     NSObject *itemObj = (NSObject *)item;
     if (!itemObj) {
-        _statusBits.fetch_or(TKAttachmentStatusBitErrorData, std::memory_order_release);
-        _statusBits.fetch_and(~TKAttachmentStatusBitLoadedData, std::memory_order_release);
-        NSLog(@"%s: type='%@', item is not an object or nil.", TK_FUNC_NAME, typeIdentifier);
+        _statusBits.fetch_or(TKAttachmentStatusBitErrorURL, std::memory_order_release);
+        _statusBits.fetch_and(~TKAttachmentStatusBitLoadedURL, std::memory_order_release);
+        DLOGF(@"%s: type='%@', item is not an object or nil.", TK_FUNC_NAME, typeIdentifier);
         return;
     }
 
     if ([itemObj isKindOfClass:[NSURL class]]) {
         _url = (NSURL *)item;
-        _name = _url.lastPathComponent;
-        NSLog(@"%s: type='%@', url={%@}", TK_FUNC_NAME, typeIdentifier, _url);
+        _name = [self goodName:_url];
+        DLOGF(@"%s: type='%@', name='%@', url={%@}", TK_FUNC_NAME, typeIdentifier, _name, _url);
 
+        _statusBits.fetch_or(TKAttachmentStatusBitHasURL, std::memory_order_release);
         _statusBits.fetch_or(TKAttachmentStatusBitLoadedURL, std::memory_order_release);
         _statusBits.fetch_and(~TKAttachmentStatusBitLoadingURL, std::memory_order_release);
     } else {
-        NSLog(@"%s: type='%@', item={%@}, unexpected class", TK_FUNC_NAME, typeIdentifier, item);
+        DLOGF(@"%s: type='%@', item={%@}, unexpected class", TK_FUNC_NAME, typeIdentifier, item);
 
-        _statusBits.fetch_or(TKAttachmentStatusBitLoadedURL, std::memory_order_release);
-        _statusBits.fetch_and(~TKAttachmentStatusBitLoadingURL, std::memory_order_release);
+        _statusBits.fetch_or(TKAttachmentStatusBitErrorURL, std::memory_order_release);
+        _statusBits.fetch_and(~TKAttachmentStatusBitLoadedURL, std::memory_order_release);
     }
 }
 
@@ -99,7 +161,7 @@ static NSString *kPublicImage = @"public.image"; // [NSString stringWithUTF8Stri
     if (error) {
         _statusBits.fetch_or(TKAttachmentStatusBitErrorData, std::memory_order_release);
         _statusBits.fetch_and(~TKAttachmentStatusBitLoadedData, std::memory_order_release);
-        NSLog(@"%s: type='%@', error='%@'.", TK_FUNC_NAME, typeIdentifier, error);
+        DLOGF(@"%s: type='%@', error='%@'.", TK_FUNC_NAME, typeIdentifier, error);
         return;
     }
 
@@ -107,29 +169,33 @@ static NSString *kPublicImage = @"public.image"; // [NSString stringWithUTF8Stri
     if (!itemObj) {
         _statusBits.fetch_or(TKAttachmentStatusBitErrorData, std::memory_order_release);
         _statusBits.fetch_and(~TKAttachmentStatusBitLoadedData, std::memory_order_release);
-        NSLog(@"%s: type='%@', item is not an object or nil.", TK_FUNC_NAME, typeIdentifier);
+        DLOGF(@"%s: type='%@', item is not an object or nil.", TK_FUNC_NAME, typeIdentifier);
         return;
     }
 
     if ([itemObj isKindOfClass:[NSURL class]]) {
-        NSURL* url = (NSURL *)item;
+        // iOS case: Received a URL instance for an image request.
+        NSURL *url = (NSURL *)item;
         DCHECK([url isEqual:_url] && _name);
         _data = [NSData dataWithContentsOfURL:url];
-        
+
         // TODO: Only for preview generation/debugging, we transfer only the data (buffer) objects.
         _image = [self imageFromData:_data];
 
-        NSLog(@"%s: type='%@', image={%@}', data={%@}", TK_FUNC_NAME, typeIdentifier, _image, _data);
+        DLOGF(@"%s: type='%@', image={%@}', data={%@}", TK_FUNC_NAME, typeIdentifier, _image, _data);
 
+        _statusBits.fetch_or(TKAttachmentStatusBitHasURL, std::memory_order_release);
+        _statusBits.fetch_or(TKAttachmentStatusBitLoadedURL, std::memory_order_release);
         _statusBits.fetch_or(TKAttachmentStatusBitLoadedData, std::memory_order_release);
         _statusBits.fetch_and(~TKAttachmentStatusBitLoadingData, std::memory_order_release);
     } else if ([itemObj isKindOfClass:[NSData class]]) {
+        // macOS case: Already receives a data instance, that can be transferred.
         _data = (NSData *)item;
-        
+
         // TODO: Only for preview generation/debugging, we transfer only the data (buffer) objects.
         _image = [self imageFromData:_data];
 
-        NSLog(@"%s: type='%@', image={%@}', data={%@}", TK_FUNC_NAME, typeIdentifier, _image, _data);
+        DLOGF(@"%s: type='%@', image={%@}', data={%@}", TK_FUNC_NAME, typeIdentifier, _image, _data);
 
         _statusBits.fetch_or(TKAttachmentStatusBitLoadedData, std::memory_order_release);
         _statusBits.fetch_and(~TKAttachmentStatusBitLoadingData, std::memory_order_release);
@@ -141,17 +207,17 @@ static NSString *kPublicImage = @"public.image"; // [NSString stringWithUTF8Stri
         _name = [image name];
         _data = [_image TIFFRepresentation];
 
-        NSLog(@"%s: type='%@', image={%@}', data={%@}", TK_FUNC_NAME, typeIdentifier, _image, _data);
+        DLOGF(@"%s: type='%@', image={%@}', data={%@}", TK_FUNC_NAME, typeIdentifier, _image, _data);
 
         _statusBits.fetch_or(TKAttachmentStatusBitLoadedData, std::memory_order_release);
         _statusBits.fetch_and(~TKAttachmentStatusBitLoadingData, std::memory_order_release);
     }
 #endif
     else {
-        NSLog(@"%s: type='%@', item={%@}, unexpected class", TK_FUNC_NAME, typeIdentifier, item);
+        DLOGF(@"%s: type='%@', item={%@}, unexpected class", TK_FUNC_NAME, typeIdentifier, item);
 
-        _statusBits.fetch_or(TKAttachmentStatusBitLoadedURL, std::memory_order_release);
-        _statusBits.fetch_and(~TKAttachmentStatusBitLoadingURL, std::memory_order_release);
+        _statusBits.fetch_or(TKAttachmentStatusBitErrorData, std::memory_order_release);
+        _statusBits.fetch_and(~TKAttachmentStatusBitLoadedData, std::memory_order_release);
     }
 }
 
@@ -173,12 +239,18 @@ static NSString *kPublicImage = @"public.image"; // [NSString stringWithUTF8Stri
     } else if ([typeIdentifier isEqualToString:kPublicImage]) {
         [self didLoadImage:item orError:error forTypeIdentifier:typeIdentifier];
     }
+
+    DLOGF(@"%s: attachment %p, status='%@'",
+          TK_FUNC_NAME,
+          self,
+          [TKStringUtilities attachmentBitsToString:TKAttachmentStatusBits(_statusBits.load())]);
 }
 
 - (void)prepareName {
     NSUInteger statusBits = _statusBits.load(std::memory_order_acquire);
     if (hasBit(statusBits, TKAttachmentStatusBitLoadingURL) || hasBit(statusBits, TKAttachmentStatusBitLoadedURL) ||
         hasBit(statusBits, TKAttachmentStatusBitErrorURL)) {
+        DLOGF(@"%s: a name/url for attachment %p is already loading/loaded.", TK_FUNC_NAME, self);
         return;
     }
     statusBits = _statusBits.fetch_or(TKAttachmentStatusBitLoadingURL, std::memory_order_acq_rel);
@@ -270,7 +342,7 @@ static NSString *kPublicImage = @"public.image"; // [NSString stringWithUTF8Stri
 
 - (void)initAttachments {
     DCHECK(_context);
-    
+
     _attachments = [[NSMutableArray alloc] init];
     DCHECK(_attachments);
 

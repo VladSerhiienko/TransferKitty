@@ -79,6 +79,8 @@
     DCHECK(self.extensionContext);
     if (self.extensionContext) {
         _context = [TKAttachmentContext attachmentContextWithExtensionContext:self.extensionContext];
+        [_context prepareNames];
+        [_context prepareBuffers];
         DCHECK(_context);
     }
     

@@ -94,7 +94,7 @@ using tk::unsetBit;
     thisDevice._model = [[_bt getModel] cStringUsingEncoding:NSUTF8StringEncoding];
     thisDevice._friendlyModel = [[_bt getFriendlyModel] cStringUsingEncoding:NSUTF8StringEncoding];
     thisDevice._uuidString =
-        [[NSStringUtilities uuidStringOrEmptyString:[_bt getUUID]] cStringUsingEncoding:NSUTF8StringEncoding];
+        [[TKStringUtilities uuidStringOrEmptyString:[_bt getUUID]] cStringUsingEncoding:NSUTF8StringEncoding];
 }
 
 - (void)startPeripheralWith:(nonnull NSArray *)sharedItems {
@@ -146,8 +146,8 @@ using tk::unsetBit;
                            to:(TKBluetoothCommunicatorStatusBits)currentStatusBits {
     DLOGF(@"%s: %@ > %@",
           TK_FUNC_NAME,
-          [NSStringUtilities toDebugString:statusBits],
-          [NSStringUtilities toDebugString:currentStatusBits]);
+          [TKStringUtilities communicatorBitsToString:statusBits],
+          [TKStringUtilities communicatorBitsToString:currentStatusBits]);
 
     if (hasBit(currentStatusBits, TKBluetoothCommunicatorStatusBitCentral)) {
         DLOGF(@"%s: Starting discovering", TK_FUNC_NAME);
@@ -176,7 +176,7 @@ using tk::unsetBit;
     deviceState._model = [[device getModel] cStringUsingEncoding:NSUTF8StringEncoding];
     deviceState._friendlyModel = [[device getFriendlyModel] cStringUsingEncoding:NSUTF8StringEncoding];
     deviceState._uuidString =
-        [[NSStringUtilities uuidStringOrEmptyString:[device getUUID]] cStringUsingEncoding:NSUTF8StringEncoding];
+        [[TKStringUtilities uuidStringOrEmptyString:[device getUUID]] cStringUsingEncoding:NSUTF8StringEncoding];
 }
 
 - (void)bluetoothCommunicator:(TKBluetoothCommunicator *)bluetoothCommunicator
@@ -221,7 +221,7 @@ using tk::unsetBit;
         deviceStateIt->_model = [[device getModel] cStringUsingEncoding:NSUTF8StringEncoding];
         deviceStateIt->_friendlyModel = [[device getFriendlyModel] cStringUsingEncoding:NSUTF8StringEncoding];
         deviceStateIt->_uuidString =
-            [[NSStringUtilities uuidStringOrEmptyString:[device getUUID]] cStringUsingEncoding:NSUTF8StringEncoding];
+            [[TKStringUtilities uuidStringOrEmptyString:[device getUUID]] cStringUsingEncoding:NSUTF8StringEncoding];
     }
 }
 

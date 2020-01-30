@@ -1,5 +1,6 @@
 #pragma once
 #include "TKConfig.h"
+#import "TKStringUtilities.h"
 
 #ifdef __OBJC__
 #if !TARGET_OS_IOS
@@ -20,17 +21,21 @@ typedef NS_ENUM(NSUInteger, TKAttachmentStatusBits) {
     TKAttachmentStatusBitErrorData = 1 << 7,
 };
 
+@interface TKStringUtilities (TKAttachmentStatusBits)
++ (NSString *)attachmentBitsToString:(TKAttachmentStatusBits)bits;
+@end
+
 @interface TKAttachment : NSObject
 - (void)prepareName;
 - (void)prepareBuffer;
 - (TKAttachmentStatusBits)itemStatus;
-- (NSString*)name;
-- (NSData*)data;
+- (NSString *)name;
+- (NSData *)data;
 @end
 
 @interface TKAttachmentContext : NSObject
-+ (instancetype)attachmentContextWithExtensionContext:(NSExtensionContext*)context;
-- (NSArray*)attachments;
++ (instancetype)attachmentContextWithExtensionContext:(NSExtensionContext *)context;
+- (NSArray *)attachments;
 // Only debugging, each attachment should be processed separately on demand due to memory limits
 // Each processed attachment must be freed ASAP.
 - (void)prepareNames;

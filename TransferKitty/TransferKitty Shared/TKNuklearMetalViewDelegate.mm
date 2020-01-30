@@ -254,9 +254,16 @@ const size_t getFontByteLength(void);
     nk_buffer_init_default(&_nuklear._cmdBuffer);
     nk_font_atlas_init_default(&_nuklear._fontAtlas);
     nk_font_atlas_begin(&_nuklear._fontAtlas);
+    
+    
+#if TARGET_OS_IOS
+    constexpr int fontSize = 12;
+#else
+    constexpr int fontSize = 24;
+#endif
 
     _nuklear._fontPtr =
-        nk_font_atlas_add_from_memory(&_nuklear._fontAtlas, (void *)getFontBytes(), getFontByteLength(), 48, 0);
+        nk_font_atlas_add_from_memory(&_nuklear._fontAtlas, (void *)getFontBytes(), getFontByteLength(), fontSize, 0);
 
     int imageWidth, imageHeight, imageBytesPerRow;
     const void *imageBytes = nk_font_atlas_bake(&_nuklear._fontAtlas, &imageWidth, &imageHeight, NK_FONT_ATLAS_RGBA32);

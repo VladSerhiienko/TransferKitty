@@ -64,6 +64,14 @@
 		F97FC03A23E13C1900209DEE /* TKExtensionContextUtils.mm in Sources */ = {isa = PBXBuildFile; fileRef = F97FC03723E13B9300209DEE /* TKExtensionContextUtils.mm */; };
 		F97FC03B23E13C1900209DEE /* TKExtensionContextUtils.mm in Sources */ = {isa = PBXBuildFile; fileRef = F97FC03723E13B9300209DEE /* TKExtensionContextUtils.mm */; };
 		F97FC03C23E13C1900209DEE /* TKExtensionContextUtils.mm in Sources */ = {isa = PBXBuildFile; fileRef = F97FC03723E13B9300209DEE /* TKExtensionContextUtils.mm */; };
+		F97FC03F23E2952100209DEE /* TKStringUtilities.mm in Sources */ = {isa = PBXBuildFile; fileRef = F97FC03E23E2952100209DEE /* TKStringUtilities.mm */; };
+		F97FC04023E2953C00209DEE /* TKStringUtilities.mm in Sources */ = {isa = PBXBuildFile; fileRef = F97FC03E23E2952100209DEE /* TKStringUtilities.mm */; };
+		F97FC04123E2953C00209DEE /* TKStringUtilities.mm in Sources */ = {isa = PBXBuildFile; fileRef = F97FC03E23E2952100209DEE /* TKStringUtilities.mm */; };
+		F97FC04223E2953D00209DEE /* TKStringUtilities.mm in Sources */ = {isa = PBXBuildFile; fileRef = F97FC03E23E2952100209DEE /* TKStringUtilities.mm */; };
+		F97FC04523E2A7E100209DEE /* TKDeviceInfoUtilities.mm in Sources */ = {isa = PBXBuildFile; fileRef = F97FC04423E2A7E100209DEE /* TKDeviceInfoUtilities.mm */; };
+		F97FC04623E2A7E100209DEE /* TKDeviceInfoUtilities.mm in Sources */ = {isa = PBXBuildFile; fileRef = F97FC04423E2A7E100209DEE /* TKDeviceInfoUtilities.mm */; };
+		F97FC04723E2A7E100209DEE /* TKDeviceInfoUtilities.mm in Sources */ = {isa = PBXBuildFile; fileRef = F97FC04423E2A7E100209DEE /* TKDeviceInfoUtilities.mm */; };
+		F97FC04823E2A7E100209DEE /* TKDeviceInfoUtilities.mm in Sources */ = {isa = PBXBuildFile; fileRef = F97FC04423E2A7E100209DEE /* TKDeviceInfoUtilities.mm */; };
 		F998F726236E312E0025564F /* icon.icns in Resources */ = {isa = PBXBuildFile; fileRef = F998F725236E312E0025564F /* icon.icns */; };
 		F998F729236E312E0025564F /* TKViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = F998F728236E312E0025564F /* TKViewController.mm */; };
 		F998F72C236E312E0025564F /* Main.xib in Resources */ = {isa = PBXBuildFile; fileRef = F998F72A236E312E0025564F /* Main.xib */; };
@@ -727,6 +735,10 @@
 		F96388D223BA6B4900BA6F2A /* TKiOSViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = TKiOSViewController.mm; sourceTree = "<group>"; };
 		F97FC03723E13B9300209DEE /* TKExtensionContextUtils.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = TKExtensionContextUtils.mm; sourceTree = "<group>"; };
 		F97FC03823E13B9300209DEE /* TKExtensionContextUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TKExtensionContextUtils.h; sourceTree = "<group>"; };
+		F97FC03D23E2952100209DEE /* TKStringUtilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TKStringUtilities.h; sourceTree = "<group>"; };
+		F97FC03E23E2952100209DEE /* TKStringUtilities.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = TKStringUtilities.mm; sourceTree = "<group>"; };
+		F97FC04323E2A7E100209DEE /* TKDeviceInfoUtilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TKDeviceInfoUtilities.h; sourceTree = "<group>"; };
+		F97FC04423E2A7E100209DEE /* TKDeviceInfoUtilities.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = TKDeviceInfoUtilities.mm; sourceTree = "<group>"; };
 		F998F723236E312E0025564F /* TransferKitty ShareExtension macOS.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "TransferKitty ShareExtension macOS.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
 		F998F725236E312E0025564F /* icon.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = icon.icns; sourceTree = "<group>"; };
 		F998F727236E312E0025564F /* TKViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TKViewController.h; sourceTree = "<group>"; };
@@ -954,6 +966,10 @@
 		CACC747D2354F93500FE3672 /* TransferKitty Shared */ = {
 			isa = PBXGroup;
 			children = (
+				F97FC04323E2A7E100209DEE /* TKDeviceInfoUtilities.h */,
+				F97FC04423E2A7E100209DEE /* TKDeviceInfoUtilities.mm */,
+				F97FC03D23E2952100209DEE /* TKStringUtilities.h */,
+				F97FC03E23E2952100209DEE /* TKStringUtilities.mm */,
 				F99A751823CA60E40061389F /* EASTL */,
 				F99A751723C9D8070061389F /* Nuklear */,
 				F9E2697223C9C36900745F52 /* FriBidi */,
@@ -1438,6 +1454,7 @@
 				F9E2698623C9C3A600745F52 /* fribidi-char-sets-utf8.c in Sources */,
 				F9E268F123C92D1000745F52 /* ttload.c in Sources */,
 				F9E2680A23C92B7B00745F52 /* ftmac.c in Sources */,
+				F97FC04523E2A7E100209DEE /* TKDeviceInfoUtilities.mm in Sources */,
 				F9E268ED23C92D1000745F52 /* ttpost.c in Sources */,
 				F9E267A123C92B1A00745F52 /* ftstroke.c in Sources */,
 				F9E2692223C92DC000745F52 /* cidparse.c in Sources */,
@@ -1499,6 +1516,7 @@
 				CACC74982354F93800FE3672 /* main.m in Sources */,
 				F9E2672C23C9275900745F52 /* bdf.c in Sources */,
 				F998F79423A70CF90025564F /* TKBlurHash.cpp in Sources */,
+				F97FC03F23E2952100209DEE /* TKStringUtilities.mm in Sources */,
 				F9E267D023C92B4E00745F52 /* fterrors.c in Sources */,
 				F9E2679523C92B1A00745F52 /* fttype1.c in Sources */,
 				F9E268C923C92D1000745F52 /* ttmtx.c in Sources */,
@@ -1593,6 +1611,7 @@
 				F9E2698723C9C3A600745F52 /* fribidi-char-sets-utf8.c in Sources */,
 				F9E268F223C92D1000745F52 /* ttload.c in Sources */,
 				F9E2680B23C92B7B00745F52 /* ftmac.c in Sources */,
+				F97FC04623E2A7E100209DEE /* TKDeviceInfoUtilities.mm in Sources */,
 				F9E268EE23C92D1000745F52 /* ttpost.c in Sources */,
 				F9E267A223C92B1A00745F52 /* ftstroke.c in Sources */,
 				F9E2692323C92DC000745F52 /* cidparse.c in Sources */,
@@ -1654,6 +1673,7 @@
 				CACC74AA2354F93800FE3672 /* main.m in Sources */,
 				F9E2672D23C9275900745F52 /* bdf.c in Sources */,
 				F998F79523A70CF90025564F /* TKBlurHash.cpp in Sources */,
+				F97FC04023E2953C00209DEE /* TKStringUtilities.mm in Sources */,
 				F9E267D123C92B4E00745F52 /* fterrors.c in Sources */,
 				F9E2679623C92B1A00745F52 /* fttype1.c in Sources */,
 				F9E268CA23C92D1000745F52 /* ttmtx.c in Sources */,
@@ -1814,6 +1834,7 @@
 				F9E268A023C92CD000745F52 /* ttinterp.c in Sources */,
 				F9E2684923C92BEF00745F52 /* ftsmooth.c in Sources */,
 				F9E267F823C92B7B00745F52 /* ftlcdfil.c in Sources */,
+				F97FC04123E2953C00209DEE /* TKStringUtilities.mm in Sources */,
 				F9E2673C23C9298D00745F52 /* pcf.c in Sources */,
 				F9E267AF23C92B1A00745F52 /* ftinit.c in Sources */,
 				F9E2698823C9C3A600745F52 /* fribidi-char-sets-utf8.c in Sources */,
@@ -1865,6 +1886,7 @@
 				F9E267FC23C92B7B00745F52 /* ftrfork.c in Sources */,
 				F9E268D723C92D1000745F52 /* ttbdf.c in Sources */,
 				F9E2681023C92B7B00745F52 /* ftdbgmem.c in Sources */,
+				F97FC04723E2A7E100209DEE /* TKDeviceInfoUtilities.mm in Sources */,
 				F96388C523B80C1600BA6F2A /* TKFileSaver.mm in Sources */,
 				F9E2678F23C92B1A00745F52 /* ftbbox.c in Sources */,
 				F9E2690623C92D3100745F52 /* infutil.c in Sources */,
@@ -1967,6 +1989,7 @@
 				F9E268A123C92CD000745F52 /* ttinterp.c in Sources */,
 				F9E2684A23C92BEF00745F52 /* ftsmooth.c in Sources */,
 				F9E267F923C92B7B00745F52 /* ftlcdfil.c in Sources */,
+				F97FC04223E2953D00209DEE /* TKStringUtilities.mm in Sources */,
 				F9E2673D23C9298D00745F52 /* pcf.c in Sources */,
 				F9E267B023C92B1A00745F52 /* ftinit.c in Sources */,
 				F9E2698923C9C3A600745F52 /* fribidi-char-sets-utf8.c in Sources */,
@@ -2018,6 +2041,7 @@
 				F9E267FD23C92B7B00745F52 /* ftrfork.c in Sources */,
 				F9E268D823C92D1000745F52 /* ttbdf.c in Sources */,
 				F9E2681123C92B7B00745F52 /* ftdbgmem.c in Sources */,
+				F97FC04823E2A7E100209DEE /* TKDeviceInfoUtilities.mm in Sources */,
 				F96388C623B80C1600BA6F2A /* TKFileSaver.mm in Sources */,
 				F9E2679023C92B1A00745F52 /* ftbbox.c in Sources */,
 				F9E2690723C92D3100745F52 /* infutil.c in Sources */,

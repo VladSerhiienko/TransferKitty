@@ -1,7 +1,8 @@
 #pragma once
 
-#include <CoreBluetooth/CoreBluetooth.h>
+#import <CoreBluetooth/CoreBluetooth.h>
 #include "TKConfig.h"
+#import "TKStringUtilities.h"
 
 typedef NS_ENUM(NSUInteger, TKBluetoothCommunicatorStatusBits) {
     TKBluetoothCommunicatorStatusBitInitial = 0,
@@ -70,12 +71,8 @@ static_assert(TKBluetoothCommunicatorMessageLength3ByteIndex == (TKBluetoothComm
 static_assert(TKBluetoothCommunicatorMessageLengthIntegerByteLength ==(TKBluetoothCommunicatorMessageLength3ByteIndex - TKBluetoothCommunicatorMessageLength0ByteIndex + 1), "");
 // clang-format on
 
-@interface NSStringUtilities : NSObject
-+ (NSString *)empty;
-+ (bool)isNilOrEmpty:(NSString *)string;
-+ (NSString *)stringOrEmptyString:(NSString *)maybeNullString;
-+ (NSString *)uuidStringOrEmptyString:(NSUUID *)maybeNullUUID;
-+ (NSString *)toDebugString:(TKBluetoothCommunicatorStatusBits)bits;
+@interface TKStringUtilities (TKBluetoothCommunicatorStatusBits)
++ (NSString *)communicatorBitsToString:(TKBluetoothCommunicatorStatusBits)bits;
 @end
 
 @interface TKSubdata : NSObject
@@ -91,12 +88,6 @@ static_assert(TKBluetoothCommunicatorMessageLengthIntegerByteLength ==(TKBluetoo
 - (uint8_t *)bytes;
 - (NSUInteger)length;
 @end
-
-//@interface NSDataNoCopyUtilities : NSObject
-//+ (NSData*)subdataNoCopy:(NSData*)data range:(NSRange)range;
-//+ (NSMutableData*)mutableSubdataNoCopy:(NSMutableData*)data
-// range:(NSRange)range;
-//@end
 
 @interface TKBluetoothCommunicatorMessage : NSObject
 + (NSUInteger)getMessageType:(NSData *)wholeMessageBytes;
@@ -165,9 +156,10 @@ static_assert(TKBluetoothCommunicatorMessageLengthIntegerByteLength ==(TKBluetoo
 - (NSString *)getModel;
 - (NSString *)getFriendlyModel;
 - (NSUInteger)statusBits;
-- (bool)schedulerScheduleMessageFrom:(TKBluetoothCommunicatorDevice *)device
-                    wholeMessageData:(NSData *)wholeMessageData;
+// clang-format off
+- (bool)schedulerScheduleMessageFrom:(TKBluetoothCommunicatorDevice *)device wholeMessageData:(NSData *)wholeMessageData;
 - (bool)schedulerScheduleMessageTo:(TKBluetoothCommunicatorDevice *)device wholeMessageData:(NSData *)wholeMessageData;
+// clang-format on
 @end
 
 @interface TKBluetoothCommunicatorEncoder : NSObject

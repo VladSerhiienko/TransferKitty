@@ -1,4 +1,5 @@
 #import "TKBluetoothCommunicator.h"
+#import "TKDeviceInfoUtilities.h"
 #import "TKFileSaver.h"
 
 #if TARGET_OS_IOS
@@ -6,7 +7,6 @@
 #endif
 
 #include <stdatomic.h>
-#import <sys/utsname.h>
 
 #ifndef TK_UUID_KEY
 #define TK_UUID_KEY @"BluetoothCommunicatorUUID"
@@ -63,9 +63,9 @@ using tk::unsetBit;
 }
 
 - (instancetype)init {
-    [self setDeviceName:[NSStringUtilities empty]];
-    [self setDeviceModel:[NSStringUtilities empty]];
-    [self setDeviceFriendlyModel:[NSStringUtilities empty]];
+    [self setDeviceName:[TKStringUtilities empty]];
+    [self setDeviceModel:[TKStringUtilities empty]];
+    [self setDeviceFriendlyModel:[TKStringUtilities empty]];
     return self;
 }
 - (void)setUUID:(NSUUID *)uuid {
@@ -170,18 +170,17 @@ static TKBluetoothCommunicator *_instance = nil;
 
     return _instance;
 }
+
 + (NSString *)createName {
-#if TARGET_OS_IOS
-    return [[UIDevice currentDevice] name];
-#else
-    return NSUserName();
-#endif
+    return [TKDeviceInfoUtilities name];
 }
 + (NSString *)createModelName {
-    struct utsname systemInfo;
-    uname(&systemInfo);
-    return [NSString stringWithCString:systemInfo.machine encoding:NSUTF8StringEncoding];
+    return [TKDeviceInfoUtilities modelName];
 }
++ (NSString *)createModelFriendlyName {
+    return [TKDeviceInfoUtilities friendlyModelName];
+}
+
 - (NSUInteger)statusBits {
     return _statusBits;
 }
@@ -1262,110 +1261,6 @@ static TKBluetoothCommunicator *_instance = nil;
     }
 }
 
-+ (NSString *)createModelFriendlyName {
-    NSString *model = [TKBluetoothCommunicator createModelName];
-
-    constexpr auto same = NSOrderedSame;
-    TK_STATIC_ASSERT(decltype(same)(kCFCompareEqualTo) == same);
-
-    if ([model compare:@"iPhone3,1"] == same) return @"iPhone 4";
-    if ([model compare:@"iPhone3,2"] == same) return @"iPhone 4";
-    if ([model compare:@"iPhone3,3"] == same) return @"iPhone 4";
-    if ([model compare:@"iPhone4,1"] == same) return @"iPhone 4s";
-    if ([model compare:@"iPhone5,1"] == same) return @"iPhone 5";
-    if ([model compare:@"iPhone5,2"] == same) return @"iPhone 5";
-    if ([model compare:@"iPhone5,3"] == same) return @"iPhone 5c";
-    if ([model compare:@"iPhone5,4"] == same) return @"iPhone 5c";
-    if ([model compare:@"iPhone6,1"] == same) return @"iPhone 5s";
-    if ([model compare:@"iPhone6,2"] == same) return @"iPhone 5s";
-    if ([model compare:@"iPhone7,2"] == same) return @"iPhone 6";
-    if ([model compare:@"iPhone7,1"] == same) return @"iPhone 6 Plus";
-    if ([model compare:@"iPhone8,1"] == same) return @"iPhone 6s";
-    if ([model compare:@"iPhone8,2"] == same) return @"iPhone 6s Plus";
-    if ([model compare:@"iPhone9,1"] == same) return @"iPhone 7";
-    if ([model compare:@"iPhone9,3"] == same) return @"iPhone 7";
-    if ([model compare:@"iPhone9,2"] == same) return @"iPhone 7 Plus";
-    if ([model compare:@"iPhone9,4"] == same) return @"iPhone 7 Plus";
-    if ([model compare:@"iPhone8,4"] == same) return @"iPhone SE";
-    if ([model compare:@"iPhone10,1"] == same) return @"iPhone 8";
-    if ([model compare:@"iPhone10,4"] == same) return @"iPhone 8";
-    if ([model compare:@"iPhone10,2"] == same) return @"iPhone 8 Plus";
-    if ([model compare:@"iPhone10,5"] == same) return @"iPhone 8 Plus";
-    if ([model compare:@"iPhone10,3"] == same) return @"iPhone X";
-    if ([model compare:@"iPhone10,6"] == same) return @"iPhone X";
-    if ([model compare:@"iPhone11,2"] == same) return @"iPhone XS";
-    if ([model compare:@"iPhone11,4"] == same) return @"iPhone XS Max";
-    if ([model compare:@"iPhone11,6"] == same) return @"iPhone XS Max";
-    if ([model compare:@"iPhone11,8"] == same) return @"iPhone XR";
-
-    if ([model compare:@"iPad2,1"] == same) return @"iPad 2";
-    if ([model compare:@"iPad2,2"] == same) return @"iPad 2";
-    if ([model compare:@"iPad2,3"] == same) return @"iPad 2";
-    if ([model compare:@"iPad2,4"] == same) return @"iPad 2";
-    if ([model compare:@"iPad3,1"] == same) return @"iPad 3";
-    if ([model compare:@"iPad3,2"] == same) return @"iPad 3";
-    if ([model compare:@"iPad3,3"] == same) return @"iPad 3";
-    if ([model compare:@"iPad3,4"] == same) return @"iPad 4";
-    if ([model compare:@"iPad3,5"] == same) return @"iPad 4";
-    if ([model compare:@"iPad3,6"] == same) return @"iPad 4";
-    if ([model compare:@"iPad4,1"] == same) return @"iPad Air";
-    if ([model compare:@"iPad4,2"] == same) return @"iPad Air";
-    if ([model compare:@"iPad4,3"] == same) return @"iPad Air";
-    if ([model compare:@"iPad5,3"] == same) return @"iPad Air 2";
-    if ([model compare:@"iPad5,4"] == same) return @"iPad Air 2";
-    if ([model compare:@"iPad6,11"] == same) return @"iPad 5";
-    if ([model compare:@"iPad6,12"] == same) return @"iPad 5";
-    if ([model compare:@"iPad7,5"] == same) return @"iPad 6";
-    if ([model compare:@"iPad7,6"] == same) return @"iPad 6";
-    if ([model compare:@"iPad2,5"] == same) return @"iPad Mini";
-    if ([model compare:@"iPad2,6"] == same) return @"iPad Mini";
-    if ([model compare:@"iPad2,7"] == same) return @"iPad Mini";
-    if ([model compare:@"iPad4,4"] == same) return @"iPad Mini 2";
-    if ([model compare:@"iPad4,5"] == same) return @"iPad Mini 2";
-    if ([model compare:@"iPad4,6"] == same) return @"iPad Mini 2";
-    if ([model compare:@"iPad4,7"] == same) return @"iPad Mini 3";
-    if ([model compare:@"iPad4,8"] == same) return @"iPad Mini 3";
-    if ([model compare:@"iPad4,9"] == same) return @"iPad Mini 3";
-    if ([model compare:@"iPad5,1"] == same) return @"iPad Mini 4";
-    if ([model compare:@"iPad5,2"] == same) return @"iPad Mini 4";
-    if ([model compare:@"iPad6,3"] == same) return @"iPad Pro (9.7-inch)";
-    if ([model compare:@"iPad6,4"] == same) return @"iPad Pro (9.7-inch)";
-    if ([model compare:@"iPad6,7"] == same) return @"iPad Pro (12.9-inch)";
-    if ([model compare:@"iPad6,8"] == same) return @"iPad Pro (12.9-inch)";
-    if ([model compare:@"iPad7,1"] == same) return @"iPad Pro (12.9-inch) (2nd generation)";
-    if ([model compare:@"iPad7,2"] == same) return @"iPad Pro (12.9-inch) (2nd generation)";
-    if ([model compare:@"iPad7,3"] == same) return @"iPad Pro (10.5-inch)";
-    if ([model compare:@"iPad7,4"] == same) return @"iPad Pro (10.5-inch)";
-    if ([model compare:@"iPad8,1"] == same) return @"iPad Pro (11-inch)";
-    if ([model compare:@"iPad8,2"] == same) return @"iPad Pro (11-inch)";
-    if ([model compare:@"iPad8,3"] == same) return @"iPad Pro (11-inch)";
-    if ([model compare:@"iPad8,4"] == same) return @"iPad Pro (11-inch)";
-    if ([model compare:@"iPad8,5"] == same) return @"iPad Pro (12.9-inch) (3rd generation)";
-    if ([model compare:@"iPad8,6"] == same) return @"iPad Pro (12.9-inch) (3rd generation)";
-    if ([model compare:@"iPad8,7"] == same) return @"iPad Pro (12.9-inch) (3rd generation)";
-    if ([model compare:@"iPad8,8"] == same) return @"iPad Pro (12.9-inch) (3rd generation)";
-
-    if ([model compare:@"iPod5,1"] == same) return @"iPod Touch 5";
-    if ([model compare:@"iPod7,1"] == same) return @"iPod Touch 6";
-
-    if ([model compare:@"AppleTV5,3"] == same) return @"Apple TV";
-    if ([model compare:@"AppleTV6,2"] == same) return @"Apple TV 4K";
-
-    if ([model compare:@"AudioAccessory1,1"] == same) return @"HomePod";
-
-    if ([model compare:@"i386"] == same) return @"Simulator";
-    if ([model compare:@"x86_64"] == same) return @"Simulator";
-
-    if ([model compare:@"iPhone" options:NSCaseInsensitiveSearch range:NSMakeRange(0, 6)] == same) return @"iPhone";
-    if ([model compare:@"iPad" options:NSCaseInsensitiveSearch range:NSMakeRange(0, 4)] == same) return @"iPad";
-    if ([model compare:@"iPod" options:NSCaseInsensitiveSearch range:NSMakeRange(0, 4)] == same) return @"iPod";
-    if ([model compare:@"AppleTV" options:NSCaseInsensitiveSearch range:NSMakeRange(0, 7)] == same) return @"AppleTV";
-    if ([model compare:@"AudioAccessory" options:NSCaseInsensitiveSearch range:NSMakeRange(0, 14)] == same)
-        return @"HomePod";
-
-    return model;
-}
-
 - (void)debugObject:(NSObject *)debugObject didLog:(NSString *)log {
     assert(debugObject == self && "Instances should match.");
     [_delegate bluetoothCommunicator:self didLog:log];
@@ -1547,27 +1442,8 @@ static TKBluetoothCommunicator *_instance = nil;
 }
 @end
 
-@implementation NSStringUtilities
-static NSString *emptyStringInstance = @"";
-+ (NSString *)empty {
-    DCHECK(emptyStringInstance && [emptyStringInstance length] == 0);
-    return emptyStringInstance;
-}
-+ (bool)isNilOrEmpty:(NSString *)string {
-    return !string || (0 == [string length]);
-}
-
-+ (NSString *)stringOrEmptyString:(NSString *)nullableString {
-    if (nullableString == nil) { return [NSStringUtilities empty]; }
-    return nullableString;
-}
-
-+ (NSString *)uuidStringOrEmptyString:(NSUUID *)nullableUUID {
-    if (nullableUUID == nil) { return [NSStringUtilities empty]; }
-    return [nullableUUID UUIDString];
-}
-
-+ (NSString *)toDebugString:(TKBluetoothCommunicatorStatusBits)bits {
+@implementation TKStringUtilities (TKBluetoothCommunicatorStatusBits)
++ (NSString *)communicatorBitsToString:(TKBluetoothCommunicatorStatusBits)bits {
     NSMutableString *mutableString = [[NSMutableString alloc] initWithCapacity:128];
 
     // clang-format off
@@ -1862,7 +1738,7 @@ static NSString *emptyStringInstance = @"";
             }
         } break;
         case TKBluetoothCommunicatorMessageTypeName: {
-            if ([NSStringUtilities isNilOrEmpty:[device getName]]) {
+            if ([TKStringUtilities isNilOrEmpty:[device getName]]) {
                 NSString *stringProperty = [TKBluetoothCommunicatorDecoder utf8StringInitWithSubdata:messageContents];
                 [device setName:stringProperty];
 
@@ -1872,7 +1748,7 @@ static NSString *emptyStringInstance = @"";
             }
         } break;
         case TKBluetoothCommunicatorMessageTypeDeviceModel: {
-            if ([NSStringUtilities isNilOrEmpty:[device getModel]]) {
+            if ([TKStringUtilities isNilOrEmpty:[device getModel]]) {
                 NSString *stringProperty = [TKBluetoothCommunicatorDecoder utf8StringInitWithSubdata:messageContents];
                 [device setModel:stringProperty];
 
@@ -1882,7 +1758,7 @@ static NSString *emptyStringInstance = @"";
             }
         } break;
         case TKBluetoothCommunicatorMessageTypeDeviceFriendlyModel: {
-            if ([NSStringUtilities isNilOrEmpty:[device getFriendlyModel]]) {
+            if ([TKStringUtilities isNilOrEmpty:[device getFriendlyModel]]) {
                 NSString *stringProperty = [TKBluetoothCommunicatorDecoder utf8StringInitWithSubdata:messageContents];
                 [device setFriendlyModel:stringProperty];
 
@@ -2115,19 +1991,19 @@ static NSString *emptyStringInstance = @"";
             responseData = [_encoder encodeUUIDMessage:device responseMessageType:responseMessageType];
         } break;
         case TKBluetoothCommunicatorMessageTypeName: {
-            bool deviceHasName = ![NSStringUtilities isNilOrEmpty:[device getName]];
+            bool deviceHasName = ![TKStringUtilities isNilOrEmpty:[device getName]];
             NSUInteger responseMessageType =
                 deviceHasName ? TKBluetoothCommunicatorMessageTypeFinish : TKBluetoothCommunicatorMessageTypeName;
             responseData = [_encoder encodeNameMessage:device responseMessageType:responseMessageType];
         } break;
         case TKBluetoothCommunicatorMessageTypeDeviceModel: {
-            bool deviceHasProperty = ![NSStringUtilities isNilOrEmpty:[device getModel]];
+            bool deviceHasProperty = ![TKStringUtilities isNilOrEmpty:[device getModel]];
             NSUInteger responseMessageType = deviceHasProperty ? TKBluetoothCommunicatorMessageTypeFinish
                                                                : TKBluetoothCommunicatorMessageTypeDeviceModel;
             responseData = [_encoder encodeModelMessage:device responseMessageType:responseMessageType];
         } break;
         case TKBluetoothCommunicatorMessageTypeDeviceFriendlyModel: {
-            bool deviceHasProperty = ![NSStringUtilities isNilOrEmpty:[device getFriendlyModel]];
+            bool deviceHasProperty = ![TKStringUtilities isNilOrEmpty:[device getFriendlyModel]];
             NSUInteger responseMessageType = deviceHasProperty ? TKBluetoothCommunicatorMessageTypeFinish
                                                                : TKBluetoothCommunicatorMessageTypeDeviceFriendlyModel;
             responseData = [_encoder encodeFriendlyModelMessage:device responseMessageType:responseMessageType];
