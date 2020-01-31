@@ -21,6 +21,7 @@
 @implementation TKMacOSViewController {
     TKApp *_app;
     TKMacOSView *_view;
+    TKAttachmentContext *_attachmentContext;
     apemode::platform::AppInput appInput;
     float scrollDampingFactor;
     bool didReceiveMouseDrag;
@@ -181,7 +182,7 @@
     [super viewDidAppear];
 }
 
-- (void)prepareViewController {
+- (void)prepareViewAndApp {
     // Insert code here to customize the view
     NSExtensionItem *item = self.extensionContext.inputItems.firstObject;
     NSLog(@"Attachments = %@", item.attachments);
@@ -202,7 +203,22 @@
     _app.inputDelegate = self;
 
     [[_view window] makeFirstResponder:self];
-    [_app startPeripheralWith:nil];
+}
+
+- (void)prepareViewControllerWithAttachmentContext:(nonnull TKAttachmentContext *)attachmentContext {
+    _attachmentContext = attachmentContext;
+    [self prepareViewAndApp];
+
+    DCHECK(_app);
+    [_app startPeripheralWithAttachmentContext:attachmentContext];
+}
+
+- (void)prepareViewController {
+    _attachmentContext = nil;
+    [self prepareViewAndApp];
+
+    DCHECK(_app);
+    [_app startCentral];
 }
 
 - (void)app:(nonnull TKApp *)app input:(nonnull TKAppInput *)input {

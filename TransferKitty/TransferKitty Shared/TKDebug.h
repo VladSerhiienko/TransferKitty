@@ -3,8 +3,10 @@
 #ifndef TK_DEBUG
 #if defined(DEBUG) || defined(_DEBUG)
 #define TK_DEBUG 1
+#define TK_DEBUG_CODE(...) __VA_ARGS__
 #else // DEBUG
 #define TK_DEBUG 0
+#define TK_DEBUG_CODE(...)
 #endif // DEBUG
 #endif // TK_DEBUG
 

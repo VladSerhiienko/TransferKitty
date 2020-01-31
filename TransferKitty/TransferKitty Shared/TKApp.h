@@ -2,6 +2,7 @@
 
 #import <CoreFoundation/CoreFoundation.h>
 #import <MetalKit/MetalKit.h>
+#import "TKExtensionContextUtils.h"
 
 #include "TKConfig.h"
 
@@ -10,7 +11,7 @@
 @interface TKApp : NSObject
 @property(nonatomic, readwrite) id<TKAppInputDelegate> outptr inputDelegate;
 - (nullable instancetype)initWithMetalKitView:(nonnull MTKView *)view;
-- (void)startPeripheralWith:(nonnull NSArray *)sharedItems;
+- (void)startPeripheralWithAttachmentContext:(nonnull TKAttachmentContext *)attachmentContext;
 - (void)startCentral;
 @end
 

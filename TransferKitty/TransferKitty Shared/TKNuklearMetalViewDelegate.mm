@@ -154,7 +154,7 @@ const size_t getFontByteLength(void);
 
     _vertexBufferIndex = 0;
     _uniformBufferIndex = 1;
-    _bufferMaxSize = 65536 * 4;
+    _bufferMaxSize = 65536 * 16;
 
     for (NSUInteger i = 0; i < FrameCount; i++) {
         TKNuklearFrame *currentFrame = [[TKNuklearFrame alloc] init];

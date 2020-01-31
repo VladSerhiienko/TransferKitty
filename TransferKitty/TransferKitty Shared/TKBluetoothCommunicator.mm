@@ -171,19 +171,10 @@ static TKBluetoothCommunicator *_instance = nil;
     return _instance;
 }
 
-+ (NSString *)createName {
-    return [TKDeviceInfoUtilities name];
-}
-+ (NSString *)createModelName {
-    return [TKDeviceInfoUtilities modelName];
-}
-+ (NSString *)createModelFriendlyName {
-    return [TKDeviceInfoUtilities friendlyModelName];
-}
-
 - (NSUInteger)statusBits {
     return _statusBits;
 }
+
 - (void)prepareUUIDs {
     DLOGF(@"%s", TK_FUNC_NAME);
 
@@ -218,9 +209,9 @@ static TKBluetoothCommunicator *_instance = nil;
 }
 - (void)prepareName {
     DLOGF(@"%s", TK_FUNC_NAME);
-    _name = [TKBluetoothCommunicator createName];
-    _model = [TKBluetoothCommunicator createModelName];
-    _friendlyModel = [TKBluetoothCommunicator createModelFriendlyName];
+    _name = [TKDeviceInfoUtilities name];
+    _model = [TKDeviceInfoUtilities modelName];
+    _friendlyModel = [TKDeviceInfoUtilities friendlyModelName];
 }
 - (NSUUID *)getUUID {
     return _UUID;

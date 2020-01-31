@@ -14,7 +14,7 @@
 #include "AppInput.h"
 #include "TKUIStatePopulator.h"
 
-@interface TKiOSViewController () <TKAppInputDelegate>
+@interface TKiOSViewController () <TKAppInputDelegate, TKAttachmentContextDelegate>
 @end
 
 struct Tap {
@@ -25,16 +25,19 @@ struct Tap {
 
 @implementation TKiOSViewController {
     TKApp *_app;
+    TKAttachmentContext *_attachmentContext;
     TKiOSView *_view;
     apemode::platform::AppInput appInput;
-    Tap tap;
-    Tap pan;
+    Tap _tap;
+    Tap _pan;
 }
 
-- (void)prepareViewController {
-    // Insert code here to customize the view
-    NSExtensionItem *item = self.extensionContext.inputItems.firstObject;
-    NSLog(@"Attachments = %@", item.attachments);
+- (void)prepareViewAndApp {
+    DCHECK(!_view && !_app);
+    if (_view && _app) {
+        DLOGF(@"%s: already prepared.", TK_FUNC_NAME);
+        return;
+    }
 
     _view = (TKiOSView *)self.view;
     [_view setViewController:self];
@@ -51,8 +54,8 @@ struct Tap {
     _app = [[TKApp alloc] initWithMetalKitView:_view];
     _app.inputDelegate = self;
 
-    tap.state = 0;
-    pan.state = 0;
+    _tap.state = 0;
+    _pan.state = 0;
 
     UITapGestureRecognizer *tapGestureRecognizer =
         [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleTap:)];
@@ -60,7 +63,21 @@ struct Tap {
         [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(handlePan:)];
     [[self view] addGestureRecognizer:tapGestureRecognizer];
     [[self view] addGestureRecognizer:panGestureRecognizer];
+}
 
+- (void)prepareViewControllerWithAttachmentContext:(nonnull TKAttachmentContext *)attachmentContext {
+    _attachmentContext = attachmentContext;
+    [self prepareViewAndApp];
+
+    DCHECK(_app);
+    [_app startPeripheralWithAttachmentContext:attachmentContext];
+}
+
+- (void)prepareViewController {
+    _attachmentContext = nil;
+    [self prepareViewAndApp];
+
+    DCHECK(_app);
     [_app startCentral];
 }
 
@@ -85,12 +102,12 @@ struct Tap {
 - (void)handleTap:(id)sender {
     if (UITapGestureRecognizer *tapGestureRecognizer = sender) {
         if (tapGestureRecognizer.state == UIGestureRecognizerStateEnded) {
-            tap.state = 1;
-            tap.location = [tapGestureRecognizer locationInView:self.view];
-            tap.location = [self getLocation:tap.location];
+            _tap.state = 1;
+            _tap.location = [tapGestureRecognizer locationInView:self.view];
+            _tap.location = [self getLocation:_tap.location];
 
             // NSLog(@"handleTap: [%i %i]\n", (int)tap.location.x, (int)tap.location.y);
-            NSLog(@"handleTap: adjusted [%i %i]\n", (int)tap.location.x, (int)tap.location.y);
+            NSLog(@"handleTap: adjusted [%i %i]\n", (int)_tap.location.x, (int)_tap.location.y);
         }
     }
 }
@@ -104,17 +121,17 @@ struct Tap {
         NSLog(@"handlePan: translation [%f %f]\n", translation.x, translation.y);
         NSLog(@"handlePan: state %i\n", (int32_t)panGestureRecognizer.state);
 
-        pan.location = translation;
-        pan.velocity = velocity;
+        _pan.location = translation;
+        _pan.velocity = velocity;
 
         if (panGestureRecognizer.state == UIGestureRecognizerStateBegan) {
-            pan.state = 1;
+            _pan.state = 1;
             NSLog(@"handlePan: UIGestureRecognizerStateBegan\n");
         } else if (panGestureRecognizer.state == UIGestureRecognizerStateEnded) {
-            pan.state = 3;
+            _pan.state = 3;
             NSLog(@"handlePan: UIGestureRecognizerStateEnded\n");
         } else {
-            pan.state = 2;
+            _pan.state = 2;
             NSLog(@"handlePan: [%f %f]\n", translation.x, translation.y);
         }
     }
@@ -124,10 +141,10 @@ struct Tap {
     nk_context *contextPtr = (nk_context *)input.opaqueImplementationPtr;
     if (!contextPtr) { return; }
 
-    if (tap.state == 1) {
-        tap.state = 2;
-        const float mx = tap.location.x;
-        const float my = tap.location.y;
+    if (_tap.state == 1) {
+        _tap.state = 2;
+        const float mx = _tap.location.x;
+        const float my = _tap.location.y;
 
         auto &mouse = contextPtr->input.mouse;
         mouse.pos.x = mx;
@@ -140,10 +157,10 @@ struct Tap {
         nk_input_button(contextPtr, NK_BUTTON_LEFT, mx, my, 1);
         // NSLog(@"nk_input_button: 1, NK_BUTTON_LEFT, [%i %i]", (int)mx, (int)my);
 
-    } else if (tap.state == 2) {
-        tap.state = 0;
-        const float mx = tap.location.x;
-        const float my = tap.location.y;
+    } else if (_tap.state == 2) {
+        _tap.state = 0;
+        const float mx = _tap.location.x;
+        const float my = _tap.location.y;
 
         auto &mouse = contextPtr->input.mouse;
         mouse.pos.x = mx;
@@ -157,17 +174,17 @@ struct Tap {
         // NSLog(@"nk_input_button: 0, NK_BUTTON_LEFT, [%i %i]", (int)mx, (int)my);
     }
 
-    if (abs(pan.velocity.x) > 0.001 || abs(pan.velocity.y) > 0.001) {
+    if (abs(_pan.velocity.x) > 0.001 || abs(_pan.velocity.y) > 0.001) {
         struct nk_vec2 scroll;
-        scroll.x = pan.velocity.x / 3000.0f;
-        scroll.y = pan.velocity.y / 3000.0f;
+        scroll.x = _pan.velocity.x / 3000.0f;
+        scroll.y = _pan.velocity.y / 3000.0f;
         nk_input_scroll(contextPtr, scroll);
 
-        pan.velocity.x /= 1.25;
-        pan.velocity.y /= 1.25;
+        _pan.velocity.x /= 1.25;
+        _pan.velocity.y /= 1.25;
 
-        if (abs(pan.velocity.x) < 0.001) { pan.velocity.x = 0; }
-        if (abs(pan.velocity.y) < 0.001) { pan.velocity.y = 0; }
+        if (abs(_pan.velocity.x) < 0.001) { _pan.velocity.x = 0; }
+        if (abs(_pan.velocity.y) < 0.001) { _pan.velocity.y = 0; }
     }
 }
 @end

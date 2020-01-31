@@ -49,7 +49,7 @@
 #import "TKExtensionContextUtils.h"
 
 @implementation TKViewController {
-    TKAttachmentContext* _context;
+    TKAttachmentContext* _attachmentContext;
 }
 
 - (BOOL)isContentValid {
@@ -77,14 +77,10 @@
     [super viewDidLoad];
     
     DCHECK(self.extensionContext);
-    if (self.extensionContext) {
-        _context = [TKAttachmentContext attachmentContextWithExtensionContext:self.extensionContext];
-        [_context prepareNames];
-        [_context prepareBuffers];
-        DCHECK(_context);
-    }
+    _attachmentContext = [TKAttachmentContext attachmentContextWithExtensionContext:self.extensionContext];
     
-    [self prepareViewController];
+    DCHECK(_attachmentContext);
+    [self prepareViewControllerWithAttachmentContext:_attachmentContext];
 }
 @end
 

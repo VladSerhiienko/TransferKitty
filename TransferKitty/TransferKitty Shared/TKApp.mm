@@ -20,7 +20,7 @@ using tk::unsetBit;
 }
 @end
 
-@interface TKApp () <TKNuklearFrameDelegate, TKBluetoothCommunicatorDelegate>
+@interface TKApp () <TKNuklearFrameDelegate, TKBluetoothCommunicatorDelegate, TKAttachmentContextDelegate>
 @end
 
 @implementation TKApp {
@@ -28,7 +28,7 @@ using tk::unsetBit;
     TKNuklearMetalViewDelegate *_viewDelegate;
     TKNuklearRenderer *_renderer;
     TKBluetoothCommunicator *_bt;
-    NSArray *_btSharedItems;
+    TKAttachmentContext *_attachmentContext;
     TKAppInput *_input;
     tk::UIStatePopulator populator;
     tk::NuklearMetalTexture iconImgTexture;
@@ -97,16 +97,20 @@ using tk::unsetBit;
         [[TKStringUtilities uuidStringOrEmptyString:[_bt getUUID]] cStringUsingEncoding:NSUTF8StringEncoding];
 }
 
-- (void)startPeripheralWith:(nonnull NSArray *)sharedItems {
-    _btSharedItems = sharedItems;
+- (void)startPeripheralWithAttachmentContext:(nonnull TKAttachmentContext *)attachmentContext {
+    _attachmentContext = attachmentContext;
+    [_attachmentContext prepareAttachmentsWithDelegate:self];
+    [_attachmentContext prepareBuffers];
+
     _bt = [TKBluetoothCommunicator instance];
     [_bt initPeripheralWithDelegate:self];
     [self resetThisDevice];
 }
 
 - (void)startCentral {
+    _attachmentContext = nil;
+
     _bt = [TKBluetoothCommunicator instance];
-    _btSharedItems = nil;
     [_bt initCentralWithDelegate:self];
     [self resetThisDevice];
 }
@@ -229,6 +233,18 @@ using tk::unsetBit;
          didWriteValueOrError:(NSError *)error
                      toDevice:(TKBluetoothCommunicatorDevice *)device {
     DLOGF(@"%s", TK_FUNC_NAME);
+}
+
+- (void)attachmentContext:(TKAttachmentContext *)attachmentContext
+    didPrepareBufferForAttachment:(TKAttachment *)attachment
+                          orError:(NSError *)error {
+    DLOGF(@"%s: index=%u", TK_FUNC_NAME, [attachment index]);
+}
+
+- (void)attachmentContext:(TKAttachmentContext *)attachmentContext
+    didPrepareNameForAttachment:(TKAttachment *)attachment
+                        orError:(NSError *)error {
+    DLOGF(@"%s: index=%u", TK_FUNC_NAME, [attachment index]);
 }
 
 @end

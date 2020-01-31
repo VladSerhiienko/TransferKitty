@@ -9,11 +9,13 @@
 #pragma once
 #import <MetalKit/MetalKit.h>
 #import <UIKit/UIKit.h>
+#import "TKExtensionContextUtils.h"
 
 @interface TKiOSViewController : UIViewController
 - (void)prepareViewController;
+- (void)prepareViewControllerWithAttachmentContext:(nonnull TKAttachmentContext *)attachmentContext;
 @end
 
 @interface TKiOSView : MTKView
-- (void)setViewController:(TKiOSViewController*)viewController;
+- (void)setViewController:(nonnull TKiOSViewController *)viewController;
 @end
