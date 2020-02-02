@@ -38,8 +38,8 @@ class IUIFileState {
 public:
     virtual StringView name() const = 0;
     virtual UIFileStatus status() const = 0;
-    virtual float progress() const = 0;
-    virtual size_t byteSize() const = 0;
+    virtual size_t bytesProcessed() const = 0;
+    virtual size_t totalSizeInBytes() const = 0;
     virtual const IUIFilePreview* preview() const = 0;
 };
 
@@ -56,6 +56,8 @@ public:
 
 class IUIState {
 public:
+    virtual void didClickSendButton() = 0;
+    
     virtual size_t deviceCount() const = 0;
     virtual const IUIDeviceState* device(size_t index) const = 0;
 

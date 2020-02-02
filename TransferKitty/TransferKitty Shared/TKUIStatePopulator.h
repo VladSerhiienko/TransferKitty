@@ -12,7 +12,7 @@ struct UIStateViewport {
 
 class UIStatePopulator {
 public:
-    virtual bool populate(const tk::IUIState *state,
+    virtual bool populate(tk::IUIState *state,
                           const tk::ITexture &texture,
                           const UIStateViewport &viewport,
                           nk_context *nk);

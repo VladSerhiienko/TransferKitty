@@ -33,6 +33,8 @@ struct Tap {
 }
 
 - (void)prepareViewAndApp {
+    DLOGF(@"%s", TK_FUNC_NAME);
+    
     DCHECK(!_view && !_app);
     if (_view && _app) {
         DLOGF(@"%s: already prepared.", TK_FUNC_NAME);
@@ -66,6 +68,8 @@ struct Tap {
 }
 
 - (void)prepareViewControllerWithAttachmentContext:(nonnull TKAttachmentContext *)attachmentContext {
+    DLOGF(@"%s", TK_FUNC_NAME);
+    
     _attachmentContext = attachmentContext;
     [self prepareViewAndApp];
 
@@ -74,6 +78,8 @@ struct Tap {
 }
 
 - (void)prepareViewController {
+    DLOGF(@"%s", TK_FUNC_NAME);
+    
     _attachmentContext = nil;
     [self prepareViewAndApp];
 

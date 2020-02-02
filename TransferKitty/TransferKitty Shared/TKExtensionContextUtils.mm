@@ -102,8 +102,7 @@ static NSString *kPublicImage = @"public.image";
                   self,
                   [TKStringUtilities attachmentBitsToString:TKAttachmentStatusBits(status)]);
             _statusBits = status;
-
-            [self prepareName];
+            // [self prepareName];
         }
     }
     return self;
@@ -133,19 +132,22 @@ static NSString *kPublicImage = @"public.image";
         _statusBits.fetch_and(~TKAttachmentStatusBitLoadedURL, std::memory_order_release);
         _statusBits.fetch_and(~TKAttachmentStatusBitLoadingURL, std::memory_order_release);
 
-        [_delegate attachmentContext:_context didPrepareNameForAttachment:self orError:error];
         DLOGF(@"%s: type='%@', error='%@'", TK_FUNC_NAME, typeIdentifier, error);
+        [_delegate attachmentContext:_context didPrepareNameForAttachment:self orError:error];
         return;
     }
 
     NSObject *itemObj = (NSObject *)item;
     if (!itemObj) {
-        DLOGF(@"%s: type='%@', item is not an object or nil.", TK_FUNC_NAME, typeIdentifier);
-
         _statusBits.fetch_or(TKAttachmentStatusBitErrorURL, std::memory_order_release);
         _statusBits.fetch_and(~TKAttachmentStatusBitLoadedURL, std::memory_order_release);
+        
+        DLOGF(@"%s: type='%@', item is not an object or nil.", TK_FUNC_NAME, typeIdentifier);
+        [_delegate attachmentContext:_context didPrepareNameForAttachment:self orError:error];
         return;
-    } else if ([itemObj isKindOfClass:[NSURL class]]) {
+    }
+    
+    if ([itemObj isKindOfClass:[NSURL class]]) {
         _url = (NSURL *)item;
         _name = [self goodName:_url];
         DLOGF(@"%s: type='%@', name='%@', url={%@}", TK_FUNC_NAME, typeIdentifier, _name, _url);
@@ -176,7 +178,9 @@ static NSString *kPublicImage = @"public.image";
     if (error) {
         _statusBits.fetch_or(TKAttachmentStatusBitErrorData, std::memory_order_release);
         _statusBits.fetch_and(~TKAttachmentStatusBitLoadedData, std::memory_order_release);
+        
         DLOGF(@"%s: type='%@', error='%@'.", TK_FUNC_NAME, typeIdentifier, error);
+        [_delegate attachmentContext:_context didPrepareBufferForAttachment:self orError:error];
         return;
     }
 
@@ -184,7 +188,9 @@ static NSString *kPublicImage = @"public.image";
     if (!itemObj) {
         _statusBits.fetch_or(TKAttachmentStatusBitErrorData, std::memory_order_release);
         _statusBits.fetch_and(~TKAttachmentStatusBitLoadedData, std::memory_order_release);
+        
         DLOGF(@"%s: type='%@', item is not an object or nil.", TK_FUNC_NAME, typeIdentifier);
+        [_delegate attachmentContext:_context didPrepareBufferForAttachment:self orError:nil];
         return;
     }
 
@@ -244,6 +250,8 @@ static NSString *kPublicImage = @"public.image";
         _statusBits.fetch_or(TKAttachmentStatusBitErrorData, std::memory_order_release);
         _statusBits.fetch_and(~TKAttachmentStatusBitLoadedData, std::memory_order_release);
     }
+    
+    [_delegate attachmentContext:_context didPrepareBufferForAttachment:self orError:nil];
 }
 
 // clang-format off
@@ -402,29 +410,33 @@ static NSString *kPublicImage = @"public.image";
             for (NSItemProvider *itemProvider in [inputItem attachments]) {
                 DCHECK(itemProvider);
 
-                if (itemProvider) {
-                    if ([TKAttachment isTypeIdentifierSupported:itemProvider]) {
-                        NSUInteger index = _attachments.count;
-                        [_attachments addObject:[TKAttachment attachmentWithItemProvider:itemProvider
-                                                                                   index:index
-                                                                                 context:self
-                                                                                delegate:delegate]];
-                        DLOGF(@"%s: adding an attachment for the item provider={%@}", TK_FUNC_NAME, itemProvider);
-                    }
+                if (itemProvider && [TKAttachment isTypeIdentifierSupported:itemProvider]) {
+                    DLOGF(@"%s: adding an attachment for the item provider={%@}", TK_FUNC_NAME, itemProvider);
+
+                    NSUInteger index = _attachments.count;
+                    [_attachments addObject:[TKAttachment attachmentWithItemProvider:itemProvider
+                                                                               index:index
+                                                                             context:self
+                                                                            delegate:delegate]];
                 }
             }
         }
     }
 }
 
+- (void)prepareNames {
+    DCHECK(_attachments);
+    for (TKAttachment *attachment in _attachments) { DCHECK(attachment); [attachment prepareName]; }
+}
+
 - (void)prepareBuffers {
     DCHECK(_attachments);
-    for (TKAttachment *attachment in _attachments) { [attachment prepareBuffer]; }
+    for (TKAttachment *attachment in _attachments) { DCHECK(attachment); [attachment prepareBuffer]; }
 }
 
 - (void)releaseBuffers {
     DCHECK(_attachments);
-    for (TKAttachment *attachment in _attachments) { [attachment releaseBuffer]; }
+    for (TKAttachment *attachment in _attachments) {  DCHECK(attachment); [attachment releaseBuffer]; }
 }
 
 - (NSArray *)attachments {

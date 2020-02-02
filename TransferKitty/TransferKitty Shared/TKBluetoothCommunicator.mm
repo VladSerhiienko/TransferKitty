@@ -171,9 +171,6 @@ static TKBluetoothCommunicator *_instance = nil;
     return _instance;
 }
 
-- (NSUInteger)statusBits {
-    return _statusBits;
-}
 
 - (void)prepareUUIDs {
     DLOGF(@"%s", TK_FUNC_NAME);
@@ -213,18 +210,17 @@ static TKBluetoothCommunicator *_instance = nil;
     _model = [TKDeviceInfoUtilities modelName];
     _friendlyModel = [TKDeviceInfoUtilities friendlyModelName];
 }
-- (NSUUID *)getUUID {
-    return _UUID;
-}
-- (NSString *)getName {
-    return _name;
-}
-- (NSString *)getModel {
-    return _model;
-}
-- (NSString *)getFriendlyModel {
-    return _friendlyModel;
-}
+
+// clang-format off
+- (NSUInteger)statusBits                        { return _statusBits; }
+- (NSUUID *)getUUID                             { return _UUID; }
+- (NSString *)getName                           { return _name; }
+- (NSString *)getModel                          { return _model; }
+- (NSString *)getFriendlyModel                  { return _friendlyModel; }
+- (TKBluetoothCommunicatorScheduler*)scheduler  { return _scheduler; }
+- (TKBluetoothCommunicatorEncoder*)encoder      { return [_scheduler bluetoothCommunicatorEncoder]; }
+- (TKBluetoothCommunicatorDecoder*)decoder      { return [_scheduler bluetoothCommunicatorDecoder]; }
+// clang-format on
 
 //
 // P e r i p h e r a l
@@ -254,26 +250,16 @@ static TKBluetoothCommunicator *_instance = nil;
 
 // https://developer.apple.com/library/archive/documentation/NetworkingInternetWeb/Conceptual/CoreBluetooth_concepts/PerformingCommonPeripheralRoleTasks/PerformingCommonPeripheralRoleTasks.html
 - (void)publishServices {
-    CBCharacteristicProperties properties =
-        CBCharacteristicPropertyRead | CBCharacteristicPropertyWrite | CBCharacteristicPropertyNotify;
-    CBAttributePermissions permissions = CBAttributePermissionsReadable | CBAttributePermissionsWriteable;
+    // clang-format off
+    constexpr CBCharacteristicProperties properties = CBCharacteristicPropertyRead | CBCharacteristicPropertyWrite | CBCharacteristicPropertyNotify;
+    constexpr CBAttributePermissions permissions = CBAttributePermissionsReadable | CBAttributePermissionsWriteable;
+    // clang-format on
 
     // https://stackoverflow.com/questions/18622608/how-do-you-create-a-descriptor-for-a-mutable-characteristic
 
-    CBUUID *userDescriptionUUID =
-        [CBUUID UUIDWithString:CBUUIDCharacteristicUserDescriptionString]; // or set it to the actual UUID->2901
+    CBUUID *userDescriptionUUID = [CBUUID UUIDWithString:CBUUIDCharacteristicUserDescriptionString];
     CBMutableDescriptor *userDescriptionDescriptor = [[CBMutableDescriptor alloc] initWithType:userDescriptionUUID
                                                                                          value:@"DATA_RESPOND"];
-
-    // uint8_t enableNotificationBytes[] = {0x01, 0x00};
-    // static_assert(sizeof(enableNotificationBytes) == 2, "");
-    // NSData *enableNotificationValue = [[NSData alloc] initWithBytes:enableNotificationBytes length:2];
-    // NSString *dataRespondString = @"DATA_RESPOND";
-    // // NSData *dataRespondValue = [dataRespondString dataUsingEncoding:NSUTF8StringEncoding];
-    // CBDescriptor *clientConfigurationDescriptor =
-    //     [[CBMutableDescriptor alloc] initWithType:[_descriptorUUIDs objectAtIndex:0] value:enableNotificationValue];
-    // CBDescriptor *userDescriptionDescriptor =
-    //     [[CBMutableDescriptor alloc] initWithType:[_descriptorUUIDs objectAtIndex:1] value:dataRespondString];
 
     NSArray<CBDescriptor *> *peripheralDescriptors = [[NSArray alloc] initWithObjects:userDescriptionDescriptor, nil];
 
@@ -562,8 +548,6 @@ static TKBluetoothCommunicator *_instance = nil;
     DCHECK([_connectedDevices count] == 1);
     [self stopAdvertising];
 #endif
-
-    [_scheduler scheduleIntroductionMessagesTo:device];
 }
 
 // CBPeripheralManagerDelegate
@@ -1004,16 +988,6 @@ static TKBluetoothCommunicator *_instance = nil;
     [_delegate bluetoothCommunicator:self didUpdateDevice:device];
 }
 
-- (bool)schedulerScheduleMessageFrom:(TKBluetoothCommunicatorDevice *)bluetoothCommunicatorDevice
-                    wholeMessageData:(NSData *)wholeMessageData {
-    return [_scheduler scheduleMessageFrom:bluetoothCommunicatorDevice wholeMessageData:wholeMessageData];
-}
-
-- (bool)schedulerScheduleMessageTo:(TKBluetoothCommunicatorDevice *)bluetoothCommunicatorDevice
-                  wholeMessageData:(NSData *)wholeMessageData {
-    return [_scheduler scheduleMessageTo:bluetoothCommunicatorDevice wholeMessageData:wholeMessageData];
-}
-
 - (TKBluetoothCommunicatorWriteValueResult)writeValue:(NSData *)value toDevice:(TKBluetoothCommunicatorDevice *)device {
     DLOGF(@"%s", TK_FUNC_NAME);
 
@@ -1030,13 +1004,10 @@ static TKBluetoothCommunicator *_instance = nil;
     if (peripheral) {
         CBCharacteristic *characteristic = [device characteristic];
         if (!peripheral || !characteristic) {
-            DLOGF(@"%s: peripheral or characteristic are nulls, write is "
-                  @"skipped.",
-                  TK_FUNC_NAME);
+            DLOGF(@"%s: peripheral or characteristic are nulls, write is skipped.", TK_FUNC_NAME);
             return TKBluetoothCommunicatorWriteValueResultErrorPanic;
         }
 
-        // [device setPendingWriteValue:true];
         [peripheral writeValue:value forCharacteristic:characteristic type:CBCharacteristicWriteWithResponse];
         return TKBluetoothCommunicatorWriteValueResultSuccessContinue;
     }
@@ -1480,12 +1451,22 @@ static TKBluetoothCommunicator *_instance = nil;
     _range = range;
     return self;
 }
-- (const uint8_t *)bytes {
-    return (const uint8_t *)[_data bytes] + _range.location;
+- (instancetype)initWithSubdata:(TKSubdata *)subdata range:(NSRange)range {
+    DCHECK(subdata);
+    DCHECK(range.location < [subdata length]);
+    DCHECK((range.location + range.length) <= [subdata length]);
+    
+    _data = [subdata data];
+    _range = NSMakeRange([subdata range].location + range.location, range.length);
+    return self;
 }
-- (NSUInteger)length {
-    return _range.length;
-}
+
+// clang-format off
+- (NSData *)data { return _data; }
+- (NSRange)range { return _range; }
+- (const uint8_t *)bytes { return (const uint8_t *)[_data bytes] + _range.location; }
+- (NSUInteger)length { return _range.length; }
+// clang-format on
 @end
 
 @implementation TKMutableSubdata {
@@ -1588,7 +1569,7 @@ static TKBluetoothCommunicator *_instance = nil;
 
 - (NSData *)encodeFileMessage:(TKBluetoothCommunicatorDevice *)device
                      fileName:(NSString *)fileName
-                     fileData:(NSData *)fileData
+                     fileData:(TKSubdata *)fileData
           responseMessageType:(NSUInteger)responseMessageType {
     NSData *fileNameData = [fileName dataUsingEncoding:NSUTF8StringEncoding];
 
@@ -1598,7 +1579,7 @@ static TKBluetoothCommunicator *_instance = nil;
     NSMutableData *messageContentsData = [[NSMutableData alloc] initWithCapacity:messageContentsLength];
     [messageContentsData appendData:fileNameData];
     [messageContentsData appendBytes:stringTermination length:sizeof(stringTermination)];
-    [messageContentsData appendData:fileData];
+    [messageContentsData appendBytes:fileData.bytes length:[fileData length]];
 
     return [self encodeMessage:device
            messageContentsData:messageContentsData
@@ -1767,12 +1748,12 @@ static TKBluetoothCommunicator *_instance = nil;
 
 - (void)decodeShortMessageFrom:(TKBluetoothCommunicatorDevice *)device
         undecoratedMessageType:(NSUInteger)undecoratedMessageType
-              wholeMessageData:(NSData *)wholeMessageData {
+              wholeMessageData:(TKSubdata *)wholeMessageData {
     const NSUInteger offset = TKBluetoothCommunicatorShortMessageStartByteIndex;
     const NSUInteger length = [wholeMessageData length] - offset;
 
     NSRange range = NSMakeRange(offset, length);
-    TKSubdata *messageContents = [[TKSubdata alloc] initWithData:wholeMessageData range:range];
+    TKSubdata *messageContents = [[TKSubdata alloc] initWithSubdata:wholeMessageData range:range];
 
     [self decodeWholeMessageFrom:device undecoratedMessageType:undecoratedMessageType messageContents:messageContents];
 }
@@ -2061,7 +2042,7 @@ static TKBluetoothCommunicator *_instance = nil;
 
             [_decoder decodeShortMessageFrom:device
                       undecoratedMessageType:undecoratedMessageType
-                            wholeMessageData:receivedMessageData];
+                            wholeMessageData:[[TKSubdata alloc] initWithData:receivedMessageData]];
 
             responseMessageType = [TKBluetoothCommunicatorMessage getResponseMessageType:receivedMessageData];
         } else {
@@ -2118,14 +2099,15 @@ static TKBluetoothCommunicator *_instance = nil;
                                                                                                toDevice:device];
                 switch (result) {
                     case TKBluetoothCommunicatorWriteValueResultSuccessContinue:
-                        if ([operation requiresResponse]) {
-                            DLOGF(@"%s: device = %p, write operation succeeded, setting pending write to true",
+                        DLOGF(@"%s: device = %p, write operation succeeded", TK_FUNC_NAME, device);
+                        
+                    if ([operation requiresResponse]) {
+                            DLOGF(@"%s: device = %p, setting pending write to true",
                                   TK_FUNC_NAME,
                                   device);
                             [device setPendingWriteValue:true];
                         }
 
-                        DLOGF(@"%s: device = %p, write operation succeeded", TK_FUNC_NAME, device);
                         return TKBluetoothCommunicatorOperationExecutionResultSuccessContinue;
 
                     case TKBluetoothCommunicatorWriteValueResultFailedReschedule:

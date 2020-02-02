@@ -33,7 +33,7 @@
 // clang-format off
 #define DCHECKF(condition, msg, ...)    [TKDebug dcheckf:(condition) file:__FILE__ line:__LINE__ tag:__PRETTY_FUNCTION__ format:msg, ## __VA_ARGS__]
 #define DCHECK(condition)               [TKDebug dcheck:(condition) file:__FILE__ line:__LINE__ tag:__PRETTY_FUNCTION__ msg:#condition]
-#define DLOGF(format, ...)              [TKDebug logf:format, __VA_ARGS__]
+#define DLOGF(format, ...)              [TKDebug logf:format, ## __VA_ARGS__]
 #define DLOG(log)                       [TKDebug log:log]
 // clang-format on
 

@@ -40,8 +40,9 @@ typedef NS_ENUM(NSUInteger, TKAttachmentStatusBits) {
 + (instancetype)attachmentContextWithExtensionContext:(NSExtensionContext *)context;
 - (void)prepareAttachmentsWithDelegate:(id<TKAttachmentContextDelegate>)delegate;
 - (NSArray *)attachments;
-TK_DEBUG_CODE(-(void)prepareBuffers;)
-TK_DEBUG_CODE(-(void)releaseBuffers;)
+- (void)prepareNames;
+- (void)prepareBuffers;
+- (void)releaseBuffers;
 @end
 
 @protocol TKAttachmentContextDelegate <NSObject>

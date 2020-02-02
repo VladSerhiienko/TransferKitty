@@ -78,6 +78,9 @@ static_assert(TKBluetoothCommunicatorMessageLengthIntegerByteLength ==(TKBluetoo
 @interface TKSubdata : NSObject
 - (instancetype)initWithData:(NSData *)data;
 - (instancetype)initWithData:(NSData *)data range:(NSRange)range;
+- (instancetype)initWithSubdata:(TKSubdata *)subdata range:(NSRange)range;
+- (NSData *)data;
+- (NSRange)range;
 - (const uint8_t *)bytes;
 - (NSUInteger)length;
 @end
@@ -139,6 +142,9 @@ static_assert(TKBluetoothCommunicatorMessageLengthIntegerByteLength ==(TKBluetoo
 @end
 
 @protocol TKBluetoothCommunicatorDelegate;
+@class TKBluetoothCommunicatorScheduler;
+@class TKBluetoothCommunicatorEncoder;
+@class TKBluetoothCommunicatorDecoder;
 
 @interface TKBluetoothCommunicator : NSObject
 + (id)instance;
@@ -150,6 +156,7 @@ static_assert(TKBluetoothCommunicatorMessageLengthIntegerByteLength ==(TKBluetoo
 - (void)stopDiscoveringDevices;
 - (void)publishServices;
 - (void)bluetoothCommunicatorDeviceDidUpdateProperty:(TKBluetoothCommunicatorDevice *)device;
+- (void)cancelConnectionForDevice:(TKBluetoothCommunicatorDevice *)device;
 - (NSArray *)connectedDevices;
 - (NSUUID *)getUUID;
 - (NSString *)getName;
@@ -157,8 +164,9 @@ static_assert(TKBluetoothCommunicatorMessageLengthIntegerByteLength ==(TKBluetoo
 - (NSString *)getFriendlyModel;
 - (NSUInteger)statusBits;
 // clang-format off
-- (bool)schedulerScheduleMessageFrom:(TKBluetoothCommunicatorDevice *)device wholeMessageData:(NSData *)wholeMessageData;
-- (bool)schedulerScheduleMessageTo:(TKBluetoothCommunicatorDevice *)device wholeMessageData:(NSData *)wholeMessageData;
+- (TKBluetoothCommunicatorScheduler*)scheduler;
+- (TKBluetoothCommunicatorEncoder*)encoder;
+- (TKBluetoothCommunicatorDecoder*)decoder;
 // clang-format on
 @end
 
@@ -177,7 +185,7 @@ static_assert(TKBluetoothCommunicatorMessageLengthIntegerByteLength ==(TKBluetoo
                    responseMessageType:(NSUInteger)responseMessageType;
 - (NSData *)encodeFileMessage:(TKBluetoothCommunicatorDevice *)device
                      fileName:(NSString *)fileName
-                     fileData:(NSData *)fileData
+                     fileData:(TKSubdata *)fileData
           responseMessageType:(NSUInteger)responseMessageType;
 @end
 
@@ -186,7 +194,7 @@ static_assert(TKBluetoothCommunicatorMessageLengthIntegerByteLength ==(TKBluetoo
 - (instancetype)initWithBluetoothCommunicator:(TKBluetoothCommunicator *)bluetoothCommunicator;
 - (void)decodeShortMessageFrom:(TKBluetoothCommunicatorDevice *)device
         undecoratedMessageType:(NSUInteger)undecoratedMessageType
-              wholeMessageData:(NSData *)wholeMessageData;
+              wholeMessageData:(TKSubdata *)wholeMessageData;
 - (void)decodeWholeMessageFrom:(TKBluetoothCommunicatorDevice *)device
         undecoratedMessageType:(NSUInteger)undecoratedMessageType
                messageContents:(TKSubdata *)messageContents;

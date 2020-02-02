@@ -51,14 +51,15 @@ constexpr float gr = 1.61803398874989484820458683436563811772030917980576;
 constexpr float b = 1.0f / (gr + 1.0f);
 constexpr float a = 1.0f - b;
 
-bool UIStatePopulator::populate(const tk::IUIState *state,
+bool UIStatePopulator::populate(tk::IUIState *state,
                                 const tk::ITexture &texture,
                                 const UIStateViewport &viewport,
                                 nk_context *nk) {
     constexpr std::string_view windowName = "UIStatePopulator";
     constexpr std::string_view imageGroupName = "GroupImg";
-    constexpr std::string_view logGroupName = "GroupLogs";
     constexpr std::string_view textGroupName = "GroupText";
+    constexpr std::string_view loadingFileName = "(loading...)";
+    constexpr std::string_view sendButtontext = "Send";
 
     assert(nk && nk->style.font);
     const float fontHeight = nk->style.font->height;
@@ -92,9 +93,9 @@ bool UIStatePopulator::populate(const tk::IUIState *state,
                 nk_layout_row_dynamic(nk, fontHeight, 1);
                 
                 nk_labelf(nk, NK_TEXT_ALIGN_LEFT, "%s", state->device(i)->name().data);
+                nk_labelf(nk, NK_TEXT_ALIGN_LEFT, "%s", state->device(i)->uuidString().data);
                 nk_labelf(nk, NK_TEXT_ALIGN_LEFT, "%s", state->device(i)->model().data);
                 nk_labelf(nk, NK_TEXT_ALIGN_LEFT, "%s", state->device(i)->friendlyModel().data);
-                nk_labelf(nk, NK_TEXT_ALIGN_LEFT, "%s", state->device(i)->uuidString().data);
                 
                 // if (nk_button_label(nk, kButton0)) { printf("\"%s\" pressed\n", kButton0); }
                 // if (nk_button_label(nk, kButton1)) { printf("\"%s\" pressed\n", kButton1); }
@@ -115,21 +116,51 @@ bool UIStatePopulator::populate(const tk::IUIState *state,
                 nk_group_end(nk);
             }
 
-        nk_layout_row_end(nk);
+            nk_layout_row_end(nk);
         }
         
+        nk_layout_row_dynamic(nk, fontHeight, 1);
+        nk_label(nk, " ", NK_TEXT_ALIGN_LEFT);
+        if (state->device(0)->fileCount()) {
+            
+            static bool didClickSendButton = false;
+            if (!didClickSendButton) {
+                if (nk_button_label(nk, sendButtontext.data())) {
+                    state->didClickSendButton();
+                    didClickSendButton = true;
+                }
+            }
+
+            nk_label(nk, "Files:", NK_TEXT_ALIGN_LEFT);
+            for (size_t i = 0; i < state->device(0)->fileCount(); ++i) {
+                const IUIFileState *fileState = state->device(0)->file(i);
+                
+                if (fileState->name().size) {
+                    nk_label(nk, fileState->name().data, NK_TEXT_ALIGN_LEFT);
+                } else {
+                    nk_label(nk, loadingFileName.data(), NK_TEXT_ALIGN_LEFT);
+                }
+                
+                if (fileState->totalSizeInBytes()) {
+                    nk_prog(nk, fileState->bytesProcessed(), fileState->totalSizeInBytes(), 1);
+                    nk_labelf(nk, NK_TEXT_ALIGN_CENTERED, "%zu/%zu bytes processed", fileState->bytesProcessed(), fileState->totalSizeInBytes());
+                }
+            }
+        } else {
+            nk_label(nk, "No files.", NK_TEXT_ALIGN_LEFT);
+        }
         
-        //nk_layout_row_begin(nk, NK_DYNAMIC, viewport.height - itemHeight - padding * 3, 1);
-        //nk_layout_row_push(nk, 1);
-        //if (nk_group_begin(nk, logGroupName.data(), 0)) {
-            nk_layout_row_dynamic(nk, fontHeight, 1);
+        nk_layout_row_dynamic(nk, fontHeight, 1);
+        nk_label(nk, " ", NK_TEXT_ALIGN_LEFT);
+
+        if (state->debugLogCount()) {
             nk_label(nk, "Logs:", NK_TEXT_ALIGN_LEFT);
             for (size_t i = 0; i < state->debugLogCount(); ++i) {
                 nk_label(nk, state->debugLog(i).data, NK_TEXT_ALIGN_LEFT);
             }
-        //    nk_group_end(nk);
-        //}
-        //nk_layout_row_end(nk);
+        } else {
+            nk_label(nk, "No logs.", NK_TEXT_ALIGN_LEFT);
+        }
     }
 
     nk_window_set_position(nk, windowName.data(), nk_vec2(viewportBounds.x, viewport.y));
