@@ -11,57 +11,51 @@
 		13B07FBD1A68108700A75B9A /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB11A68108700A75B9A /* LaunchScreen.xib */; };
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
+		43AB20F0FFAE0123C1A605E6 /* (null) in Frameworks */ = {isa = PBXBuildFile; };
+		878AFD1823E73838003F4D92 /* libDoubleConversion.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 878AFCF323E73838003F4D92 /* libDoubleConversion.a */; };
+		878AFD1923E73838003F4D92 /* libEXAppLoaderProvider.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 878AFCF423E73838003F4D92 /* libEXAppLoaderProvider.a */; };
+		878AFD1A23E73838003F4D92 /* libEXConstants.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 878AFCF523E73838003F4D92 /* libEXConstants.a */; };
+		878AFD1B23E73838003F4D92 /* libEXFileSystem.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 878AFCF623E73838003F4D92 /* libEXFileSystem.a */; };
+		878AFD1C23E73838003F4D92 /* libEXPermissions.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 878AFCF723E73838003F4D92 /* libEXPermissions.a */; };
+		878AFD1D23E73838003F4D92 /* libFBReactNativeSpec.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 878AFCF823E73838003F4D92 /* libFBReactNativeSpec.a */; };
+		878AFD1E23E73838003F4D92 /* libFolly.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 878AFCF923E73838003F4D92 /* libFolly.a */; };
+		878AFD1F23E73838003F4D92 /* libglog.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 878AFCFA23E73838003F4D92 /* libglog.a */; };
+		878AFD2023E73838003F4D92 /* liblottie-ios.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 878AFCFB23E73838003F4D92 /* liblottie-ios.a */; };
+		878AFD2123E73838003F4D92 /* liblottie-react-native.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 878AFCFC23E73838003F4D92 /* liblottie-react-native.a */; };
+		878AFD2223E73838003F4D92 /* libPods-CatenaNative-CatenaShare.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 878AFCFD23E73838003F4D92 /* libPods-CatenaNative-CatenaShare.a */; };
+		878AFD2323E73838003F4D92 /* libPods-CatenaNative.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 878AFCFE23E73838003F4D92 /* libPods-CatenaNative.a */; };
+		878AFD2423E73838003F4D92 /* libRCTTypeSafety.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 878AFCFF23E73838003F4D92 /* libRCTTypeSafety.a */; };
+		878AFD2523E73838003F4D92 /* libReact-Core.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 878AFD0023E73838003F4D92 /* libReact-Core.a */; };
+		878AFD2623E73838003F4D92 /* libReact-CoreModules.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 878AFD0123E73838003F4D92 /* libReact-CoreModules.a */; };
+		878AFD2723E73838003F4D92 /* libReact-cxxreact.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 878AFD0223E73838003F4D92 /* libReact-cxxreact.a */; };
+		878AFD2823E73838003F4D92 /* libReact-jsi.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 878AFD0323E73838003F4D92 /* libReact-jsi.a */; };
+		878AFD2923E73838003F4D92 /* libReact-jsiexecutor.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 878AFD0423E73838003F4D92 /* libReact-jsiexecutor.a */; };
+		878AFD2A23E73838003F4D92 /* libReact-jsinspector.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 878AFD0523E73838003F4D92 /* libReact-jsinspector.a */; };
+		878AFD2B23E73838003F4D92 /* libreact-native-bluetooth-status.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 878AFD0623E73838003F4D92 /* libreact-native-bluetooth-status.a */; };
+		878AFD2C23E73838003F4D92 /* libReact-RCTActionSheet.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 878AFD0723E73838003F4D92 /* libReact-RCTActionSheet.a */; };
+		878AFD2D23E73838003F4D92 /* libReact-RCTAnimation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 878AFD0823E73838003F4D92 /* libReact-RCTAnimation.a */; };
+		878AFD2E23E73838003F4D92 /* libReact-RCTBlob.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 878AFD0923E73838003F4D92 /* libReact-RCTBlob.a */; };
+		878AFD2F23E73838003F4D92 /* libReact-RCTImage.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 878AFD0A23E73838003F4D92 /* libReact-RCTImage.a */; };
+		878AFD3023E73838003F4D92 /* libReact-RCTLinking.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 878AFD0B23E73838003F4D92 /* libReact-RCTLinking.a */; };
+		878AFD3123E73838003F4D92 /* libReact-RCTNetwork.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 878AFD0C23E73838003F4D92 /* libReact-RCTNetwork.a */; };
+		878AFD3223E73838003F4D92 /* libReact-RCTSettings.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 878AFD0D23E73838003F4D92 /* libReact-RCTSettings.a */; };
+		878AFD3323E73838003F4D92 /* libReact-RCTText.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 878AFD0E23E73838003F4D92 /* libReact-RCTText.a */; };
+		878AFD3423E73838003F4D92 /* libReact-RCTVibration.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 878AFD0F23E73838003F4D92 /* libReact-RCTVibration.a */; };
+		878AFD3523E73838003F4D92 /* libReactCommon.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 878AFD1023E73838003F4D92 /* libReactCommon.a */; };
+		878AFD3623E73838003F4D92 /* libRNGestureHandler.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 878AFD1123E73838003F4D92 /* libRNGestureHandler.a */; };
+		878AFD3723E73838003F4D92 /* libRNReanimated.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 878AFD1223E73838003F4D92 /* libRNReanimated.a */; };
+		878AFD3823E73838003F4D92 /* libRNScreens.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 878AFD1323E73838003F4D92 /* libRNScreens.a */; };
+		878AFD3923E73838003F4D92 /* libUMCore.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 878AFD1423E73838003F4D92 /* libUMCore.a */; };
+		878AFD3A23E73838003F4D92 /* libUMPermissionsInterface.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 878AFD1523E73838003F4D92 /* libUMPermissionsInterface.a */; };
+		878AFD3B23E73838003F4D92 /* libUMReactNativeAdapter.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 878AFD1623E73838003F4D92 /* libUMReactNativeAdapter.a */; };
+		878AFD3C23E73838003F4D92 /* libYoga.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 878AFD1723E73838003F4D92 /* libYoga.a */; };
 		87D8897423DF7EF400D12D6A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
-		87D8897623DF7FF900D12D6A /* libDoubleConversion.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 87D8897523DF7FF900D12D6A /* libDoubleConversion.a */; };
-		87D8897823DF7FF900D12D6A /* libEXAppLoaderProvider.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 87D8897723DF7FF900D12D6A /* libEXAppLoaderProvider.a */; };
-		87D8897A23DF7FF900D12D6A /* libEXConstants.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 87D8897923DF7FF900D12D6A /* libEXConstants.a */; };
-		87D8897C23DF7FF900D12D6A /* libEXErrorRecovery.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 87D8897B23DF7FF900D12D6A /* libEXErrorRecovery.a */; };
-		87D8897E23DF7FF900D12D6A /* libEXFileSystem.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 87D8897D23DF7FF900D12D6A /* libEXFileSystem.a */; };
-		87D8898023DF7FF900D12D6A /* libEXFont.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 87D8897F23DF7FF900D12D6A /* libEXFont.a */; };
-		87D8898223DF7FF900D12D6A /* libEXKeepAwake.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 87D8898123DF7FF900D12D6A /* libEXKeepAwake.a */; };
-		87D8898423DF7FF900D12D6A /* libEXLinearGradient.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 87D8898323DF7FF900D12D6A /* libEXLinearGradient.a */; };
-		87D8898623DF7FF900D12D6A /* libEXLocation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 87D8898523DF7FF900D12D6A /* libEXLocation.a */; };
-		87D8898823DF7FF900D12D6A /* libEXPermissions.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 87D8898723DF7FF900D12D6A /* libEXPermissions.a */; };
-		87D8898A23DF7FF900D12D6A /* libEXSQLite.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 87D8898923DF7FF900D12D6A /* libEXSQLite.a */; };
-		87D8898C23DF7FF900D12D6A /* libEXWebBrowser.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 87D8898B23DF7FF900D12D6A /* libEXWebBrowser.a */; };
-		87D8898E23DF7FF900D12D6A /* libFBReactNativeSpec.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 87D8898D23DF7FF900D12D6A /* libFBReactNativeSpec.a */; };
-		87D8899023DF7FF900D12D6A /* libFolly.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 87D8898F23DF7FF900D12D6A /* libFolly.a */; };
-		87D8899223DF7FF900D12D6A /* libglog.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 87D8899123DF7FF900D12D6A /* libglog.a */; };
-		87D8899423DF7FF900D12D6A /* liblottie-ios.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 87D8899323DF7FF900D12D6A /* liblottie-ios.a */; };
-		87D8899623DF7FF900D12D6A /* liblottie-react-native.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 87D8899523DF7FF900D12D6A /* liblottie-react-native.a */; };
-		87D8899823DF7FF900D12D6A /* libPods-CatenaNative.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 87D8899723DF7FF900D12D6A /* libPods-CatenaNative.a */; };
-		87D8899A23DF7FF900D12D6A /* libRCTTypeSafety.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 87D8899923DF7FF900D12D6A /* libRCTTypeSafety.a */; };
-		87D8899C23DF7FF900D12D6A /* libReact-Core.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 87D8899B23DF7FF900D12D6A /* libReact-Core.a */; };
-		87D8899E23DF7FF900D12D6A /* libReact-CoreModules.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 87D8899D23DF7FF900D12D6A /* libReact-CoreModules.a */; };
-		87D889A023DF7FFA00D12D6A /* libReact-cxxreact.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 87D8899F23DF7FFA00D12D6A /* libReact-cxxreact.a */; };
-		87D889A223DF7FFA00D12D6A /* libReact-jsi.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 87D889A123DF7FFA00D12D6A /* libReact-jsi.a */; };
-		87D889A423DF7FFA00D12D6A /* libReact-jsiexecutor.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 87D889A323DF7FFA00D12D6A /* libReact-jsiexecutor.a */; };
-		87D889A623DF7FFA00D12D6A /* libReact-jsinspector.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 87D889A523DF7FFA00D12D6A /* libReact-jsinspector.a */; };
-		87D889A823DF7FFA00D12D6A /* libreact-native-bluetooth-status.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 87D889A723DF7FFA00D12D6A /* libreact-native-bluetooth-status.a */; };
-		87D889AA23DF7FFA00D12D6A /* libReact-RCTActionSheet.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 87D889A923DF7FFA00D12D6A /* libReact-RCTActionSheet.a */; };
-		87D889AC23DF7FFA00D12D6A /* libReact-RCTAnimation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 87D889AB23DF7FFA00D12D6A /* libReact-RCTAnimation.a */; };
-		87D889AE23DF7FFA00D12D6A /* libReact-RCTBlob.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 87D889AD23DF7FFA00D12D6A /* libReact-RCTBlob.a */; };
-		87D889B023DF7FFA00D12D6A /* libReact-RCTImage.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 87D889AF23DF7FFA00D12D6A /* libReact-RCTImage.a */; };
-		87D889B223DF7FFA00D12D6A /* libReact-RCTLinking.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 87D889B123DF7FFA00D12D6A /* libReact-RCTLinking.a */; };
-		87D889B423DF7FFA00D12D6A /* libReact-RCTNetwork.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 87D889B323DF7FFA00D12D6A /* libReact-RCTNetwork.a */; };
-		87D889B623DF7FFA00D12D6A /* libReact-RCTSettings.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 87D889B523DF7FFA00D12D6A /* libReact-RCTSettings.a */; };
-		87D889B823DF7FFA00D12D6A /* libReact-RCTText.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 87D889B723DF7FFA00D12D6A /* libReact-RCTText.a */; };
-		87D889BA23DF7FFA00D12D6A /* libReact-RCTVibration.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 87D889B923DF7FFA00D12D6A /* libReact-RCTVibration.a */; };
-		87D889BC23DF7FFA00D12D6A /* libReactCommon.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 87D889BB23DF7FFA00D12D6A /* libReactCommon.a */; };
-		87D889BE23DF7FFA00D12D6A /* libRNGestureHandler.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 87D889BD23DF7FFA00D12D6A /* libRNGestureHandler.a */; };
-		87D889C023DF7FFA00D12D6A /* libRNReanimated.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 87D889BF23DF7FFA00D12D6A /* libRNReanimated.a */; };
-		87D889C223DF7FFA00D12D6A /* libRNScreens.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 87D889C123DF7FFA00D12D6A /* libRNScreens.a */; };
-		87D889C423DF7FFA00D12D6A /* libUMCore.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 87D889C323DF7FFA00D12D6A /* libUMCore.a */; };
-		87D889C623DF7FFA00D12D6A /* libUMPermissionsInterface.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 87D889C523DF7FFA00D12D6A /* libUMPermissionsInterface.a */; };
-		87D889C823DF7FFA00D12D6A /* libUMReactNativeAdapter.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 87D889C723DF7FFA00D12D6A /* libUMReactNativeAdapter.a */; };
-		87D889CA23DF7FFA00D12D6A /* libYoga.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 87D889C923DF7FFA00D12D6A /* libYoga.a */; };
 		87D889CB23DF808400D12D6A /* empty.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87F824F623DCC1E800D0C4F1 /* empty.swift */; };
 		87F821EF23DC901500D0C4F1 /* ReactNativeShareExtension.m in Sources */ = {isa = PBXBuildFile; fileRef = 87F821EE23DC901500D0C4F1 /* ReactNativeShareExtension.m */; };
 		87F821F223DC901500D0C4F1 /* MainInterface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 87F821F023DC901500D0C4F1 /* MainInterface.storyboard */; };
 		87F821F623DC901500D0C4F1 /* CatenaShare.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 87F821EB23DC901500D0C4F1 /* CatenaShare.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		87F824F323DCA40E00D0C4F1 /* ReactNativeShareExtension.h in Sources */ = {isa = PBXBuildFile; fileRef = 87F824F223DCA40E00D0C4F1 /* ReactNativeShareExtension.h */; };
 		87F824F723DCC1E800D0C4F1 /* empty.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87F824F623DCC1E800D0C4F1 /* empty.swift */; };
-		C3DEB9C4A6784B76DFDACA26 /* libPods-CatenaNative-CatenaShare.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2700BA4FD6DC23651DDD3A39 /* libPods-CatenaNative-CatenaShare.a */; };
 		E2F9CA61E99E892EAF54DF8E /* libPods-CatenaNative.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2502ACF51380E8237829647D /* libPods-CatenaNative.a */; };
 /* End PBXBuildFile section */
 
@@ -102,6 +96,43 @@
 		2502ACF51380E8237829647D /* libPods-CatenaNative.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-CatenaNative.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2700BA4FD6DC23651DDD3A39 /* libPods-CatenaNative-CatenaShare.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-CatenaNative-CatenaShare.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2D16E6891FA4F8E400B85C8A /* libReact.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libReact.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		878AFCF323E73838003F4D92 /* libDoubleConversion.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libDoubleConversion.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		878AFCF423E73838003F4D92 /* libEXAppLoaderProvider.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libEXAppLoaderProvider.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		878AFCF523E73838003F4D92 /* libEXConstants.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libEXConstants.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		878AFCF623E73838003F4D92 /* libEXFileSystem.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libEXFileSystem.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		878AFCF723E73838003F4D92 /* libEXPermissions.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libEXPermissions.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		878AFCF823E73838003F4D92 /* libFBReactNativeSpec.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libFBReactNativeSpec.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		878AFCF923E73838003F4D92 /* libFolly.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libFolly.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		878AFCFA23E73838003F4D92 /* libglog.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libglog.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		878AFCFB23E73838003F4D92 /* liblottie-ios.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = "liblottie-ios.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		878AFCFC23E73838003F4D92 /* liblottie-react-native.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = "liblottie-react-native.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		878AFCFD23E73838003F4D92 /* libPods-CatenaNative-CatenaShare.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = "libPods-CatenaNative-CatenaShare.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		878AFCFE23E73838003F4D92 /* libPods-CatenaNative.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = "libPods-CatenaNative.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		878AFCFF23E73838003F4D92 /* libRCTTypeSafety.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libRCTTypeSafety.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		878AFD0023E73838003F4D92 /* libReact-Core.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = "libReact-Core.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		878AFD0123E73838003F4D92 /* libReact-CoreModules.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = "libReact-CoreModules.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		878AFD0223E73838003F4D92 /* libReact-cxxreact.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = "libReact-cxxreact.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		878AFD0323E73838003F4D92 /* libReact-jsi.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = "libReact-jsi.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		878AFD0423E73838003F4D92 /* libReact-jsiexecutor.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = "libReact-jsiexecutor.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		878AFD0523E73838003F4D92 /* libReact-jsinspector.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = "libReact-jsinspector.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		878AFD0623E73838003F4D92 /* libreact-native-bluetooth-status.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = "libreact-native-bluetooth-status.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		878AFD0723E73838003F4D92 /* libReact-RCTActionSheet.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = "libReact-RCTActionSheet.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		878AFD0823E73838003F4D92 /* libReact-RCTAnimation.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = "libReact-RCTAnimation.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		878AFD0923E73838003F4D92 /* libReact-RCTBlob.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = "libReact-RCTBlob.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		878AFD0A23E73838003F4D92 /* libReact-RCTImage.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = "libReact-RCTImage.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		878AFD0B23E73838003F4D92 /* libReact-RCTLinking.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = "libReact-RCTLinking.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		878AFD0C23E73838003F4D92 /* libReact-RCTNetwork.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = "libReact-RCTNetwork.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		878AFD0D23E73838003F4D92 /* libReact-RCTSettings.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = "libReact-RCTSettings.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		878AFD0E23E73838003F4D92 /* libReact-RCTText.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = "libReact-RCTText.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		878AFD0F23E73838003F4D92 /* libReact-RCTVibration.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = "libReact-RCTVibration.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		878AFD1023E73838003F4D92 /* libReactCommon.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libReactCommon.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		878AFD1123E73838003F4D92 /* libRNGestureHandler.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libRNGestureHandler.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		878AFD1223E73838003F4D92 /* libRNReanimated.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libRNReanimated.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		878AFD1323E73838003F4D92 /* libRNScreens.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libRNScreens.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		878AFD1423E73838003F4D92 /* libUMCore.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libUMCore.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		878AFD1523E73838003F4D92 /* libUMPermissionsInterface.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libUMPermissionsInterface.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		878AFD1623E73838003F4D92 /* libUMReactNativeAdapter.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libUMReactNativeAdapter.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		878AFD1723E73838003F4D92 /* libYoga.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libYoga.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		87D8897523DF7FF900D12D6A /* libDoubleConversion.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libDoubleConversion.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		87D8897723DF7FF900D12D6A /* libEXAppLoaderProvider.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libEXAppLoaderProvider.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		87D8897923DF7FF900D12D6A /* libEXConstants.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libEXConstants.a; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -119,7 +150,6 @@
 		87D8899123DF7FF900D12D6A /* libglog.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libglog.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		87D8899323DF7FF900D12D6A /* liblottie-ios.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = "liblottie-ios.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		87D8899523DF7FF900D12D6A /* liblottie-react-native.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = "liblottie-react-native.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		87D8899723DF7FF900D12D6A /* libPods-CatenaNative.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = "libPods-CatenaNative.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		87D8899923DF7FF900D12D6A /* libRCTTypeSafety.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libRCTTypeSafety.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		87D8899B23DF7FF900D12D6A /* libReact-Core.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = "libReact-Core.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		87D8899D23DF7FF900D12D6A /* libReact-CoreModules.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = "libReact-CoreModules.a"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -775,6 +805,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				E2F9CA61E99E892EAF54DF8E /* libPods-CatenaNative.a in Frameworks */,
+				43AB20F0FFAE0123C1A605E6 /* (null) in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -782,50 +813,43 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				87D8897623DF7FF900D12D6A /* libDoubleConversion.a in Frameworks */,
-				87D8897823DF7FF900D12D6A /* libEXAppLoaderProvider.a in Frameworks */,
-				87D8897A23DF7FF900D12D6A /* libEXConstants.a in Frameworks */,
-				87D8897C23DF7FF900D12D6A /* libEXErrorRecovery.a in Frameworks */,
-				87D8897E23DF7FF900D12D6A /* libEXFileSystem.a in Frameworks */,
-				87D8898023DF7FF900D12D6A /* libEXFont.a in Frameworks */,
-				87D8898223DF7FF900D12D6A /* libEXKeepAwake.a in Frameworks */,
-				87D8898423DF7FF900D12D6A /* libEXLinearGradient.a in Frameworks */,
-				87D8898623DF7FF900D12D6A /* libEXLocation.a in Frameworks */,
-				87D8898823DF7FF900D12D6A /* libEXPermissions.a in Frameworks */,
-				87D8898A23DF7FF900D12D6A /* libEXSQLite.a in Frameworks */,
-				87D8898C23DF7FF900D12D6A /* libEXWebBrowser.a in Frameworks */,
-				87D8898E23DF7FF900D12D6A /* libFBReactNativeSpec.a in Frameworks */,
-				87D8899023DF7FF900D12D6A /* libFolly.a in Frameworks */,
-				87D8899223DF7FF900D12D6A /* libglog.a in Frameworks */,
-				87D8899423DF7FF900D12D6A /* liblottie-ios.a in Frameworks */,
-				87D8899623DF7FF900D12D6A /* liblottie-react-native.a in Frameworks */,
-				C3DEB9C4A6784B76DFDACA26 /* libPods-CatenaNative-CatenaShare.a in Frameworks */,
-				87D8899823DF7FF900D12D6A /* libPods-CatenaNative.a in Frameworks */,
-				87D8899A23DF7FF900D12D6A /* libRCTTypeSafety.a in Frameworks */,
-				87D8899C23DF7FF900D12D6A /* libReact-Core.a in Frameworks */,
-				87D8899E23DF7FF900D12D6A /* libReact-CoreModules.a in Frameworks */,
-				87D889A023DF7FFA00D12D6A /* libReact-cxxreact.a in Frameworks */,
-				87D889A223DF7FFA00D12D6A /* libReact-jsi.a in Frameworks */,
-				87D889A423DF7FFA00D12D6A /* libReact-jsiexecutor.a in Frameworks */,
-				87D889A623DF7FFA00D12D6A /* libReact-jsinspector.a in Frameworks */,
-				87D889A823DF7FFA00D12D6A /* libreact-native-bluetooth-status.a in Frameworks */,
-				87D889AA23DF7FFA00D12D6A /* libReact-RCTActionSheet.a in Frameworks */,
-				87D889AC23DF7FFA00D12D6A /* libReact-RCTAnimation.a in Frameworks */,
-				87D889AE23DF7FFA00D12D6A /* libReact-RCTBlob.a in Frameworks */,
-				87D889B023DF7FFA00D12D6A /* libReact-RCTImage.a in Frameworks */,
-				87D889B223DF7FFA00D12D6A /* libReact-RCTLinking.a in Frameworks */,
-				87D889B423DF7FFA00D12D6A /* libReact-RCTNetwork.a in Frameworks */,
-				87D889B623DF7FFA00D12D6A /* libReact-RCTSettings.a in Frameworks */,
-				87D889B823DF7FFA00D12D6A /* libReact-RCTText.a in Frameworks */,
-				87D889BA23DF7FFA00D12D6A /* libReact-RCTVibration.a in Frameworks */,
-				87D889BC23DF7FFA00D12D6A /* libReactCommon.a in Frameworks */,
-				87D889BE23DF7FFA00D12D6A /* libRNGestureHandler.a in Frameworks */,
-				87D889C023DF7FFA00D12D6A /* libRNReanimated.a in Frameworks */,
-				87D889C223DF7FFA00D12D6A /* libRNScreens.a in Frameworks */,
-				87D889C423DF7FFA00D12D6A /* libUMCore.a in Frameworks */,
-				87D889C623DF7FFA00D12D6A /* libUMPermissionsInterface.a in Frameworks */,
-				87D889C823DF7FFA00D12D6A /* libUMReactNativeAdapter.a in Frameworks */,
-				87D889CA23DF7FFA00D12D6A /* libYoga.a in Frameworks */,
+				878AFD1F23E73838003F4D92 /* libglog.a in Frameworks */,
+				878AFD2F23E73838003F4D92 /* libReact-RCTImage.a in Frameworks */,
+				878AFD3323E73838003F4D92 /* libReact-RCTText.a in Frameworks */,
+				878AFD1E23E73838003F4D92 /* libFolly.a in Frameworks */,
+				878AFD1923E73838003F4D92 /* libEXAppLoaderProvider.a in Frameworks */,
+				878AFD2623E73838003F4D92 /* libReact-CoreModules.a in Frameworks */,
+				878AFD3A23E73838003F4D92 /* libUMPermissionsInterface.a in Frameworks */,
+				878AFD1B23E73838003F4D92 /* libEXFileSystem.a in Frameworks */,
+				878AFD1823E73838003F4D92 /* libDoubleConversion.a in Frameworks */,
+				878AFD3423E73838003F4D92 /* libReact-RCTVibration.a in Frameworks */,
+				878AFD2123E73838003F4D92 /* liblottie-react-native.a in Frameworks */,
+				878AFD3C23E73838003F4D92 /* libYoga.a in Frameworks */,
+				878AFD2723E73838003F4D92 /* libReact-cxxreact.a in Frameworks */,
+				878AFD3223E73838003F4D92 /* libReact-RCTSettings.a in Frameworks */,
+				878AFD2523E73838003F4D92 /* libReact-Core.a in Frameworks */,
+				878AFD3123E73838003F4D92 /* libReact-RCTNetwork.a in Frameworks */,
+				878AFD2423E73838003F4D92 /* libRCTTypeSafety.a in Frameworks */,
+				878AFD2823E73838003F4D92 /* libReact-jsi.a in Frameworks */,
+				878AFD2B23E73838003F4D92 /* libreact-native-bluetooth-status.a in Frameworks */,
+				878AFD3723E73838003F4D92 /* libRNReanimated.a in Frameworks */,
+				878AFD2A23E73838003F4D92 /* libReact-jsinspector.a in Frameworks */,
+				878AFD2923E73838003F4D92 /* libReact-jsiexecutor.a in Frameworks */,
+				878AFD3823E73838003F4D92 /* libRNScreens.a in Frameworks */,
+				878AFD2323E73838003F4D92 /* libPods-CatenaNative.a in Frameworks */,
+				878AFD2023E73838003F4D92 /* liblottie-ios.a in Frameworks */,
+				878AFD2C23E73838003F4D92 /* libReact-RCTActionSheet.a in Frameworks */,
+				878AFD3923E73838003F4D92 /* libUMCore.a in Frameworks */,
+				878AFD2223E73838003F4D92 /* libPods-CatenaNative-CatenaShare.a in Frameworks */,
+				878AFD3023E73838003F4D92 /* libReact-RCTLinking.a in Frameworks */,
+				878AFD1A23E73838003F4D92 /* libEXConstants.a in Frameworks */,
+				878AFD1C23E73838003F4D92 /* libEXPermissions.a in Frameworks */,
+				878AFD2D23E73838003F4D92 /* libReact-RCTAnimation.a in Frameworks */,
+				878AFD1D23E73838003F4D92 /* libFBReactNativeSpec.a in Frameworks */,
+				878AFD3B23E73838003F4D92 /* libUMReactNativeAdapter.a in Frameworks */,
+				878AFD3523E73838003F4D92 /* libReactCommon.a in Frameworks */,
+				878AFD2E23E73838003F4D92 /* libReact-RCTBlob.a in Frameworks */,
+				878AFD3623E73838003F4D92 /* libRNGestureHandler.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -852,6 +876,43 @@
 		2D16E6871FA4F8E400B85C8A /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				878AFCF323E73838003F4D92 /* libDoubleConversion.a */,
+				878AFCF423E73838003F4D92 /* libEXAppLoaderProvider.a */,
+				878AFCF523E73838003F4D92 /* libEXConstants.a */,
+				878AFCF623E73838003F4D92 /* libEXFileSystem.a */,
+				878AFCF723E73838003F4D92 /* libEXPermissions.a */,
+				878AFCF823E73838003F4D92 /* libFBReactNativeSpec.a */,
+				878AFCF923E73838003F4D92 /* libFolly.a */,
+				878AFCFA23E73838003F4D92 /* libglog.a */,
+				878AFCFB23E73838003F4D92 /* liblottie-ios.a */,
+				878AFCFC23E73838003F4D92 /* liblottie-react-native.a */,
+				878AFCFD23E73838003F4D92 /* libPods-CatenaNative-CatenaShare.a */,
+				878AFCFE23E73838003F4D92 /* libPods-CatenaNative.a */,
+				878AFCFF23E73838003F4D92 /* libRCTTypeSafety.a */,
+				878AFD0023E73838003F4D92 /* libReact-Core.a */,
+				878AFD0123E73838003F4D92 /* libReact-CoreModules.a */,
+				878AFD0223E73838003F4D92 /* libReact-cxxreact.a */,
+				878AFD0323E73838003F4D92 /* libReact-jsi.a */,
+				878AFD0423E73838003F4D92 /* libReact-jsiexecutor.a */,
+				878AFD0523E73838003F4D92 /* libReact-jsinspector.a */,
+				878AFD0623E73838003F4D92 /* libreact-native-bluetooth-status.a */,
+				878AFD0723E73838003F4D92 /* libReact-RCTActionSheet.a */,
+				878AFD0823E73838003F4D92 /* libReact-RCTAnimation.a */,
+				878AFD0923E73838003F4D92 /* libReact-RCTBlob.a */,
+				878AFD0A23E73838003F4D92 /* libReact-RCTImage.a */,
+				878AFD0B23E73838003F4D92 /* libReact-RCTLinking.a */,
+				878AFD0C23E73838003F4D92 /* libReact-RCTNetwork.a */,
+				878AFD0D23E73838003F4D92 /* libReact-RCTSettings.a */,
+				878AFD0E23E73838003F4D92 /* libReact-RCTText.a */,
+				878AFD0F23E73838003F4D92 /* libReact-RCTVibration.a */,
+				878AFD1023E73838003F4D92 /* libReactCommon.a */,
+				878AFD1123E73838003F4D92 /* libRNGestureHandler.a */,
+				878AFD1223E73838003F4D92 /* libRNReanimated.a */,
+				878AFD1323E73838003F4D92 /* libRNScreens.a */,
+				878AFD1423E73838003F4D92 /* libUMCore.a */,
+				878AFD1523E73838003F4D92 /* libUMPermissionsInterface.a */,
+				878AFD1623E73838003F4D92 /* libUMReactNativeAdapter.a */,
+				878AFD1723E73838003F4D92 /* libYoga.a */,
 				87D8897523DF7FF900D12D6A /* libDoubleConversion.a */,
 				87D8897723DF7FF900D12D6A /* libEXAppLoaderProvider.a */,
 				87D8897923DF7FF900D12D6A /* libEXConstants.a */,
@@ -869,7 +930,6 @@
 				87D8899123DF7FF900D12D6A /* libglog.a */,
 				87D8899323DF7FF900D12D6A /* liblottie-ios.a */,
 				87D8899523DF7FF900D12D6A /* liblottie-react-native.a */,
-				87D8899723DF7FF900D12D6A /* libPods-CatenaNative.a */,
 				87D8899923DF7FF900D12D6A /* libRCTTypeSafety.a */,
 				87D8899B23DF7FF900D12D6A /* libReact-Core.a */,
 				87D8899D23DF7FF900D12D6A /* libReact-CoreModules.a */,
