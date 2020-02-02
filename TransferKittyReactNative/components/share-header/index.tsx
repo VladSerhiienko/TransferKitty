@@ -9,10 +9,8 @@ export default function ShareHeader() {
             <View style={styles.leftContainer}>
                 <TextButton style={styles.cancelText}>Cancel</TextButton>
             </View>
-            <Text style={styles.title}>Catena</Text>
-            <View style={styles.rightContainer}>
-                <TextButton style={styles.submitButton}>Next</TextButton>
-            </View>
+            <Text style={styles.title}>Selected 4 images</Text>
+            <View style={styles.rightContainer} />
         </View>
     );
 }
@@ -23,11 +21,6 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center',
-        backgroundColor: '#fff',
-        // borderTopStartRadius: 20,
-        // borderTopEndRadius: 20,
-        // borderBottomWidth: 1,
-        // borderBottomColor: '#cbcbcb',
     },
     leftContainer: {
         flex: 1,
@@ -48,7 +41,7 @@ const styles = StyleSheet.create({
     },
     title: {
         color: '#000',
-        fontWeight: '600',
+        fontWeight: '300',
         fontSize: 16,
     },
 });

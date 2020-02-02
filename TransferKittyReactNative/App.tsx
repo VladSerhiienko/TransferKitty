@@ -3,6 +3,7 @@ import { SafeAreaView, StyleSheet, Text, View } from 'react-native';
 
 import AppHeader from './components/app-header';
 import History from './components/history';
+import ShareContent from './components/share-content';
 
 import {displayName} from './app.json';
 
@@ -11,7 +12,7 @@ export default function App() {
       <View style={styles.container}>
         <SafeAreaView>
           <AppHeader name={displayName} style={styles.header} />
-          <History />
+          <ShareContent />
         </SafeAreaView>
       </View>
   );

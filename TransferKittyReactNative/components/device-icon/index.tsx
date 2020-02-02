@@ -17,7 +17,7 @@ export const DeviceIcon = ({ device }) => (
 
 const styles = StyleSheet.create({
     icon: {
-        fontSize: 28,
+        fontSize: 30,
     },
     [Device.iPhone]: {
         color: colors.BLUE ,

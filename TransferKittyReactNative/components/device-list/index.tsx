@@ -1,8 +1,14 @@
-import React, {useState} from 'react';
-import { StyleSheet, FlatList, Text, View } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { StyleSheet, TouchableOpacity, Text, View } from 'react-native';
 
-import {Device} from '../../types/device';
+import { Device } from '../../types/device';
 import DeviceIcon from '../device-icon';
+
+interface BTIdentificator {
+    id: string;
+    name: string;
+    device: Device;
+}
 
 const DATA = [
     {
@@ -22,12 +28,12 @@ const DATA = [
     },
 ];
 
-function Item({ name, device }) {
+function Item({ name, device, style }) {
     return (
-        <View style={itemStyles.item}>
+        <TouchableOpacity style={{...itemStyles.item, ...style}}>
             <DeviceIcon device={device} />
             <Text style={itemStyles.name}>{name}</Text>
-        </View>
+        </TouchableOpacity>
     );
 }
 
@@ -37,7 +43,7 @@ const itemStyles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'flex-start',
         alignItems: 'center',
-        marginBottom: 10,
+        marginBottom: 15,
     },
     name: {
         fontWeight: '400',
@@ -51,23 +57,61 @@ const itemStyles = StyleSheet.create({
 
 export default function DeviceList() {
     const [selected, setSelected] = useState(null);
+    const [devices, setDevices] = useState<BTIdentificator[]>([DATA[0]]);
+
+    useEffect(() => {
+        if (devices.length < 3) {
+            const t1 = setTimeout(() => {
+                setDevices(devices => [...devices, DATA[1]]);
+            }, 1000);
+            const t2 = setTimeout(() => {
+                setDevices(devices => [...devices, DATA[2]]);
+            }, 2500);
+            return () => {
+                clearTimeout(t1);
+                clearTimeout(t2);
+            }
+        }
+    }, []);
+
+    const isLast = index => index === (devices.length - 1);
+
     return (
         <View style={styles.container}>
-            <FlatList
-                data={DATA}
-                renderItem={({item}) => <Item name={item.name} device={item.device} />}
-                keyExtractor={item => item.id}
-            />
+            <View style={styles.deviceList}>
+                {devices.map((device, index) => <Item name={device.name} device={device.device} style={isLast(index) ? {marginBottom: 0}: {}} />)}
+            </View>
         </View>
     );
 }
 
 const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        padding: 20,
-        paddingVertical: 25,
-        paddingTop: 35,
-        backgroundColor: 'hsl(0, 0%, 97%)'
+    label: {
+        // alignSelf: 'center',
+        // marginTop: -10,
+        fontSize: 14,
+        fontWeight: '600',
+        marginTop: -10,
+        marginLeft: 10,
+        // backgroundColor: '#fff',
+        width: 'auto',
     },
+    deviceList: {
+        padding: 10,
+        paddingLeft: 20,
+        paddingVertical: 20,
+    },
+    container: {
+        // flex: 1,
+        paddingTop: 0,
+        marginTop: 0,
+        padding: 20,
+        paddingBottom: 0,
+        paddingVertical: 25,
+        backgroundColor: '#f7f7f7',
+    },
+    list: {
+        paddingTop: 10,
+        paddingHorizontal: 10,
+    }
 });

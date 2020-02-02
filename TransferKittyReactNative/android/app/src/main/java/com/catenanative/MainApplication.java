@@ -4,6 +4,7 @@ import android.app.Application;
 
 import com.facebook.react.PackageList;
 import com.facebook.react.ReactApplication;
+import com.cmcewen.blurview.BlurViewPackage;
 import com.oblador.vectoricons.VectorIconsPackage;
 import com.solinor.bluetoothstatus.RNBluetoothManagerPackage;
 import com.airbnb.android.react.lottie.LottiePackage;
