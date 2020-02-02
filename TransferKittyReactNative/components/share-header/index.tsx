@@ -10,7 +10,9 @@ export default function ShareHeader() {
                 <TextButton style={styles.cancelText}>Cancel</TextButton>
             </View>
             <Text style={styles.title}>Catena</Text>
-            <View style={{flex: 1}} />
+            <View style={styles.rightContainer}>
+                <TextButton style={styles.submitButton}>Next</TextButton>
+            </View>
         </View>
     );
 }
@@ -21,21 +23,28 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center',
-        backgroundColor: '#f1f1f1',
-        borderTopStartRadius: 20,
-        borderTopEndRadius: 20,
-        borderBottomWidth: 1,
-        borderBottomColor: '#cbcbcb',
+        backgroundColor: '#fff',
+        // borderTopStartRadius: 20,
+        // borderTopEndRadius: 20,
+        // borderBottomWidth: 1,
+        // borderBottomColor: '#cbcbcb',
     },
     leftContainer: {
         flex: 1,
-        flexDirection: 'row',
         justifyContent: 'flex-start',
         // paddingLeft: 10,
     },
+    rightContainer: {
+        flex: 1,
+        alignItems: 'flex-end',
+    },
     cancelText: {
-        paddingLeft: 15,
+        paddingLeft: 25,
         color: "#338fe0",
+    },
+    submitButton: {
+        paddingRight: 25,
+        color: "#1271c4",
     },
     title: {
         color: '#000',

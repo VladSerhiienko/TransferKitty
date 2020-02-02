@@ -44,7 +44,6 @@ target 'CatenaNative' do
   pod 'lottie-ios', :path => '../node_modules/lottie-ios'
   pod 'lottie-react-native', :path => '../node_modules/lottie-react-native'
 
-
   target 'CatenaShare' do
     use_native_modules!
     inherit! :complete
