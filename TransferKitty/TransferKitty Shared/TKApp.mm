@@ -93,13 +93,14 @@ using tk::unsetBit;
     thisDevice._name = [[_bt getName] cStringUsingEncoding:NSUTF8StringEncoding];
     thisDevice._model = [[_bt getModel] cStringUsingEncoding:NSUTF8StringEncoding];
     thisDevice._friendlyModel = [[_bt getFriendlyModel] cStringUsingEncoding:NSUTF8StringEncoding];
-    thisDevice._uuidString = [[TKStringUtilities uuidStringOrEmptyString:[_bt getUUID]] cStringUsingEncoding:NSUTF8StringEncoding];
-    
+    thisDevice._uuidString =
+        [[TKStringUtilities uuidStringOrEmptyString:[_bt getUUID]] cStringUsingEncoding:NSUTF8StringEncoding];
+
     if (_attachmentContext) {
         [_attachmentContext prepareAttachmentsWithDelegate:self];
         [_attachmentContext prepareNames];
         [_attachmentContext prepareBuffers];
-        
+
         NSArray *attachments = [_attachmentContext attachments];
         NSUInteger attachmentCount = attachments.count;
         thisDevice._files.resize(attachmentCount);
@@ -114,7 +115,6 @@ using tk::unsetBit;
     _bt = [TKBluetoothCommunicator instance];
     [_bt initPeripheralWithDelegate:self];
     [self resetThisDevice];
-    
 }
 
 - (void)startCentral {
@@ -149,20 +149,24 @@ using tk::unsetBit;
                                   static_cast<uint32_t>(viewport.size.height - (debugOffsetY << 1))};
 
     populator.populate(&_defaultState, hashedImgTexture, bounds, frame.contextPtr);
-    
+
     if (_defaultState._didClickSendButton) {
         // DLOGF(@"Clicked send button!");
-        
+
         if (_defaultState._devices.size() > 1) {
             _defaultState._didClickSendButton = false;
-            
-            TKBluetoothCommunicatorDevice *device = tk::unboxPlatformObject<TKBluetoothCommunicatorDevice*>(_defaultState._devices[1]._deviceHandle);
+
+            TKBluetoothCommunicatorDevice *device =
+                tk::unboxPlatformObject<TKBluetoothCommunicatorDevice *>(_defaultState._devices[1]._deviceHandle);
             TKBluetoothCommunicatorEncoder *encoder = [_bt encoder];
 
             TKBluetoothCommunicatorScheduler *scheduler = [_bt scheduler];
             for (TKAttachment *attachment in [_attachmentContext attachments]) {
-                TKSubdata* subdata = [[TKSubdata alloc] initWithData:[attachment data]];
-                NSData *encodedFileMessage = [encoder encodeFileMessage:device fileName:[attachment name] fileData:subdata responseMessageType:TKBluetoothCommunicatorMessageTypeConfirm];
+                TKSubdata *subdata = [[TKSubdata alloc] initWithData:[attachment data]];
+                NSData *encodedFileMessage = [encoder encodeFileMessage:device
+                                                               fileName:[attachment name]
+                                                               fileData:subdata
+                                                    responseMessageType:TKBluetoothCommunicatorMessageTypeConfirm];
                 [scheduler scheduleMessageTo:device wholeMessageData:encodedFileMessage];
             }
         }
@@ -174,17 +178,17 @@ using tk::unsetBit;
 //
 
 - (void)attachmentContext:(TKAttachmentContext *)attachmentContext
-didPrepareBufferForAttachment:(TKAttachment *)attachment
-                  orError:(NSError *)error {
+    didPrepareBufferForAttachment:(TKAttachment *)attachment
+                          orError:(NSError *)error {
     // DLOGF(@"%s: index=%u", TK_FUNC_NAME, [attachment index]);
-    
+
     auto &thisDevice = _defaultState._devices.front();
     thisDevice._files[[attachment index]]._totalSizeInBytes = [[attachment data] length];
 }
 
 - (void)attachmentContext:(TKAttachmentContext *)attachmentContext
-didPrepareNameForAttachment:(TKAttachment *)attachment
-                  orError:(NSError *)error {
+    didPrepareNameForAttachment:(TKAttachment *)attachment
+                        orError:(NSError *)error {
     // DLOGF(@"%s: index=%u name=%@", TK_FUNC_NAME, [attachment index], [attachment name]);
 
     auto &thisDevice = _defaultState._devices.front();
@@ -222,7 +226,7 @@ didPrepareNameForAttachment:(TKAttachment *)attachment
 - (void)bluetoothCommunicator:(TKBluetoothCommunicator *)bluetoothCommunicator
            didConnectToDevice:(TKBluetoothCommunicatorDevice *)device {
     // DLOGF(@"%s", TK_FUNC_NAME);
-    
+
     DCHECK(bluetoothCommunicator && device);
     [[bluetoothCommunicator scheduler] scheduleIntroductionMessagesTo:device];
 
@@ -240,17 +244,19 @@ didPrepareNameForAttachment:(TKAttachment *)attachment
 - (void)bluetoothCommunicator:(TKBluetoothCommunicator *)bluetoothCommunicator
               didUpdateDevice:(TKBluetoothCommunicatorDevice *)device {
     // DLOGF(@"%s", TK_FUNC_NAME);
-    
-    auto deviceStateIt = std::find_if(_defaultState._devices.begin() + 1, _defaultState._devices.end(), [&](const tk::DefaultUIDeviceState &state) {
-        return state._hash == [device hash];
-    });
-    
+
+    auto deviceStateIt = std::find_if(
+        _defaultState._devices.begin() + 1, _defaultState._devices.end(), [&](const tk::DefaultUIDeviceState &state) {
+            return state._hash == [device hash];
+        });
+
     if (deviceStateIt != _defaultState._devices.end()) {
         DCHECK(device == deviceStateIt->_deviceHandle);
         deviceStateIt->_name = [[device getName] cStringUsingEncoding:NSUTF8StringEncoding];
         deviceStateIt->_model = [[device getModel] cStringUsingEncoding:NSUTF8StringEncoding];
         deviceStateIt->_friendlyModel = [[device getFriendlyModel] cStringUsingEncoding:NSUTF8StringEncoding];
-        deviceStateIt->_uuidString = [[TKStringUtilities uuidStringOrEmptyString:[device getUUID]] cStringUsingEncoding:NSUTF8StringEncoding];
+        deviceStateIt->_uuidString =
+            [[TKStringUtilities uuidStringOrEmptyString:[device getUUID]] cStringUsingEncoding:NSUTF8StringEncoding];
     }
 }
 

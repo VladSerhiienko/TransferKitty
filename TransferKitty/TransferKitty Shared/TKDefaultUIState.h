@@ -57,10 +57,8 @@ public:
     bool _didClickSendButton = false;
 
 public:
-    void didClickSendButton() override {
-        _didClickSendButton = true;
-    }
-    
+    void didClickSendButton() override { _didClickSendButton = true; }
+
     size_t deviceCount() const override { return _devices.size(); }
     const IUIDeviceState* device(size_t index) const override { return &_devices[index]; }
 

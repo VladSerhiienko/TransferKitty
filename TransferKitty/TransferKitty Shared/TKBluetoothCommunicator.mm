@@ -7,6 +7,7 @@
 #endif
 
 #include <stdatomic.h>
+#include <chrono>
 
 #ifndef TK_UUID_KEY
 #define TK_UUID_KEY @"BluetoothCommunicatorUUID"
@@ -170,7 +171,6 @@ static TKBluetoothCommunicator *_instance = nil;
 
     return _instance;
 }
-
 
 - (void)prepareUUIDs {
     // DLOGF(@"%s", TK_FUNC_NAME);
@@ -413,7 +413,7 @@ static TKBluetoothCommunicator *_instance = nil;
     device.localId = [_connectedDevices count];
     device.characteristic = characteristic;
     device.pendingWriteValue = false;
-    
+
     [_peripheralManager setDesiredConnectionLatency:CBPeripheralManagerConnectionLatencyLow forCentral:central];
     [_delegate bluetoothCommunicator:self didConnectToDevice:device];
     return device;
@@ -454,7 +454,8 @@ static TKBluetoothCommunicator *_instance = nil;
     }
 
     if (TKBluetoothCommunicatorDevice *device = [_connectedDevices objectForKey:request.central]) {
-        // DLOGF(@"%s: device that requested read: name=%@, uuid=%@", TK_FUNC_NAME, device.deviceName, device.deviceUUID);
+        // DLOGF(@"%s: device that requested read: name=%@, uuid=%@", TK_FUNC_NAME, device.deviceName,
+        // device.deviceUUID);
 
         request.value = nil;
         // DLOGF(@"%s: responding to request, success.", TK_FUNC_NAME);
@@ -744,7 +745,8 @@ static TKBluetoothCommunicator *_instance = nil;
         // DLOGF(@"%s: Caught null invalidated services.", TK_FUNC_NAME);
         [self cancelConnectionForDevice:device];
     } else if (device.service && [invalidatedServices containsObject:device.service]) {
-        // DLOGF(@"%s: Invalidated services collecton contains connected service, cancelling peripheral connection.", TK_FUNC_NAME);
+        // DLOGF(@"%s: Invalidated services collecton contains connected service, cancelling peripheral connection.",
+        // TK_FUNC_NAME);
         [self cancelConnectionForDevice:device];
     }
 }
@@ -1234,6 +1236,8 @@ static TKBluetoothCommunicator *_instance = nil;
     NSUInteger _messageContentsLength;
     NSMutableData *_messageContents;
     NSUInteger _messageContentsOffset;
+    std::chrono::high_resolution_clock::time_point _initTimePoint;
+    std::chrono::high_resolution_clock::time_point _lastTimePoint;
 }
 
 - (NSUInteger)getMessageType {
@@ -1259,6 +1263,7 @@ static TKBluetoothCommunicator *_instance = nil;
 }
 - (void)start:(NSData *)wholeMessageData {
     DCHECK([self isEmpty]);
+    _initTimePoint = std::chrono::high_resolution_clock::now();
     _responseMessageType = [TKBluetoothCommunicatorMessage getResponseMessageType:wholeMessageData];
     _messageType = [TKBluetoothCommunicatorMessage getMessageType:wholeMessageData];
     _messageContentsLength = [TKBluetoothCommunicatorMessage getMessageContentsByteLength:wholeMessageData];
@@ -1282,10 +1287,22 @@ static TKBluetoothCommunicator *_instance = nil;
 }
 - (bool)append:(NSData *)wholeMessageData {
     DCHECK([self canAppend:wholeMessageData.length]);
+    _lastTimePoint = std::chrono::high_resolution_clock::now();
     [_messageContents appendData:wholeMessageData];
     _messageContentsOffset += wholeMessageData.length;
     return [self isComplete];
 }
+- (double)bytesPerSecond {
+    std::chrono::duration<double> duration =
+    std::chrono::duration_cast<std::chrono::duration<double>>(_lastTimePoint - _initTimePoint);
+    return double(_messageContentsOffset) / duration.count();
+}
+- (double)secondsETA {
+    double bps = [self bytesPerSecond];
+    double bytesLeft = _messageContentsLength - _messageContentsOffset;
+    return bytesLeft / bps;
+}
+
 - (bool)isEmpty {
     DCHECK(_messageContents != nil || _responseMessageType == 0);
     DCHECK(_messageContents != nil || _messageType == 0);
@@ -1453,7 +1470,7 @@ static TKBluetoothCommunicator *_instance = nil;
     DCHECK(subdata);
     DCHECK(range.location <= [subdata length]);
     DCHECK((range.location + range.length) <= [subdata length]);
-    
+
     _data = [subdata data];
     _range = NSMakeRange([subdata range].location + range.location, range.length);
     return self;
@@ -2025,7 +2042,14 @@ static TKBluetoothCommunicator *_instance = nil;
             [_longMessages removeObjectForKey:device];
         } else {
             DCHECK(![longMessage isComplete]);
-            DLOGF(@"%s: Appending the long message, %lu/%lu bytes processed (%f%%)", TK_FUNC_NAME, [longMessage getMessageContentsOffset], [longMessage getMessageContentsLength], double([longMessage getMessageContentsOffset])/double([longMessage getMessageContentsLength])*100.0);
+            DLOGF(@"%s: %lu/%lu bytes received, %.3f%% complete, speed %.2f kb/s, ETA %im%is",
+                  TK_FUNC_NAME,
+                  [longMessage getMessageContentsOffset],
+                  [longMessage getMessageContentsLength],
+                  double([longMessage getMessageContentsOffset]) / double([longMessage getMessageContentsLength]) * 100.0,
+                  [longMessage bytesPerSecond] / 1024.0,
+                  (int)floor([longMessage secondsETA] / 60.0),
+                  (int)(([longMessage secondsETA] - floor([longMessage secondsETA])) * 60.0));
 
             responseMessageType = TKBluetoothCommunicatorMessageTypeConfirm;
         }
@@ -2098,8 +2122,8 @@ static TKBluetoothCommunicator *_instance = nil;
                 switch (result) {
                     case TKBluetoothCommunicatorWriteValueResultSuccessContinue:
                         // DLOGF(@"%s: device = %p, write operation succeeded", TK_FUNC_NAME, device);
-                        
-                    if ([operation requiresResponse]) {
+
+                        if ([operation requiresResponse]) {
                             // DLOGF(@"%s: device = %p, setting pending write to true", TK_FUNC_NAME, device);
                             [device setPendingWriteValue:true];
                         }

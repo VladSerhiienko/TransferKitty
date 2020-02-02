@@ -141,12 +141,12 @@ static NSString *kPublicImage = @"public.image";
     if (!itemObj) {
         _statusBits.fetch_or(TKAttachmentStatusBitErrorURL, std::memory_order_release);
         _statusBits.fetch_and(~TKAttachmentStatusBitLoadedURL, std::memory_order_release);
-        
+
         // DLOGF(@"%s: type='%@', item is not an object or nil.", TK_FUNC_NAME, typeIdentifier);
         [_delegate attachmentContext:_context didPrepareNameForAttachment:self orError:error];
         return;
     }
-    
+
     if ([itemObj isKindOfClass:[NSURL class]]) {
         _url = (NSURL *)item;
         _name = [self goodName:_url];
@@ -178,7 +178,7 @@ static NSString *kPublicImage = @"public.image";
     if (error) {
         _statusBits.fetch_or(TKAttachmentStatusBitErrorData, std::memory_order_release);
         _statusBits.fetch_and(~TKAttachmentStatusBitLoadedData, std::memory_order_release);
-        
+
         // DLOGF(@"%s: type='%@', error='%@'.", TK_FUNC_NAME, typeIdentifier, error);
         [_delegate attachmentContext:_context didPrepareBufferForAttachment:self orError:error];
         return;
@@ -188,7 +188,7 @@ static NSString *kPublicImage = @"public.image";
     if (!itemObj) {
         _statusBits.fetch_or(TKAttachmentStatusBitErrorData, std::memory_order_release);
         _statusBits.fetch_and(~TKAttachmentStatusBitLoadedData, std::memory_order_release);
-        
+
         // DLOGF(@"%s: type='%@', item is not an object or nil.", TK_FUNC_NAME, typeIdentifier);
         [_delegate attachmentContext:_context didPrepareBufferForAttachment:self orError:nil];
         return;
@@ -250,7 +250,7 @@ static NSString *kPublicImage = @"public.image";
         _statusBits.fetch_or(TKAttachmentStatusBitErrorData, std::memory_order_release);
         _statusBits.fetch_and(~TKAttachmentStatusBitLoadedData, std::memory_order_release);
     }
-    
+
     [_delegate attachmentContext:_context didPrepareBufferForAttachment:self orError:nil];
 }
 
@@ -426,17 +426,26 @@ static NSString *kPublicImage = @"public.image";
 
 - (void)prepareNames {
     DCHECK(_attachments);
-    for (TKAttachment *attachment in _attachments) { DCHECK(attachment); [attachment prepareName]; }
+    for (TKAttachment *attachment in _attachments) {
+        DCHECK(attachment);
+        [attachment prepareName];
+    }
 }
 
 - (void)prepareBuffers {
     DCHECK(_attachments);
-    for (TKAttachment *attachment in _attachments) { DCHECK(attachment); [attachment prepareBuffer]; }
+    for (TKAttachment *attachment in _attachments) {
+        DCHECK(attachment);
+        [attachment prepareBuffer];
+    }
 }
 
 - (void)releaseBuffers {
     DCHECK(_attachments);
-    for (TKAttachment *attachment in _attachments) {  DCHECK(attachment); [attachment releaseBuffer]; }
+    for (TKAttachment *attachment in _attachments) {
+        DCHECK(attachment);
+        [attachment releaseBuffer];
+    }
 }
 
 - (NSArray *)attachments {

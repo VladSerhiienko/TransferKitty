@@ -57,7 +57,7 @@ public:
 class IUIState {
 public:
     virtual void didClickSendButton() = 0;
-    
+
     virtual size_t deviceCount() const = 0;
     virtual const IUIDeviceState* device(size_t index) const = 0;
 
