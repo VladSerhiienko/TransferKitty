@@ -151,7 +151,7 @@ using tk::unsetBit;
     populator.populate(&_defaultState, hashedImgTexture, bounds, frame.contextPtr);
     
     if (_defaultState._didClickSendButton) {
-        DLOGF(@"Clicked send button!");
+        // DLOGF(@"Clicked send button!");
         
         if (_defaultState._devices.size() > 1) {
             _defaultState._didClickSendButton = false;
@@ -176,7 +176,7 @@ using tk::unsetBit;
 - (void)attachmentContext:(TKAttachmentContext *)attachmentContext
 didPrepareBufferForAttachment:(TKAttachment *)attachment
                   orError:(NSError *)error {
-    DLOGF(@"%s: index=%u", TK_FUNC_NAME, [attachment index]);
+    // DLOGF(@"%s: index=%u", TK_FUNC_NAME, [attachment index]);
     
     auto &thisDevice = _defaultState._devices.front();
     thisDevice._files[[attachment index]]._totalSizeInBytes = [[attachment data] length];
@@ -185,7 +185,7 @@ didPrepareBufferForAttachment:(TKAttachment *)attachment
 - (void)attachmentContext:(TKAttachmentContext *)attachmentContext
 didPrepareNameForAttachment:(TKAttachment *)attachment
                   orError:(NSError *)error {
-    DLOGF(@"%s: index=%u name=%@", TK_FUNC_NAME, [attachment index], [attachment name]);
+    // DLOGF(@"%s: index=%u name=%@", TK_FUNC_NAME, [attachment index], [attachment name]);
 
     auto &thisDevice = _defaultState._devices.front();
     thisDevice._files[[attachment index]]._name = [[attachment name] cStringUsingEncoding:NSUTF8StringEncoding];
@@ -198,30 +198,30 @@ didPrepareNameForAttachment:(TKAttachment *)attachment
 - (void)bluetoothCommunicator:(TKBluetoothCommunicator *)bluetoothCommunicator
           didChangeStatusFrom:(TKBluetoothCommunicatorStatusBits)statusBits
                            to:(TKBluetoothCommunicatorStatusBits)currentStatusBits {
-    DLOGF(@"%s: %@ > %@",
-          TK_FUNC_NAME,
-          [TKStringUtilities communicatorBitsToString:statusBits],
-          [TKStringUtilities communicatorBitsToString:currentStatusBits]);
+    // DLOGF(@"%s: %@ > %@",
+    //       TK_FUNC_NAME,
+    //       [TKStringUtilities communicatorBitsToString:statusBits],
+    //       [TKStringUtilities communicatorBitsToString:currentStatusBits]);
 
     if (hasBit(currentStatusBits, TKBluetoothCommunicatorStatusBitCentral)) {
-        DLOGF(@"%s: Starting discovering", TK_FUNC_NAME);
+        // DLOGF(@"%s: Starting discovering", TK_FUNC_NAME);
         [bluetoothCommunicator startDiscoveringDevices];
     } else if (hasBit(currentStatusBits, TKBluetoothCommunicatorStatusBitPeripheral) &&
                !hasBit(currentStatusBits, TKBluetoothCommunicatorStatusBitPublishedService) &&
                !hasBit(currentStatusBits, TKBluetoothCommunicatorStatusBitPublishingService)) {
-        DLOGF(@"%s: Starting publishing", TK_FUNC_NAME);
+        // DLOGF(@"%s: Starting publishing", TK_FUNC_NAME);
         [bluetoothCommunicator publishServices];
     } else if (hasBit(currentStatusBits, TKBluetoothCommunicatorStatusBitPeripheral) &&
                !hasBit(currentStatusBits, TKBluetoothCommunicatorStatusBitPublishingService) &&
                hasBit(currentStatusBits, TKBluetoothCommunicatorStatusBitPublishedService)) {
-        DLOGF(@"%s: Starting advertising", TK_FUNC_NAME);
+        // DLOGF(@"%s: Starting advertising", TK_FUNC_NAME);
         [bluetoothCommunicator startAdvertising];
     }
 }
 
 - (void)bluetoothCommunicator:(TKBluetoothCommunicator *)bluetoothCommunicator
            didConnectToDevice:(TKBluetoothCommunicatorDevice *)device {
-    DLOGF(@"%s", TK_FUNC_NAME);
+    // DLOGF(@"%s", TK_FUNC_NAME);
     
     DCHECK(bluetoothCommunicator && device);
     [[bluetoothCommunicator scheduler] scheduleIntroductionMessagesTo:device];
@@ -239,7 +239,7 @@ didPrepareNameForAttachment:(TKAttachment *)attachment
 
 - (void)bluetoothCommunicator:(TKBluetoothCommunicator *)bluetoothCommunicator
               didUpdateDevice:(TKBluetoothCommunicatorDevice *)device {
-    DLOGF(@"%s", TK_FUNC_NAME);
+    // DLOGF(@"%s", TK_FUNC_NAME);
     
     auto deviceStateIt = std::find_if(_defaultState._devices.begin() + 1, _defaultState._devices.end(), [&](const tk::DefaultUIDeviceState &state) {
         return state._hash == [device hash];
@@ -256,7 +256,7 @@ didPrepareNameForAttachment:(TKAttachment *)attachment
 
 - (void)bluetoothCommunicator:(TKBluetoothCommunicator *)bluetoothCommunicator
           didDisconnectDevice:(TKBluetoothCommunicatorDevice *)device {
-    DLOGF(@"%s", TK_FUNC_NAME);
+    // DLOGF(@"%s", TK_FUNC_NAME);
 
     auto deviceStateIt = std::find_if(
         _defaultState._devices.begin() + 1, _defaultState._devices.end(), [&](const tk::DefaultUIDeviceState &state) {
@@ -274,18 +274,18 @@ didPrepareNameForAttachment:(TKAttachment *)attachment
               didReceiveValue:(NSData *)value
                       orError:(NSError *)error
                    fromDevice:(TKBluetoothCommunicatorDevice *)device {
-    DLOGF(@"%s", TK_FUNC_NAME);
+    // DLOGF(@"%s", TK_FUNC_NAME);
 }
 
 - (void)bluetoothCommunicator:(TKBluetoothCommunicator *)bluetoothCommunicator
          didSubscribeToDevice:(TKBluetoothCommunicatorDevice *)device {
-    DLOGF(@"%s", TK_FUNC_NAME);
+    // DLOGF(@"%s", TK_FUNC_NAME);
 }
 
 - (void)bluetoothCommunicator:(TKBluetoothCommunicator *)bluetoothCommunicator
          didWriteValueOrError:(NSError *)error
                      toDevice:(TKBluetoothCommunicatorDevice *)device {
-    DLOGF(@"%s", TK_FUNC_NAME);
+    // DLOGF(@"%s", TK_FUNC_NAME);
 }
 
 @end

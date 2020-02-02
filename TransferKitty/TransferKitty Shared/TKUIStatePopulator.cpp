@@ -125,12 +125,14 @@ bool UIStatePopulator::populate(tk::IUIState *state,
             
             static bool didClickSendButton = false;
             if (!didClickSendButton) {
+                nk_layout_row_dynamic(nk, fontHeight * 3, 1);
                 if (nk_button_label(nk, sendButtontext.data())) {
                     state->didClickSendButton();
                     didClickSendButton = true;
                 }
             }
 
+            nk_layout_row_dynamic(nk, fontHeight, 1);
             nk_label(nk, "Files:", NK_TEXT_ALIGN_LEFT);
             for (size_t i = 0; i < state->device(0)->fileCount(); ++i) {
                 const IUIFileState *fileState = state->device(0)->file(i);
@@ -155,7 +157,7 @@ bool UIStatePopulator::populate(tk::IUIState *state,
 
         if (state->debugLogCount()) {
             nk_label(nk, "Logs:", NK_TEXT_ALIGN_LEFT);
-            for (size_t i = 0; i < state->debugLogCount(); ++i) {
+            for (int i = (int)state->debugLogCount() - 1; i >= 0; --i) {
                 nk_label(nk, state->debugLog(i).data, NK_TEXT_ALIGN_LEFT);
             }
         } else {
