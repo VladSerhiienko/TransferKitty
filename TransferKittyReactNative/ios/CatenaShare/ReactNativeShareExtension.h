@@ -1,6 +1,6 @@
 #import <UIKit/UIKit.h>
-#import <Social/Social.h>
+#import <React/RCTBridgeModule.h>
 
-@interface ShareViewController : UIViewController
-
+@interface ShareViewController : UIViewController<RCTBridgeModule>
+- (UIView*) shareView;
 @end

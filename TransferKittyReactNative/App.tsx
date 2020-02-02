@@ -12,7 +12,7 @@ export default function App() {
       <View style={styles.container}>
         <SafeAreaView>
           <AppHeader name={displayName} style={styles.header} />
-          <ShareContent />
+          <ShareContent selected />
         </SafeAreaView>
       </View>
   );

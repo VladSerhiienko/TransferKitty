@@ -46,6 +46,8 @@ target 'CatenaNative' do
 
   pod 'react-native-blur', :path => '../node_modules/@react-native-community/blur'
 
+  pod 'RNExitApp', :path => '../node_modules/react-native-exit-app'
+
   target 'CatenaShare' do
     use_native_modules!
     inherit! :complete

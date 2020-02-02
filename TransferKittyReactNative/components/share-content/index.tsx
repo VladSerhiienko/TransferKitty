@@ -1,6 +1,6 @@
-import React, { useRef, useEffect, useState } from 'react';
-import { Animated, StyleSheet, Text, View, FlatList, Image, TouchableOpacity, findNodeHandle } from 'react-native';
-import { BlurView, VibrancyView } from "@react-native-community/blur";
+import React, { useLayoutEffect, useRef, useEffect, useState } from 'react';
+import { Animated, Modal, StyleSheet, Text, View, FlatList, Image, TouchableOpacity } from 'react-native';
+import { BlurView } from "@react-native-community/blur";
 
 export interface ImageType {
     file: string;
@@ -45,35 +45,18 @@ export const Item = ({ source, text }) => {
     )
 };
 
-export const ShareContent = () => {
-    const viewRef = useRef<number|null>(null);
-    const [fadeAnim] = useState<number>(new Animated.Value(0));
-    const listRef = useRef();
-
-    useEffect(() => {
-        Animated.timing(
-            fadeAnim,
-            {
-              toValue: 10,
-              duration: 1000,
-            }
-          ).start();
-    }, []);
-
+export const ShareContent = ({selected}) => {
+    const viewRef = useRef();
     return (
-        <Animated.View style={styles.container}>
-            <BlurView
-                style={styles.backdrop}
-                blurType="light"
-                blurAmount={10}
-            />
+        <View style={styles.container}>
+            {!selected && <BlurView style={styles.backdrop} blurType="light" blurAmount={10} viewRef={viewRef.current} />}
             <FlatList
-                ref={listRef}
-                data={IMAGES}
-                renderItem={({ item }) => <Item source={item.file} text={item.text} />}
-                keyExtractor={item => item.file}
-            />
-        </Animated.View>
+                    ref={viewRef}
+                    data={IMAGES}
+                    renderItem={({ item }) => <Item source={item.file} text={item.text} />}
+                    keyExtractor={item => item.text}
+                />
+        </View>
     );
 }
 

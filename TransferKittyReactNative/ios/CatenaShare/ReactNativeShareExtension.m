@@ -7,10 +7,14 @@
 #import <UMReactNativeAdapter/UMNativeModulesProxy.h>
 #import <UMReactNativeAdapter/UMModuleRegistryAdapter.h>
 
+NSExtensionContext* extensionContext;
+
 @interface ShareViewController ()
 @end
 
 @implementation ShareViewController
+
+RCT_EXPORT_MODULE();
 
 - (void)loadView {
   NSURL *jsCodeLocation;
@@ -23,6 +27,12 @@
                                                    launchOptions:nil];
   rootView.backgroundColor = nil;
   self.view = rootView;
+}
+
+- (void)viewDidLoad {
+  [super viewDidLoad];
+  
+  extensionContext = self.extensionContext;
 }
 
 - (BOOL)isContentValid {
@@ -40,6 +50,11 @@
 - (NSArray *)configurationItems {
     // To add configuration options via table cells at the bottom of the sheet, return an array of SLComposeSheetConfigurationItem here.
     return @[];
+}
+
+RCT_EXPORT_METHOD(close) {
+  [extensionContext completeRequestReturningItems:nil
+                                completionHandler:nil];
 }
 
 @end

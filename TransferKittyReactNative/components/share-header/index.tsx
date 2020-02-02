@@ -3,13 +3,13 @@ import { StyleSheet, Text, View } from 'react-native';
 
 import TextButton from '../text-button';
 
-export default function ShareHeader() {
+export default function ShareHeader({onClose}) {
     return (
         <View style={styles.navBar}>
             <View style={styles.leftContainer}>
-                <TextButton style={styles.cancelText}>Cancel</TextButton>
+                <TextButton onPress={() =>onClose()} style={styles.cancelText}>Cancel</TextButton>
             </View>
-            <Text style={styles.title}>Selected 4 images</Text>
+            <Text style={styles.title}>Catena Share</Text>
             <View style={styles.rightContainer} />
         </View>
     );
